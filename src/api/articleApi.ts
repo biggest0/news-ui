@@ -3,9 +3,9 @@ import {
 	articleInfoTransform,
 } from "../utils/transform";
 
-export async function fetchArticlesByCategory(category: string) {
+export async function fetchArticlesByCategory(page: number, category: string) {
 	const response = await fetch(
-		`http://localhost:3001/article-info?page=1&limit=10&category=${category}`,
+		`http://localhost:3001/article-info?page=${page}&limit=10&category=${category}`,
 		{
 			method: "GET",
 			headers: { "Content-Type": "application/json" },
@@ -34,18 +34,17 @@ export async function fetchArticlesInfo() {
 }
 
 export async function fetchArticleDetail(articleId: string) {
-	console.log(111, articleId);
+	// console.log(111, articleId);
 	const response = await fetch("http://localhost:3001/article-detail", {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify({ id: articleId }),
 	});
 	if (!response.ok) {
-		console.log("failed bb");
 		throw new Error(`Error: ${response.statusText}`);
 	}
 	const data = await response.json();
-	console.log(data);
+	// console.log(data);
 	return articleDetailTransform(data);
 }
 

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import type { RootState, AppDispatch } from "../store/store";
 import {
@@ -25,13 +25,21 @@ export default function NewsSection() {
 		"politics",
 		"other",
 	];
+  const prevArticlesLength = useRef(0)
 	const [selectedCategory, setSelectedCategory] = useState("all");
 	const [filteredArticles, setFilteredArticles] = useState(articles);
 
+  const [page, setPage] = useState(1)
+  const [showMore, setShowMore] = useState(true)
+  const [fetching, setFetching] = useState(false)
+
+
+  // load 10 articles when page initializes
 	useEffect(() => {
-		dispatch(getArticlesInfo());
+		dispatch(getArticlesInfoByCategory({page: page, category: selectedCategory}));
 	}, []);
 
+  // logic to display articles of correct category
 	useEffect(() => {
 		if (selectedCategory === "all") {
 			setFilteredArticles(articles);
@@ -41,6 +49,38 @@ export default function NewsSection() {
 			);
 		}
 	}, [selectedCategory, articles]);
+
+  useEffect(() => {
+    if (articles.length === prevArticlesLength.current) {
+      setShowMore(false)
+    }
+    else {
+      setShowMore(true)
+      setFetching(false)
+      prevArticlesLength. current = articles.length
+    }
+  }, [articles])
+
+  // lazy loading more articles
+	useEffect(() => {
+		const handleScroll = () => {
+			if (
+        !fetching &&
+        showMore &&
+				window.innerHeight + window.scrollY >=
+				document.body.scrollHeight - 100
+			) {
+        setFetching(true)
+        setPage(prev => prev + 1)
+        console.log(page)
+        dispatch(getArticlesInfoByCategory({page: page + 1, category: selectedCategory}));
+			}
+		};
+
+		window.addEventListener("scroll", handleScroll);
+		return () => window.removeEventListener("scroll", handleScroll);
+	}, [fetching, showMore]);
+
 	return (
 		<>
 			<div>
@@ -52,7 +92,7 @@ export default function NewsSection() {
 								key={category}
 								onClick={() => {
 									setSelectedCategory(category);
-									dispatch(getArticlesInfoByCategory(category));
+									dispatch(getArticlesInfoByCategory({page: page, category: category}));
 								}}
 								className={`cursor-pointer py-2 text-lg font-medium whitespace-nowrap ${
 									selectedCategory === category

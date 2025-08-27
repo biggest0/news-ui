@@ -80,9 +80,9 @@ export const getArticleDetail = createAsyncThunk<ArticleDetail, string>(
 
 export const getArticlesInfoByCategory = createAsyncThunk<
 	ArticleInfo[],
-	string
->("articles/getArticlesInfoByCategory", async (category: string) => {
-	return fetchArticlesByCategory(category);
+	{page: number, category: string}
+>("articles/getArticlesInfoByCategory", async ({page, category}) => {
+	return fetchArticlesByCategory(page, category);
 });
 
 const articlesSlice = createSlice({
@@ -143,7 +143,6 @@ const articlesSlice = createSlice({
 				(state, action) => {
 					state.loading = false;
 					action.payload.forEach((article) => {
-						console.log("ran");
 						const exists = state.articles.some((a) => a.id === article.id);
 						if (!exists) {
 							state.articles.push(article);
