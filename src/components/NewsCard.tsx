@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import type { ArticleInfo, ArticleDetail } from "../types/articleTypes";
 import type { RootState, AppDispatch } from "../store/store";
-import { getArticleDetail } from "../store/articlesSlice";
+import { loadArticleDetail } from "../store/articlesSlice";
 import { incrementArticleViewed } from "../api/articleApi";
 
 interface NewsCardProp {
@@ -41,9 +41,8 @@ export default function NewsCard({ articleInfo }: NewsCardProp) {
 		// await dispatch(getArticleDetail(articleInfo.id))
 
 		if (!articleDetailfetched && !isLoadingDetail) {
-			console.log("ran");
 			setIsLoadingDetail(true);
-			await dispatch(getArticleDetail(articleInfo.id))
+			await dispatch(loadArticleDetail(articleInfo.id))
 				.then(() => {
 					setArticleDetailfetched(true);
 				})
@@ -73,13 +72,17 @@ export default function NewsCard({ articleInfo }: NewsCardProp) {
 					{articleDetail && (
 						<div className="flex flex-col space-y-4">
 							<div className="space-y-2">
-								{articleDetail.paragraphs?.map((paragraph) => (
-									<div>{paragraph}</div>
+								{articleDetail.paragraphs?.map((paragraph, index) => (
+									<div key={`${articleDetail.id}-paragraph-${index}}`}>
+										{paragraph}
+									</div>
 								))}
 							</div>
 							<div className="flex flex-wrap space-x-4 underline text-sm">
-								{articleDetail.subCategory?.map((source) => (
-									<span>{source}</span>
+								{articleDetail.subCategory?.map((source, index) => (
+									<span key={`${articleDetail.id}-category-${index}}`}>
+										{source}
+									</span>
 								))}
 							</div>
 						</div>

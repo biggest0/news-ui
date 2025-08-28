@@ -3,11 +3,10 @@ import { useEffect, useRef, useState } from "react";
 
 import type { RootState, AppDispatch } from "../store/store";
 import {
-	getArticleDetail,
-	getArticlesInfo,
-	getArticlesInfoByCategory,
+	loadArticlesInfoByCategory,
 } from "../store/articlesSlice";
 import NewsCard from "./NewsCard";
+import { getTopTenArticles } from "../service/articleService";
 
 export default function NewsSection() {
 	const dispatch = useDispatch<AppDispatch>();
@@ -36,7 +35,7 @@ export default function NewsSection() {
 
   // load 10 articles when page initializes
 	useEffect(() => {
-		dispatch(getArticlesInfoByCategory({page: page, category: selectedCategory}));
+		dispatch(loadArticlesInfoByCategory({page: page, category: selectedCategory}));
 	}, []);
 
   // logic to display articles of correct category
@@ -73,7 +72,7 @@ export default function NewsSection() {
         setFetching(true)
         setPage(prev => prev + 1)
         console.log(page)
-        dispatch(getArticlesInfoByCategory({page: page + 1, category: selectedCategory}));
+        dispatch(loadArticlesInfoByCategory({page: page + 1, category: selectedCategory}));
 			}
 		};
 
@@ -84,6 +83,9 @@ export default function NewsSection() {
 	return (
 		<>
 			<div>
+        <button onClick={() => {
+          getTopTenArticles()
+        }}>TEST</button>
 				{/* article category menu slider */}
 				<div className="w-full overflow-x-auto hide-scrollbar p-4">
 					<div className="flex gap-8 border-b border-gray-300 px-4 min-w-max md:justify-center">
@@ -92,7 +94,7 @@ export default function NewsSection() {
 								key={category}
 								onClick={() => {
 									setSelectedCategory(category);
-									dispatch(getArticlesInfoByCategory({page: page, category: category}));
+									dispatch(loadArticlesInfoByCategory({page: page, category: category}));
 								}}
 								className={`cursor-pointer py-2 text-lg font-medium whitespace-nowrap ${
 									selectedCategory === category

@@ -8,10 +8,10 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 import type { ArticleInfo, ArticleDetail } from "../types/articleTypes";
 import {
-	fetchArticleDetail,
-	fetchArticlesByCategory,
-	fetchArticlesInfo,
-} from "../api/articleApi";
+	getArticleDetail,
+	getArticlesByCategory,
+	getArticlesInfo,
+} from "../service/articleService";
 
 interface ArticleRequest {
 	articles: ArticleInfo[];
@@ -64,25 +64,25 @@ const initialState: ArticlesState = {
 // 	}
 // );
 
-export const getArticlesInfo = createAsyncThunk<ArticleInfo[]>(
+export const loadArticlesInfo = createAsyncThunk<ArticleInfo[]>(
 	"articles/getArticlesInfo",
 	async () => {
-		return fetchArticlesInfo();
+		return getArticlesInfo();
 	}
 );
 
-export const getArticleDetail = createAsyncThunk<ArticleDetail, string>(
+export const loadArticleDetail = createAsyncThunk<ArticleDetail, string>(
 	"articles/getArticleDetail",
 	async (articleId: string) => {
-		return fetchArticleDetail(articleId);
+		return getArticleDetail(articleId);
 	}
 );
 
-export const getArticlesInfoByCategory = createAsyncThunk<
+export const loadArticlesInfoByCategory = createAsyncThunk<
 	ArticleInfo[],
-	{page: number, category: string}
->("articles/getArticlesInfoByCategory", async ({page, category}) => {
-	return fetchArticlesByCategory(page, category);
+	{ page: number; category: string }
+>("articles/getArticlesInfoByCategory", async ({ page, category }) => {
+	return getArticlesByCategory(page, category);
 });
 
 const articlesSlice = createSlice({
@@ -116,15 +116,15 @@ const articlesSlice = createSlice({
 	extraReducers: (builder) => {
 		// fetch article details with article ID
 		builder
-			.addCase(getArticleDetail.pending, (state) => {
+			.addCase(loadArticleDetail.pending, (state) => {
 				state.loading = true;
 				state.error = undefined;
 			})
-			.addCase(getArticleDetail.fulfilled, (state, action) => {
+			.addCase(loadArticleDetail.fulfilled, (state, action) => {
 				state.loading = false;
 				state.articlesDetail[action.payload.id] = action.payload;
 			})
-			.addCase(getArticleDetail.rejected, (state, action) => {
+			.addCase(loadArticleDetail.rejected, (state, action) => {
 				state.loading = false;
 				state.error = action.error.message;
 			});
@@ -132,14 +132,17 @@ const articlesSlice = createSlice({
 		// fetch for basic article info
 		builder
 			.addMatcher(
-				isAnyOf(getArticlesInfo.pending, getArticlesInfoByCategory.pending),
+				isAnyOf(loadArticlesInfo.pending, loadArticlesInfoByCategory.pending),
 				(state) => {
 					state.loading = true;
 					state.error = undefined;
 				}
 			)
 			.addMatcher(
-				isAnyOf(getArticlesInfo.fulfilled, getArticlesInfoByCategory.fulfilled),
+				isAnyOf(
+					loadArticlesInfo.fulfilled,
+					loadArticlesInfoByCategory.fulfilled
+				),
 				(state, action) => {
 					state.loading = false;
 					action.payload.forEach((article) => {
@@ -151,7 +154,7 @@ const articlesSlice = createSlice({
 				}
 			)
 			.addMatcher(
-				isAnyOf(getArticlesInfo.rejected, getArticlesInfoByCategory.rejected),
+				isAnyOf(loadArticlesInfo.rejected, loadArticlesInfoByCategory.rejected),
 				(state, action) => {
 					state.loading = false;
 					state.error = action.error.message;
