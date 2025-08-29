@@ -6,26 +6,17 @@ import {
 	loadArticlesInfoByCategory,
 } from "../store/articlesSlice";
 import NewsCard from "./NewsCard";
-import { getTopTenArticles } from "../service/articleService";
+import { useLocation } from "react-router-dom";
 
 export default function NewsSection() {
+	const location = useLocation()
+	const selectedCategory = location.pathname.split('/')[1]
 	const dispatch = useDispatch<AppDispatch>();
 	const { articles, loading, error } = useSelector(
 		(state: RootState) => state.article
 	);
-	const categories = [
-		"all",
-		"world",
-		"lifestyle",
-		"science",
-		"technology",
-		"business",
-		"sport",
-		"politics",
-		"other",
-	];
   const prevArticlesLength = useRef(0)
-	const [selectedCategory, setSelectedCategory] = useState("all");
+	// const [selectedCategory, setSelectedCategory] = useState("all");
 	const [filteredArticles, setFilteredArticles] = useState(articles);
 
   const [page, setPage] = useState(1)
@@ -33,14 +24,14 @@ export default function NewsSection() {
   const [fetching, setFetching] = useState(false)
 
 
-  // load 10 articles when page initializes
-	useEffect(() => {
-		dispatch(loadArticlesInfoByCategory({page: page, category: selectedCategory}));
-	}, []);
+  // // load 10 articles when page initializes
+	// useEffect(() => {
+	// 	dispatch(loadArticlesInfoByCategory({page: page, category: selectedCategory}));
+	// }, []);
 
   // logic to display articles of correct category
 	useEffect(() => {
-		if (selectedCategory === "all") {
+		if (selectedCategory === "") {
 			setFilteredArticles(articles);
 		} else {
 			setFilteredArticles(
@@ -81,47 +72,22 @@ export default function NewsSection() {
 	}, [fetching, showMore]);
 
 	return (
-		<>
-			<div>
-        <button onClick={() => {
-          getTopTenArticles()
-        }}>TEST</button>
-				{/* article category menu slider */}
-				<div className="w-full overflow-x-auto hide-scrollbar p-4">
-					<div className="flex gap-8 border-b border-gray-300 px-4 min-w-max md:justify-center">
-						{categories.map((category) => (
-							<div
-								key={category}
-								onClick={() => {
-									setSelectedCategory(category);
-									dispatch(loadArticlesInfoByCategory({page: page, category: category}));
-								}}
-								className={`cursor-pointer py-2 text-lg font-medium whitespace-nowrap ${
-									selectedCategory === category
-										? "border-b-2 border-blue-600 text-blue-600"
-										: "text-gray-600 hover:text-black"
-								}`}
-							>
-								{category.toUpperCase()}
-							</div>
-						))}
-					</div>
-				</div>
-			</div>
+		<div>
+
 
 			{/* articles */}
-			<div>
+
 				{filteredArticles.length > 0 && (
 					<div>
 						{filteredArticles.map((article) => (
 							<NewsCard
-								key={`${selectedCategory}-${article.id}`}
+								key={`${selectedCategory || 'all'}-${article.id}`}
 								articleInfo={article}
 							/>
 						))}
 					</div>
 				)}
-			</div>
-		</>
+
+		</div>
 	);
 }
