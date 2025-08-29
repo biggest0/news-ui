@@ -70,5 +70,5 @@ export async function fetchTopTenArticles() {
 		throw new Error(`Error: ${response.statusText}`);
 	}
 	const data = await response.json();
-	return articleInfoTransform(data);
+	return data.map(articleInfoTransform);
 }

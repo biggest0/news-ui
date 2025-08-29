@@ -11,6 +11,7 @@ import {
 	getArticleDetail,
 	getArticlesByCategory,
 	getArticlesInfo,
+	getTopTenArticles,
 } from "../service/articleService";
 
 interface ArticleRequest {
@@ -20,6 +21,7 @@ interface ArticleRequest {
 }
 
 interface ArticlesState {
+	topTenArticles: ArticleInfo[];
 	articles: ArticleInfo[];
 	articlesDetail: Record<string, ArticleDetail>;
 	loading: boolean;
@@ -27,6 +29,7 @@ interface ArticlesState {
 }
 
 const initialState: ArticlesState = {
+	topTenArticles: [],
 	articles: [],
 	articlesDetail: {},
 	loading: false,
@@ -85,6 +88,13 @@ export const loadArticlesInfoByCategory = createAsyncThunk<
 	return getArticlesByCategory(page, category);
 });
 
+export const loadTopTenArticles = createAsyncThunk<ArticleInfo[]>(
+	"articles/getTopTenArticles",
+	async () => {
+		return getTopTenArticles();
+	}
+);
+
 const articlesSlice = createSlice({
 	name: "articles",
 	initialState,
@@ -114,7 +124,7 @@ const articlesSlice = createSlice({
 		},
 	},
 	extraReducers: (builder) => {
-		// fetch article details with article ID
+		// load article details with article ID
 		builder
 			.addCase(loadArticleDetail.pending, (state) => {
 				state.loading = true;
@@ -128,6 +138,18 @@ const articlesSlice = createSlice({
 				state.loading = false;
 				state.error = action.error.message;
 			});
+
+    // load top 10 articles
+    builder
+    .addCase(loadTopTenArticles.pending, (state) => {
+      state.error = undefined;
+    })
+    .addCase(loadTopTenArticles.fulfilled, (state, action) => {
+      state.topTenArticles = action.payload;
+    })
+    .addCase(loadTopTenArticles.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
 
 		// fetch for basic article info
 		builder
