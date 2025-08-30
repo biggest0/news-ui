@@ -1,20 +1,20 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import "./App.css";
-import NavBar from "./components/NavBar";
-import Footer from "./components/Footer";
-import HomePageNotice from "./components/HomePageNotice";
-import HomePage from "./pages/HomePage";
-import ArticlePage from "./pages/ArticlesPage";
-import { ARTICLE_ROUTES } from "./constants/routes";
-import CategoryBar from "./components/CategoryBar";
+import NavBar from "@/components/layout/NavBar";
+import Footer from "@/components/layout/Footer";
+import NoticeBar from "@/components/common/NoticeBar";
+import HomePage from "@/pages/HomePage";
+import ArticlePage from "@/pages/ArticlesPage";
+import { ARTICLE_ROUTES } from "@/constants/routes";
+import CategoryBar from "@/components/layout/CategoryBar";
 
 function App() {
 	return (
 		<BrowserRouter>
 			<NavBar />
 			<CategoryBar />
-			<HomePageNotice />
+			<NoticeBar />
 			<main className="w-full max-w-[1280px] min-h-screen mx-auto">
 				<Routes>
 					<Route path="/" element={<HomePage />} />

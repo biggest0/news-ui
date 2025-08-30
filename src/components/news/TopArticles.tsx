@@ -1,10 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 
-import type { RootState, AppDispatch } from "../store/store";
-import { loadTopTenArticles } from "../store/articlesSlice";
-import NewsCard from "./NewsCard";
-import Image from "../assets/ChatGPT Image Apr 13, 2025, 11_38_22 AM.png";
+import type { RootState, AppDispatch } from "@/store/store";
+import { loadTopTenArticles } from "@/store/articlesSlice";
 
 export default function TopArticles() {
 	const dispatch = useDispatch<AppDispatch>();

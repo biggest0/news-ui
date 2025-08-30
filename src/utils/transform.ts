@@ -3,7 +3,7 @@ import type {
 	ArticleDetailResponse,
 	ArticleInfo,
 	ArticleInfoResponse,
-} from "../types/articleTypes";
+} from "@/types/articleTypes";
 
 export function articleInfoTransform(
 	articleInfoResponse: ArticleInfoResponse

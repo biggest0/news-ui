@@ -6,13 +6,13 @@ import {
 } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-import type { ArticleInfo, ArticleDetail } from "../types/articleTypes";
+import type { ArticleInfo, ArticleDetail } from "@/types/articleTypes";
 import {
 	getArticleDetail,
 	getArticlesByCategory,
 	getArticlesInfo,
 	getTopTenArticles,
-} from "../service/articleService";
+} from "@/service/articleService";
 
 interface ArticleRequest {
 	articles: ArticleInfo[];

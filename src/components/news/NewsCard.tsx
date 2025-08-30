@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import type { ArticleInfo, ArticleDetail } from "../types/articleTypes";
-import type { RootState, AppDispatch } from "../store/store";
-import { loadArticleDetail } from "../store/articlesSlice";
-import { incrementArticleViewed } from "../api/articleApi";
+import type { ArticleInfo, ArticleDetail } from "@/types/articleTypes";
+import type { RootState, AppDispatch } from "@/store/store";
+import { loadArticleDetail } from "@/store/articlesSlice";
+import { incrementArticleViewed } from "@/api/articleApi";
 
 interface NewsCardProp {
 	articleInfo: ArticleInfo;

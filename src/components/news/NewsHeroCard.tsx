@@ -1,4 +1,4 @@
-import type { ArticleInfo } from "../types/articleTypes";
+import type { ArticleInfo } from "@/types/articleTypes";
 
 interface NewsCardProp {
 	articleInfo: ArticleInfo;

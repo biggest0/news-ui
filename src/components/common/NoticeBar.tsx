@@ -1,4 +1,4 @@
-export default function HomePageNotice() {
+export default function NoticeBar() {
 	return (
 		<div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-2 flex items-center justify-center text-sm">
 			This website is a satire news outlet. Content may be exaggerated or

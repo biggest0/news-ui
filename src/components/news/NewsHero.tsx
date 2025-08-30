@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 
-import Image from "../assets/ChatGPT Image Apr 13, 2025, 11_38_22 AM.png";
-import type { RootState, AppDispatch } from "../store/store";
-import { loadTopTenArticles } from "../store/articlesSlice";
+import Image from "@/assets/ChatGPT Image Apr 13, 2025, 11_38_22 AM.png";
+import type { RootState, AppDispatch } from "@/store/store";
+import { loadTopTenArticles } from "@/store/articlesSlice";
 import NewsHeroCard from "./NewsHeroCard";
 
 export default function NewsHero() {

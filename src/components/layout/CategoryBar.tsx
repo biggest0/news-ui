@@ -1,10 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
-import { ARTICLE_ROUTES } from "../constants/routes";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 
-import type { AppDispatch } from "../store/store";
-import { loadArticlesInfoByCategory } from "../store/articlesSlice";
+import { ARTICLE_ROUTES } from "@/constants/routes";
+import type { AppDispatch } from "@/store/store";
+import { loadArticlesInfoByCategory } from "@/store/articlesSlice";
 
 export default function CategoryBar() {
 	// get url/{category}
