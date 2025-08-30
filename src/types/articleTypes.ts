@@ -1,6 +1,7 @@
 export interface ArticleInfoResponse {
 	id: string;
 	title: string;
+	summary?: string;
 	date_published: string;
 	main_category: string;
 	viewed: number;
@@ -9,6 +10,7 @@ export interface ArticleInfoResponse {
 export interface ArticleInfo {
 	id: string;
 	title: string;
+	summary?: string;
 	datePublished: string | undefined;
 	mainCategory: string | undefined;
 	viewed: number;

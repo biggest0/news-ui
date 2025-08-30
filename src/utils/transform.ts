@@ -11,6 +11,7 @@ export function articleInfoTransform(
 	return {
 		id: articleInfoResponse.id,
 		title: articleInfoResponse.title,
+		summary: articleInfoResponse.summary,
 		datePublished: new Date(
 			articleInfoResponse.date_published
 		).toLocaleDateString(),
