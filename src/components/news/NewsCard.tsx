@@ -89,6 +89,7 @@ export default function NewsCard({ articleInfo }: NewsCardProp) {
 					)}
 				</>
 			)}
+			{articleInfo.summary && !expanded && <div>{articleInfo.summary}</div>}
 			<span
 				className="cursor-pointer hover:text-amber-500 self-start"
 				onClick={handleExpand}
