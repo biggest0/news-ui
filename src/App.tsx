@@ -12,10 +12,10 @@ import CategoryBar from "@/components/layout/CategoryBar";
 function App() {
 	return (
 		<BrowserRouter>
-			<NavBar />
-			<CategoryBar />
-			<NoticeBar />
 			<main className="w-full max-w-[1280px] min-h-screen mx-auto">
+				<NoticeBar />
+				<NavBar />
+				<CategoryBar />
 				<Routes>
 					<Route path="/" element={<HomePage />} />
 					{ARTICLE_ROUTES.map((category) => (
