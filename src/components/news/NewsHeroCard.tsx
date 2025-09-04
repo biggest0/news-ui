@@ -11,8 +11,8 @@ export default function NewsHeroCard({ articleInfo, small }: NewsCardProp) {
 			<h3 className="text-lg font-semibold text-gray-800 hover:text-amber-600 cursor-pointer">
 				{articleInfo.title}
 			</h3>
-			{!small && articleInfo.summary && <span>{articleInfo.summary}</span>}
-			{small && <span>{articleInfo.datePublished}</span>}
+			{!small && articleInfo.summary && <span className="text-sm">{articleInfo.summary}</span>}
+			{small && <span className="text-sm">{articleInfo.datePublished}</span>}
 		</div>
 	);
 }
