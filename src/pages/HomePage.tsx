@@ -7,7 +7,6 @@ export default function HomePage() {
 		<>
 			<NewsHero />
 			<TopArticles />
-			<div>More Mews</div>
 			<NewsSection />
 		</>
 	);

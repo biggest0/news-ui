@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import type { RootState, AppDispatch } from "@/store/store";
 import { loadArticlesInfoByCategory } from "@/store/articlesSlice";
 import NewsCard from "./NewsCard";
+import NewsSideColumn from "./NewsSideColumn";
 
 export default function NewsSection() {
 	const location = useLocation();
@@ -72,19 +73,25 @@ export default function NewsSection() {
 	}, [fetching, showMore]);
 
 	return (
-		<div>
-			{/* articles */}
-
-			{filteredArticles.length > 0 && (
-				<div>
-					{filteredArticles.map((article) => (
-						<NewsCard
-							key={`${selectedCategory || "all"}-${article.id}`}
-							articleInfo={article}
-						/>
-					))}
-				</div>
-			)}
+		<div className="grid grid-cols-3 gap-4 py-6">
+			{/* articles, main col */}
+			<div className="col-span-2">
+				<h3 className="text-gray-500 pb-4">MORE MEWS</h3>
+				{filteredArticles.length > 0 && (
+					<div>
+						{filteredArticles.map((article) => (
+							<NewsCard
+								key={`${selectedCategory || "all"}-${article.id}`}
+								articleInfo={article}
+							/>
+						))}
+					</div>
+				)}
+			</div>
+			{/* side col */}
+			<div className="flex flex-col space-y-8 pl-4 border-l border-gray-400">
+				<NewsSideColumn />
+			</div>
 		</div>
 	);
 }

@@ -17,7 +17,7 @@ export default function NewsHero() {
 	}, []);
 	return (
 		<>
-			<div className="grid grid-cols-4 grid-rows-2 gap-3 mb-16 border-b-2 border-gray-200 h-96">
+			<div className="grid grid-cols-4 grid-rows-2 gap-4 border-b border-gray-400 h-112 py-6">
 				{/* Left column - 2 articles */}
 				<div className="col-span-1 row-span-2 flex flex-col gap-2 overflow-hidden">
 					{topTenArticles &&
@@ -33,7 +33,7 @@ export default function NewsHero() {
 				</div>
 
 				{/* Image - spans 2x2 */}
-				<div className="col-span-2 row-span-2 relative rounded-xl overflow-hidden">
+				<div className="col-span-2 row-span-2 relative overflow-hidden">
 					<img
 						src={Image}
 						alt="Featured News"

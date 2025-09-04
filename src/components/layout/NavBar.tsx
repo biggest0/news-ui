@@ -1,22 +1,29 @@
 // components/NavBar.tsx
-import { User } from "lucide-react";
+import { User, Cat } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function NavBar() {
 	return (
-		<nav className="w-full border-b-2 border-gray-200 shadow-sm z-20 px-8 py-3 flex items-center justify-between">
+		<nav className="w-full z-20 py-3 flex items-center justify-between">
 			{/* Left - Logo */}
-			<Link
+			{/* <Link
 				className="text-xl font-bold text-blue-600"
 				to={{
 					pathname: "/",
 				}}
 			>
 				📰
+			</Link> */}
+			<Link
+				to={{
+					pathname: "/",
+				}}
+			>
+				<Cat></Cat>
 			</Link>
 
 			{/* Center - App Name */}
-			<div className="text-lg font-semibold text-gray-800 tracking-wide">
+			<div className="text-5xl font-semibold text-gray-800 tracking-wide">
 				THE CATIRE TIMES
 			</div>
 

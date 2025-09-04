@@ -36,7 +36,8 @@ export default function TopArticles() {
 		// 			))}
 		// 	</div>
 		// </>
-		<div className="border-b border-gray-400 py-4">
+		<div className="border-b border-gray-400 py-6 space-y-4">
+			<h3 className="text-gray-500 pb-4">POPULAR</h3>
 			<div className="grid grid-cols-5 grid-rows-2 gap-4">
 				{topTenArticles.map((article, index) => (
 					<div

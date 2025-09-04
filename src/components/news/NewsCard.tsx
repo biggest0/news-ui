@@ -59,7 +59,7 @@ export default function NewsCard({ articleInfo }: NewsCardProp) {
 	}
 
 	return (
-		<div className="flex flex-col justify-between min-h-48 max-h-full shadow-[0_2px_4px_rgba(0,0,0,0.05)] border-b border-gray-200 px-4 py-4 w-full space-y-8">
+		<div className="flex flex-col justify-between min-h-48 max-h-full border-b border-gray-400 py-4 w-full space-y-8">
 			<div>
 				<h3 className="text-lg font-semibold text-gray-800">
 					{articleInfo.title}
