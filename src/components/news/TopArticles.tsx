@@ -36,12 +36,17 @@ export default function TopArticles() {
 		// 			))}
 		// 	</div>
 		// </>
-		<div className="grid grid-cols-5 grid-rows-2">
-			{topTenArticles.map((article, index) => (
-				<div>
-					<span className="font-bold">{index + 1 + ". " + article.title}</span>
-				</div>
-			))}
+		<div className="border-b border-gray-400 py-4">
+			<div className="grid grid-cols-5 grid-rows-2 gap-4">
+				{topTenArticles.map((article, index) => (
+					<div
+						className="font-medium hover:text-amber-600 cursor-pointer"
+						key={`top-ten-${article.id}`}
+					>
+						{index + 1 + ". " + article.title}
+					</div>
+				))}
+			</div>
 		</div>
 	);
 }
