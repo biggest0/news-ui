@@ -1,18 +1,23 @@
 // components/NavBar.tsx
-import { User, Cat, Search, X } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
-import { getArticlesBySearch } from "@/service/articleService";
 import { useState } from "react";
+import { User, Cat, Search, X } from "lucide-react";
+
+import { Link, useNavigate } from "react-router-dom";
+import type { AppDispatch } from "@/store/store";
+import { useDispatch } from "react-redux";
+import { loadArticlesInfoBySearch } from "@/store/articlesSlice";
 
 export default function NavBar() {
+	const dispatch = useDispatch<AppDispatch>();
+	const navigate = useNavigate();
+
 	const [searchClicked, setSearchClicked] = useState(false);
 	const [query, setQuery] = useState("");
-	const navigate = useNavigate();
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 		if (query.trim()) {
-			getArticlesBySearch(1, query);
+			dispatch(loadArticlesInfoBySearch({ page: 1, search: query }));
 			navigate(`/search?q=${encodeURIComponent(query)}`);
 			setSearchClicked(false);
 		}

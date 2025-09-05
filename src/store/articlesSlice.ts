@@ -10,6 +10,7 @@ import type { ArticleInfo, ArticleDetail } from "@/types/articleTypes";
 import {
 	getArticleDetail,
 	getArticlesByCategory,
+	getArticlesBySearch,
 	getArticlesInfo,
 	getTopTenArticles,
 } from "@/service/articleService";
@@ -88,6 +89,13 @@ export const loadArticlesInfoByCategory = createAsyncThunk<
 	return getArticlesByCategory(page, category);
 });
 
+export const loadArticlesInfoBySearch = createAsyncThunk<
+	ArticleInfo[],
+	{ page: number; search: string }
+>("articles/getArticlesInfoBySearch", async ({ page, search }) => {
+	return getArticlesBySearch(page, search);
+});
+
 export const loadTopTenArticles = createAsyncThunk<ArticleInfo[]>(
 	"articles/getTopTenArticles",
 	async () => {
@@ -139,22 +147,26 @@ const articlesSlice = createSlice({
 				state.error = action.error.message;
 			});
 
-    // load top 10 articles
-    builder
-    .addCase(loadTopTenArticles.pending, (state) => {
-      state.error = undefined;
-    })
-    .addCase(loadTopTenArticles.fulfilled, (state, action) => {
-      state.topTenArticles = action.payload;
-    })
-    .addCase(loadTopTenArticles.rejected, (state, action) => {
-      state.error = action.error.message;
-    });
+		// load top 10 articles
+		builder
+			.addCase(loadTopTenArticles.pending, (state) => {
+				state.error = undefined;
+			})
+			.addCase(loadTopTenArticles.fulfilled, (state, action) => {
+				state.topTenArticles = action.payload;
+			})
+			.addCase(loadTopTenArticles.rejected, (state, action) => {
+				state.error = action.error.message;
+			});
 
 		// fetch for basic article info
 		builder
 			.addMatcher(
-				isAnyOf(loadArticlesInfo.pending, loadArticlesInfoByCategory.pending),
+				isAnyOf(
+					loadArticlesInfo.pending,
+					loadArticlesInfoByCategory.pending,
+					loadArticlesInfoBySearch.pending
+				),
 				(state) => {
 					state.loading = true;
 					state.error = undefined;
@@ -163,7 +175,8 @@ const articlesSlice = createSlice({
 			.addMatcher(
 				isAnyOf(
 					loadArticlesInfo.fulfilled,
-					loadArticlesInfoByCategory.fulfilled
+					loadArticlesInfoByCategory.fulfilled,
+					loadArticlesInfoBySearch.fulfilled
 				),
 				(state, action) => {
 					state.loading = false;
@@ -176,7 +189,11 @@ const articlesSlice = createSlice({
 				}
 			)
 			.addMatcher(
-				isAnyOf(loadArticlesInfo.rejected, loadArticlesInfoByCategory.rejected),
+				isAnyOf(
+					loadArticlesInfo.rejected,
+					loadArticlesInfoByCategory.rejected,
+					loadArticlesInfoBySearch.rejected
+				),
 				(state, action) => {
 					state.loading = false;
 					state.error = action.error.message;

@@ -4,7 +4,6 @@ import {
 } from "../utils/transform";
 
 export async function fetchArticlesByCategory(page: number, category: string) {
-	console.log("fetch category");
 	const response = await fetch(
 		`http://localhost:3001/article-info?page=${page}&limit=10&category=${category}`,
 		{
@@ -50,7 +49,6 @@ export async function fetchArticlesInfo() {
 }
 
 export async function fetchArticleDetail(articleId: string) {
-	// console.log(111, articleId);
 	const response = await fetch("http://localhost:3001/article-detail", {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
@@ -60,7 +58,6 @@ export async function fetchArticleDetail(articleId: string) {
 		throw new Error(`Error: ${response.statusText}`);
 	}
 	const data = await response.json();
-	// console.log(data);
 	return articleDetailTransform(data);
 }
 
