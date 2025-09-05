@@ -77,7 +77,7 @@ export default function NewsSideColumn() {
 				<h3 className="text-gray-500">STAFF FAVORITES</h3>
 
 				{topTenArticles.slice(0, 5).map((article) => (
-					<div className="border-b border-gray-400 py-4">{article.title}</div>
+					<div className="border-b border-gray-400 py-4" key={`side-${article.id}`}>{article.title}</div>
 				))}
 			</div>
 

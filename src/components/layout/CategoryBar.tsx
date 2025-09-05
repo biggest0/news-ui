@@ -13,10 +13,12 @@ export default function CategoryBar() {
 
 	const dispatch = useDispatch<AppDispatch>();
 	useEffect(() => {
-		dispatch(
-			loadArticlesInfoByCategory({ page: 1, category: currentCategory })
-		);
-	}, [currentCategory]);
+		if (ARTICLE_ROUTES.includes(currentCategory)) {
+			dispatch(
+				loadArticlesInfoByCategory({ page: 1, category: currentCategory })
+			);
+		}
+	}, [currentCategory, dispatch]);
 
 	return (
 		<div>
