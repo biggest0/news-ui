@@ -1,6 +1,7 @@
 import {
 	fetchArticleDetail,
 	fetchArticlesByCategory,
+	fetchArticlesBySearch,
 	fetchArticlesInfo,
 	fetchTopTenArticles,
 } from "../api/articleApi";
@@ -11,6 +12,14 @@ export async function getArticlesByCategory(page: number, category: string) {
 		return await fetchArticlesByCategory(page, category);
 	} catch (error) {
 		console.log("[Error fetching articles by category]:", error);
+	}
+}
+
+export async function getArticlesBySearch(page: number, search: string) {
+	try {
+		return await fetchArticlesBySearch(page, search);
+	} catch (error) {
+		console.log("[Error fetching articles by search]:", error);
 	}
 }
 

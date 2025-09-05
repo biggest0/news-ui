@@ -4,8 +4,24 @@ import {
 } from "../utils/transform";
 
 export async function fetchArticlesByCategory(page: number, category: string) {
+	console.log("fetch category");
 	const response = await fetch(
 		`http://localhost:3001/article-info?page=${page}&limit=10&category=${category}`,
+		{
+			method: "GET",
+			headers: { "Content-Type": "application/json" },
+		}
+	);
+	if (!response.ok) {
+		throw new Error(`Error: ${response.statusText}`);
+	}
+	const data = await response.json();
+	return data.map(articleInfoTransform);
+}
+
+export async function fetchArticlesBySearch(page: number, search: string) {
+	const response = await fetch(
+		`http://localhost:3001/article-info?page=${page}&limit=10&search=${search}`,
 		{
 			method: "GET",
 			headers: { "Content-Type": "application/json" },
