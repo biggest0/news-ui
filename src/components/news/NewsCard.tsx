@@ -64,7 +64,7 @@ export default function NewsCard({ articleInfo }: NewsCardProp) {
 				<h3 className="text-lg font-semibold text-gray-800">
 					{articleInfo.title}
 				</h3>
-				<span>{articleInfo.datePublished}</span>
+				<span className="text-sm">{articleInfo.datePublished}</span>
 			</div>
 
 			{expanded && (

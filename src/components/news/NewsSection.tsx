@@ -76,7 +76,7 @@ export default function NewsSection() {
 		<div className="grid grid-cols-3 gap-4 py-6">
 			{/* articles, main col */}
 			<div className="col-span-2">
-				<h3 className="text-gray-500 pb-4">MORE MEWS</h3>
+				<h3 className="text-gray-500 pb-4">MEWS</h3>
 				{filteredArticles.length > 0 && (
 					<div>
 						{filteredArticles.map((article) => (
