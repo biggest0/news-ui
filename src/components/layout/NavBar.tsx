@@ -1,5 +1,5 @@
 // components/NavBar.tsx
-import { User, Cat } from "lucide-react";
+import { User, Cat, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function NavBar() {
@@ -19,7 +19,7 @@ export default function NavBar() {
 					pathname: "/",
 				}}
 			>
-				<Cat></Cat>
+				<Cat className="w-5 h-5 hover:text-black cursor-pointer" />
 			</Link>
 
 			{/* Center - App Name */}
@@ -29,6 +29,7 @@ export default function NavBar() {
 
 			{/* Right - Icons */}
 			<div className="flex gap-4 items-center text-gray-600">
+				<Search className="w-5 h-5 hover:text-black cursor-pointer" />
 				<User className="w-5 h-5 hover:text-black cursor-pointer" />
 			</div>
 		</nav>
