@@ -8,7 +8,7 @@ export default function HomePage() {
 		<>
 			<NewsHero />
 			<TopArticles />
-			<NewsSection />
+			<NewsSection key={"home-article-section"} />
 			<BackToTopButton />
 		</>
 	);
