@@ -6,6 +6,7 @@ import Footer from "@/components/layout/Footer";
 import NoticeBar from "@/components/common/NoticeBar";
 import HomePage from "@/pages/HomePage";
 import ArticlePage from "@/pages/ArticlesPage";
+import SearchPage from "./pages/SearchPage";
 import { ARTICLE_ROUTES } from "@/constants/routes";
 import CategoryBar from "@/components/layout/CategoryBar";
 
@@ -25,7 +26,7 @@ function App() {
 							element={<ArticlePage />}
 						/>
 					))}
-					{/* <Route> path='*' element={<div>Page not Found</div>}</Route> */}
+					<Route path="/search" element={<SearchPage />} />
 					<Route path="*" element={<div>Page not Found</div>} />
 				</Routes>
 			</main>

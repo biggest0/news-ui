@@ -2,6 +2,7 @@ export const PAGE_ROUTES = {
 	HOME: "/",
 	LOGIN: "/login",
 	ABOUT: "/about",
+	SEARCH: "/search",
 	CATS: "/cats",
 };
 
@@ -17,6 +18,7 @@ export const PAGE_ROUTES = {
 // }
 
 export const ARTICLE_ROUTES = [
+	"",
 	"world",
 	"lifestyle",
 	"science",
