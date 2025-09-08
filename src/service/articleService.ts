@@ -5,8 +5,11 @@ import {
 	fetchArticlesInfo,
 	fetchTopTenArticles,
 } from "../api/articleApi";
-import type { ArticleDetail } from "../types/articleTypes";
+import type { ArticleDetail, ArticleInfo } from "../types/articleTypes";
 
+// --------------
+// API functions
+// --------------
 export async function getArticlesByCategory(page: number, category: string) {
 	try {
 		return await fetchArticlesByCategory(page, category);
@@ -53,4 +56,28 @@ export async function getTopTenArticles() {
 	} catch (error) {
 		console.log("[Error fetching top 10 articles]:", error);
 	}
+}
+
+// ---------------
+// Article Sorting
+// ---------------
+export function sortByWordCount(articles: ArticleInfo[], query: string) {
+	const lowerCaseQuery = query.toLowerCase();
+
+	return articles.sort((a, b) => {
+		const countA =
+			(a.title.toLowerCase().match(new RegExp(lowerCaseQuery, "g")) || [])
+				.length *
+				2 +
+			(a.summary?.toLowerCase().match(new RegExp(lowerCaseQuery, "g")) || [])
+				.length;
+		const countB =
+			(b.title.toLowerCase().match(new RegExp(lowerCaseQuery, "g")) || [])
+				.length *
+				2 +
+			(b.summary?.toLowerCase().match(new RegExp(lowerCaseQuery, "g")) || [])
+				.length;
+
+		return countB - countA;
+	});
 }
