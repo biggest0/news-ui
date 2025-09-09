@@ -18,7 +18,11 @@ export interface ArticleInfo {
 
 export interface ArticleDetail {
 	id: string;
+	datePublished: string;
+	title: string;
+	summary?: string;
 	paragraphs: string[];
+	mainCategory: string;
 	subCategory: string[];
 	source: string;
 	url: string;
@@ -26,7 +30,11 @@ export interface ArticleDetail {
 
 export interface ArticleDetailResponse {
 	id: string;
+	date_published: string;
+	title: string;
+	summary?: string;
 	paragraphs: string[];
+	main_category: string;
 	sub_category: string[];
 	source: string;
 	url: string;

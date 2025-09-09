@@ -25,7 +25,13 @@ export function articleDetailTransform(
 ): ArticleDetail {
 	return {
 		id: articleDetailResponse.id,
+		datePublished: new Date(
+			articleDetailResponse.date_published
+		).toLocaleDateString(),
+		title: articleDetailResponse.title,
+		summary: articleDetailResponse.summary,
 		paragraphs: articleDetailResponse.paragraphs,
+		mainCategory: articleDetailResponse.main_category,
 		subCategory: articleDetailResponse.sub_category,
 		source: articleDetailResponse.source,
 		url: articleDetailResponse.url,
