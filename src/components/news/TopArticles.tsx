@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 import type { RootState, AppDispatch } from "@/store/store";
 import { loadTopTenArticles } from "@/store/articlesSlice";
@@ -40,12 +41,13 @@ export default function TopArticles() {
 			<h3 className="text-gray-500 pb-4">POPULAR</h3>
 			<div className="grid grid-cols-5 grid-rows-2 gap-4">
 				{topTenArticles.map((article, index) => (
-					<div
+					<Link
+						to={`/article/${article.id}`}
 						className="font-medium hover:text-amber-600 cursor-pointer"
 						key={`top-ten-${article.id}`}
 					>
 						{index + 1 + ". " + article.title}
-					</div>
+					</Link>
 				))}
 			</div>
 		</div>
