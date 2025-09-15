@@ -1,5 +1,5 @@
 export interface ArticleInfoResponse {
-	id: string;
+	_id: string;
 	title: string;
 	summary?: string;
 	date_published: string;
@@ -29,7 +29,7 @@ export interface ArticleDetail {
 }
 
 export interface ArticleDetailResponse {
-	id: string;
+	_id: string;
 	date_published: string;
 	title: string;
 	summary?: string;

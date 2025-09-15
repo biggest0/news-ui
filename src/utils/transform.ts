@@ -9,7 +9,7 @@ export function articleInfoTransform(
 	articleInfoResponse: ArticleInfoResponse
 ): ArticleInfo {
 	return {
-		id: articleInfoResponse.id,
+		id: articleInfoResponse._id,
 		title: articleInfoResponse.title,
 		summary: articleInfoResponse.summary,
 		datePublished: new Date(
@@ -24,7 +24,7 @@ export function articleDetailTransform(
 	articleDetailResponse: ArticleDetailResponse
 ): ArticleDetail {
 	return {
-		id: articleDetailResponse.id,
+		id: articleDetailResponse._id,
 		datePublished: new Date(
 			articleDetailResponse.date_published
 		).toLocaleDateString(),
