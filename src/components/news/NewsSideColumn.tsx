@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 
 import CatImage1 from "@/assets/ChatGPT Image Apr 13, 2025, 11_38_22 AM.png";
 import type { RootState, AppDispatch } from "@/store/store";
-import { loadTopTenArticles } from "@/store/articlesSlice";
 
 export default function NewsSideColumn() {
 	const dispatch = useDispatch<AppDispatch>();

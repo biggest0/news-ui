@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 
 import Image from "@/assets/ChatGPT Image Apr 13, 2025, 11_38_22 AM.png";
 import type { RootState, AppDispatch } from "@/store/store";
-import { loadTopTenArticles } from "@/store/articlesSlice";
 import NewsHeroCard from "./NewsHeroCard";
 
 export default function NewsHero() {
@@ -12,9 +11,6 @@ export default function NewsHero() {
 		(state: RootState) => state.article
 	);
 
-	useEffect(() => {
-		dispatch(loadTopTenArticles());
-	}, []);
 	return (
 		<>
 			<div className="grid grid-cols-4 grid-rows-2 gap-4 border-b border-gray-400 h-112 py-6">
