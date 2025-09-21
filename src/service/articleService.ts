@@ -42,7 +42,11 @@ export async function getArticleDetail(articleId: string) {
 		// have to return a ArticleDetail object or redux thunk will get angry
 		return {
 			id: articleId,
+			datePublished: '',
+			title: '',
+			summary: '',
 			paragraphs: ["Error loading article details."],
+			mainCategory: '',
 			subCategory: [],
 			source: "",
 			url: "",
