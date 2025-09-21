@@ -62,17 +62,12 @@ export async function fetchArticleDetail(articleId: string) {
 	return articleDetailTransform(data);
 }
 
-export async function incrementArticleViewed(articleId: string) {
+export function incrementArticleViewed(articleId: string) {
 	fetch(`${url}/increment-article-view/${articleId}`, {
 		method: "PUT",
 		headers: { "Content-Type": "application/json" },
 	});
-
-	// if (!response.ok) {
-	//   throw new Error(`Failed to update article: ${response.statusText}`);
-	// }
-
-	// no returns because just incrementing view of article with specific ID
+	// don't expect a repsonse, so no return/ no async because just incrementing view of article with specific ID
 }
 
 export async function fetchTopTenArticles() {
