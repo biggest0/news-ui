@@ -1,6 +1,6 @@
 // components/NavBar.tsx
 import { useState } from "react";
-import { User, Cat, Search, X } from "lucide-react";
+import { LuCat, LuUserRound, LuSearch, LuX } from "react-icons/lu";
 
 import { Link, useNavigate } from "react-router-dom";
 import type { AppDispatch } from "@/store/store";
@@ -39,7 +39,7 @@ export default function NavBar() {
 					pathname: "/",
 				}}
 			>
-				<Cat className="w-5 h-5 hover:text-black cursor-pointer" />
+				<LuCat className="w-5 h-5 hover:text-black cursor-pointer" />
 			</Link>
 
 			{/* Center - App Name */}
@@ -52,7 +52,7 @@ export default function NavBar() {
 				<div className="relative flex items-center">
 					{/* Search icon */}
 					{!searchClicked && (
-						<Search
+						<LuSearch
 							className={`w-5 h-5 cursor-pointer transition-colors duration-200 ${
 								searchClicked ? "text-blue-500" : "hover:text-black"
 							}`}
@@ -69,7 +69,7 @@ export default function NavBar() {
 					>
 						{/* Search icon */}
 						<button type="submit">
-							<Search className="w-4 h-4 text-gray-400 cursor-pointer hover:text-black  flex-shrink-0" />
+							<LuSearch className="w-4 h-4 text-gray-400 cursor-pointer hover:text-black  flex-shrink-0" />
 						</button>
 
 						{/* Input */}
@@ -82,7 +82,7 @@ export default function NavBar() {
 						/>
 
 						{/* Close button */}
-						<X
+						<LuX
 							className="w-4 h-4 text-gray-400 cursor-pointer hover:text-black flex-shrink-0"
 							onClick={() => {
 								setSearchClicked(false);
@@ -91,7 +91,7 @@ export default function NavBar() {
 						/>
 					</form>
 				</div>
-				<User className="w-5 h-5 hover:text-black cursor-pointer" />
+				<LuUserRound className="w-5 h-5 hover:text-black cursor-pointer" />
 			</div>
 		</nav>
 	);

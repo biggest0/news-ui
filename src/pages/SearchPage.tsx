@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Search } from "lucide-react";
+import { LuSearch } from "react-icons/lu";
 
 import type { AppDispatch, RootState } from "@/store/store";
 import type { ArticleInfo } from "@/types/articleTypes";
@@ -150,7 +150,7 @@ function SearchSection({
 					type="submit"
 					className="text-gray-400 px-4 py-2 hover:text-black transition cursor-pointer"
 				>
-					<Search />
+					<LuSearch />
 				</button>
 			</form>
 

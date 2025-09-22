@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ChevronUp } from "lucide-react";
+import { FaChevronUp } from "react-icons/fa6";
 
 export default function BackToTopButton() {
 	const [showButton, setShowButton] = useState(false);
@@ -24,7 +24,7 @@ export default function BackToTopButton() {
 					aria-label="Back to top"
 					title="Back to top"
 				>
-					<ChevronUp />
+					<FaChevronUp />
 				</button>
 			)}
 		</>

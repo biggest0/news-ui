@@ -12,6 +12,8 @@ export default function CategoryBar() {
 	const currentCategory = location.pathname.split("/")[1]; // grabs part after "/"
 
 	const dispatch = useDispatch<AppDispatch>();
+	// instead of setting the category, you link it
+	// and then in sections just grab the param again and filter
 	useEffect(() => {
 		if (ARTICLE_ROUTES.includes(currentCategory)) {
 			dispatch(
@@ -45,6 +47,3 @@ export default function CategoryBar() {
 		</div>
 	);
 }
-
-// instead of setting the category, you link it
-// and then in sections just grab the param again and filter
