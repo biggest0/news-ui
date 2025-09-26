@@ -15,7 +15,7 @@ export default function NewsHero() {
 		<>
 			<div className="grid grid-cols-4 grid-rows-2 gap-4 border-b border-gray-400 h-112 py-6">
 				{/* Left column - 2 articles */}
-				<div className="col-span-1 row-span-2 flex flex-col gap-2 overflow-hidden">
+				<div className="col-span-1 row-span-2 flex flex-col gap-8 overflow-auto">
 					{topTenArticles &&
 						topTenArticles
 							.slice(0, 2)
@@ -29,7 +29,7 @@ export default function NewsHero() {
 				</div>
 
 				{/* Image - spans 2x2 */}
-				<div className="col-span-2 row-span-2 relative overflow-hidden">
+				<div className="col-span-2 row-span-2 relative overflow-y-hidden">
 					<img
 						src={Image}
 						alt="Featured News"
@@ -42,7 +42,7 @@ export default function NewsHero() {
 				</div>
 
 				{/* Right column - multiple articles with scroll */}
-				<div className="col-span-1 row-span-2 flex flex-col gap-2 overflow-y-auto overflow-x-hidden">
+				<div className="col-span-1 row-span-2 flex flex-col gap-4 overflow-y-auto overflow-x-hidden">
 					{topTenArticles &&
 						topTenArticles
 							.slice(2, 6)

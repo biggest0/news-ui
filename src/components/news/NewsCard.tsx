@@ -61,7 +61,7 @@ export default function NewsCard({ articleInfo }: NewsCardProp) {
 	return (
 		<div className="flex flex-col justify-between min-h-48 max-h-full border-b border-gray-400 py-4 w-full space-y-8">
 			<div>
-				<h3 className="text-lg font-semibold text-gray-800">
+				<h3 className="text-xl font-semibold text-gray-800">
 					{articleInfo.title}
 				</h3>
 				<div className="text-sm">{articleInfo.datePublished}</div>

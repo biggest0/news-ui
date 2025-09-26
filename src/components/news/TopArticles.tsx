@@ -23,7 +23,7 @@ export default function TopArticles() {
 				{topTenArticles.map((article, index) => (
 					<Link
 						to={`/article/${article.id}`}
-						className="font-medium hover:text-amber-600 cursor-pointer"
+						className="font-medium text-black hover:text-amber-600 cursor-pointer"
 						key={`top-ten-${article.id}`}
 						onClick={() => incrementArticleViewed(article.id)}
 					>
