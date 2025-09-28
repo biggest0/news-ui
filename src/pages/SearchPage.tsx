@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { LuSearch } from "react-icons/lu";
@@ -15,6 +15,7 @@ export default function SearchPage() {
 	const { articles, loading, error } = useSelector(
 		(state: RootState) => state.article
 	);
+	const prevArticlesLength = useRef(0);
 
 	const params = new URLSearchParams(location.search);
 	const query = params.get("q") || "";
@@ -22,6 +23,9 @@ export default function SearchPage() {
 	const sortBy = params.get("sortBy") || "";
 
 	const [filteredArticles, setFilteredArticles] = useState<ArticleInfo[]>([]);
+	const [page, setPage] = useState(1);
+	const [showMore, setShowMore] = useState(true);
+	const [fetching, setFetching] = useState(false);
 
 	// page init if search query exists in url send request to load articles
 	const dispatch = useDispatch<AppDispatch>();
@@ -87,6 +91,41 @@ export default function SearchPage() {
 			setFilteredArticles(searchedArticles);
 		}
 	}, [query, dateRange, sortBy, articles]);
+
+	// checks if more articles can be loaded
+	useEffect(() => {
+		if (articles.length === prevArticlesLength.current) {
+			setShowMore(false);
+		} else {
+			setShowMore(true);
+			setFetching(false);
+			prevArticlesLength.current = articles.length;
+		}
+	}, [articles]);
+
+	// lazy loading more articles
+	useEffect(() => {
+		const handleScroll = () => {
+			if (
+				!fetching &&
+				showMore &&
+				window.innerHeight + window.scrollY >= document.body.scrollHeight - 100
+			) {
+				setFetching(true);
+				setPage((prev) => prev + 1);
+				console.log(page);
+				dispatch(
+					loadArticlesInfoBySearch({
+						page: page + 1,
+						search: query,
+					})
+				);
+			}
+		};
+
+		window.addEventListener("scroll", handleScroll);
+		return () => window.removeEventListener("scroll", handleScroll);
+	}, [fetching, showMore]);
 
 	return (
 		<div>
