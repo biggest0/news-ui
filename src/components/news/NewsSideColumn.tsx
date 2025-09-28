@@ -17,34 +17,14 @@ export default function NewsSideColumn() {
 				<h3 className="text-gray-500">OUR EDITORS</h3>
 
 				<div className="flex flex-row justify-between border-b border-gray-400 py-4">
-					<div className="flex flex-row justify-between space-x-8">
-						<div className="flex flex-col justify-between min-h-24 max-h-full">
-							<div className="flex flex-col">
-								<div>Albert Meowstein</div>
-								<div>Chief Editor</div>
-							</div>
-							<div className="text-sm text-gray-500">
-								A cheeky cat that does nothing but read
-							</div>
-						</div>
-						<img
-							src={CatImage1}
-							alt=""
-							className="w-28 h-28 object-cover rounded-xl flex-shrink-0"
-						/>
-					</div>
-				</div>
-
-				<div className="flex flex-row justify-between border-b border-gray-400 py-4">
-					<div className="flex flex-row space-x-8 items-start">
+					<div className="flex flex-row space-x-8 items-start justify-between w-full">
 						<div className="flex flex-col justify-between min-h-24 max-h-full max-w-sm">
 							<div className="flex flex-col">
-								<div className="font-semibold">Albert Meowstein</div>
-								<div className="text-gray-600">Chief Editor</div>
+								<div>Albert Meowstein</div>
+								<div>Chief Editor</div>
 							</div>
 							<div className="text-sm text-gray-500 whitespace-normal break-words">
-								A cheeky cat that does nothing but read ads;fasjdfkl;asjfklas
-								jdfkl;aalksdfj;lajsdfkasfdsakl;fj;asdl
+								A cheeky cat that does nothing but read
 							</div>
 						</div>
 						<img
@@ -56,17 +36,42 @@ export default function NewsSideColumn() {
 				</div>
 
 				<div className="flex flex-row justify-between border-b border-gray-400 py-4">
-					<div className="flex flex-row justify-between space-x-8">
-						<div className="flex flex-col justify-between h-28">
+					<div className="flex flex-row space-x-8 items-start justify-between w-full">
+						{/* right col */}
+						<div className="flex flex-col justify-between min-h-24 max-h-full max-w-sm">
 							<div className="flex flex-col">
 								<div>Albert Meowstein</div>
 								<div>Chief Editor</div>
 							</div>
-							<div className="text-sm text-gray-500">
-								A cheeky cat that does nothing but read
+							<div className="text-sm text-gray-500 whitespace-normal break-words">
+								A bit too positive for her own good
 							</div>
 						</div>
-						<img src={CatImage1} alt="" className="w-auto h-28" />
+						{/* left col */}
+						<img
+							src={CatImage1}
+							alt=""
+							className="w-28 h-28 object-cover rounded-xl flex-shrink-0"
+						/>
+					</div>
+				</div>
+
+				<div className="flex flex-row justify-between border-b border-gray-400 py-4">
+					<div className="flex flex-row space-x-8 items-start justify-between w-full">
+						<div className="flex flex-col justify-between min-h-24 max-h-full max-w-sm">
+							<div className="flex flex-col">
+								<div>Albert Meowstein</div>
+								<div>Chief Editor</div>
+							</div>
+							<div className="text-sm text-gray-500 whitespace-normal break-words">
+								Hates his job but loves to rant
+							</div>
+						</div>
+						<img
+							src={CatImage1}
+							alt=""
+							className="w-28 h-28 object-cover rounded-xl flex-shrink-0"
+						/>
 					</div>
 				</div>
 			</div>
@@ -76,7 +81,12 @@ export default function NewsSideColumn() {
 				<h3 className="text-gray-500">STAFF FAVORITES</h3>
 
 				{topTenArticles.slice(0, 5).map((article) => (
-					<div className="border-b border-gray-400 py-4" key={`side-${article.id}`}>{article.title}</div>
+					<div
+						className="border-b border-gray-400 py-4"
+						key={`side-${article.id}`}
+					>
+						{article.title}
+					</div>
 				))}
 			</div>
 
