@@ -23,10 +23,17 @@ export default function SearchPage() {
 
 	const [filteredArticles, setFilteredArticles] = useState<ArticleInfo[]>([]);
 
+	// page init if search query exists in url send request to load articles
+	const dispatch = useDispatch<AppDispatch>();
+	useEffect(() => {
+		if (query) {
+			dispatch(loadArticlesInfoBySearch({ page: 1, search: query }));
+		}
+	}, [query]);
+
 	// article filtering
 	useEffect(() => {
 		if (query) {
-			console.log(query);
 			const lowerCaseQuery = query.toLowerCase();
 			let searchedArticles = articles.filter(
 				(article) =>
@@ -110,6 +117,10 @@ function SearchSection({
 	const navigate = useNavigate();
 
 	const [input, setInput] = useState(query ?? "");
+
+	useEffect(() => {
+		setInput(query);
+	}, [query]);
 
 	const updateUrl = (q: string, dateRange: string, sort: string) => {
 		const params = new URLSearchParams();
