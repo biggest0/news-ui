@@ -26,7 +26,7 @@ export default function CategoryBar() {
 		<div>
 			{/* article category menu slider */}
 			<div className="w-full overflow-x-auto hide-scrollbar pt-4">
-				<div className="flex gap-8 border-b border-gray-400 px-4 min-w-max md:justify-center">
+				<div className="flex gap-8 border-b-2 border-gray-500 px-4 min-w-max md:justify-center">
 					{ARTICLE_ROUTES.map((category) => (
 						<Link
 							key={category}
