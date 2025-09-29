@@ -10,7 +10,7 @@ interface NewsCardProp {
 
 export default function NewsHeroCard({ articleInfo, small }: NewsCardProp) {
 	return (
-		<div className={`${small ? "h-24" : "h-48"}`}>
+		<div className={`${small ? "min-h-24" : "min-h-48"}`}>
 			<h3
 				className={`${
 					small ? "text-lg" : "text-xl"
@@ -24,7 +24,7 @@ export default function NewsHeroCard({ articleInfo, small }: NewsCardProp) {
 				</Link>
 			</h3>
 			{!small && articleInfo.summary && (
-				<span className="text-md">{articleInfo.summary}</span>
+				<span className="text-sm lg:text-base">{articleInfo.summary}</span>
 			)}
 			{small && <span className="text-sm">{articleInfo.datePublished}</span>}
 		</div>

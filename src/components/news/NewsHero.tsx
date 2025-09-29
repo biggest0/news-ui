@@ -1,21 +1,21 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 
-import Image from "@/assets/ChatGPT Image Apr 13, 2025, 11_38_22 AM.png";
-import type { RootState, AppDispatch } from "@/store/store";
+import { SectionHeader } from "@/components/common/SectionHeader";
+import Image from "@/assets/ChatGPT Image Sep 25, 2025, 09_32_03 PM.png";
+import type { RootState } from "@/store/store";
 import NewsHeroCard from "./NewsHeroCard";
 
 export default function NewsHero() {
-	const dispatch = useDispatch<AppDispatch>();
 	const { topTenArticles, loading, error } = useSelector(
 		(state: RootState) => state.article
 	);
 
 	return (
-		<>
-			<div className="grid grid-cols-4 grid-rows-2 gap-4 border-b border-gray-400 h-112 py-6">
+		<section className="border-b border-gray-400 py-6">
+			{/* Desktop Layout */}
+			<div className="hidden md:grid grid-cols-4 grid-rows-2 gap-4 min-h-112">
 				{/* Left column - 2 articles */}
-				<div className="col-span-1 row-span-2 flex flex-col gap-8 overflow-auto">
+				<div className="col-span-1 row-span-2 flex flex-col gap-8">
 					{topTenArticles &&
 						topTenArticles
 							.slice(0, 2)
@@ -42,7 +42,7 @@ export default function NewsHero() {
 				</div>
 
 				{/* Right column - multiple articles with scroll */}
-				<div className="col-span-1 row-span-2 flex flex-col gap-4 overflow-y-auto overflow-x-hidden">
+				<div className="col-span-1 row-span-2 flex flex-col gap-4">
 					{topTenArticles &&
 						topTenArticles
 							.slice(2, 6)
@@ -55,6 +55,42 @@ export default function NewsHero() {
 							))}
 				</div>
 			</div>
-		</>
+
+			{/* Mobile Layout */}
+			<div className="flex flex-col gap-8 md:hidden">
+				{/* Image first on mobile */}
+				<div className="border-b border-gray-400 pb-6">
+					<div className="relative w-full h-64 overflow-hidden">
+						<img
+							src={Image}
+							alt="Featured News"
+							className="w-full h-full object-cover"
+						/>
+					</div>
+					<div className="text-center">
+						"Reading satire news is like getting your veggies in cake
+						form—tasty, fun, and surprisingly informative." — Albert Mewstein
+					</div>
+				</div>
+
+				{/* Combined articles column - horizontal scroll */}
+				<div>
+					<SectionHeader title="EDITOR'S CHOICES" />
+					<div className="overflow-x-auto overflow-y-hidden">
+						<div className="flex gap-4">
+							{topTenArticles &&
+								topTenArticles.slice(0, 6).map((article) => (
+									<div
+										key={`mobile-scroll-${article.id}`}
+										className="flex-shrink-0 w-64"
+									>
+										<NewsHeroCard articleInfo={article} small={true} />
+									</div>
+								))}
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
 	);
 }
