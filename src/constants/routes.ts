@@ -18,7 +18,6 @@ export const PAGE_ROUTES = {
 // }
 
 export const ARTICLE_ROUTES = [
-	"",
 	"world",
 	"lifestyle",
 	"science",

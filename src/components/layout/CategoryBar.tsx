@@ -15,7 +15,12 @@ export default function CategoryBar() {
 	// instead of setting the category, you link it
 	// and then in sections just grab the param again and filter
 	useEffect(() => {
-		if (ARTICLE_ROUTES.includes(currentCategory)) {
+		if (currentCategory === "") {
+			// defaults to grabbing all articles
+			dispatch(
+				loadArticlesInfoByCategory({ page: 1, category: currentCategory })
+			);
+		} else if (ARTICLE_ROUTES.includes(currentCategory)) {
 			dispatch(
 				loadArticlesInfoByCategory({ page: 1, category: currentCategory })
 			);
@@ -26,18 +31,18 @@ export default function CategoryBar() {
 		<div>
 			{/* article category menu slider */}
 			<div className="w-full overflow-x-auto hide-scrollbar pt-4">
-				<div className="flex gap-8 border-b-2 border-gray-500 px-4 min-w-max md:justify-center">
-					{ARTICLE_ROUTES.map((category) => (
+				<div className="flex border-b-2 border-gray-500 min-w-max md:justify-center">
+					{ARTICLE_ROUTES.map((category, index) => (
 						<Link
 							key={category}
 							to={{
 								pathname: `/${category}`,
 							}}
-							className={`cursor-pointer py-2 text-lg font-medium whitespace-nowrap ${
+							className={`cursor-pointer py-2 text-base md:text-lg font-medium whitespace-nowrap ${
 								currentCategory === category
 									? "border-b-2 border-blue-600 text-blue-600"
 									: "text-gray-600 hover:text-black"
-							}`}
+							} ${index !== 0 ? "ml-6" : ""}`}
 						>
 							{category.toUpperCase()}
 						</Link>
