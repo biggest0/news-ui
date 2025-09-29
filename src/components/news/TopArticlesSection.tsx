@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import type { RootState, AppDispatch } from "@/store/store";
 import { loadTopTenArticles } from "@/store/articlesSlice";
 import { SectionHeader } from "@/components/common/SectionHeader";
-import { ArticleTitleCard } from "@/components/common/ArticleTitleCard";
+import { ArticleTitleCard } from "@/components/news/ArticleTitleCard";
 
 export default function TopArticlesSection() {
 	const dispatch = useDispatch<AppDispatch>();
