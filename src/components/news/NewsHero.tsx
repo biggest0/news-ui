@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 
 import { SectionHeader } from "@/components/common/SectionHeader";
-import Image from "@/assets/ChatGPT Image Sep 25, 2025, 09_32_03 PM.png";
+import Image from "@/assets/news_hero_image.png";
 import type { RootState } from "@/store/store";
 import NewsHeroCard from "./NewsHeroCard";
 
@@ -35,7 +35,7 @@ export default function NewsHero() {
 						alt="Featured News"
 						className="w-full h-full object-cover"
 					/>
-					<div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-4 text-white text-xl font-bold">
+					<div className="absolute bottom-0 left-0 right-0 bg-black/70 p-4 text-white text-xl">
 						"Reading satire news is like getting your veggies in cake
 						form—tasty, fun, and surprisingly informative." — Albert Mewstein
 					</div>
