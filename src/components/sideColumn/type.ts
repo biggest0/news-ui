@@ -8,4 +8,5 @@ export interface EditorCardProps {
 export interface CatFactsProps {
 	title: string;
 	fact: string;
+	small: boolean;
 }
