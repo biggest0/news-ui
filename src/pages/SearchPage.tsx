@@ -113,7 +113,6 @@ export default function SearchPage() {
 			) {
 				setFetching(true);
 				setPage((prev) => prev + 1);
-				console.log(page);
 				dispatch(
 					loadArticlesInfoBySearch({
 						page: page + 1,
@@ -136,9 +135,12 @@ export default function SearchPage() {
 				</div>
 			)}
 
-			{filteredArticles.map((article) => (
-				<NewsCard key={`search-${article.id}`} articleInfo={article} />
-			))}
+			{/* Section for searched articles */}
+			<section>
+				{filteredArticles.map((article) => (
+					<NewsCard key={`search-${article.id}`} articleInfo={article} />
+				))}
+			</section>
 		</div>
 	);
 }
