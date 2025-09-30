@@ -27,7 +27,9 @@ export const MobileSearchBar = ({
 				onSubmit={onSubmit}
 				className="flex items-center border rounded-md px-3 py-2"
 			>
-				<LuSearch className="w-4 h-4 text-gray-400 mr-2" />
+				<button type="submit">
+					<LuSearch className="w-4 h-4 text-gray-400 mr-2 cursor-pointer" />
+				</button>
 				<input
 					type="text"
 					value={query}
