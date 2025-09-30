@@ -6,6 +6,10 @@ import type { RootState, AppDispatch } from "@/store/store";
 import { loadArticlesInfoByCategory } from "@/store/articlesSlice";
 import NewsCard from "./NewsCard";
 import NewsSideColumn from "./NewsSideColumn";
+import { EditorCardVertical } from "@/components/sideColumn/EditorCardVertical";
+import { CATIRE_EDITORS, CAT_FACTS } from "@/components/sideColumn/constants";
+import { SectionHeader } from "@/components/common/SectionHeader";
+import { CatFactsCard } from "@/components/sideColumn/CatFactsCard";
 
 export default function NewsSection() {
 	const location = useLocation();
@@ -73,9 +77,45 @@ export default function NewsSection() {
 	}, [fetching, showMore]);
 
 	return (
-		<div className="grid grid-cols-3 gap-4 py-6">
-			{/* articles, main col */}
-			<div className="col-span-2">
+		<div className="flex flex-col md:grid md:grid-cols-3 gap-4 py-6">
+			{selectedCategory === "" && (
+				<>
+					{/* Horizontal col for mobile screen for home page */}
+					<section className="md:hidden pb-6 border-b border-gray-400">
+						<SectionHeader title="OUR EDITORS" />
+						<div className="flex flex-row overflow-x-auto hide-scrollbar space-x-4">
+							{/* List of editors*/}
+							{CATIRE_EDITORS.map((editor, index) => (
+								<EditorCardVertical
+									key={`editor-${index}`}
+									name={editor.name}
+									role={editor.role}
+									description={editor.description}
+									imageUrl={editor.imageUrl}
+								/>
+							))}
+						</div>
+					</section>
+
+					{/* Horizontal col for cat facts for home page */}
+					<section className="md:hidden pb-6 border-b border-gray-400">
+						<SectionHeader title="CAT FACTS" />
+						<div className="flex gap-4 overflow-x-auto">
+							{CAT_FACTS.map((catFact, index) => (
+								<CatFactsCard
+									key={index}
+									title={catFact.title}
+									fact={catFact.fact}
+									small={true}
+								/>
+							))}
+						</div>
+					</section>
+				</>
+			)}
+
+			{/* Articles, main col */}
+			<div className="md:col-span-2">
 				<h3 className="text-gray-500 pb-4">MEWS</h3>
 				{filteredArticles.length > 0 && (
 					<div>
@@ -88,8 +128,9 @@ export default function NewsSection() {
 					</div>
 				)}
 			</div>
-			{/* side col */}
-			<div className="flex flex-col space-y-8 pl-4 border-l border-gray-400">
+
+			{/* Side col for md screen and larger */}
+			<div className="hidden md:flex flex-col space-y-8 pl-4 border-l border-gray-400">
 				<NewsSideColumn />
 			</div>
 		</div>

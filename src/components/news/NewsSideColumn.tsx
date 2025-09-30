@@ -1,8 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 
-import CatImage1 from "@/assets/ChatGPT Image Apr 13, 2025, 11_38_22 AM.png";
 import type { RootState, AppDispatch } from "@/store/store";
+import { EditorCardHorizontal } from "@/components/sideColumn/EditorCardHorizontal";
+import { CATIRE_EDITORS, CAT_FACTS } from "@/components/sideColumn/constants";
+import { CatFactsCard } from "@/components/sideColumn/CatFactsCard";
+import { SectionHeader } from "@/components/common/SectionHeader";
 
 export default function NewsSideColumn() {
 	const dispatch = useDispatch<AppDispatch>();
@@ -13,68 +16,20 @@ export default function NewsSideColumn() {
 	return (
 		<>
 			{/* our editors */}
-			<div className="space-y-4">
-				<h3 className="text-gray-500">OUR EDITORS</h3>
-
-				<div className="flex flex-row justify-between border-b border-gray-400 py-4">
-					<div className="flex flex-row space-x-8 items-start justify-between w-full">
-						<div className="flex flex-col justify-between min-h-24 max-h-full max-w-sm">
-							<div className="flex flex-col">
-								<div>Albert Meowstein</div>
-								<div>Chief Editor</div>
-							</div>
-							<div className="text-sm text-gray-500 whitespace-normal break-words">
-								A cheeky cat that does nothing but read
-							</div>
-						</div>
-						<img
-							src={CatImage1}
-							alt=""
-							className="w-28 h-28 object-cover rounded-xl flex-shrink-0"
+			<section className="space-y-4">
+				<SectionHeader title="OUR EDITORS" />
+				<div className="">
+					{CATIRE_EDITORS.map((editor, index) => (
+						<EditorCardHorizontal
+							key={`editor-${index}`}
+							name={editor.name}
+							role={editor.role}
+							description={editor.description}
+							imageUrl={editor.imageUrl}
 						/>
-					</div>
+					))}
 				</div>
-
-				<div className="flex flex-row justify-between border-b border-gray-400 py-4">
-					<div className="flex flex-row space-x-8 items-start justify-between w-full">
-						{/* right col */}
-						<div className="flex flex-col justify-between min-h-24 max-h-full max-w-sm">
-							<div className="flex flex-col">
-								<div>Albert Meowstein</div>
-								<div>Chief Editor</div>
-							</div>
-							<div className="text-sm text-gray-500 whitespace-normal break-words">
-								A bit too positive for her own good
-							</div>
-						</div>
-						{/* left col */}
-						<img
-							src={CatImage1}
-							alt=""
-							className="w-28 h-28 object-cover rounded-xl flex-shrink-0"
-						/>
-					</div>
-				</div>
-
-				<div className="flex flex-row justify-between border-b border-gray-400 py-4">
-					<div className="flex flex-row space-x-8 items-start justify-between w-full">
-						<div className="flex flex-col justify-between min-h-24 max-h-full max-w-sm">
-							<div className="flex flex-col">
-								<div>Albert Meowstein</div>
-								<div>Chief Editor</div>
-							</div>
-							<div className="text-sm text-gray-500 whitespace-normal break-words">
-								Hates his job but loves to rant
-							</div>
-						</div>
-						<img
-							src={CatImage1}
-							alt=""
-							className="w-28 h-28 object-cover rounded-xl flex-shrink-0"
-						/>
-					</div>
-				</div>
-			</div>
+			</section>
 
 			{/* staff favorites, for future */}
 			<div className="space-y-4">
@@ -92,47 +47,15 @@ export default function NewsSideColumn() {
 
 			{/* cat facts */}
 			<div className="space-y-4">
-				<h3 className="text-gray-500">RANDOM CAT FATS</h3>
-
-				<div className="flex flex-col justify-between border-b border-gray-400 py-4">
-					<h4>Cats can't taste sugar</h4>
-					<div>
-						Which explains why your cheesecake goes untouched — not because your
-						cat has self-control, but because evolution spared them from
-						diabetes.
-					</div>
-				</div>
-
-				<div className="flex flex-col justify-between border-b border-gray-400 py-4">
-					<h4>Cats only meow at humans</h4>
-					<div>
-						It’s not a sign of affection. It’s their way of saying, “Dance,
-						servant, dance.”
-					</div>
-				</div>
-
-				<div className="flex flex-col justify-between border-b border-gray-400 py-4">
-					<h4>Cats purr to heal bones</h4>
-					<div>
-						Yes, their purrs can speed up healing. Basically, your cat is a
-						furry chiropractor with zero medical license.
-					</div>
-				</div>
-
-				<div className="flex flex-col justify-between border-b border-gray-400 py-4">
-					<h4>Cats can fit through holes as small as their head</h4>
-					<div>
-						This isn’t a magic trick. It’s just physics mixed with chaos.
-					</div>
-				</div>
-
-				<div className="flex flex-col justify-between border-b border-gray-400 py-4">
-					<h4>Cats can run 30 mph</h4>
-					<div>
-						Impressive — until you realize they only use this Olympic-level
-						speed to launch themselves across your bed at 3 a.m.
-					</div>
-				</div>
+				<SectionHeader title="RANDOM CAT FATS" />
+				{CAT_FACTS.map((catFact, index) => (
+					<CatFactsCard
+						key={index}
+						title={catFact.title}
+						fact={catFact.fact}
+						small={false}
+					/>
+				))}
 			</div>
 
 			{/* cat merch */}
