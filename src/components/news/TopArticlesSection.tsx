@@ -8,7 +8,7 @@ import { ArticleTitleCard } from "@/components/news/ArticleTitleCard";
 
 export default function TopArticlesSection() {
 	const dispatch = useDispatch<AppDispatch>();
-	const { topTenArticles, loading, error } = useSelector(
+	const { topTenArticles } = useSelector(
 		(state: RootState) => state.article
 	);
 

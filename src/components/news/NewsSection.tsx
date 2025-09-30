@@ -15,7 +15,7 @@ export default function NewsSection() {
 	const location = useLocation();
 	const selectedCategory = location.pathname.split("/")[1];
 	const dispatch = useDispatch<AppDispatch>();
-	const { articles, loading, error } = useSelector(
+	const { articles } = useSelector(
 		(state: RootState) => state.article
 	);
 	const prevArticlesLength = useRef(0);

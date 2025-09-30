@@ -7,7 +7,7 @@ import { CatFactsCard } from "@/components/sideColumn/CatFactsCard";
 import { SectionHeader } from "@/components/common/SectionHeader";
 
 export default function NewsSideColumn() {
-	const { topTenArticles, loading, error } = useSelector(
+	const { topTenArticles } = useSelector(
 		(state: RootState) => state.article
 	);
 

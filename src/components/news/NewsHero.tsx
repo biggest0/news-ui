@@ -6,7 +6,7 @@ import type { RootState } from "@/store/store";
 import NewsHeroCard from "./NewsHeroCard";
 
 export default function NewsHero() {
-	const { topTenArticles, loading, error } = useSelector(
+	const { topTenArticles } = useSelector(
 		(state: RootState) => state.article
 	);
 

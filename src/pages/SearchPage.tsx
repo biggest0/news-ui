@@ -12,7 +12,7 @@ import { sortByWordCount } from "@/service/articleService";
 
 export default function SearchPage() {
 	const location = useLocation();
-	const { articles, loading, error } = useSelector(
+	const { articles } = useSelector(
 		(state: RootState) => state.article
 	);
 	const prevArticlesLength = useRef(0);

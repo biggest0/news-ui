@@ -1,7 +1,6 @@
 import {
 	createSlice,
 	createAsyncThunk,
-	current,
 	isAnyOf,
 } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
@@ -14,12 +13,6 @@ import {
 	getArticlesInfo,
 	getTopTenArticles,
 } from "@/service/articleService";
-
-interface ArticleRequest {
-	articles: ArticleInfo[];
-	loading: boolean;
-	error: string | undefined;
-}
 
 interface ArticlesState {
 	topTenArticles: ArticleInfo[];
