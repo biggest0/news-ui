@@ -1,9 +1,10 @@
 import { CgInstagram } from "react-icons/cg";
-import { RiFacebookFill, RiTwitterXFill } from "react-icons/ri";
+import { RiTwitterXFill } from "react-icons/ri";
+import { TfiYoutube } from "react-icons/tfi";
 
 export default function Footer() {
   return (
-    <footer className="bg-white border-t border-gray-200 mt-16">
+    <footer className="bg-white border-t border-gray-200 mt-6">
       {/* Top Section */}
       <div className="px-8 py-12 grid grid-cols-1 justify-items-center md:justify-items-start md:grid-cols-2 gap-8 w-full max-w-[1280px] mx-auto">
         {/* Left side - Logo, caption, social */}
@@ -11,9 +12,9 @@ export default function Footer() {
           <div className="text-2xl font-bold text-gray-800">📰 The Catire Times</div>
           <div className="text-sm text-gray-600">Your daily dose of humour... I mean mews</div>
           <div className="flex gap-4 mt-2">
-            <RiFacebookFill className="w-5 h-5 text-gray-500 hover:text-black cursor-pointer" />
-            <RiTwitterXFill className="w-5 h-5 text-gray-500 hover:text-black cursor-pointer" />
             <CgInstagram className="w-5 h-5 text-gray-500 hover:text-black cursor-pointer" />
+            <RiTwitterXFill className="w-5 h-5 text-gray-500 hover:text-black cursor-pointer" />
+            <TfiYoutube className="w-5 h-5 text-gray-500 hover:text-black cursor-pointer" />
           </div>
         </div>
 
