@@ -1,7 +1,52 @@
+@import url("https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..7000&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 @import "tailwindcss";
 
-@theme {
-  
+/* @font-face {
+	font-family: "CormorantGaramond";
+	src: url("/public/fonts/CormorantGaramond-VariableFont_wght.ttf")
+		format("woff2");
+	font-weight: 100 700;
+	font-style: normal;
+  font-display: swap;
+} */
+
+body {
+	font-family: "Tinos", serif;
+	color: rgb(97, 97, 97);
+	line-height: 1.5;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: "Cardo", serif;
+	font-weight: 700;
+	line-height: 1.4;
+}
+
+.hide-scrollbar {
+	scrollbar-width: thin; /* Firefox */
+	scrollbar-color: #b7b7b7 transparent; /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+	height: 2px; /* horizontal scrollbar height */
+}
+
+.hide-scrollbar::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.hide-scrollbar::-webkit-scrollbar-thumb {
+	background-color: #a1a1a1;
+	border-radius: 2px;
+}
+
+.hide-scrollbar::-webkit-scrollbar-thumb:hover {
+	background-color: #a8a8a8;
 }
 
 /* global css by targetting index.html

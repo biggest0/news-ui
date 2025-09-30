@@ -3,14 +3,15 @@ import type {
 	ArticleDetailResponse,
 	ArticleInfo,
 	ArticleInfoResponse,
-} from "../types/articleTypes";
+} from "@/types/articleTypes";
 
 export function articleInfoTransform(
 	articleInfoResponse: ArticleInfoResponse
 ): ArticleInfo {
 	return {
-		id: articleInfoResponse.id,
+		id: articleInfoResponse._id,
 		title: articleInfoResponse.title,
+		summary: articleInfoResponse.summary,
 		datePublished: new Date(
 			articleInfoResponse.date_published
 		).toLocaleDateString(),
@@ -23,8 +24,14 @@ export function articleDetailTransform(
 	articleDetailResponse: ArticleDetailResponse
 ): ArticleDetail {
 	return {
-		id: articleDetailResponse.id,
+		id: articleDetailResponse._id,
+		datePublished: new Date(
+			articleDetailResponse.date_published
+		).toLocaleDateString(),
+		title: articleDetailResponse.title,
+		summary: articleDetailResponse.summary,
 		paragraphs: articleDetailResponse.paragraphs,
+		mainCategory: articleDetailResponse.main_category,
 		subCategory: articleDetailResponse.sub_category,
 		source: articleDetailResponse.source,
 		url: articleDetailResponse.url,
