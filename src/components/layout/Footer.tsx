@@ -9,7 +9,7 @@ export default function Footer() {
       <div className="px-8 py-12 grid grid-cols-1 justify-items-center md:justify-items-start md:grid-cols-2 gap-8 w-full max-w-[1280px] mx-auto">
         {/* Left side - Logo, caption, social */}
         <div className="flex flex-col items-center md:items-start space-y-4">
-          <div className="text-2xl font-bold text-gray-800">📰 The Catire Times</div>
+          <div className="text-2xl font-bold text-gray-800">The Catire Times</div>
           <div className="text-sm text-gray-600">Your daily dose of humour... I mean mews</div>
           <div className="flex gap-4 mt-2">
             <CgInstagram className="w-5 h-5 text-gray-500 hover:text-black cursor-pointer" />
@@ -25,12 +25,13 @@ export default function Footer() {
           <form className="flex gap-2">
             <input
               type="email"
-              placeholder="Your email"
+              placeholder="Does nothing currently"
               className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <button
               type="submit"
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+              disabled
+              className="bg-amber-500 text-white px-4 py-2 rounded-lg hover:bg-amber-600 transition disabled:bg-gray-400"
             >
               Subscribe
             </button>
