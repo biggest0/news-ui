@@ -30,6 +30,28 @@ h6 {
 	line-height: 1.4;
 }
 
+.hide-scrollbar {
+	scrollbar-width: thin; /* Firefox */
+	scrollbar-color: #b7b7b7 transparent; /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+	height: 2px; /* horizontal scrollbar height */
+}
+
+.hide-scrollbar::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.hide-scrollbar::-webkit-scrollbar-thumb {
+	background-color: #a1a1a1;
+	border-radius: 2px;
+}
+
+.hide-scrollbar::-webkit-scrollbar-thumb:hover {
+	background-color: #a8a8a8;
+}
+
 /* global css by targetting index.html
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;

@@ -95,7 +95,7 @@ export default function NewsSection() {
 					{/* Horizontal col for cat facts for home page */}
 					<section className="md:hidden pb-6 border-b border-gray-400">
 						<SectionHeader title="CAT FACTS" />
-						<div className="flex gap-4 overflow-x-auto pt-4">
+						<div className="flex w-full gap-4 overflow-x-auto pt-4 hide-scrollbar">
 							{CAT_FACTS.map((catFact, index) => (
 								<CatFactsCard
 									key={index}
@@ -111,7 +111,7 @@ export default function NewsSection() {
 
 			{/* Articles, main col */}
 			<section className="md:col-span-2">
-				<SectionHeader title='MEWS' />
+				<SectionHeader title="MEWS" />
 				{filteredArticles.length > 0 && (
 					<div>
 						{filteredArticles.map((article) => (

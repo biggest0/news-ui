@@ -76,7 +76,7 @@ export default function NewsHero() {
 				{/* Combined articles column - horizontal scroll */}
 				<div>
 					<SectionHeader title="STAFF PICKS" />
-					<div className="overflow-x-auto overflow-y-hidden pt-4">
+					<div className="w-full overflow-x-auto overflow-y-hidden pt-4 hide-scrollbar">
 						<div className="flex gap-x-4">
 							{topTenArticles &&
 								topTenArticles.slice(0, 6).map((article) => (
