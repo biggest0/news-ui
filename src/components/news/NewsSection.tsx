@@ -57,7 +57,6 @@ export default function NewsSection() {
 			) {
 				setFetching(true);
 				setPage((prev) => prev + 1);
-				console.log(page);
 				dispatch(
 					loadArticlesInfoByCategory({
 						page: page + 1,
