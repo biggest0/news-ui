@@ -10,11 +10,13 @@ import SearchPage from "./pages/SearchPage";
 import { ARTICLE_ROUTES } from "@/constants/routes";
 import CategoryBar from "@/components/layout/CategoryBar";
 import ArticlePage from "./pages/ArticlePage";
+import ScrollToTop from "@/components/layout/ScrollToTop";
 
 function App() {
 	return (
 		<BrowserRouter>
-			<main className="w-full max-w-[1280px] min-h-screen mx-auto">
+			<main className="w-full max-w-[1280px] min-h-screen mx-auto px-4">
+				<ScrollToTop />
 				<NoticeBar />
 				<NavBar />
 				<CategoryBar />
