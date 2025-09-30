@@ -1,14 +1,12 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 
-import type { RootState, AppDispatch } from "@/store/store";
+import type { RootState } from "@/store/store";
 import { EditorCardHorizontal } from "@/components/sideColumn/EditorCardHorizontal";
 import { CATIRE_EDITORS, CAT_FACTS } from "@/components/sideColumn/constants";
 import { CatFactsCard } from "@/components/sideColumn/CatFactsCard";
 import { SectionHeader } from "@/components/common/SectionHeader";
 
 export default function NewsSideColumn() {
-	const dispatch = useDispatch<AppDispatch>();
 	const { topTenArticles, loading, error } = useSelector(
 		(state: RootState) => state.article
 	);

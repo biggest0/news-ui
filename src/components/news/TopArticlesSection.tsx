@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 
 import type { RootState, AppDispatch } from "@/store/store";
 import { loadTopTenArticles } from "@/store/articlesSlice";

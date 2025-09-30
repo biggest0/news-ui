@@ -24,9 +24,9 @@ export default function NewsHeroCard({ articleInfo, small }: NewsCardProp) {
 				</Link>
 			</h3>
 			{!small && articleInfo.summary && (
-				<span className="text-sm lg:text-base">{articleInfo.summary}</span>
+				<div className="text-sm lg:text-base">{articleInfo.summary}</div>
 			)}
-			{small && <span className="text-sm">{articleInfo.datePublished}</span>}
+			{small && <div className="text-sm">{articleInfo.datePublished}</div>}
 		</div>
 	);
 }

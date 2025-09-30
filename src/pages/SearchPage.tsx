@@ -71,7 +71,6 @@ export default function SearchPage() {
 			if (sortBy) {
 				switch (sortBy) {
 					case "relevant":
-						console.log("relevant");
 						searchedArticles = sortByWordCount(searchedArticles, query);
 						break;
 

@@ -11,9 +11,6 @@ export default function ArticlePage() {
 	const articleDetail = useSelector((state: RootState) =>
 		id ? state.article.articlesDetail[id] : undefined
 	);
-	const articleInfo = useSelector((state: RootState) =>
-		id ? state.article.articles.find((article) => article.id === id) : undefined
-	);
 
 	useEffect(() => {
 		if (id) {
@@ -25,7 +22,7 @@ export default function ArticlePage() {
 		<div className="py-6">
 			{articleDetail && (
 				<div className="flex flex-col space-y-4">
-					{/* title and date */}
+					{/* Title and date */}
 					<div>
 						<h3 className="text-lg font-semibold text-gray-800">
 							{articleDetail.title}
@@ -33,7 +30,7 @@ export default function ArticlePage() {
 						<div className="text-sm">{articleDetail.datePublished}</div>
 					</div>
 
-					{/* paragraphs */}
+					{/* Paragraphs */}
 					<div className="space-y-2">
 						{articleDetail.paragraphs?.map((paragraph, index) => (
 							<div key={`${articleDetail.id}-paragraph-${index}}`}>
@@ -42,7 +39,7 @@ export default function ArticlePage() {
 						))}
 					</div>
 
-					{/* sub category */}
+					{/* Sub category */}
 					<div className="flex flex-wrap space-x-4 underline text-sm">
 						{articleDetail.subCategory?.map((source, index) => (
 							<span key={`${articleDetail.id}-category-${index}}`}>
