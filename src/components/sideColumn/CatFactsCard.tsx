@@ -1,6 +1,6 @@
 import type { CatFactsProps } from "./type";
 
-export const CatFacts = ({ title, fact }: CatFactsProps) => {
+export const CatFactsCard = ({ title, fact }: CatFactsProps) => {
 	return (
 		<div className="min-h-24 flex-shrink-0 w-64">
 			<div className="text-base font-semibold text-gray-800">{title}</div>
