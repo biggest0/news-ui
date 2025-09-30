@@ -13,9 +13,9 @@ export const EditorCardHorizontal = ({
 }: EditorCardProps) => {
 	return (
 		<div className="border-b border-gray-400 py-4">
-			<div className="flex flex-row space-x-8 items-center justify-between w-full">
+			<div className="flex flex-row space-x-8 items-stretch justify-between w-full">
 				{/* Text */}
-				<div className="flex flex-col justify-between min-h-24 max-h-full max-w-sm">
+				<div className="flex flex-col justify-between max-w-sm">
 					<div className="flex flex-col">
 						<div>{name}</div>
 						<div>{role}</div>

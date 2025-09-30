@@ -19,19 +19,13 @@ export default function NewsSection() {
 		(state: RootState) => state.article
 	);
 	const prevArticlesLength = useRef(0);
-	// const [selectedCategory, setSelectedCategory] = useState("all");
 	const [filteredArticles, setFilteredArticles] = useState(articles);
 
 	const [page, setPage] = useState(1);
 	const [showMore, setShowMore] = useState(true);
 	const [fetching, setFetching] = useState(false);
 
-	// // load 10 articles when page initializes
-	// useEffect(() => {
-	// 	dispatch(loadArticlesInfoByCategory({page: page, category: selectedCategory}));
-	// }, []);
-
-	// logic to display articles of correct category
+	// Logic to display articles of correct category
 	useEffect(() => {
 		if (selectedCategory === "") {
 			setFilteredArticles(articles);
@@ -42,6 +36,7 @@ export default function NewsSection() {
 		}
 	}, [selectedCategory, articles]);
 
+	// Check if more articles to load
 	useEffect(() => {
 		if (articles.length === prevArticlesLength.current) {
 			setShowMore(false);
@@ -52,7 +47,7 @@ export default function NewsSection() {
 		}
 	}, [articles]);
 
-	// lazy loading more articles
+	// Lazy loading more articles
 	useEffect(() => {
 		const handleScroll = () => {
 			if (
@@ -77,7 +72,7 @@ export default function NewsSection() {
 	}, [fetching, showMore]);
 
 	return (
-		<div className="flex flex-col md:grid md:grid-cols-3 gap-4 py-6">
+		<div className="flex flex-col md:grid md:grid-cols-3 gap-x-4 gap-y-6 pt-6">
 			{selectedCategory === "" && (
 				<>
 					{/* Horizontal col for mobile screen for home page */}
@@ -100,7 +95,7 @@ export default function NewsSection() {
 					{/* Horizontal col for cat facts for home page */}
 					<section className="md:hidden pb-6 border-b border-gray-400">
 						<SectionHeader title="CAT FACTS" />
-						<div className="flex gap-4 overflow-x-auto">
+						<div className="flex gap-4 overflow-x-auto pt-4">
 							{CAT_FACTS.map((catFact, index) => (
 								<CatFactsCard
 									key={index}
@@ -115,8 +110,8 @@ export default function NewsSection() {
 			)}
 
 			{/* Articles, main col */}
-			<div className="md:col-span-2">
-				<h3 className="text-gray-500 pb-4">MEWS</h3>
+			<section className="md:col-span-2">
+				<SectionHeader title='MEWS' />
 				{filteredArticles.length > 0 && (
 					<div>
 						{filteredArticles.map((article) => (
@@ -127,10 +122,10 @@ export default function NewsSection() {
 						))}
 					</div>
 				)}
-			</div>
+			</section>
 
 			{/* Side col for md screen and larger */}
-			<div className="hidden md:flex flex-col space-y-8 pl-4 border-l border-gray-400">
+			<div className="hidden md:flex flex-col space-y-6 pl-4 border-l border-gray-400">
 				<NewsSideColumn />
 			</div>
 		</div>

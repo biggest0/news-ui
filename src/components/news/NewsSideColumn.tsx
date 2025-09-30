@@ -16,7 +16,7 @@ export default function NewsSideColumn() {
 	return (
 		<>
 			{/* our editors */}
-			<section className="space-y-4">
+			<section className="">
 				<SectionHeader title="OUR EDITORS" />
 				<div className="">
 					{CATIRE_EDITORS.map((editor, index) => (
@@ -32,21 +32,18 @@ export default function NewsSideColumn() {
 			</section>
 
 			{/* staff favorites, for future */}
-			<div className="space-y-4">
-				<h3 className="text-gray-500">STAFF FAVORITES</h3>
+			<div className="border-b border-gray-400 pb-6 space-y-4">
+				<SectionHeader title="STAFF FAVORITES" />
 
 				{topTenArticles.slice(0, 5).map((article) => (
-					<div
-						className="border-b border-gray-400 py-4"
-						key={`side-${article.id}`}
-					>
+					<div className="py-2" key={`side-${article.id}`}>
 						{article.title}
 					</div>
 				))}
 			</div>
 
 			{/* cat facts */}
-			<div className="space-y-4">
+			<div className="">
 				<SectionHeader title="RANDOM CAT FATS" />
 				{CAT_FACTS.map((catFact, index) => (
 					<CatFactsCard
@@ -59,12 +56,12 @@ export default function NewsSideColumn() {
 			</div>
 
 			{/* cat merch */}
-			<div className="space-y-4">
-				<h3 className="text-gray-500">CAT MERCH</h3>
+			{/* <div className="">
+				<SectionHeader title="CAT MERCH" />
 				<div className="border-b border-gray-400 py-4">
 					<div>Coming one day ...</div>
 				</div>
-			</div>
+			</div> */}
 		</>
 	);
 }

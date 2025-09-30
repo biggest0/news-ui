@@ -30,7 +30,7 @@ export default function CategoryBar() {
 	return (
 		<div>
 			{/* article category menu slider */}
-			<div className="w-full overflow-x-auto hide-scrollbar pt-4">
+			<div className="w-full overflow-x-auto hide-scrollbar">
 				<div className="flex border-b-2 border-gray-500 min-w-max md:justify-center">
 					{ARTICLE_ROUTES.map((category, index) => (
 						<Link
@@ -38,7 +38,7 @@ export default function CategoryBar() {
 							to={{
 								pathname: `/${category}`,
 							}}
-							className={`cursor-pointer py-2 text-base md:text-lg font-medium whitespace-nowrap ${
+							className={`cursor-pointer pb-2 lg:pt-1 text-base md:text-lg font-medium whitespace-nowrap ${
 								currentCategory === category
 									? "border-b-2 border-blue-600 text-blue-600"
 									: "text-gray-600 hover:text-black"

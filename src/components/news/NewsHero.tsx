@@ -57,7 +57,7 @@ export default function NewsHero() {
 			</div>
 
 			{/* Mobile Layout */}
-			<div className="flex flex-col gap-8 md:hidden">
+			<div className="flex flex-col gap-y-6 md:hidden">
 				{/* Image first on mobile */}
 				<div className="border-b border-gray-400 pb-6">
 					<div className="relative w-full h-64 overflow-hidden">
@@ -75,13 +75,13 @@ export default function NewsHero() {
 
 				{/* Combined articles column - horizontal scroll */}
 				<div>
-					<SectionHeader title="EDITOR'S CHOICES" />
-					<div className="overflow-x-auto overflow-y-hidden">
-						<div className="flex gap-4">
+					<SectionHeader title="STAFF PICKS" />
+					<div className="overflow-x-auto overflow-y-hidden pt-4">
+						<div className="flex gap-x-4">
 							{topTenArticles &&
 								topTenArticles.slice(0, 6).map((article) => (
 									<div
-										key={`mobile-scroll-${article.id}`}
+										key={`mobile-staff-picks-${article.id}`}
 										className="flex-shrink-0 w-64"
 									>
 										<NewsHeroCard articleInfo={article} small={true} />
