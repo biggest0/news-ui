@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { LuUserRound } from "react-icons/lu";
 
 import { MobileNavLink } from "@/components/navBar/MobileNavLink";
@@ -14,10 +15,12 @@ export const UserProfile = ({
 	if (variant === "icon") {
 		// Icon display
 		return (
-			<LuUserRound
-				className="w-5 h-5 hover:text-black cursor-pointer transition-colors"
-				onClick={onLinkClick}
-			/>
+			<Link to="/profile">
+				<LuUserRound
+					className="w-5 h-5 hover:text-black cursor-pointer transition-colors"
+					onClick={onLinkClick}
+				/>
+			</Link>
 		);
 	}
 
