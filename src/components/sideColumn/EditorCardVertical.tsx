@@ -1,3 +1,4 @@
+import { BASE_URL } from "@/config/config";
 import type { EditorCardProps } from "./type";
 
 export const EditorCardVertical = ({
@@ -10,7 +11,7 @@ export const EditorCardVertical = ({
 		<div className="flex flex-col items-center text-center space-y-4 w-1/3 border-b border-gray-200 bg-gradient-to-b py-4">
 			{/* Image */}
 			<img
-				src={`/images/${imageUrl}`}
+				src={`${BASE_URL}images/${imageUrl}`}
 				alt={name}
 				className="w-28 h-28 object-cover rounded-xl"
 			/>
