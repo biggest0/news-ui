@@ -1,3 +1,5 @@
+import { BASE_URL } from "@/config/config";
+
 interface EditorCardProps {
 	name: string;
 	role: string;
@@ -27,7 +29,7 @@ export const EditorCardHorizontal = ({
 
 				{/* Image */}
 				<img
-					src={`/images/${imageUrl}`}
+					src={`${BASE_URL}images/${imageUrl}`}
 					alt=""
 					className="w-28 h-28 object-cover rounded-xl flex-shrink-0"
 				/>
