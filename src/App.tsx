@@ -14,7 +14,7 @@ import ScrollToTop from "@/components/layout/ScrollToTop";
 
 function App() {
 	return (
-		<BrowserRouter>
+		<BrowserRouter basename="/">
 			<main className="w-full max-w-[1280px] min-h-screen mx-auto px-4">
 				<ScrollToTop />
 				<NoticeBar />
