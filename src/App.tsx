@@ -6,6 +6,7 @@ import ArticlePages from "@/pages/ArticlesPage";
 import SearchPage from "./pages/SearchPage";
 import About from "./pages/About";
 import Contact from "./pages/Conatct";
+import AccountPage from "./pages/AccountPage";
 
 import NoticeBar from "@/components/common/NoticeBar";
 import NavBar from "@/components/navBar/NavBar";
@@ -38,6 +39,7 @@ function App() {
 					<Route path="/search" element={<SearchPage />} />
 					<Route path="/about" element={<About />} />
 					<Route path="/contact" element={<Contact />} />
+					<Route path="/account" element={<AccountPage />} />
 					<Route path="*" element={<div>Page not Found</div>} />
 				</Routes>
 			</main>
