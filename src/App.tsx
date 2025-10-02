@@ -1,16 +1,19 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import "./App.css";
-import NavBar from "@/components/navBar/NavBar";
-import Footer from "@/components/layout/Footer";
-import NoticeBar from "@/components/common/NoticeBar";
 import HomePage from "@/pages/HomePage";
 import ArticlePages from "@/pages/ArticlesPage";
 import SearchPage from "./pages/SearchPage";
-import { ARTICLE_ROUTES } from "@/constants/routes";
+import About from "./pages/About";
+import Contact from "./pages/Conatct";
+
+import NoticeBar from "@/components/common/NoticeBar";
+import NavBar from "@/components/navBar/NavBar";
+import Footer from "@/components/layout/Footer";
 import CategoryBar from "@/components/layout/CategoryBar";
 import ArticlePage from "./pages/ArticlePage";
 import ScrollToTop from "@/components/layout/ScrollToTop";
+import { ARTICLE_ROUTES } from "@/constants/routes";
 
 function App() {
 	return (
@@ -33,6 +36,8 @@ function App() {
 					{/* article pages */}
 					<Route path="/article/:id" element={<ArticlePage />} />
 					<Route path="/search" element={<SearchPage />} />
+					<Route path="/about" element={<About />} />
+					<Route path="/contact" element={<Contact />} />
 					<Route path="*" element={<div>Page not Found</div>} />
 				</Routes>
 			</main>
