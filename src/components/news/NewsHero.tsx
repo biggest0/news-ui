@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 
 import { SectionHeader } from "@/components/common/SectionHeader";
-import Image from "@/assets/news_hero_image.png";
+import Image from "@/assets/news_hero_image.jpg";
 import type { RootState } from "@/store/store";
 import NewsHeroCard from "./NewsHeroCard";
 
