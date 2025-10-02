@@ -3,19 +3,19 @@ import { LuUserRound } from "react-icons/lu";
 
 import { MobileNavLink } from "@/components/navBar/MobileNavLink";
 
-interface UserProfileProps {
+interface UserAccountProps {
 	variant?: "icon" | "full";
 	onLinkClick?: () => void;
 }
 
-export const UserProfile = ({
+export const UserAccount = ({
 	variant = "icon",
 	onLinkClick,
-}: UserProfileProps) => {
+}: UserAccountProps) => {
 	if (variant === "icon") {
 		// Icon display
 		return (
-			<Link to="/profile">
+			<Link to="/account">
 				<LuUserRound
 					className="w-5 h-5 hover:text-black cursor-pointer transition-colors"
 					onClick={onLinkClick}
@@ -27,9 +27,9 @@ export const UserProfile = ({
 	// Text display
 	return (
 		<MobileNavLink
-			key="/profile"
-			linkTo="/profile"
-			linkLabel="Profile"
+			key="/account"
+			linkTo="/account"
+			linkLabel="account"
 			onClick={onLinkClick}
 		/>
 	);

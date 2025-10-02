@@ -4,8 +4,8 @@ import "./App.css";
 import HomePage from "@/pages/HomePage";
 import ArticlePages from "@/pages/ArticlesPage";
 import SearchPage from "./pages/SearchPage";
-import About from "./pages/About";
-import Contact from "./pages/Conatct";
+import About from "./pages/AboutPage";
+import Contact from "./pages/ConatctPage";
 import AccountPage from "./pages/AccountPage";
 
 import NoticeBar from "@/components/common/NoticeBar";
