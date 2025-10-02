@@ -29,7 +29,7 @@ export const UserAccount = ({
 		<MobileNavLink
 			key="/account"
 			linkTo="/account"
-			linkLabel="account"
+			linkLabel="Account"
 			onClick={onLinkClick}
 		/>
 	);
