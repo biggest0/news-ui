@@ -53,6 +53,7 @@ export default function Footer() {
         <span>Catire Time © 2025</span>
         <Link className="cursor-pointer hover:text-black" to="/disclaimer">Disclaimer</Link>
         <Link className="cursor-pointer hover:text-black" to="/about">About Us</Link>
+        <Link className="cursor-pointer hover:text-black" to="/contact">Contact</Link>
       </div>
     </footer>
   );
