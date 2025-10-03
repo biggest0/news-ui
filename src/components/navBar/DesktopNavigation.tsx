@@ -1,7 +1,7 @@
 import { Logo } from "@/components/common/Logo";
 import { AppTitle } from "./AppTitle";
 import { SearchBar } from "./SearchBar";
-import { UserProfile } from "@/components/common/UserProfile";
+import { UserAccount } from "@/components/common/UserAccount";
 import type { SearchProps } from "@/types/navBar";
 
 export const DesktopNavigation = (props: SearchProps) => {
@@ -16,7 +16,7 @@ export const DesktopNavigation = (props: SearchProps) => {
 			{/* Right - Search and User */}
 			<div className="flex gap-4 items-center text-gray-600">
 				<SearchBar {...props} />
-				<UserProfile variant="icon" />
+				<UserAccount variant="icon" />
 			</div>
 		</div>
 	);

@@ -6,7 +6,7 @@ export const UnderMaintenance = () => {
 			<img
 				src={Image}
 				alt="Cats at work"
-				className="w-full h-full object-contain mb-6"
+				className="w-full max-w-128 h-full object-contain mb-6"
 			/>
 			<h2 className="text-xl md:text-3xl font-bold text-gray-800">
 				This page is still in purr-duction 🐱🔧

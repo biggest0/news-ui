@@ -2,7 +2,7 @@ import { LuX } from "react-icons/lu";
 import type { MobileMenuProps } from "@/types/navBar";
 import { MobileSearchBar } from "@/components/navBar/MobileSearchBar";
 import { NavigationLinks } from "./NavigationLinks";
-import { UserProfile } from "@/components/common/UserProfile";
+import { UserAccount } from "@/components/common/UserAccount";
 
 export const MobileMenu = ({
 	menuOpen,
@@ -50,7 +50,7 @@ export const MobileMenu = ({
 
 					{/* User profile */}
 					<div className="border-t pt-4 mt-6">
-						<UserProfile variant="full" onLinkClick={onMenuClose} />
+						<UserAccount variant="full" onLinkClick={onMenuClose} />
 					</div>
 				</div>
 			</div>
