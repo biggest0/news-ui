@@ -7,6 +7,7 @@ import SearchPage from "./pages/SearchPage";
 import About from "./pages/AboutPage";
 import Contact from "./pages/ConatctPage";
 import AccountPage from "./pages/AccountPage";
+import DisclaimerPage from "./pages/DisclaimerPage";
 
 import NoticeBar from "@/components/common/NoticeBar";
 import NavBar from "@/components/navBar/NavBar";
@@ -26,7 +27,7 @@ function App() {
 				<CategoryBar />
 				<Routes>
 					<Route path="/" element={<HomePage />} />
-					{/* article category pages */}
+					{/* Article category pages */}
 					{ARTICLE_ROUTES.map((category) => (
 						<Route
 							key={category}
@@ -34,12 +35,14 @@ function App() {
 							element={<ArticlePages />}
 						/>
 					))}
-					{/* article pages */}
+					{/* Article pages */}
 					<Route path="/article/:id" element={<ArticlePage />} />
 					<Route path="/search" element={<SearchPage />} />
 					<Route path="/about" element={<About />} />
 					<Route path="/contact" element={<Contact />} />
 					<Route path="/account" element={<AccountPage />} />
+					<Route path="/disclaimer" element={<DisclaimerPage />} />
+					{/* Other routes */}
 					<Route path="*" element={<div>Page not Found</div>} />
 				</Routes>
 			</main>
