@@ -30,7 +30,7 @@ export const UserAccount = ({
 			key="/account"
 			linkTo="/account"
 			linkLabel="Account"
-			onClick={onLinkClick}
+			onLinkClick={onLinkClick}
 		/>
 	);
 };
