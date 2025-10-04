@@ -40,7 +40,7 @@ export default function CategoryBar() {
 							}}
 							className={`cursor-pointer pb-2 lg:pt-1 text-base md:text-lg font-medium whitespace-nowrap ${
 								currentCategory === category
-									? "border-b-2 border-blue-600 text-blue-600"
+									? "text-amber-600 underline"
 									: "text-gray-600 hover:text-black"
 							} ${index !== 0 ? "ml-6" : ""}`}
 						>
