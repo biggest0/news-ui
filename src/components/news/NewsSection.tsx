@@ -10,20 +10,67 @@ import { EditorCardVertical } from "@/components/sideColumn/EditorCardVertical";
 import { CATIRE_EDITORS, CAT_FACTS } from "@/components/sideColumn/constants";
 import { SectionHeader } from "@/components/common/SectionHeader";
 import { CatFactsCard } from "@/components/sideColumn/CatFactsCard";
+import { isWithinNDays } from "@/service/dateUtils";
 
 export default function NewsSection() {
 	const location = useLocation();
 	const selectedCategory = location.pathname.split("/")[1];
 	const dispatch = useDispatch<AppDispatch>();
-	const { articles } = useSelector(
-		(state: RootState) => state.article
-	);
+	const { articles } = useSelector((state: RootState) => state.article);
 	const prevArticlesLength = useRef(0);
 	const [filteredArticles, setFilteredArticles] = useState(articles);
 
 	const [page, setPage] = useState(1);
 	const [showMore, setShowMore] = useState(true);
 	const [fetching, setFetching] = useState(false);
+	const [dateRange, setDateRange] = useState("");
+	const [sortBy, setSortBy] = useState("");
+
+	// // Manual article filtering
+	// useEffect(() => {
+	// 	let searchedArticles = [...filteredArticles];
+	// 	if (dateRange) {
+	// 		switch (dateRange) {
+	// 			case "24h":
+	// 				searchedArticles = filteredArticles.filter((article) => {
+	// 					if (article.datePublished) {
+	// 						return isWithinNDays(article.datePublished, 1);
+	// 					}
+	// 				});
+	// 				break;
+	// 			case "7d":
+	// 				searchedArticles = filteredArticles.filter((article) => {
+	// 					if (article.datePublished) {
+	// 						return isWithinNDays(article.datePublished, 7);
+	// 					}
+	// 				});
+	// 				break;
+	// 			case "30d":
+	// 				searchedArticles = filteredArticles.filter((article) => {
+	// 					if (article.datePublished) {
+	// 						return isWithinNDays(article.datePublished, 30);
+	// 					}
+	// 				});
+	// 		}
+
+	// 		if (sortBy) {
+	// 			switch (sortBy) {
+	// 				case "newest":
+	// 					searchedArticles = filteredArticles.sort((a, b) => {
+	// 						if (b.datePublished && a.datePublished) {
+	// 							return (
+	// 								new Date(b.datePublished).getTime() -
+	// 								new Date(a.datePublished).getTime()
+	// 							);
+	// 						}
+	// 						return 0;
+	// 					});
+	// 					break;
+	// 			}
+	// 		}
+	// 		setFilteredArticles(searchedArticles);
+	// 	}
+	// }, [dateRange, sortBy, articles, filteredArticles]);
 
 	// Logic to display articles of correct category
 	useEffect(() => {
@@ -110,7 +157,40 @@ export default function NewsSection() {
 
 			{/* Articles, main col */}
 			<section className="md:col-span-2">
-				<SectionHeader title="MEWS" />
+				<div className="flex flex-row justify-between w-full items-center">
+					<SectionHeader title="MEWS" />
+
+					{/* Filter bar */}
+					<div className="flex gap-8 pb-4 text-sm text-gray-600">
+						{/* Date Range */}
+						<select
+							value={dateRange}
+							className="py-1 font-medium text-gray-700"
+							onChange={(e) => setDateRange(e.target.value)}
+						>
+							<option value="" disabled>
+								Date Range
+							</option>
+							<option value="all">All Time</option>
+							<option value="24h">Last 24 hours</option>
+							<option value="7d">Last 7 days</option>
+							<option value="30d">Last 30 days</option>
+						</select>
+
+						{/* Sort By */}
+						<select
+							value={sortBy}
+							className=" py-1 font-medium text-gray-700"
+							onChange={(e) => setSortBy(e.target.value)}
+						>
+							<option value="" disabled hidden>
+								Sort By
+							</option>
+							<option value="newest">Newest</option>
+						</select>
+					</div>
+				</div>
+				
 				{filteredArticles.length > 0 && (
 					<div>
 						{filteredArticles.map((article) => (
