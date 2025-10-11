@@ -5,7 +5,7 @@ import { GoChevronLeft, GoChevronRight } from "react-icons/go";
 
 import { ARTICLE_ROUTES } from "@/constants/routes";
 import type { AppDispatch } from "@/store/store";
-import { loadArticlesInfoByCategory } from "@/store/articlesSlice";
+import { loadArticlesInfoByCategory, loadArticlesInfo } from "@/store/articlesSlice";
 
 export default function CategoryBar() {
 	// get url/{category}
@@ -23,7 +23,7 @@ export default function CategoryBar() {
 		if (currentCategory === "") {
 			// defaults to grabbing all articles
 			dispatch(
-				loadArticlesInfoByCategory({ page: 1, category: currentCategory })
+				loadArticlesInfo(1)
 			);
 		} else if (ARTICLE_ROUTES.includes(currentCategory)) {
 			dispatch(
