@@ -40,8 +40,8 @@ export async function fetchArticlesBySearch(page: number, search: string) {
 	return data.map(articleInfoTransform);
 }
 
-export async function fetchArticlesInfo() {
-	const response = await fetch(`${API_URL}/article-info?page=1&limit=10`, {
+export async function fetchArticlesInfo(page: number) {
+	const response = await fetch(`${API_URL}/article-info?page=${page}&limit=10`, {
 		method: "GET",
 		headers: { "Content-Type": "application/json" },
 	});
@@ -84,3 +84,22 @@ export async function fetchTopTenArticles() {
 	const data = await response.json();
 	return data.map(articleInfoTransform);
 }
+
+// take date site loaded
+// for last 24 hours grab most viewed
+// tie breakers do time published
+// grab 6
+
+// export async function fetchTodayPopularArticles() {
+// 	const today = new Date()
+// 	const response = await fetch(`${API_URL}/article-info`, {
+// 		method: "POST",
+// 		headers: { "Content-Type": "application/json" },
+// 		body: JSON.stringify({ today: today }),
+// 	});
+// 	if (!response.ok) {
+// 		throw new Error(`Error: ${response.statusText}`);
+// 	}
+// 	const data = await response.json();
+// 	return articleDetailTransform(data);
+// }

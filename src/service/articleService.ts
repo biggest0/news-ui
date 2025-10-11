@@ -26,9 +26,9 @@ export async function getArticlesBySearch(page: number, search: string) {
 	}
 }
 
-export async function getArticlesInfo() {
+export async function getArticlesInfo(page: number) {
 	try {
-		return await fetchArticlesInfo();
+		return await fetchArticlesInfo(page);
 	} catch (error) {
 		console.error("[Error fetching article infos]:", error);
 	}
