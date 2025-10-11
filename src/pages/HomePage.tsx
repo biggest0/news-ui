@@ -2,13 +2,14 @@ import NewsSection from "@/components/news/NewsSection";
 import TopArticlesSection from "@/components/news/TopArticlesSection";
 import NewsHero from "@/components/news/NewsHero";
 import BackToTopButton from "@/components/common/BackToTopButton";
+import { HomeNewsSection } from "@/components/news/newsSection/HomeNewsSection";
 
 export default function HomePage() {
 	return (
 		<>
 			<NewsHero />
 			<TopArticlesSection />
-			<NewsSection key={"home-article-section"} />
+			<HomeNewsSection key={"home-article-section"} />
 			<BackToTopButton />
 		</>
 	);
