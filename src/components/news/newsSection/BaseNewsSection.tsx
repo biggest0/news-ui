@@ -7,6 +7,7 @@ import { CATIRE_EDITORS, CAT_FACTS } from "@/components/sideColumn/constants";
 import { SectionHeader } from "@/components/common/SectionHeader";
 import { CatFactsCard } from "@/components/sideColumn/CatFactsCard";
 import type { ArticleInfo } from "@/types/articleTypes";
+import { isWithinNDays } from "@/service/dateUtils";
 
 interface BaseNewsSectionProps {
 	articles: ArticleInfo[];
@@ -22,11 +23,12 @@ export function BaseNewsSection({
 	resetKey,
 }: BaseNewsSectionProps) {
 	const prevArticlesLength = useRef(0);
+	const [articlesToDisplay, setArticlesToDisplay] = useState(articles);
 	const [page, setPage] = useState(1);
 	const [showMore, setShowMore] = useState(true);
 	const [fetching, setFetching] = useState(false);
-	const [dateRange, setDateRange] = useState("");
-	const [sortBy, setSortBy] = useState("");
+	const [dateRange, setDateRange] = useState("all");
+	const [sortBy, setSortBy] = useState("newest");
 
 	// Reset state when component mounts or resetKey changes
 	useEffect(() => {
@@ -38,25 +40,26 @@ export function BaseNewsSection({
 	// Check if more articles to load
 	useEffect(() => {
 		if (articles.length === prevArticlesLength.current) {
-			console.log("same length", articles.length, prevArticlesLength.current);
+			// console.log("same length", articles.length, prevArticlesLength.current);
 			setShowMore(false);
 		} else {
-			console.log("ran");
+			// console.log("ran");
 			setShowMore(true);
 			setFetching(false);
 			prevArticlesLength.current = articles.length;
 		}
 	}, [articles]);
 
+	// Update page count based on articles length
 	useEffect(() => {
 		if (articles.length > 0) {
 			setPage(Math.ceil(articles.length / 10));
 		}
 	}, [articles]);
 
-	useEffect(() => {
-		console.log(page, showMore, fetching);
-	});
+	// useEffect(() => {
+	// 	console.log(page, showMore, fetching);
+	// });
 
 	// Lazy loading more articles
 	useEffect(() => {
@@ -75,6 +78,38 @@ export function BaseNewsSection({
 		window.addEventListener("scroll", handleScroll);
 		return () => window.removeEventListener("scroll", handleScroll);
 	}, [fetching, showMore, page, loadMoreArticles]);
+
+	// Filter articles when dateRange or sortBy changes
+	useEffect(() => {
+		let tempArticles = [...articles];
+		if (dateRange) {
+			console.log("rannn");
+			switch (dateRange) {
+				case "24h":
+					console.log("24h ran");
+					tempArticles = tempArticles.filter((article) => {
+						if (article.datePublished) {
+							return isWithinNDays(article.datePublished, 1);
+						}
+					});
+					break;
+				case "7d":
+					tempArticles = tempArticles.filter((article) => {
+						if (article.datePublished) {
+							return isWithinNDays(article.datePublished, 7);
+						}
+					});
+					break;
+				case "30d":
+					tempArticles = tempArticles.filter((article) => {
+						if (article.datePublished) {
+							return isWithinNDays(article.datePublished, 30);
+						}
+					});
+			}
+			setArticlesToDisplay(tempArticles);
+		}
+	}, [dateRange, articles]);
 
 	return (
 		<div className="flex flex-col md:grid md:grid-cols-3 gap-x-4 gap-y-6 pt-6">
@@ -108,7 +143,7 @@ export function BaseNewsSection({
 							className="py-1 font-medium text-gray-700"
 							onChange={(e) => setSortBy(e.target.value)}
 						>
-							<option value="" disabled hidden>
+							<option value="" disabled>
 								Sort By
 							</option>
 							<option value="newest">Newest</option>
@@ -116,9 +151,9 @@ export function BaseNewsSection({
 					</div>
 				</div>
 
-				{articles.length > 0 && (
+				{articlesToDisplay.length > 0 && (
 					<div>
-						{articles.map((article) => (
+						{articlesToDisplay.map((article) => (
 							<NewsCard key={article.id} articleInfo={article} />
 						))}
 					</div>
