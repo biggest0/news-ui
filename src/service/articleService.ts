@@ -5,7 +5,7 @@ import {
 	fetchArticlesInfo,
 	fetchTopTenArticles,
 } from "../api/articleApi";
-import type { ArticleDetail, ArticleInfo } from "../types/articleTypes";
+import type { ArticleDetail, ArticleInfo, ArticleInfoRequest } from "../types/articleTypes";
 
 // --------------
 // API functions
@@ -26,9 +26,9 @@ export async function getArticlesBySearch(page: number, search: string) {
 	}
 }
 
-export async function getArticlesInfo(page: number) {
+export async function getArticlesInfo(request: ArticleInfoRequest) {
 	try {
-		return await fetchArticlesInfo({page});
+		return await fetchArticlesInfo(request);
 	} catch (error) {
 		console.error("[Error fetching article infos]:", error);
 	}

@@ -2,21 +2,13 @@ import {
 	articleDetailTransform,
 	articleInfoTransform,
 } from "../utils/transform";
+import type { ArticleInfoRequest } from "@/types/articleTypes";
 
 import { API_URL } from "@/config/config";
 
 // toggle to use either heroku app or local app
 // const url = 'https://catire-1acdb920c122.herokuapp.com';
 // const url = "http://localhost:3001";
-
-interface ArticleRequest {
-	page?: number;
-	limit?: number;
-	category?: string;
-	search?: string;
-	dateRange?: string;
-	sortBy?: string;
-}
 
 export async function fetchArticlesInfo({
 	page = 1,
@@ -25,7 +17,7 @@ export async function fetchArticlesInfo({
 	search,
 	dateRange,
 	sortBy,
-}: ArticleRequest) {
+}: ArticleInfoRequest) {
 	const params = new URLSearchParams();
 	params.append("page", page.toString());
 	params.append("limit", limit.toString());

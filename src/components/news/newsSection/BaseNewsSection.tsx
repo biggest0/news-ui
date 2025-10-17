@@ -1,5 +1,7 @@
 // BaseNewsSection.tsx - Parent Component
 import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
+
 import NewsCard from "../NewsCard";
 import NewsSideColumn from "../NewsSideColumn";
 import { EditorCardVertical } from "@/components/sideColumn/EditorCardVertical";
@@ -8,10 +10,11 @@ import { SectionHeader } from "@/components/common/SectionHeader";
 import { CatFactsCard } from "@/components/sideColumn/CatFactsCard";
 import type { ArticleInfo } from "@/types/articleTypes";
 import { isWithinNDays } from "@/service/dateUtils";
+import type { ArticleInfoRequest } from "@/types/articleTypes";
 
 interface BaseNewsSectionProps {
 	articles: ArticleInfo[];
-	loadMoreArticles: (page: number) => void;
+	loadMoreArticles: (request: ArticleInfoRequest) => void;
 	showHomeContent?: boolean;
 	resetKey?: string;
 }
@@ -22,6 +25,8 @@ export function BaseNewsSection({
 	showHomeContent = false,
 	resetKey,
 }: BaseNewsSectionProps) {
+  const location = useLocation();
+	const selectedCategory = location.pathname.split("/")[1];
 	const prevArticlesLength = useRef(0);
 	const [articlesToDisplay, setArticlesToDisplay] = useState(articles);
 	const [page, setPage] = useState(1);
@@ -71,7 +76,7 @@ export function BaseNewsSection({
 			) {
 				setFetching(true);
 				setPage((prev) => prev + 1);
-				loadMoreArticles(page + 1);
+				loadMoreArticles({page: page + 1, category: selectedCategory} );
 			}
 		};
 
@@ -83,10 +88,8 @@ export function BaseNewsSection({
 	useEffect(() => {
 		let tempArticles = [...articles];
 		if (dateRange) {
-			console.log("rannn");
 			switch (dateRange) {
 				case "24h":
-					console.log("24h ran");
 					tempArticles = tempArticles.filter((article) => {
 						if (article.datePublished) {
 							return isWithinNDays(article.datePublished, 1);
@@ -147,6 +150,7 @@ export function BaseNewsSection({
 								Sort By
 							</option>
 							<option value="newest">Newest</option>
+							<option value="mostViewed">Most Viewed</option>
 						</select>
 					</div>
 				</div>
