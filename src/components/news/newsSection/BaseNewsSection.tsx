@@ -25,7 +25,7 @@ export function BaseNewsSection({
 	showHomeContent = false,
 	resetKey,
 }: BaseNewsSectionProps) {
-  const location = useLocation();
+	const location = useLocation();
 	const selectedCategory = location.pathname.split("/")[1];
 	const prevArticlesLength = useRef(0);
 	const [articlesToDisplay, setArticlesToDisplay] = useState(articles);
@@ -44,16 +44,15 @@ export function BaseNewsSection({
 
 	// Check if more articles to load
 	useEffect(() => {
-		if (articles.length === prevArticlesLength.current) {
-			// console.log("same length", articles.length, prevArticlesLength.current);
+		if (articlesToDisplay.length === prevArticlesLength.current) {
 			setShowMore(false);
 		} else {
 			// console.log("ran");
 			setShowMore(true);
 			setFetching(false);
-			prevArticlesLength.current = articles.length;
+			prevArticlesLength.current = articlesToDisplay.length;
 		}
-	}, [articles]);
+	}, [articlesToDisplay]);
 
 	// Update page count based on articles length
 	useEffect(() => {
@@ -76,7 +75,7 @@ export function BaseNewsSection({
 			) {
 				setFetching(true);
 				setPage((prev) => prev + 1);
-				loadMoreArticles({page: page + 1, category: selectedCategory} );
+				loadMoreArticles({ page: page + 1, category: selectedCategory });
 			}
 		};
 
@@ -129,7 +128,10 @@ export function BaseNewsSection({
 						<select
 							value={dateRange}
 							className="py-1 font-medium text-gray-700"
-							onChange={(e) => setDateRange(e.target.value)}
+							onChange={(e) => {
+								setDateRange(e.target.value);
+								prevArticlesLength.current = 0;
+							}}
 						>
 							<option value="" disabled>
 								Date Range
@@ -144,7 +146,10 @@ export function BaseNewsSection({
 						<select
 							value={sortBy}
 							className="py-1 font-medium text-gray-700"
-							onChange={(e) => setSortBy(e.target.value)}
+							onChange={(e) => {
+								setSortBy(e.target.value);
+								prevArticlesLength.current = 0;
+							}}
 						>
 							<option value="" disabled>
 								Sort By
