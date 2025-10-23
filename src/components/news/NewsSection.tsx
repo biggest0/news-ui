@@ -10,7 +10,6 @@ import { EditorCardVertical } from "@/components/sideColumn/EditorCardVertical";
 import { CATIRE_EDITORS, CAT_FACTS } from "@/components/sideColumn/constants";
 import { SectionHeader } from "@/components/common/SectionHeader";
 import { CatFactsCard } from "@/components/sideColumn/CatFactsCard";
-import { isWithinNDays } from "@/service/dateUtils";
 
 export default function NewsSection() {
 	const location = useLocation();

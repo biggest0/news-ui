@@ -1,4 +1,3 @@
-import NewsSection from "@/components/news/NewsSection";
 import { useLocation } from "react-router-dom";
 import { CategoryNewsSection } from "@/components/news/newsSection/CategoryNewsSection";
 
