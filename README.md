@@ -1,4 +1,4 @@
-# Catire Time v0.1.0
+# Catire Time v0.1.1
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
