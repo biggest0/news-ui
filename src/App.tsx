@@ -5,7 +5,7 @@ import HomePage from "@/pages/HomePage";
 import ArticlePages from "@/pages/ArticlesPage";
 import SearchPage from "./pages/SearchPage";
 import About from "./pages/AboutPage";
-import Contact from "./pages/ConatctPage";
+import Contact from "./pages/ContactPage";
 import AccountPage from "./pages/AccountPage";
 import DisclaimerPage from "./pages/DisclaimerPage";
 

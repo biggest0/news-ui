@@ -42,7 +42,7 @@ export default function NewsSideColumn() {
 
 			{/* cat facts */}
 			<div className="">
-				<SectionHeader title="RANDOM CAT FATS" />
+				<SectionHeader title="RANDOM CAT FACTS" />
 				{CAT_FACTS.map((catFact, index) => (
 					<CatFactsCard
 						key={index}

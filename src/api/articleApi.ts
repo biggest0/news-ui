@@ -2,13 +2,40 @@ import {
 	articleDetailTransform,
 	articleInfoTransform,
 } from "../utils/transform";
+import type { ArticleInfoRequest } from "@/types/articleTypes";
 
-import {API_URL} from "@/config/config"
+import { API_URL } from "@/config/config";
 
 // toggle to use either heroku app or local app
 // const url = 'https://catire-1acdb920c122.herokuapp.com';
 // const url = "http://localhost:3001";
 
+export async function fetchArticlesInfo({
+	page = 1,
+	limit = 10,
+	category,
+	search,
+	dateRange,
+	sortBy,
+}: ArticleInfoRequest) {
+	const params = new URLSearchParams();
+	params.append("page", page.toString());
+	params.append("limit", limit.toString());
+	if (category) params.append("category", category);
+	if (search) params.append("search", search);
+	if (dateRange) params.append("dateRange", dateRange);
+	if (sortBy) params.append("sortBy", sortBy);
+
+	const response = await fetch(`${API_URL}/article-info?${params}`, {
+		method: "GET",
+		headers: { "Content-Type": "application/json" },
+	});
+	if (!response.ok) {
+		throw new Error(`Error: ${response.statusText}`);
+	}
+	const data = await response.json();
+	return data.map(articleInfoTransform);
+}
 
 export async function fetchArticlesByCategory(page: number, category: string) {
 	const response = await fetch(
@@ -40,11 +67,14 @@ export async function fetchArticlesBySearch(page: number, search: string) {
 	return data.map(articleInfoTransform);
 }
 
-export async function fetchArticlesInfo() {
-	const response = await fetch(`${API_URL}/article-info?page=1&limit=10`, {
-		method: "GET",
-		headers: { "Content-Type": "application/json" },
-	});
+export async function _fetchArticlesInfo(page: number) {
+	const response = await fetch(
+		`${API_URL}/article-info?page=${page}&limit=10`,
+		{
+			method: "GET",
+			headers: { "Content-Type": "application/json" },
+		}
+	);
 	if (!response.ok) {
 		throw new Error(`Error: ${response.statusText}`);
 	}
@@ -84,3 +114,22 @@ export async function fetchTopTenArticles() {
 	const data = await response.json();
 	return data.map(articleInfoTransform);
 }
+
+// take date site loaded
+// for last 24 hours grab most viewed
+// tie breakers do time published
+// grab 6
+
+// export async function fetchTodayPopularArticles() {
+// 	const today = new Date()
+// 	const response = await fetch(`${API_URL}/article-info`, {
+// 		method: "POST",
+// 		headers: { "Content-Type": "application/json" },
+// 		body: JSON.stringify({ today: today }),
+// 	});
+// 	if (!response.ok) {
+// 		throw new Error(`Error: ${response.statusText}`);
+// 	}
+// 	const data = await response.json();
+// 	return articleDetailTransform(data);
+// }
