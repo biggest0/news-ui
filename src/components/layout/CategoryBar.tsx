@@ -23,7 +23,7 @@ export default function CategoryBar() {
 		if (currentCategory === "") {
 			// defaults to grabbing all articles
 			dispatch(
-				loadArticlesInfo(1)
+				loadArticlesInfo({ page: 1 })
 			);
 		} else if (ARTICLE_ROUTES.includes(currentCategory)) {
 			dispatch(
