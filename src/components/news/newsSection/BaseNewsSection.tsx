@@ -109,7 +109,15 @@ export function BaseNewsSection({
 						}
 					});
 			}
-			setArticlesToDisplay(tempArticles);
+			// Compare tempArticles with articlesToDisplay before setting state
+			const currentIds = new Set(articlesToDisplay.map((a) => a.id));
+			const filteredIds = new Set(tempArticles.map((a) => a.id));
+			if (
+				currentIds.size !== filteredIds.size ||
+				![...currentIds].every((id) => filteredIds.has(id))
+			) {
+				setArticlesToDisplay(tempArticles);
+			}
 		}
 	}, [dateRange, articles]);
 
