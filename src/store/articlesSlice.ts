@@ -19,7 +19,9 @@ interface ArticlesState {
 	homeArticles: ArticleInfo[];
 	articles: ArticleInfo[];
 	articlesDetail: Record<string, ArticleDetail>;
-	loading: boolean;
+	loadingPage: boolean;
+	loadingArticleInfo: boolean;
+	loadingArticleDetail: boolean;
 	error: string | undefined;
 }
 
@@ -28,9 +30,18 @@ const initialState: ArticlesState = {
 	homeArticles: [],
 	articles: [],
 	articlesDetail: {},
-	loading: false,
+	loadingPage: false,
+	loadingArticleInfo: false,
+	loadingArticleDetail: false,
 	error: undefined,
 };
+
+export const loadInitialArticlesInfo = createAsyncThunk<
+	ArticleInfo[],
+	ArticleInfoRequest
+>("articles/loadInitialArticlesInfo", async (request) => {
+	return getArticlesInfo(request);
+});
 
 export const loadArticlesInfo = createAsyncThunk<
 	ArticleInfo[],
@@ -96,18 +107,33 @@ const articlesSlice = createSlice({
 		},
 	},
 	extraReducers: (builder) => {
+		// load initial articles for home page
+		builder
+			.addCase(loadInitialArticlesInfo.pending, (state) => {
+				state.loadingPage = true;
+				state.error = undefined;
+			})
+			.addCase(loadInitialArticlesInfo.fulfilled, (state, action) => {
+				state.loadingPage = false;
+				state.homeArticles = action.payload;
+			})
+			.addCase(loadInitialArticlesInfo.rejected, (state, action) => {
+				state.loadingPage = false;
+				state.error = action.error.message;
+			});
+
 		// load article details with article ID
 		builder
 			.addCase(loadArticleDetail.pending, (state) => {
-				state.loading = true;
+				state.loadingArticleDetail = true;
 				state.error = undefined;
 			})
 			.addCase(loadArticleDetail.fulfilled, (state, action) => {
-				state.loading = false;
+				state.loadingArticleDetail = false;
 				state.articlesDetail[action.payload.id] = action.payload;
 			})
 			.addCase(loadArticleDetail.rejected, (state, action) => {
-				state.loading = false;
+				state.loadingArticleDetail = false;
 				state.error = action.error.message;
 			});
 
@@ -123,14 +149,14 @@ const articlesSlice = createSlice({
 				state.error = action.error.message;
 			});
 
-		// load articles for home page
+		// paginate articles for home page
 		builder
 			.addCase(loadArticlesInfo.pending, (state) => {
-				state.loading = true;
+				state.loadingArticleInfo = true;
 				state.error = undefined;
 			})
 			.addCase(loadArticlesInfo.fulfilled, (state, action) => {
-				state.loading = false;
+				state.loadingArticleInfo = false;
 
 				action.payload.forEach((article) => {
 					const exists = state.homeArticles.some((a) => a.id === article.id);
@@ -140,7 +166,7 @@ const articlesSlice = createSlice({
 				});
 			})
 			.addCase(loadArticlesInfo.rejected, (state, action) => {
-				state.loading = false;
+				state.loadingArticleInfo = false;
 				state.error = action.error.message;
 			});
 
@@ -152,7 +178,7 @@ const articlesSlice = createSlice({
 					loadArticlesInfoBySearch.pending
 				),
 				(state) => {
-					state.loading = true;
+					state.loadingArticleInfo = true;
 					state.error = undefined;
 				}
 			)
@@ -162,7 +188,7 @@ const articlesSlice = createSlice({
 					loadArticlesInfoBySearch.fulfilled
 				),
 				(state, action) => {
-					state.loading = false;
+					state.loadingArticleInfo = false;
 					action.payload.forEach((article) => {
 						const exists = state.articles.some((a) => a.id === article.id);
 						if (!exists) {
@@ -177,7 +203,7 @@ const articlesSlice = createSlice({
 					loadArticlesInfoBySearch.rejected
 				),
 				(state, action) => {
-					state.loading = false;
+					state.loadingArticleInfo = false;
 					state.error = action.error.message;
 				}
 			);
