@@ -6,9 +6,10 @@ import { incrementArticleViewed } from "@/api/articleApi";
 interface NewsCardProp {
 	articleInfo: ArticleInfo;
 	small: boolean;
+	onOpen?: (article: ArticleInfo) => void;
 }
 
-export default function NewsHeroCard({ articleInfo, small }: NewsCardProp) {
+export default function NewsHeroCard({ articleInfo, small, onOpen }: NewsCardProp) {
 	return (
 		<div className={`${small ? "min-h-24" : "min-h-48"}`}>
 			<h3
@@ -18,7 +19,9 @@ export default function NewsHeroCard({ articleInfo, small }: NewsCardProp) {
 			>
 				<Link
 					to={`/article/${articleInfo.id}`}
-					onClick={() => incrementArticleViewed(articleInfo.id)}
+					onClick={() => {incrementArticleViewed(articleInfo.id)
+						onOpen?.(articleInfo);
+					}}
 				>
 					{articleInfo.title}
 				</Link>
