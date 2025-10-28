@@ -1,15 +1,21 @@
-import { useSelector } from "react-redux";
-
-import type { RootState } from "@/store/store";
 import { EditorCardHorizontal } from "@/components/sideColumn/EditorCardHorizontal";
 import { CATIRE_EDITORS, CAT_FACTS } from "@/components/sideColumn/constants";
 import { CatFactsCard } from "@/components/sideColumn/CatFactsCard";
 import { SectionHeader } from "@/components/common/SectionHeader";
+import { SELECTED_ARTICLES } from "./tempArticles";
+import { Link } from "react-router-dom";
+import { incrementArticleViewed } from "@/api/articleApi";
+import { handleLocalStorageUpdate } from "@/service/localStorageService";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import type { ArticleInfo } from "@/types/articleTypes";
+import { USER_ARTICLE_HISTORY } from "@/constants/keys";
 
 export default function NewsSideColumn() {
-	const { topTenArticles } = useSelector(
-		(state: RootState) => state.article
+	const [articleHistory, setArticleHistory] = useLocalStorage<ArticleInfo[]>(
+		USER_ARTICLE_HISTORY,
+		[]
 	);
+	const selectedArticles = SELECTED_ARTICLES;
 
 	return (
 		<>
@@ -33,9 +39,22 @@ export default function NewsSideColumn() {
 			<div className="border-b border-gray-400 pb-6 space-y-4">
 				<SectionHeader title="STAFF FAVORITES" />
 
-				{topTenArticles.slice(0, 5).map((article) => (
-					<div className="py-2" key={`side-${article.id}`}>
-						{article.title}
+				{selectedArticles.slice(0, 5).map((article) => (
+					<div key={`side-${article.id}`}>
+						<Link
+							to={`/article/${article.id}`}
+							className="py-2"
+							onClick={() => {
+								incrementArticleViewed(article.id);
+								handleLocalStorageUpdate(
+									article,
+									articleHistory,
+									setArticleHistory
+								);
+							}}
+						>
+							{article.title}
+						</Link>
 					</div>
 				))}
 			</div>
