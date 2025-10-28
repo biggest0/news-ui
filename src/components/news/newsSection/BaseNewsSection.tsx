@@ -1,4 +1,3 @@
-// BaseNewsSection.tsx - Parent Component
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -11,6 +10,8 @@ import { CatFactsCard } from "@/components/sideColumn/CatFactsCard";
 import type { ArticleInfo } from "@/types/articleTypes";
 import { isWithinNDays } from "@/service/dateUtils";
 import type { ArticleInfoRequest } from "@/types/articleTypes";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { USER_ARTICLE_HISTORY } from "@/constants/keys";
 
 interface BaseNewsSectionProps {
 	articles: ArticleInfo[];
@@ -34,6 +35,29 @@ export function BaseNewsSection({
 	const [fetching, setFetching] = useState(false);
 	const [dateRange, setDateRange] = useState("all");
 	const [sortBy, setSortBy] = useState("newest");
+	const [articleHistory, setArticleHistory] = useLocalStorage<ArticleInfo[]>(
+		USER_ARTICLE_HISTORY,
+		[]
+	);
+
+	const handleLocalStorageUpdate = (clickedArticle: ArticleInfo) => {
+		// Maintain a max of 100 articles in history
+		if (articleHistory.length === 100) {
+			articleHistory.pop();
+		}
+		// Check if article already exists in history
+		if (!articleHistory.some((a) => a.id === clickedArticle.id)) {
+			const updatedArticles = [clickedArticle, ...articleHistory];
+			setArticleHistory(updatedArticles);
+		} else {
+			// Move the clicked article to the front
+			const filteredArticles = articleHistory.filter(
+				(a) => a.id !== clickedArticle.id
+			);
+			const updatedArticles = [clickedArticle, ...filteredArticles];
+			setArticleHistory(updatedArticles);
+		}
+	};
 
 	// Reset state when component mounts or resetKey changes
 	useEffect(() => {
@@ -109,7 +133,15 @@ export function BaseNewsSection({
 						}
 					});
 			}
-			setArticlesToDisplay(tempArticles);
+			// Compare tempArticles with articlesToDisplay before setting state
+			const currentIds = new Set(articlesToDisplay.map((a) => a.id));
+			const filteredIds = new Set(tempArticles.map((a) => a.id));
+			if (
+				currentIds.size !== filteredIds.size ||
+				![...currentIds].every((id) => filteredIds.has(id))
+			) {
+				setArticlesToDisplay(tempArticles);
+			}
 		}
 	}, [dateRange, articles]);
 
@@ -163,7 +195,11 @@ export function BaseNewsSection({
 				{articlesToDisplay.length > 0 && (
 					<div>
 						{articlesToDisplay.map((article) => (
-							<NewsCard key={article.id} articleInfo={article} />
+							<NewsCard
+								key={article.id}
+								articleInfo={article}
+								onRead={handleLocalStorageUpdate}
+							/>
 						))}
 					</div>
 				)}

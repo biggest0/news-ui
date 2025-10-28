@@ -8,9 +8,10 @@ import { incrementArticleViewed } from "@/api/articleApi";
 
 interface NewsCardProp {
 	articleInfo: ArticleInfo;
+	onRead?: (article: ArticleInfo) => void;
 }
 
-export default function NewsCard({ articleInfo }: NewsCardProp) {
+export default function NewsCard({ articleInfo, onRead }: NewsCardProp) {
 	const dispatch = useDispatch<AppDispatch>();
 	// const {articlesDetail, loading, error} = useSelector((state: RootState) => state.article)
 	const articleDetail: ArticleDetail = useSelector(
@@ -22,6 +23,9 @@ export default function NewsCard({ articleInfo }: NewsCardProp) {
 	const [isLoadingDetail, setIsLoadingDetail] = useState(false);
 
 	async function handleExpand() {
+		if (!expanded && onRead) {
+			onRead(articleInfo);
+		}
 		setExpanded((prev) => !prev);
 		if (!articleDetailfetched && !isLoadingDetail) {
 			setIsLoadingDetail(true);
