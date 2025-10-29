@@ -32,7 +32,7 @@ export function HomeNewsSection() {
 				showHomeContent={true}
 				resetKey={"home"}
 			/>
-			{loadingPage && <LoadingOverlay />}
+			{<LoadingOverlay loading={loadingPage}/>}
 		</>
 	);
 }
