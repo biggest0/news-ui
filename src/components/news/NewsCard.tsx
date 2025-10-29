@@ -54,8 +54,23 @@ export default function NewsCard({ articleInfo, onRead }: NewsCardProp) {
 				<div className="text-sm">{articleInfo.datePublished}</div>
 			</div>
 
-			{expanded && (
-				<>
+			{/* Grid transition for article's paragraphs on expand */}
+			<div
+				className={`grid transition-all duration-500 ease-in-out ${
+					expanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+				}`}
+			>
+				{/* Transition to display detail when expanded */}
+				<div
+					className={`overflow-hidden transition-opacity duration-1000 ${
+						expanded ? "opacity-100" : "opacity-0"
+					}`}
+				>
+					{/* Display loading if waiting for data*/}
+					{isLoadingDetail && !articleDetail && (
+						<div className="py-4 text-gray-500">Loading details...</div>
+					)}
+
 					{articleDetail && (
 						<div className="flex flex-col space-y-4">
 							<div className="space-y-2">
@@ -74,9 +89,26 @@ export default function NewsCard({ articleInfo, onRead }: NewsCardProp) {
 							</div>
 						</div>
 					)}
-				</>
-			)}
-			{articleInfo.summary && !expanded && <div>{articleInfo.summary}</div>}
+				</div>
+			</div>
+
+			{/* Grid transition for showing summary when !expanded,*/}
+			<div
+				className={`grid transition-all duration-500 ease-in-out ${
+					!expanded && articleInfo.summary
+						? "grid-rows-[1fr]"
+						: "grid-rows-[0fr]"
+				}`}
+			>
+				<div
+					className={`overflow-hidden transition-opacity duration-1000 ${
+						!expanded ? "opacity-100" : "opacity-0"
+					}`}
+				>
+					{articleInfo.summary && <div>{articleInfo.summary}</div>}
+				</div>
+			</div>
+
 			<div
 				className="cursor-pointer hover:text-amber-500 self-start"
 				onClick={handleExpand}
