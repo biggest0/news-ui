@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import NewsCard from "../NewsCard";
 import NewsSideColumn from "../NewsSideColumn";
@@ -12,6 +13,7 @@ import { isWithinNDays } from "@/service/dateUtils";
 import type { ArticleInfoRequest } from "@/types/articleTypes";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { USER_ARTICLE_HISTORY } from "@/constants/keys";
+import type { RootState } from "@/store/store";
 
 interface BaseNewsSectionProps {
 	articles: ArticleInfo[];
@@ -29,6 +31,10 @@ export function BaseNewsSection({
 	const location = useLocation();
 	const selectedCategory = location.pathname.split("/")[1];
 	const prevArticlesLength = useRef(0);
+	const { loadingArticleInfo } = useSelector(
+		(state: RootState) => state.article
+	);
+
 	const [articlesToDisplay, setArticlesToDisplay] = useState(articles);
 	const [page, setPage] = useState(1);
 	const [showMore, setShowMore] = useState(true);
@@ -156,15 +162,16 @@ export function BaseNewsSection({
 		}
 
 		// Compare tempArticles with articlesToDisplay before setting state
-		const currentIds = articlesToDisplay.map((a) => a.id)
-		const newIds = tempArticles.map((a) => a.id)
+		const currentIds = articlesToDisplay.map((a) => a.id);
+		const newIds = tempArticles.map((a) => a.id);
 
 		let articlesAreDifferent = false;
 		if (currentIds.length !== newIds.length) {
 			articlesAreDifferent = true;
-		}
-		else {
-			articlesAreDifferent = currentIds.some((id, index) => id !== newIds[index])
+		} else {
+			articlesAreDifferent = currentIds.some(
+				(id, index) => id !== newIds[index]
+			);
 		}
 		if (articlesAreDifferent) {
 			setArticlesToDisplay(tempArticles);
@@ -231,7 +238,9 @@ export function BaseNewsSection({
 				)}
 
 				<div className="text-center text-gray-500 py-4">
-					No more articles to load.
+					{loadingArticleInfo
+						? "Just a few seoncds, articles are coming!"
+						: "You've scrolled to the end. There's nothing left!"}
 				</div>
 			</section>
 
