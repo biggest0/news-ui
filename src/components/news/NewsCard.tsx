@@ -5,6 +5,7 @@ import type { ArticleInfo, ArticleDetail } from "@/types/articleTypes";
 import type { RootState, AppDispatch } from "@/store/store";
 import { loadArticleDetail } from "@/store/articlesSlice";
 import { incrementArticleViewed } from "@/api/articleApi";
+import { ShareButton } from "../common/ShareButton";
 
 interface NewsCardProp {
 	articleInfo: ArticleInfo;
@@ -109,11 +110,14 @@ export default function NewsCard({ articleInfo, onRead }: NewsCardProp) {
 				</div>
 			</div>
 
-			<div
-				className="cursor-pointer hover:text-amber-500 self-start"
-				onClick={handleExpand}
-			>
-				{!expanded ? "Read More" : "Hide"}
+			<div className="flex flex-row justify-between items-center">
+				<div
+					className="cursor-pointer hover:text-amber-500 self-start"
+					onClick={handleExpand}
+				>
+					{!expanded ? "Read More" : "Hide"}
+				</div>
+				<ShareButton articleId={articleInfo.id} />
 			</div>
 		</div>
 	);
