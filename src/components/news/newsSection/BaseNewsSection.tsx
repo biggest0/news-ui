@@ -133,17 +133,43 @@ export function BaseNewsSection({
 						}
 					});
 			}
-			// Compare tempArticles with articlesToDisplay before setting state
-			const currentIds = new Set(articlesToDisplay.map((a) => a.id));
-			const filteredIds = new Set(tempArticles.map((a) => a.id));
-			if (
-				currentIds.size !== filteredIds.size ||
-				![...currentIds].every((id) => filteredIds.has(id))
-			) {
-				setArticlesToDisplay(tempArticles);
+		}
+		if (sortBy) {
+			switch (sortBy) {
+				case "newest":
+					tempArticles = tempArticles.sort((a, b) => {
+						if (b.datePublished && a.datePublished) {
+							return (
+								new Date(b.datePublished).getTime() -
+								new Date(a.datePublished).getTime()
+							);
+						}
+						return 0;
+					});
+					break;
+				case "mostViewed":
+					tempArticles = tempArticles.sort((a, b) => {
+						return (b.viewed || 0) - (a.viewed || 0);
+					});
+					break;
 			}
 		}
-	}, [dateRange, articles]);
+
+		// Compare tempArticles with articlesToDisplay before setting state
+		const currentIds = articlesToDisplay.map((a) => a.id)
+		const newIds = tempArticles.map((a) => a.id)
+
+		let articlesAreDifferent = false;
+		if (currentIds.length !== newIds.length) {
+			articlesAreDifferent = true;
+		}
+		else {
+			articlesAreDifferent = currentIds.some((id, index) => id !== newIds[index])
+		}
+		if (articlesAreDifferent) {
+			setArticlesToDisplay(tempArticles);
+		}
+	}, [dateRange, sortBy, articles]);
 
 	return (
 		<div className="flex flex-col md:grid md:grid-cols-3 gap-x-4 gap-y-6 pt-6">
