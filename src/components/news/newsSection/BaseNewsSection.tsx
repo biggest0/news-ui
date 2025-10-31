@@ -194,7 +194,7 @@ export function BaseNewsSection({
 						<div className="relative">
 							<select
 								value={dateRange}
-								className="py-1 font-medium text-gray-700 appearance-none pr-6"
+								className="py-1 font-medium text-gray-700 appearance-none pr-4"
 								onChange={(e) => {
 									setDateRange(e.target.value);
 									prevArticlesLength.current = 0;
@@ -208,7 +208,7 @@ export function BaseNewsSection({
 								<option value="7d">Last 7 days</option>
 								<option value="30d">Last 30 days</option>
 							</select>
-							<div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+							<div className="absolute inset-y-0 right-0 flex items-center pointer-events-none">
 								<BsChevronDown className="w-3 h-3 fill-current text-gray-600" />
 							</div>
 						</div>
@@ -217,7 +217,7 @@ export function BaseNewsSection({
 						<div className="relative">
 							<select
 								value={sortBy}
-								className="py-1 font-medium text-gray-700 appearance-none pr-6"
+								className="py-1 font-medium text-gray-700 appearance-none pr-4"
 								onChange={(e) => {
 									setSortBy(e.target.value);
 									prevArticlesLength.current = 0;
@@ -229,7 +229,7 @@ export function BaseNewsSection({
 								<option value="newest">Newest</option>
 								<option value="mostViewed">Most Viewed</option>
 							</select>
-							<div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+							<div className="absolute inset-y-0 right-0 flex items-center pointer-events-none">
 								<BsChevronDown className="w-3 h-3 fill-current text-gray-600" />
 							</div>
 						</div>
