@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { CiShare1 } from "react-icons/ci";
-import { FaCheck } from "react-icons/fa6";
+import { IoCheckmark } from "react-icons/io5";
 
 export const ShareButton = ({ articleId }: { articleId: string }) => {
 	const [copied, setCopied] = useState(false);
@@ -26,7 +26,8 @@ export const ShareButton = ({ articleId }: { articleId: string }) => {
 		>
 			{copied ? (
 				<>
-					<FaCheck className="w-4 h-4" />
+					<IoCheckmark className="w-4 h-4" />
+					<span>Copied</span>
 				</>
 			) : (
 				<>
