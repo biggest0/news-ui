@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { LuSearch } from "react-icons/lu";
+import { BsChevronDown } from "react-icons/bs";
 
 import type { AppDispatch, RootState } from "@/store/store";
 import type { ArticleInfo } from "@/types/articleTypes";
@@ -12,9 +13,7 @@ import { sortByWordCount } from "@/service/articleService";
 
 export default function SearchPage() {
 	const location = useLocation();
-	const { articles } = useSelector(
-		(state: RootState) => state.article
-	);
+	const { articles } = useSelector((state: RootState) => state.article);
 	const prevArticlesLength = useRef(0);
 
 	const params = new URLSearchParams(location.search);
@@ -208,32 +207,42 @@ function SearchSection({
 			{/* Filter bar */}
 			<div className="flex justify-start gap-8 w-full max-w-md text-sm text-gray-600">
 				{/* Date Range */}
-				<select
-					value={dateRange}
-					className="py-1 font-medium text-gray-700"
-					onChange={(e) => updateUrl(query, e.target.value, sortBy)}
-				>
-					<option value="" disabled>
-						Date Range
-					</option>
-					<option value="all">All Time</option>
-					<option value="24h">Last 24 hours</option>
-					<option value="7d">Last 7 days</option>
-					<option value="30d">Last 30 days</option>
-				</select>
+				<div className="relative">
+					<select
+						value={dateRange}
+						className="py-1 font-medium text-gray-700 appearance-none pr-6"
+						onChange={(e) => updateUrl(query, e.target.value, sortBy)}
+					>
+						<option value="" disabled>
+							Date Range
+						</option>
+						<option value="all">All Time</option>
+						<option value="24h">Last 24 hours</option>
+						<option value="7d">Last 7 days</option>
+						<option value="30d">Last 30 days</option>
+					</select>
+					<div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+						<BsChevronDown className="w-3 h-3 fill-current text-gray-600" />
+					</div>
+				</div>
 
 				{/* Sort By */}
-				<select
-					value={sortBy}
-					className=" py-1 font-medium text-gray-700"
-					onChange={(e) => updateUrl(query, dateRange, e.target.value)}
-				>
-					<option value="" disabled hidden>
-						Sort By
-					</option>
-					<option value="relevant">Relevant</option>
-					<option value="newest">Newest</option>
-				</select>
+				<div className="relative">
+					<select
+						value={sortBy}
+						className="py-1 font-medium text-gray-700 appearance-none pr-6"
+						onChange={(e) => updateUrl(query, dateRange, e.target.value)}
+					>
+						<option value="" disabled hidden>
+							Sort By
+						</option>
+						<option value="relevant">Relevant</option>
+						<option value="newest">Newest</option>
+					</select>
+					<div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+						<BsChevronDown className="w-3 h-3 fill-current text-gray-600" />
+					</div>
+				</div>
 			</div>
 		</section>
 	);
