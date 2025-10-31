@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { BsChevronDown } from "react-icons/bs";
 
 import NewsCard from "../NewsCard";
 import NewsSideColumn from "../NewsSideColumn";
@@ -190,38 +191,48 @@ export function BaseNewsSection({
 					{/* Filter bar */}
 					<div className="flex gap-8 pb-4 text-sm text-gray-600">
 						{/* Date Range */}
-						<select
-							value={dateRange}
-							className="py-1 font-medium text-gray-700"
-							onChange={(e) => {
-								setDateRange(e.target.value);
-								prevArticlesLength.current = 0;
-							}}
-						>
-							<option value="" disabled>
-								Date Range
-							</option>
-							<option value="all">All Time</option>
-							<option value="24h">Last 24 hours</option>
-							<option value="7d">Last 7 days</option>
-							<option value="30d">Last 30 days</option>
-						</select>
+						<div className="relative">
+							<select
+								value={dateRange}
+								className="py-1 font-medium text-gray-700 appearance-none pr-4"
+								onChange={(e) => {
+									setDateRange(e.target.value);
+									prevArticlesLength.current = 0;
+								}}
+							>
+								<option value="" disabled>
+									Date Range
+								</option>
+								<option value="all">All Time</option>
+								<option value="24h">Last 24 hours</option>
+								<option value="7d">Last 7 days</option>
+								<option value="30d">Last 30 days</option>
+							</select>
+							<div className="absolute inset-y-0 right-0 flex items-center pointer-events-none">
+								<BsChevronDown className="w-3 h-3 fill-current text-gray-600" />
+							</div>
+						</div>
 
 						{/* Sort By */}
-						<select
-							value={sortBy}
-							className="py-1 font-medium text-gray-700"
-							onChange={(e) => {
-								setSortBy(e.target.value);
-								prevArticlesLength.current = 0;
-							}}
-						>
-							<option value="" disabled>
-								Sort By
-							</option>
-							<option value="newest">Newest</option>
-							<option value="mostViewed">Most Viewed</option>
-						</select>
+						<div className="relative">
+							<select
+								value={sortBy}
+								className="py-1 font-medium text-gray-700 appearance-none pr-4"
+								onChange={(e) => {
+									setSortBy(e.target.value);
+									prevArticlesLength.current = 0;
+								}}
+							>
+								<option value="" disabled>
+									Sort By
+								</option>
+								<option value="newest">Newest</option>
+								<option value="mostViewed">Most Viewed</option>
+							</select>
+							<div className="absolute inset-y-0 right-0 flex items-center pointer-events-none">
+								<BsChevronDown className="w-3 h-3 fill-current text-gray-600" />
+							</div>
+						</div>
 					</div>
 				</div>
 
