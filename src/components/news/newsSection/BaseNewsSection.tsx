@@ -266,8 +266,15 @@ export function BaseNewsSection({
 
 // HomeContentSections component
 function HomeContentSections() {
-	const [expandEditors, setExpandEditors] = useState(true);
-	const [expandCatFacts, setExpandCatFacts] = useState(true);
+	// TODO: Put these into an object
+	const [expandEditors, setExpandEditors] = useLocalStorage<boolean>(
+		"home_our_editors_expand",
+		true
+	);
+	const [expandCatFacts, setExpandCatFacts] = useLocalStorage<boolean>(
+		"home_cat_facts_expand",
+		true
+	);
 	return (
 		<>
 			{/* Horizontal col for mobile screen for home page */}
