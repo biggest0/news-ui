@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { BsChevronDown } from "react-icons/bs";
+import { FaChevronUp, FaChevronDown } from "react-icons/fa6";
 
 import NewsCard from "../NewsCard";
 import NewsSideColumn from "../NewsSideColumn";
@@ -265,36 +266,80 @@ export function BaseNewsSection({
 
 // HomeContentSections component
 function HomeContentSections() {
+	const [expandEditors, setExpandEditors] = useState(true);
+	const [expandCatFacts, setExpandCatFacts] = useState(true);
 	return (
 		<>
 			{/* Horizontal col for mobile screen for home page */}
 			<section className="md:hidden pb-6 border-b border-gray-400">
-				<SectionHeader title="OUR EDITORS" />
-				<div className="flex flex-row overflow-x-auto hide-scrollbar space-x-4">
-					{CATIRE_EDITORS.map((editor: any, index: number) => (
-						<EditorCardVertical
-							key={`editor-${index}`}
-							name={editor.name}
-							role={editor.role}
-							description={editor.description}
-							imageUrl={editor.imageUrl}
+				<div className="flex flex-row items-center space-x-4">
+					<SectionHeader title="OUR EDITORS" />
+					{expandEditors ? (
+						<FaChevronUp
+							className="w-4 h-4 mb-4 fill-current text-gray-500"
+							onClick={() => setExpandEditors(false)}
 						/>
-					))}
+					) : (
+						<FaChevronDown
+							className="w-4 h-4 mb-4 fill-current text-gray-500"
+							onClick={() => setExpandEditors(true)}
+						/>
+					)}
+				</div>
+				<div
+					className={`grid transition-all duration-500 ease-in-out ${
+						expandEditors ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+					}`}
+				>
+					<div className="flex flex-row overflow-x-auto overflow-y-hidden hide-scrollbar space-x-4">
+						{CATIRE_EDITORS.map((editor: any, index: number) => (
+							<EditorCardVertical
+								key={`editor-${index}`}
+								name={editor.name}
+								role={editor.role}
+								description={editor.description}
+								imageUrl={editor.imageUrl}
+							/>
+						))}
+					</div>
 				</div>
 			</section>
 
 			{/* Horizontal col for cat facts for home page */}
 			<section className="md:hidden pb-6 border-b border-gray-400">
-				<SectionHeader title="CAT FACTS" />
-				<div className="flex w-full gap-4 overflow-x-auto pt-4 hide-scrollbar">
-					{CAT_FACTS.map((catFact: any, index: number) => (
-						<CatFactsCard
-							key={index}
-							title={catFact.title}
-							fact={catFact.fact}
-							small={true}
+				<div className="flex flex-row items-center space-x-4">
+					<SectionHeader title="CAT FACTS" />
+					{expandCatFacts ? (
+						<FaChevronUp
+							className="w-4 h-4 mb-4 fill-current text-gray-500"
+							onClick={() => setExpandCatFacts(false)}
 						/>
-					))}
+					) : (
+						<FaChevronDown
+							className="w-4 h-4 mb-4 fill-current text-gray-500"
+							onClick={() => setExpandCatFacts(true)}
+						/>
+					)}
+				</div>
+				<div
+					className={`grid transition-all duration-500 ease-in-out ${
+						expandCatFacts ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+					}`}
+				>
+					<div
+						className={`flex w-full gap-4 pt-4 hide-scrollbar overflow-y-hidden ${
+							expandCatFacts ? "overflow-x-auto" : "overflow-hidden"
+						}`}
+					>
+						{CAT_FACTS.map((catFact: any, index: number) => (
+							<CatFactsCard
+								key={index}
+								title={catFact.title}
+								fact={catFact.fact}
+								small={true}
+							/>
+						))}
+					</div>
 				</div>
 			</section>
 		</>
