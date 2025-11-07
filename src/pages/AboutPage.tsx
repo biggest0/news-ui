@@ -36,6 +36,20 @@ export default function About() {
 							closer to that glorious, fish-filled paradise.
 						</div>
 					</div>
+					<div className="text-center">
+						<h3 className="text-lg text-gray-800">Fun Reads</h3>
+						<div>
+							The motivation for this app is to make reading news more engaging
+							and give readers control over how they experience it. Let's be
+							honest, a lot of news is too long, gloomy, or just plain boring.
+							Our goal is to make it enjoyable, like taking plain broccoli and
+							drenching it in flavorful gravy. We let readers choose exactly how
+							deeply they want to engage. They can start with a catchy title,
+							skim a quick summary, or dive into the full content. It’s a
+							'three-speed' approach that matches how people naturally consume
+							information today: quickly, selectively, and with ease.
+						</div>
+					</div>
 					{/* Disclaimer */}
 					<div className="text-center">
 						<h3 className="text-lg text-gray-800">Disclaimer</h3>

@@ -1,4 +1,7 @@
+import { useEffect, useState } from "react";
+
 import { LuX } from "react-icons/lu";
+
 import type { MobileMenuProps } from "@/types/navBar";
 import { MobileSearchBar } from "@/components/navBar/MobileSearchBar";
 import { NavigationLinks } from "./NavigationLinks";
@@ -11,21 +14,74 @@ export const MobileMenu = ({
 	onQueryChange,
 	onSubmit,
 }: MobileMenuProps) => {
+	const [touchStart, setTouchStart] = useState(0);
+	const [touchEnd, setTouchEnd] = useState(0);
+	const [isDragging, setIsDragging] = useState(false);
+	const [dragOffset, setDragOffset] = useState(0);
+
+	// Minimum swipe distance (in px) to trigger close
+	const minSwipeDistance = 100;
+
+	// Prevent body scroll when menu is open
+	useEffect(() => {
+		if (menuOpen) {
+			document.body.style.overflow = "hidden";
+		} else {
+			document.body.style.overflow = "unset";
+		}
+
+		// Cleanup on unmount
+		return () => {
+			document.body.style.overflow = "unset";
+		};
+	}, [menuOpen]);
+
+	const handleTouchStart = (e: React.TouchEvent) => {
+		setTouchStart(e.targetTouches[0].clientX);
+		setTouchEnd(e.targetTouches[0].clientX);
+		setIsDragging(true);
+	};
+
+	const handleTouchMove = (e: React.TouchEvent) => {
+		if (!isDragging) return;
+
+		const currentTouch = e.targetTouches[0].clientX;
+		setTouchEnd(currentTouch);
+
+		// Calculate drag offset (only allow dragging to the right)
+		const offset = currentTouch - touchStart;
+		if (offset > 0) {
+			setDragOffset(offset);
+		}
+	};
+
+	const handleTouchEnd = () => {
+		setIsDragging(false);
+
+		const swipeDistance = touchEnd - touchStart;
+
+		// If swiped right beyond threshold, close menu
+		if (swipeDistance > minSwipeDistance) {
+			onMenuClose();
+		}
+
+		// Reset drag offset
+		setDragOffset(0);
+	};
 	return (
 		<>
-			{/* Overlay */}
-			{/* <div
-				className={`fixed inset-0 bg-black bg-opacity-50 z-30 transition-opacity duration-300 md:hidden ${
-					menuOpen ? "opacity-100 visible" : "opacity-0 invisible"
-				}`}
-				onClick={onMenuClose}
-			/> */}
-
 			{/* Menu Panel */}
 			<div
-				className={`fixed top-0 right-0 h-full w-full bg-white shadow-xl z-40 transform transition-transform duration-300 ease-in-out md:hidden ${
-					menuOpen ? "translate-x-0" : "translate-x-full"
-				}`}
+				className={`fixed top-0 right-0 h-full w-full bg-white shadow-xl z-40 transform md:hidden ${
+					isDragging ? "" : "transition-transform duration-300 ease-in-out"
+				} ${menuOpen ? "translate-x-0" : "translate-x-full"}`}
+				style={{
+					transform:
+						isDragging && menuOpen ? `translateX(${dragOffset}px)` : undefined,
+				}}
+				onTouchStart={handleTouchStart}
+				onTouchMove={handleTouchMove}
+				onTouchEnd={handleTouchEnd}
 			>
 				<div className="p-4">
 					{/* Close button */}
