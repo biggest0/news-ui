@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 import { LuX } from "react-icons/lu";
 
@@ -14,6 +15,7 @@ export const MobileMenu = ({
 	onQueryChange,
 	onSubmit,
 }: MobileMenuProps) => {
+	const location = useLocation();
 	const [touchStart, setTouchStart] = useState(0);
 	const [touchEnd, setTouchEnd] = useState(0);
 	const [isDragging, setIsDragging] = useState(false);
@@ -21,6 +23,8 @@ export const MobileMenu = ({
 
 	// Minimum swipe distance (in px) to trigger close
 	const minSwipeDistance = 100;
+	// Left edge zone for browser back navigation (in px)
+	const leftEdgeZone = 50;
 
 	// Prevent body scroll when menu is open
 	useEffect(() => {
@@ -36,7 +40,16 @@ export const MobileMenu = ({
 		};
 	}, [menuOpen]);
 
+	// Close menu on browser back/forward navigation
+	useEffect(() => {
+		if (menuOpen) onMenuClose();
+	}, [location]);
+
 	const handleTouchStart = (e: React.TouchEvent) => {
+		if (e.targetTouches[0].clientX < leftEdgeZone) {
+			return;
+		}
+
 		setTouchStart(e.targetTouches[0].clientX);
 		setTouchEnd(e.targetTouches[0].clientX);
 		setIsDragging(true);
