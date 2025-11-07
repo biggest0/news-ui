@@ -1,29 +1,12 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { CgInstagram } from "react-icons/cg";
 import { TfiYoutube } from "react-icons/tfi";
 import { RiTwitterXFill } from "react-icons/ri";
 
-import { submitEmailSubscriptionForm } from "@/api/formApi";
-import { validateEmail, cleanseEmail } from "@/service/formService";
+import SubscribeButton from "@/components/common/SubscribeButton";
 
 export default function Footer() {
-	const [email, setEmail] = useState("");
-	// const [message, setMessage] = useState("")
-
-	const handleSubmit = (event: React.FormEvent) => {
-		event.preventDefault();
-		const cleansedEmail = cleanseEmail(email);
-
-		if (!validateEmail(cleansedEmail)) {
-			// setMessage("Please enter a valid email address.")
-			return;
-		}
-		submitEmailSubscriptionForm(cleansedEmail);
-		// setMessage("Thank you for subscribing!")
-	};
-
 	return (
 		<footer className="bg-white border-t border-gray-200 mt-6">
 			{/* Top Section */}
@@ -62,31 +45,7 @@ export default function Footer() {
 				</div>
 
 				{/* Right side - Mailing list */}
-				<div className="flex flex-col space-y-2">
-					<h4 className="text-lg font-semibold text-gray-800">
-						Subscribe to our newsletter
-					</h4>
-					<p className="text-sm text-gray-600">
-						Get the latest news delivered to your inbox.
-					</p>
-					{/* Email input and submission */}
-					<form className="flex gap-2" onSubmit={handleSubmit}>
-						<input
-							type="email"
-							placeholder="Enter your email"
-							value={email}
-							onChange={(e) => setEmail(e.target.value)}
-							className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-						/>
-						<button
-							type="submit"
-							disabled={validateEmail(email) ? false : true}
-							className="bg-amber-500 text-white px-4 py-2 rounded-lg hover:bg-amber-700 transition disabled:bg-gray-400"
-						>
-							Subscribe
-						</button>
-					</form>
-				</div>
+				<SubscribeButton />
 			</div>
 
 			{/* Bottom section */}
