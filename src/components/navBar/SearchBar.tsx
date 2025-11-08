@@ -13,7 +13,7 @@ export const SearchBar = ({
 			{/* Search form trigger icon */}
 			{!searchClicked && (
 				<LuSearch
-					className="w-5 h-5 cursor-pointer transition-colors duration-200 hover:text-black"
+					className="w-6 h-6 cursor-pointer transition-colors duration-200 hover:text-black"
 					onClick={() => onSearchToggle(true)}
 				/>
 			)}

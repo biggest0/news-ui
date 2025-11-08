@@ -17,7 +17,7 @@ export const UserAccount = ({
 		return (
 			<Link to="/account">
 				<LuUserRound
-					className="w-5 h-5 hover:text-black cursor-pointer transition-colors"
+					className="w-6 h-6 hover:text-black cursor-pointer transition-colors"
 					onClick={onLinkClick}
 				/>
 			</Link>

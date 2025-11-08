@@ -1,22 +1,25 @@
 import { Link } from "react-router-dom";
-import { LuCat } from "react-icons/lu";
+import { LuHouse } from "react-icons/lu";
 
 interface LogoProps {
-	size?: "sm" | "md" | "lg";
+	size?: "sm" | "md";
 }
 
 export const Logo = ({ size = "md" }: LogoProps) => {
 	const sizeClasses = {
 		sm: "w-5 h-5",
 		md: "w-6 h-6",
-		lg: "w-8 h-8",
 	};
 
 	return (
 		<Link to="/">
-			<LuCat
+			<LuHouse
 				className={`${sizeClasses[size]} hover:text-black cursor-pointer`}
 			/>
 		</Link>
+		// To DO: Replace with actual logo image (maybe)
+		// <a href="">
+		// 	<img src="test-logo.png" alt="" className={`${sizeClasses[size]} hover:text-black cursor-pointer`}/>
+		// </a>
 	);
 };
