@@ -13,9 +13,9 @@ export const AppTitle = ({ variant = "desktop" }: AppTitleProps) => {
 			<span className="relative inline-block">
 				<span className="relative z-10">Ç</span>
 				<img
-					src="/images/app_title_background_cat.png"
+					src="/images/app_title_background_cat.svg"
 					alt=""
-					className="absolute top-[51%] md:top-[52%] lg:top-[57%] left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 w-4 h-4 md:w-6 md:h-6 lg:w-9 lg:h-9"
+					className="absolute top-[52%] md:top-[54%] lg:top-[57%] left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 w-4 h-4 md:w-6 md:h-6 lg:w-9 lg:h-9"
 				/>
 			</span>
 			ATIRE TIME
