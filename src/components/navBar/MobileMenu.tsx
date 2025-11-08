@@ -7,6 +7,7 @@ import type { MobileMenuProps } from "@/types/navBar";
 import { MobileSearchBar } from "@/components/navBar/MobileSearchBar";
 import { NavigationLinks } from "./NavigationLinks";
 import { UserAccount } from "@/components/common/UserAccount";
+import SocialMediaLinks from "@/components/common/SocialMediaLinks";
 
 export const MobileMenu = ({
 	menuOpen,
@@ -85,9 +86,8 @@ export const MobileMenu = ({
 		<>
 			{/* Menu Panel */}
 			<div
-				className={`fixed top-0 right-0 h-full w-full bg-white shadow-xl z-40 transform md:hidden ${
-					isDragging ? "" : "transition-transform duration-300 ease-in-out"
-				} ${menuOpen ? "translate-x-0" : "translate-x-full"}`}
+				className={`fixed top-0 right-0 h-full w-full bg-white shadow-xl z-40 transform md:hidden ${isDragging ? "" : "transition-transform duration-300 ease-in-out"
+					} ${menuOpen ? "translate-x-0" : "translate-x-full"}`}
 				style={{
 					transform:
 						isDragging && menuOpen ? `translateX(${dragOffset}px)` : undefined,
@@ -120,6 +120,11 @@ export const MobileMenu = ({
 					{/* User profile */}
 					<div className="border-t pt-4 mt-6">
 						<UserAccount variant="full" onLinkClick={onMenuClose} />
+					</div>
+
+					{/* Social media links */}
+					<div className="border-t pt-4 mt-6 flex justify-center">
+						<SocialMediaLinks />
 					</div>
 				</div>
 			</div>
