@@ -8,6 +8,7 @@ import { MobileSearchBar } from "@/components/navBar/MobileSearchBar";
 import { NavigationLinks } from "./NavigationLinks";
 import { UserAccount } from "@/components/common/UserAccount";
 import SocialMediaLinks from "@/components/common/SocialMediaLinks";
+import { APP_VERSION } from "@/config/config";
 
 export const MobileMenu = ({
 	menuOpen,
@@ -86,8 +87,9 @@ export const MobileMenu = ({
 		<>
 			{/* Menu Panel */}
 			<div
-				className={`fixed top-0 right-0 h-full w-full bg-white shadow-xl z-40 transform md:hidden ${isDragging ? "" : "transition-transform duration-300 ease-in-out"
-					} ${menuOpen ? "translate-x-0" : "translate-x-full"}`}
+				className={`fixed top-0 right-0 h-full w-full bg-white shadow-xl z-40 transform md:hidden ${
+					isDragging ? "" : "transition-transform duration-300 ease-in-out"
+				} ${menuOpen ? "translate-x-0" : "translate-x-full"}`}
 				style={{
 					transform:
 						isDragging && menuOpen ? `translateX(${dragOffset}px)` : undefined,
@@ -96,36 +98,38 @@ export const MobileMenu = ({
 				onTouchMove={handleTouchMove}
 				onTouchEnd={handleTouchEnd}
 			>
-				<div className="p-4">
-					{/* Close button */}
-					<div className="flex justify-end mb-6">
-						<button
-							onClick={onMenuClose}
-							className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
-						>
-							<LuX className="w-5 h-5 text-gray-600" />
-						</button>
+				<div className="p-4 h-full flex flex-col justify-between">
+					<div>
+						{/* Close button */}
+						<div className="flex justify-end mb-6">
+							<button
+								onClick={onMenuClose}
+								className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+							>
+								<LuX className="w-5 h-5 text-gray-600" />
+							</button>
+						</div>
+
+						{/* Search */}
+						<MobileSearchBar
+							query={query}
+							onQueryChange={onQueryChange}
+							onSubmit={onSubmit}
+						/>
+						{/* Navigation links */}
+						<NavigationLinks onLinkClick={onMenuClose} />
+						{/* User profile */}
+						<div className="border-t pt-4 mt-6">
+							<UserAccount variant="full" onLinkClick={onMenuClose} />
+						</div>
+						{/* Social media links */}
+						<div className="border-t pt-4 mt-6 flex justify-center">
+							<SocialMediaLinks />
+						</div>
 					</div>
 
-					{/* Search */}
-					<MobileSearchBar
-						query={query}
-						onQueryChange={onQueryChange}
-						onSubmit={onSubmit}
-					/>
-
-					{/* Navigation links */}
-					<NavigationLinks onLinkClick={onMenuClose} />
-
-					{/* User profile */}
-					<div className="border-t pt-4 mt-6">
-						<UserAccount variant="full" onLinkClick={onMenuClose} />
-					</div>
-
-					{/* Social media links */}
-					<div className="border-t pt-4 mt-6 flex justify-center">
-						<SocialMediaLinks />
-					</div>
+					{/* App version */}
+					<div className="flex justify-end text-xs">{APP_VERSION}</div>
 				</div>
 			</div>
 		</>
