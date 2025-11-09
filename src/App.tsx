@@ -9,10 +9,8 @@ import Contact from "./pages/ContactPage";
 import AccountPage from "./pages/AccountPage";
 import DisclaimerPage from "./pages/DisclaimerPage";
 
-import NoticeBar from "@/components/common/NoticeBar";
-import NavBar from "@/components/navBar/NavBar";
+import Header from "./components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import CategoryBar from "@/components/layout/CategoryBar";
 import ArticlePage from "./pages/ArticlePage";
 import ScrollToTop from "@/components/layout/ScrollToTop";
 import { ARTICLE_ROUTES } from "@/constants/routes";
@@ -20,11 +18,9 @@ import { ARTICLE_ROUTES } from "@/constants/routes";
 function App() {
 	return (
 		<BrowserRouter basename="/">
+			<Header />
 			<main className="w-full max-w-[1280px] min-h-screen mx-auto px-4">
 				<ScrollToTop />
-				<NoticeBar />
-				<NavBar />
-				<CategoryBar />
 				<Routes>
 					<Route path="/" element={<HomePage />} />
 					{/* Article category pages */}
