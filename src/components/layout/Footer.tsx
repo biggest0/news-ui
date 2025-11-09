@@ -5,9 +5,9 @@ import SocialMediaLinks from "@/components/common/SocialMediaLinks";
 
 export default function Footer() {
 	return (
-		<footer className="bg-white border-t border-gray-200 mt-6">
+		<footer className="w-full max-w-[1280px] mx-auto bg-white border-t border-gray-200 mt-6">
 			{/* Top Section */}
-			<div className="px-8 py-12 grid grid-cols-1 justify-items-center md:justify-items-start md:grid-cols-2 gap-8 w-full max-w-[1280px] mx-auto">
+			<div className="px-4 py-12 grid grid-cols-1 md:grid-cols-2 gap-8 justify-items-center md:justify-items-start">
 				{/* Left side - Logo, caption, social */}
 				<div className="flex flex-col items-center md:items-start space-y-4">
 					<div className="text-2xl font-bold text-gray-800">Catire Time</div>
