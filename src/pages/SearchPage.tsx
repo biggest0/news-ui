@@ -8,8 +8,8 @@ import type { AppDispatch, RootState } from "@/store/store";
 import type { ArticleInfo } from "@/types/articleTypes";
 import NewsCard from "@/components/news/NewsCard";
 import { loadArticlesInfoBySearch } from "@/store/articlesSlice";
-import { isWithinNDays } from "@/utils/dateUtil";
-import { sortArticlesByMatchCount } from "@/utils/sortUtil";
+import { isWithinNDays } from "@/utils/dateUtils";
+import { sortArticlesByMatchCount } from "@/utils/sortUtils";
 
 export default function SearchPage() {
 	const location = useLocation();

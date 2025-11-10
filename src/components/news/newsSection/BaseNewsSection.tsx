@@ -11,7 +11,7 @@ import { CATIRE_EDITORS, CAT_FACTS } from "@/components/sideColumn/constants";
 import { SectionHeader } from "@/components/common/SectionHeader";
 import { CatFactsCard } from "@/components/sideColumn/CatFactsCard";
 import type { ArticleInfo } from "@/types/articleTypes";
-import { isWithinNDays } from "@/utils/dateUtil";
+import { isWithinNDays } from "@/utils/dateUtils";
 import type { ArticleInfoRequest } from "@/types/articleTypes";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { USER_ARTICLE_HISTORY } from "@/constants/keys";
