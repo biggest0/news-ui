@@ -73,8 +73,6 @@ export async function getTopTenArticles() {
 	}
 }
 
-
-
 // ------------------------------
 // Data transformation functions
 // ------------------------------

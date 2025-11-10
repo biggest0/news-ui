@@ -1,6 +1,9 @@
 import type { ArticleInfo } from "@/types/articleTypes";
 
-export function sortArticlesByMatchCount(articles: ArticleInfo[], query: string) {
+export function sortArticlesByMatchCount(
+	articles: ArticleInfo[],
+	query: string
+) {
 	const lowerCaseQuery = query.toLowerCase();
 
 	return articles.sort((a, b) => {
