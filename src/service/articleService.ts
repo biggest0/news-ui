@@ -5,7 +5,11 @@ import {
 	fetchArticlesInfo,
 	fetchTopTenArticles,
 } from "../api/articleApi";
-import type { ArticleDetail, ArticleInfo, ArticleInfoRequest } from "../types/articleTypes";
+import type {
+	ArticleDetail,
+	ArticleInfo,
+	ArticleInfoRequest,
+} from "../types/articleTypes";
 
 // --------------
 // API functions
@@ -42,11 +46,11 @@ export async function getArticleDetail(articleId: string) {
 		// have to return a ArticleDetail object or redux thunk will get angry
 		return {
 			id: articleId,
-			datePublished: '',
-			title: '',
-			summary: '',
+			datePublished: "",
+			title: "",
+			summary: "",
 			paragraphs: ["Error loading article details."],
-			mainCategory: '',
+			mainCategory: "",
 			subCategory: [],
 			source: "",
 			url: "",
