@@ -8,7 +8,7 @@ import type { AppDispatch, RootState } from "@/store/store";
 import type { ArticleInfo } from "@/types/articleTypes";
 import NewsCard from "@/components/news/NewsCard";
 import { loadArticlesInfoBySearch } from "@/store/articlesSlice";
-import { isWithinNDays } from "@/service/dateService";
+import { isWithinNDays } from "@/utils/dateUtil";
 import { sortByWordCount } from "@/service/articleService";
 
 export default function SearchPage() {
