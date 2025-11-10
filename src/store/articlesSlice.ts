@@ -100,7 +100,7 @@ const articlesSlice = createSlice({
 			}
 		},
 		removeArticle: (state, action: PayloadAction<string>) => {
-			state.articles.filter((article) => article.id !== action.payload);
+			state.articles = state.articles.filter((article) => article.id !== action.payload);
 		},
 		clearError: (state) => {
 			state.error = undefined;
