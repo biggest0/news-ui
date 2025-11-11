@@ -1,6 +1,17 @@
 import type { ArticleInfoRequest } from "@/types/articleTypes";
 import { API_URL } from "@/config/config";
 
+/**
+ * Fetches article information from the server with optional filters
+ * @param page - The page number to fetch (default: 1)
+ * @param limit - The number of articles per page (default: 10)
+ * @param category - Optional category filter
+ * @param search - Optional search query filter
+ * @param dateRange - Optional date range filter
+ * @param sortBy - Optional sort criteria
+ * @returns The response data from the server containing article information
+ * @throws Error if the HTTP request fails
+ */
 export async function fetchArticlesInfo({
 	page = 1,
 	limit = 10,
@@ -27,6 +38,13 @@ export async function fetchArticlesInfo({
 	return response.json();
 }
 
+/**
+ * Fetches articles filtered by category from the server
+ * @param page - The page number to fetch
+ * @param category - The category to filter articles by
+ * @returns The response data from the server containing article information
+ * @throws Error if the HTTP request fails
+ */
 export async function fetchArticlesByCategory(page: number, category: string) {
 	const response = await fetch(
 		`${API_URL}/article-info?page=${page}&limit=10&category=${category}`,
@@ -41,6 +59,13 @@ export async function fetchArticlesByCategory(page: number, category: string) {
 	return response.json();
 }
 
+/**
+ * Fetches articles filtered by search query from the server
+ * @param page - The page number to fetch
+ * @param search - The search query to filter articles by
+ * @returns The response data from the server containing article information
+ * @throws Error if the HTTP request fails
+ */
 export async function fetchArticlesBySearch(page: number, search: string) {
 	const response = await fetch(
 		`${API_URL}/article-info?page=${page}&limit=10&search=${search}`,
@@ -55,20 +80,12 @@ export async function fetchArticlesBySearch(page: number, search: string) {
 	return response.json();
 }
 
-export async function _fetchArticlesInfo(page: number) {
-	const response = await fetch(
-		`${API_URL}/article-info?page=${page}&limit=10`,
-		{
-			method: "GET",
-			headers: { "Content-Type": "application/json" },
-		}
-	);
-	if (!response.ok) {
-		throw new Error(`Error: ${response.statusText}`);
-	}
-	return response.json();
-}
-
+/**
+ * Fetches detailed information for a specific article from the server
+ * @param articleId - The unique identifier of the article
+ * @returns The response data from the server containing detailed article information
+ * @throws Error if the HTTP request fails
+ */
 export async function fetchArticleDetail(articleId: string) {
 	const response = await fetch(`${API_URL}/article-detail`, {
 		method: "POST",
@@ -81,6 +98,11 @@ export async function fetchArticleDetail(articleId: string) {
 	return response.json();
 }
 
+/**
+ * Increments the view count for a specific article on the server
+ * @param articleId - The unique identifier of the article
+ * @throws Error if the HTTP request fails
+ */
 export function incrementArticleViewed(articleId: string) {
 	fetch(`${API_URL}/increment-article-view/${articleId}`, {
 		method: "PUT",
@@ -89,6 +111,11 @@ export function incrementArticleViewed(articleId: string) {
 	// don't expect a repsonse, so no return/ no async because just incrementing view of article with specific ID
 }
 
+/**
+ * Fetches the top ten most viewed articles from the server
+ * @returns The response data from the server containing the top ten articles
+ * @throws Error if the HTTP request fails
+ */
 export async function fetchTopTenArticles() {
 	const response = await fetch(`${API_URL}/article-top-ten`, {
 		method: "GET",
