@@ -32,7 +32,7 @@ export function useSearchArticles(query: string) {
 }
 
 /**
- * Hook to create a sbuset of articles by filtering and sorting articles based on search parameters
+ * Hook to create a subset of articles by filtering and sorting articles based on search parameters
  * @param articles - All articles from Redux store
  * @param filters - Search filters (query, dateRange, sortBy)
  * @returns Filtered and sorted articles
@@ -110,7 +110,6 @@ export function useSearchPagination(
  * @param page - Current page number
  * @param setPage - Function to update page number
  * @param setFetching - Function to update fetching state
- * @param hasFilters - Whether any filters (dateRange or sortBy) are applied
  */
 export function useInfiniteScroll(
 	query: string,
@@ -118,18 +117,13 @@ export function useInfiniteScroll(
 	fetching: boolean,
 	page: number,
 	setPage: (updater: (prev: number) => number) => void,
-	setFetching: (value: boolean) => void,
-	hasFilters: boolean
+	setFetching: (value: boolean) => void
 ) {
 	const dispatch = useDispatch<AppDispatch>();
 
 	useEffect(() => {
 		const handleScroll = () => {
-			// Only load more if:
-			// 1. Not currently fetching
-			// 2. More articles can be shown (based on filtered articles)
-			// 3. If filters are applied, only load if showMore is true (filtered articles are growing)
-			// 4. If no filters, load based on showMore
+			// Only load more if not fetching and more articles can be shown
 			if (
 				!fetching &&
 				showMore &&
@@ -148,14 +142,5 @@ export function useInfiniteScroll(
 
 		window.addEventListener("scroll", handleScroll);
 		return () => window.removeEventListener("scroll", handleScroll);
-	}, [
-		fetching,
-		showMore,
-		query,
-		page,
-		dispatch,
-		setPage,
-		setFetching,
-		hasFilters,
-	]);
+	}, [fetching, showMore, query, page, dispatch, setPage, setFetching]);
 }

@@ -27,9 +27,6 @@ export default function SearchPage() {
 	};
 	const filteredArticles = useFilteredArticles(articles, filters);
 
-	// Check if filters are applied
-	const hasFilters = Boolean(filters.dateRange || filters.sortBy);
-
 	// Handle pagination (based on filtered articles)
 	const { page, setPage, showMore, fetching, setFetching } =
 		useSearchPagination(filteredArticles, filters);
@@ -41,8 +38,7 @@ export default function SearchPage() {
 		fetching,
 		page,
 		setPage,
-		setFetching,
-		hasFilters
+		setFetching
 	);
 
 	return (
