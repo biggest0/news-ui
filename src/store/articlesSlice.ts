@@ -19,10 +19,18 @@ interface ArticlesState {
 	homeArticles: ArticleInfo[];
 	articles: ArticleInfo[];
 	articlesDetail: Record<string, ArticleDetail>;
-	loadingPage: boolean;
-	loadingArticleInfo: boolean;
-	loadingArticleDetail: boolean;
-	error: string | undefined;
+	loading: {
+		homePage: boolean;
+		topTen: boolean;
+		articles: boolean;
+		detail: boolean;
+	};
+	error: {
+		homePage: string | undefined;
+		topTen: string | undefined;
+		articles: string | undefined;
+		detail: string | undefined;
+	};
 }
 
 const initialState: ArticlesState = {
@@ -30,12 +38,23 @@ const initialState: ArticlesState = {
 	homeArticles: [],
 	articles: [],
 	articlesDetail: {},
-	loadingPage: false,
-	loadingArticleInfo: false,
-	loadingArticleDetail: false,
-	error: undefined,
+	loading: {
+		homePage: false,
+		topTen: false,
+		articles: false,
+		detail: false,
+	},
+	error: {
+		homePage: undefined,
+		topTen: undefined,
+		articles: undefined,
+		detail: undefined,
+	},
 };
 
+// -------------------------
+// Thunks for async actions
+// -------------------------
 export const loadInitialArticlesInfo = createAsyncThunk<
 	ArticleInfo[],
 	ArticleInfoRequest
@@ -78,6 +97,26 @@ export const loadTopTenArticles = createAsyncThunk<ArticleInfo[]>(
 	}
 );
 
+// -------------------------
+// Helper functions
+// -------------------------
+// re-enable when hasMore flag has been implemented
+// const appendUniqueArticles = (
+// 	existingArticles: ArticleInfo[],
+// 	newArticles: ArticleInfo[]
+// ) => {
+// 	const articlesMap = new Map(existingArticles.map((a) => [a.id, a]));
+// 	newArticles.forEach((article) => {
+// 		if (!articlesMap.has(article.id)) {
+// 			articlesMap.set(article.id, article);
+// 		}
+// 	});
+// 	return Array.from(articlesMap.values());
+// };
+
+// -------------------------
+// Articles Slice
+// -------------------------
 const articlesSlice = createSlice({
 	name: "articles",
 	initialState,
@@ -100,63 +139,73 @@ const articlesSlice = createSlice({
 			}
 		},
 		removeArticle: (state, action: PayloadAction<string>) => {
-			state.articles = state.articles.filter((article) => article.id !== action.payload);
+			state.articles = state.articles.filter(
+				(article) => article.id !== action.payload
+			);
 		},
 		clearError: (state) => {
-			state.error = undefined;
+			state.error = {
+				homePage: undefined,
+				topTen: undefined,
+				articles: undefined,
+				detail: undefined,
+			};
 		},
 	},
 	extraReducers: (builder) => {
 		// load initial articles for home page
 		builder
 			.addCase(loadInitialArticlesInfo.pending, (state) => {
-				state.loadingPage = true;
-				state.error = undefined;
+				state.loading.homePage = true;
+				state.error.homePage = undefined;
 			})
 			.addCase(loadInitialArticlesInfo.fulfilled, (state, action) => {
-				state.loadingPage = false;
+				state.loading.homePage = false;
 				state.homeArticles = action.payload;
 			})
 			.addCase(loadInitialArticlesInfo.rejected, (state, action) => {
-				state.loadingPage = false;
-				state.error = action.error.message;
+				state.loading.homePage = false;
+				state.error.homePage = action.error.message;
 			});
 
 		// load article details with article ID
 		builder
 			.addCase(loadArticleDetail.pending, (state) => {
-				state.loadingArticleDetail = true;
-				state.error = undefined;
+				state.loading.detail = true;
+				state.error.detail = undefined;
 			})
 			.addCase(loadArticleDetail.fulfilled, (state, action) => {
-				state.loadingArticleDetail = false;
+				state.loading.detail = false;
 				state.articlesDetail[action.payload.id] = action.payload;
 			})
 			.addCase(loadArticleDetail.rejected, (state, action) => {
-				state.loadingArticleDetail = false;
-				state.error = action.error.message;
+				state.loading.detail = false;
+				state.error.detail = action.error.message;
 			});
 
 		// load top 10 articles
 		builder
 			.addCase(loadTopTenArticles.pending, (state) => {
-				state.error = undefined;
+				state.loading.topTen = true;
+				state.error.topTen = undefined;
 			})
 			.addCase(loadTopTenArticles.fulfilled, (state, action) => {
+				state.loading.topTen = false;
 				state.topTenArticles = action.payload;
 			})
 			.addCase(loadTopTenArticles.rejected, (state, action) => {
-				state.error = action.error.message;
+				state.loading.topTen = false;
+				state.error.topTen = action.error.message;
 			});
 
 		// paginate articles for home page
 		builder
 			.addCase(loadArticlesInfo.pending, (state) => {
-				state.loadingArticleInfo = true;
-				state.error = undefined;
+				state.loading.articles = true;
+				state.error.articles = undefined;
 			})
 			.addCase(loadArticlesInfo.fulfilled, (state, action) => {
-				state.loadingArticleInfo = false;
+				state.loading.articles = false;
 
 				action.payload.forEach((article) => {
 					const exists = state.homeArticles.some((a) => a.id === article.id);
@@ -164,10 +213,12 @@ const articlesSlice = createSlice({
 						state.homeArticles.push(article);
 					}
 				});
+
+				// state.homeArticles = appendUniqueArticles(state.homeArticles, action.payload)
 			})
 			.addCase(loadArticlesInfo.rejected, (state, action) => {
-				state.loadingArticleInfo = false;
-				state.error = action.error.message;
+				state.loading.articles = false;
+				state.error.articles = action.error.message;
 			});
 
 		// fetch for basic article info
@@ -178,8 +229,8 @@ const articlesSlice = createSlice({
 					loadArticlesInfoBySearch.pending
 				),
 				(state) => {
-					state.loadingArticleInfo = true;
-					state.error = undefined;
+					state.loading.articles = true;
+					state.error.articles = undefined;
 				}
 			)
 			.addMatcher(
@@ -188,13 +239,16 @@ const articlesSlice = createSlice({
 					loadArticlesInfoBySearch.fulfilled
 				),
 				(state, action) => {
-					state.loadingArticleInfo = false;
+					state.loading.articles = false;
+
 					action.payload.forEach((article) => {
 						const exists = state.articles.some((a) => a.id === article.id);
 						if (!exists) {
 							state.articles.push(article);
 						}
 					});
+
+					// state.articles = appendUniqueArticles(state.articles, action.payload)
 				}
 			)
 			.addMatcher(
@@ -203,8 +257,8 @@ const articlesSlice = createSlice({
 					loadArticlesInfoBySearch.rejected
 				),
 				(state, action) => {
-					state.loadingArticleInfo = false;
-					state.error = action.error.message;
+					state.loading.articles = false;
+					state.error.articles = action.error.message;
 				}
 			);
 	},

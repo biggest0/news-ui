@@ -9,7 +9,7 @@ import { LoadingOverlay } from "@/components/common/LoadingOverlay";
 
 export function HomeNewsSection() {
 	const dispatch = useDispatch<AppDispatch>();
-	const { homeArticles, loadingPage } = useSelector(
+	const { homeArticles, loading } = useSelector(
 		(state: RootState) => state.article
 	);
 
@@ -32,7 +32,7 @@ export function HomeNewsSection() {
 				showHomeContent={true}
 				resetKey={"home"}
 			/>
-			{<LoadingOverlay loading={loadingPage}/>}
+			{<LoadingOverlay loading={loading.homePage}/>}
 		</>
 	);
 }

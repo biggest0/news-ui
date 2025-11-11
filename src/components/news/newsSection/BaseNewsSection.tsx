@@ -33,7 +33,7 @@ export function BaseNewsSection({
 	const location = useLocation();
 	const selectedCategory = location.pathname.split("/")[1];
 	const prevArticlesLength = useRef(0);
-	const { loadingArticleInfo } = useSelector(
+	const { loading } = useSelector(
 		(state: RootState) => state.article
 	);
 
@@ -250,7 +250,7 @@ export function BaseNewsSection({
 				)}
 
 				<div className="text-center text-gray-500 py-4">
-					{loadingArticleInfo
+					{loading.articles
 						? "Just a few seoncds, articles are coming!"
 						: "You've scrolled to the end. There's nothing left!"}
 				</div>

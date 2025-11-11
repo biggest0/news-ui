@@ -11,9 +11,7 @@ export default function ArticlePage() {
 	const articleDetail = useSelector((state: RootState) =>
 		id ? state.article.articlesDetail[id] : undefined
 	);
-	const loadingArticleDetail = useSelector(
-		(state: RootState) => state.article.loadingArticleDetail
-	);
+	const { loading } = useSelector((state: RootState) => state.article);
 
 	useEffect(() => {
 		if (id) {
@@ -52,9 +50,7 @@ export default function ArticlePage() {
 					</div>
 				</div>
 			)}
-			{loadingArticleDetail && !articleDetail && (
-				<div>Loading article details!</div>
-			)}
+			{loading.detail && !articleDetail && <div>Loading article details!</div>}
 		</div>
 	);
 }
