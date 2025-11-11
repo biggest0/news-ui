@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import type { AppDispatch, RootState } from "@/store/store";
 import { loadArticleDetail } from "@/store/articlesSlice";
+import ArticleDetail from "@/components/news/ArticleDetail";
 
 export default function ArticlePage() {
 	const { id } = useParams();
@@ -11,9 +12,7 @@ export default function ArticlePage() {
 	const articleDetail = useSelector((state: RootState) =>
 		id ? state.article.articlesDetail[id] : undefined
 	);
-	const loadingArticleDetail = useSelector(
-		(state: RootState) => state.article.loadingArticleDetail
-	);
+	const { loading } = useSelector((state: RootState) => state.article);
 
 	useEffect(() => {
 		if (id) {
@@ -23,38 +22,8 @@ export default function ArticlePage() {
 
 	return (
 		<div className="py-6">
-			{articleDetail && (
-				<div className="flex flex-col space-y-4">
-					{/* Title and date */}
-					<div>
-						<h3 className="text-lg font-semibold text-gray-800">
-							{articleDetail.title}
-						</h3>
-						<div className="text-sm">{articleDetail.datePublished}</div>
-					</div>
-
-					{/* Paragraphs */}
-					<div className="space-y-2">
-						{articleDetail.paragraphs?.map((paragraph, index) => (
-							<div key={`${articleDetail.id}-paragraph-${index}}`}>
-								{paragraph}
-							</div>
-						))}
-					</div>
-
-					{/* Sub category */}
-					<div className="flex flex-wrap space-x-4 underline text-sm">
-						{articleDetail.subCategory?.map((source, index) => (
-							<span key={`${articleDetail.id}-category-${index}}`}>
-								{source}
-							</span>
-						))}
-					</div>
-				</div>
-			)}
-			{loadingArticleDetail && !articleDetail && (
-				<div>Loading article details!</div>
-			)}
+			{articleDetail && <ArticleDetail article={articleDetail} />}
+			{loading.detail && !articleDetail && <div>Loading article details!</div>}
 		</div>
 	);
 }

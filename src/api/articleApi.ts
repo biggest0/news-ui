@@ -1,14 +1,5 @@
-import {
-	articleDetailTransform,
-	articleInfoTransform,
-} from "../utils/transform";
 import type { ArticleInfoRequest } from "@/types/articleTypes";
-
 import { API_URL } from "@/config/config";
-
-// toggle to use either heroku app or local app
-// const url = 'https://catire-1acdb920c122.herokuapp.com';
-// const url = "http://localhost:3001";
 
 export async function fetchArticlesInfo({
 	page = 1,
@@ -33,8 +24,7 @@ export async function fetchArticlesInfo({
 	if (!response.ok) {
 		throw new Error(`Error: ${response.statusText}`);
 	}
-	const data = await response.json();
-	return data.map(articleInfoTransform);
+	return response.json();
 }
 
 export async function fetchArticlesByCategory(page: number, category: string) {
@@ -48,8 +38,7 @@ export async function fetchArticlesByCategory(page: number, category: string) {
 	if (!response.ok) {
 		throw new Error(`Error: ${response.statusText}`);
 	}
-	const data = await response.json();
-	return data.map(articleInfoTransform);
+	return response.json();
 }
 
 export async function fetchArticlesBySearch(page: number, search: string) {
@@ -63,8 +52,7 @@ export async function fetchArticlesBySearch(page: number, search: string) {
 	if (!response.ok) {
 		throw new Error(`Error: ${response.statusText}`);
 	}
-	const data = await response.json();
-	return data.map(articleInfoTransform);
+	return response.json();
 }
 
 export async function _fetchArticlesInfo(page: number) {
@@ -78,8 +66,7 @@ export async function _fetchArticlesInfo(page: number) {
 	if (!response.ok) {
 		throw new Error(`Error: ${response.statusText}`);
 	}
-	const data = await response.json();
-	return data.map(articleInfoTransform);
+	return response.json();
 }
 
 export async function fetchArticleDetail(articleId: string) {
@@ -91,8 +78,7 @@ export async function fetchArticleDetail(articleId: string) {
 	if (!response.ok) {
 		throw new Error(`Error: ${response.statusText}`);
 	}
-	const data = await response.json();
-	return articleDetailTransform(data);
+	return response.json();
 }
 
 export function incrementArticleViewed(articleId: string) {
@@ -111,8 +97,7 @@ export async function fetchTopTenArticles() {
 	if (!response.ok) {
 		throw new Error(`Error: ${response.statusText}`);
 	}
-	const data = await response.json();
-	return data.map(articleInfoTransform);
+	return response.json();
 }
 
 // take date site loaded

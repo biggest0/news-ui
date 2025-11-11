@@ -1,4 +1,4 @@
 export interface UserInfo {
-  name?: string;
-  biography?: string;
+	name?: string;
+	biography?: string;
 }

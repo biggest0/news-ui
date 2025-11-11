@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { submitEmailSubscriptionForm } from "@/api/formApi";
-import { validateEmail, cleanseEmail } from "@/service/formService";
+import { subscribeToNewsletter } from "@/service/formService";
+import { validateEmail, cleanseEmail } from "@/utils/textUtils";
 
 export default function SubscribeButton() {
 	const [email, setEmail] = useState("");
@@ -20,11 +20,11 @@ export default function SubscribeButton() {
 		setMessage("");
 
 		try {
-			await submitEmailSubscriptionForm(cleansedEmail);
+			await subscribeToNewsletter(cleansedEmail);
 			setMessage("Thank you for subscribing! Check your inbox to confirm.");
 			setEmail("");
 		} catch (error) {
-			// Display the specific error message from the API
+			// Display the specific error message from the form service
 			if (error instanceof Error) {
 				setMessage(error.message);
 			} else {

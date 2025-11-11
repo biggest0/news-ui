@@ -18,7 +18,7 @@ export const CATIRE_EDITORS = [
 	},
 	{
 		name: "Purrscilla",
-		role: "Intern",
+		role: "Curator",
 		description: "Gets her news from Tiktok",
 		imageUrl: "cat_purrscilla.jpg",
 	},

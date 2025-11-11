@@ -8,8 +8,8 @@ import type { AppDispatch, RootState } from "@/store/store";
 import type { ArticleInfo } from "@/types/articleTypes";
 import NewsCard from "@/components/news/NewsCard";
 import { loadArticlesInfoBySearch } from "@/store/articlesSlice";
-import { isWithinNDays } from "@/service/dateUtils";
-import { sortByWordCount } from "@/service/articleService";
+import { isWithinNDays } from "@/utils/dateUtils";
+import { sortArticlesByMatchCount } from "@/utils/sortUtils";
 
 export default function SearchPage() {
 	const location = useLocation();
@@ -70,7 +70,7 @@ export default function SearchPage() {
 			if (sortBy) {
 				switch (sortBy) {
 					case "relevant":
-						searchedArticles = sortByWordCount(searchedArticles, query);
+						searchedArticles = sortArticlesByMatchCount(searchedArticles, query);
 						break;
 
 					case "newest":
@@ -233,7 +233,7 @@ function SearchSection({
 						className="py-1 font-medium text-gray-700 appearance-none pr-6"
 						onChange={(e) => updateUrl(query, dateRange, e.target.value)}
 					>
-						<option value="" disabled hidden>
+						<option value="" disabled>
 							Sort By
 						</option>
 						<option value="relevant">Relevant</option>
