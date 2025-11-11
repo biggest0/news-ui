@@ -25,4 +25,3 @@ export default function SortByFilter({ value, onChange }: SortByFilterProps) {
 		</div>
 	);
 }
-
