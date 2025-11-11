@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { LuSearch } from "react-icons/lu";
 
-import type { AppDispatch } from "@/store/store";
-import { loadArticlesInfoBySearch } from "@/store/articlesSlice";
 import { buildSearchUrl } from "@/utils/searchUrlUtils";
 import DateRangeFilter from "./DateRangeFilter";
 import SortByFilter from "./SortByFilter";
@@ -20,7 +17,6 @@ export default function SearchSection({
 	dateRange,
 	sortBy,
 }: SearchSectionProps) {
-	const dispatch = useDispatch<AppDispatch>();
 	const navigate = useNavigate();
 
 	const [input, setInput] = useState(query ?? "");
@@ -36,7 +32,7 @@ export default function SearchSection({
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 		if (input.trim()) {
-			dispatch(loadArticlesInfoBySearch({ page: 1, search: input }));
+			// Navigate to new URL - useSearchArticles hook will handle the API call
 			navigate(
 				buildSearchUrl({
 					query: input,
