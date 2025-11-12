@@ -1,6 +1,6 @@
 import { AppLogo } from "@/components/common/brand/AppLogo";
 import { AppTitle } from "./AppTitle";
-import { SearchBar } from "./SearchBar";
+import { DesktopSearchBar } from "./DesktopSearchBar";
 import { UserAccountIcon } from "@/components/common/user/UserAccountIcon";
 import type { SearchProps } from "@/types/navBar";
 
@@ -15,7 +15,7 @@ export const DesktopNavigation = (props: SearchProps) => {
 
 			{/* Right - Search and User */}
 			<div className="flex gap-4 items-center text-gray-600">
-				<SearchBar {...props} />
+				<DesktopSearchBar {...props} />
 				<UserAccountIcon variant="icon" />
 			</div>
 		</div>
