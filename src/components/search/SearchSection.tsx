@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LuSearch } from "react-icons/lu";
 
-import { buildSearchUrl } from "@/utils/searchUrlUtils";
+import { buildSearchUrl } from "@/utils/search/searchUrlUtils";
 import DateRangeFilter from "./DateRangeFilter";
 import SortByFilter from "./SortByFilter";
 

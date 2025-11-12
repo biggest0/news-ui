@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import type { ArticleInfo, ArticleInfoRequest } from "@/types/articleTypes";
 import { useLocalStorage } from "./useLocalStorage";
 import { USER_ARTICLE_HISTORY } from "@/constants/keys";
-import { isWithinNDays } from "@/utils/dateUtils";
+import { isWithinNDays } from "@/utils/date/dateUtils";
 
 export function useArticleHistory() {
 	const [articleHistory, setArticleHistory] = useLocalStorage<ArticleInfo[]>(

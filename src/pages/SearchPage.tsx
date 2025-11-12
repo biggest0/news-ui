@@ -10,7 +10,7 @@ import {
 	useSearchPagination,
 	useInfiniteScroll,
 } from "@/hooks/useSearchPage";
-import type { SearchFilters } from "@/utils/searchUtils";
+import type { SearchFilters } from "@/utils/search/searchUtils";
 
 export default function SearchPage() {
 	const { articles } = useSelector((state: RootState) => state.article);

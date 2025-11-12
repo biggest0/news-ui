@@ -5,8 +5,8 @@ import { useDispatch } from "react-redux";
 import type { AppDispatch } from "@/store/store";
 import type { ArticleInfo } from "@/types/articleTypes";
 import { loadArticlesInfoBySearch } from "@/store/articlesSlice";
-import { parseSearchParams, type SearchParams } from "@/utils/searchUrlUtils";
-import { filterAndSortArticles, type SearchFilters } from "@/utils/searchUtils";
+import { parseSearchParams, type SearchParams } from "@/utils/search/searchUrlUtils";
+import { filterAndSortArticles, type SearchFilters } from "@/utils/search/searchUtils";
 
 /**
  * Hook to read and parse search parameters from URL
