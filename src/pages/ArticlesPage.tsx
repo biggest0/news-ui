@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { CategoryNewsSection } from "@/components/news/section/CategoryNewsSection";
+import { CategoryNewsSection } from "@/components/news/section/newsSections/CategoryNewsSection";
 
 export default function ArticlesPage() {
 	const location = useLocation();

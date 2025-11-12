@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import NewsSideColumn from "../NewsSideColumn";
+import NewsSideColumn from "../../NewsSideColumn";
 import { SectionHeader } from "@/components/common/SectionHeader";
 import type { ArticleInfo, ArticleInfoRequest } from "@/types/articleTypes";
 import type { RootState } from "@/store/store";
@@ -10,9 +10,9 @@ import {
 	useArticleFilters,
 	useInfiniteScroll,
 } from "@/hooks/useArticleHooks";
-import { FilterBar } from "./FilterBar";
-import { ArticleList } from "./ArticleList";
-import { LoadingMessage } from "./LoadingMessage";
+import { FilterBar } from "../../shared/FilterBar";
+import { ArticleList } from "../../shared/ArticleList";
+import { LoadingMessage } from "../../shared/LoadingMessage";
 
 interface BaseNewsSectionProps {
 	articles: ArticleInfo[];
