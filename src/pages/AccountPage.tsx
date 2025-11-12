@@ -1,5 +1,5 @@
 import { SectionHeader } from "@/components/common/SectionHeader";
-import { AccountNewsSection } from "@/components/news/newsSection/AccountNewsSection";
+import { AccountNewsSection } from "@/components/news/section/AccountNewsSection";
 import { AccountInfoSection } from "@/components/forms/AccountInfoSection";
 import { USER_ARTICLE_HISTORY } from "@//constants/keys";
 
