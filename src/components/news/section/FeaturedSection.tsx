@@ -3,14 +3,14 @@
 import { SectionHeader } from "@/components/common/SectionHeader";
 import Image from "@/assets/news_hero_image.jpg";
 // import type { RootState } from "@/store/store";
-import NewsHeroCard from "./cards/NewsHeroCard";
+import NewsHeroCard from "../cards/NewsHeroCard";
 import type { ArticleInfo } from "@/types/articleTypes";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { USER_ARTICLE_HISTORY } from "@/constants/keys";
 import { handleLocalStorageUpdate } from "@/service/localStorageService";
-import { SELECTED_ARTICLES } from "./tempArticles";
+import { SELECTED_ARTICLES } from "../tempArticles";
 
-export default function NewsHero() {
+export default function FeaturedSection() {
 	// const { topTenArticles } = useSelector((state: RootState) => state.article);
 	const [articleHistory, setArticleHistory] = useLocalStorage<ArticleInfo[]>(
 		USER_ARTICLE_HISTORY,
