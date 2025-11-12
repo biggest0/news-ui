@@ -9,10 +9,10 @@ import Contact from "./pages/ContactPage";
 import AccountPage from "./pages/AccountPage";
 import DisclaimerPage from "./pages/DisclaimerPage";
 
-import Header from "./components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import Header from "./components/layout/header/Header";
+import Footer from "@/components/layout/footer/Footer";
 import ArticlePage from "./pages/ArticlePage";
-import ScrollToTop from "@/components/layout/ScrollToTop";
+import ScrollToTop from "@/components/layout/navigation/ScrollToTop";
 import { ARTICLE_ROUTES } from "@/constants/routes";
 
 function App() {

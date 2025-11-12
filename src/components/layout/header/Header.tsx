@@ -1,6 +1,6 @@
 import NoticeBar from "@/components/common/feedback/NoticeBar";
-import NavBar from "@/components/navBar/NavBar";
-import CategoryBar from "@/components/layout/CategoryBar";
+import NavBar from "../navBar/NavBar";
+import CategoryBar from "./CategoryBar";
 
 export default function Header() {
 	return (

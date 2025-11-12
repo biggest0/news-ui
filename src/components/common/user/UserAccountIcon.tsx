@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { LuUserRound } from "react-icons/lu";
 
-import { MobileNavLink } from "@/components/navBar/MobileNavLink";
+import { MobileNavLink } from "@/components/layout/navBar/MobileNavLink";
 
 interface UserAccountProps {
 	variant?: "icon" | "full";

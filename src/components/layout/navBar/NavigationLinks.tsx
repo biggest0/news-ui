@@ -1,4 +1,4 @@
-import { MobileNavLink } from "@/components/navBar/MobileNavLink";
+import { MobileNavLink } from "./MobileNavLink";
 import type { NavCategory, NavLink } from "@/types/navBar";
 import { ExpandableNavItem } from "./ExpandableNavItem";
 

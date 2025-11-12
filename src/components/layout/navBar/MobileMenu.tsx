@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import { LuX } from "react-icons/lu";
 
 import type { MobileMenuProps } from "@/types/navBar";
-import { MobileSearchBar } from "@/components/navBar/MobileSearchBar";
+import { MobileSearchBar } from "./MobileSearchBar";
 import { NavigationLinks } from "./NavigationLinks";
 import { UserAccountIcon } from "@/components/common/user/UserAccountIcon";
 import SocialMediaLinks from "@/components/common/social/SocialMediaLinks";
