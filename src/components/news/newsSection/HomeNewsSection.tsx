@@ -29,7 +29,6 @@ export function HomeNewsSection() {
 			<BaseNewsSection
 				articles={homeArticles}
 				loadMoreArticles={loadMoreArticles}
-				showHomeContent={true}
 				resetKey={"home"}
 			/>
 			{<LoadingOverlay loading={loading.homePage}/>}

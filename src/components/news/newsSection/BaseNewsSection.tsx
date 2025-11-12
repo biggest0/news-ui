@@ -1,259 +1,77 @@
-import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { BsChevronDown } from "react-icons/bs";
-import { FaChevronUp, FaChevronDown } from "react-icons/fa6";
 
-import NewsCard from "../NewsCard";
 import NewsSideColumn from "../NewsSideColumn";
-import { EditorCardVertical } from "@/components/sideColumn/EditorCardVertical";
-import { CATIRE_EDITORS, CAT_FACTS } from "@/components/sideColumn/constants";
 import { SectionHeader } from "@/components/common/SectionHeader";
-import { CatFactsCard } from "@/components/sideColumn/CatFactsCard";
-import type { ArticleInfo } from "@/types/articleTypes";
-import { isWithinNDays } from "@/utils/dateUtils";
-import type { ArticleInfoRequest } from "@/types/articleTypes";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { USER_ARTICLE_HISTORY } from "@/constants/keys";
+import type { ArticleInfo, ArticleInfoRequest } from "@/types/articleTypes";
 import type { RootState } from "@/store/store";
+import {
+	useArticleHistory,
+	useArticleFilters,
+	useInfiniteScroll,
+} from "@/hooks/useArticleHooks";
+import { FilterBar } from "./FilterBar";
+import { ArticleList } from "./ArticleList";
+import { LoadingMessage } from "./LoadingMessage";
 
 interface BaseNewsSectionProps {
 	articles: ArticleInfo[];
 	loadMoreArticles: (request: ArticleInfoRequest) => void;
-	showHomeContent?: boolean;
 	resetKey?: string;
 }
 
 export function BaseNewsSection({
 	articles,
 	loadMoreArticles,
-	showHomeContent = false,
 	resetKey,
 }: BaseNewsSectionProps) {
 	const location = useLocation();
 	const selectedCategory = location.pathname.split("/")[1];
-	const prevArticlesLength = useRef(0);
-	const { loading } = useSelector(
-		(state: RootState) => state.article
-	);
+	const { loading } = useSelector((state: RootState) => state.article);
 
-	const [articlesToDisplay, setArticlesToDisplay] = useState(articles);
-	const [page, setPage] = useState(1);
-	const [showMore, setShowMore] = useState(true);
-	const [fetching, setFetching] = useState(false);
-	const [dateRange, setDateRange] = useState("all");
-	const [sortBy, setSortBy] = useState("newest");
-	const [articleHistory, setArticleHistory] = useLocalStorage<ArticleInfo[]>(
-		USER_ARTICLE_HISTORY,
-		[]
-	);
+	const handleLocalStorageUpdate = useArticleHistory();
 
-	const handleLocalStorageUpdate = (clickedArticle: ArticleInfo) => {
-		// Maintain a max of 100 articles in history
-		if (articleHistory.length === 100) {
-			articleHistory.pop();
-		}
-		// Check if article already exists in history
-		if (!articleHistory.some((a) => a.id === clickedArticle.id)) {
-			const updatedArticles = [clickedArticle, ...articleHistory];
-			setArticleHistory(updatedArticles);
-		} else {
-			// Move the clicked article to the front
-			const filteredArticles = articleHistory.filter(
-				(a) => a.id !== clickedArticle.id
-			);
-			const updatedArticles = [clickedArticle, ...filteredArticles];
-			setArticleHistory(updatedArticles);
-		}
+	const { articlesToDisplay, dateRange, setDateRange, sortBy, setSortBy } =
+		useArticleFilters(articles);
+
+	const resetFilterState = useInfiniteScroll({
+		articlesLength: articles.length,
+		filteredArticlesLength: articlesToDisplay.length,
+		loadMoreArticles,
+		selectedCategory,
+		resetKey,
+	});
+
+	const handleDateRangeChange = (value: string) => {
+		setDateRange(value);
+		resetFilterState();
 	};
 
-	// Reset state when component mounts or resetKey changes
-	useEffect(() => {
-		prevArticlesLength.current = 0;
-		setShowMore(true);
-		setFetching(false);
-	}, [resetKey]);
-
-	// Check if more articles to load
-	useEffect(() => {
-		if (articlesToDisplay.length === prevArticlesLength.current) {
-			setShowMore(false);
-		} else {
-			// console.log("ran");
-			setShowMore(true);
-			setFetching(false);
-			prevArticlesLength.current = articlesToDisplay.length;
-		}
-	}, [articlesToDisplay]);
-
-	// Update page count based on articles length
-	useEffect(() => {
-		if (articles.length > 0) {
-			setPage(Math.ceil(articles.length / 10));
-		}
-	}, [articles]);
-
-	// useEffect(() => {
-	// 	console.log(page, showMore, fetching);
-	// });
-
-	// Lazy loading more articles
-	useEffect(() => {
-		const handleScroll = () => {
-			if (
-				!fetching &&
-				showMore &&
-				window.innerHeight + window.scrollY >= document.body.scrollHeight - 700
-			) {
-				setFetching(true);
-				setPage((prev) => prev + 1);
-				loadMoreArticles({ page: page + 1, category: selectedCategory });
-			}
-		};
-
-		window.addEventListener("scroll", handleScroll);
-		return () => window.removeEventListener("scroll", handleScroll);
-	}, [fetching, showMore, page, loadMoreArticles]);
-
-	// Filter articles when dateRange or sortBy changes
-	useEffect(() => {
-		let tempArticles = [...articles];
-		if (dateRange) {
-			switch (dateRange) {
-				case "24h":
-					tempArticles = tempArticles.filter((article) => {
-						if (article.datePublished) {
-							return isWithinNDays(article.datePublished, 1);
-						}
-					});
-					break;
-				case "7d":
-					tempArticles = tempArticles.filter((article) => {
-						if (article.datePublished) {
-							return isWithinNDays(article.datePublished, 7);
-						}
-					});
-					break;
-				case "30d":
-					tempArticles = tempArticles.filter((article) => {
-						if (article.datePublished) {
-							return isWithinNDays(article.datePublished, 30);
-						}
-					});
-			}
-		}
-		if (sortBy) {
-			switch (sortBy) {
-				case "newest":
-					tempArticles = tempArticles.sort((a, b) => {
-						if (b.datePublished && a.datePublished) {
-							return (
-								new Date(b.datePublished).getTime() -
-								new Date(a.datePublished).getTime()
-							);
-						}
-						return 0;
-					});
-					break;
-				case "mostViewed":
-					tempArticles = tempArticles.sort((a, b) => {
-						return (b.viewed || 0) - (a.viewed || 0);
-					});
-					break;
-			}
-		}
-
-		// Compare tempArticles with articlesToDisplay before setting state
-		const currentIds = articlesToDisplay.map((a) => a.id);
-		const newIds = tempArticles.map((a) => a.id);
-
-		let articlesAreDifferent = false;
-		if (currentIds.length !== newIds.length) {
-			articlesAreDifferent = true;
-		} else {
-			articlesAreDifferent = currentIds.some(
-				(id, index) => id !== newIds[index]
-			);
-		}
-		if (articlesAreDifferent) {
-			setArticlesToDisplay(tempArticles);
-		}
-	}, [dateRange, sortBy, articles]);
+	const handleSortByChange = (value: string) => {
+		setSortBy(value);
+		resetFilterState();
+	};
 
 	return (
 		<div className="flex flex-col md:grid md:grid-cols-3 gap-x-4 gap-y-6 pt-6">
-			{showHomeContent && <HomeContentSections />}
-
 			{/* Articles, main col */}
 			<section className="md:col-span-2">
 				<div className="flex flex-row justify-between w-full items-center">
 					<SectionHeader title="MEWS" />
-
-					{/* Filter bar */}
-					<div className="flex gap-8 pb-4 text-sm text-gray-600">
-						{/* Date Range */}
-						<div className="relative">
-							<select
-								value={dateRange}
-								className="py-1 font-medium text-gray-700 appearance-none pr-4"
-								onChange={(e) => {
-									setDateRange(e.target.value);
-									prevArticlesLength.current = 0;
-								}}
-							>
-								<option value="" disabled>
-									Date Range
-								</option>
-								<option value="all">All Time</option>
-								<option value="24h">Last 24 hours</option>
-								<option value="7d">Last 7 days</option>
-								<option value="30d">Last 30 days</option>
-							</select>
-							<div className="absolute inset-y-0 right-0 flex items-center pointer-events-none">
-								<BsChevronDown className="w-3 h-3 fill-current text-gray-600" />
-							</div>
-						</div>
-
-						{/* Sort By */}
-						<div className="relative">
-							<select
-								value={sortBy}
-								className="py-1 font-medium text-gray-700 appearance-none pr-4"
-								onChange={(e) => {
-									setSortBy(e.target.value);
-									prevArticlesLength.current = 0;
-								}}
-							>
-								<option value="" disabled>
-									Sort By
-								</option>
-								<option value="newest">Newest</option>
-								<option value="mostViewed">Most Viewed</option>
-							</select>
-							<div className="absolute inset-y-0 right-0 flex items-center pointer-events-none">
-								<BsChevronDown className="w-3 h-3 fill-current text-gray-600" />
-							</div>
-						</div>
-					</div>
+					<FilterBar
+						dateRange={dateRange}
+						sortBy={sortBy}
+						onDateRangeChange={handleDateRangeChange}
+						onSortByChange={handleSortByChange}
+					/>
 				</div>
 
-				{articlesToDisplay.length > 0 && (
-					<div>
-						{articlesToDisplay.map((article) => (
-							<NewsCard
-								key={article.id}
-								articleInfo={article}
-								onRead={handleLocalStorageUpdate}
-							/>
-						))}
-					</div>
-				)}
+				<ArticleList
+					articles={articlesToDisplay}
+					onArticleRead={handleLocalStorageUpdate}
+				/>
 
-				<div className="text-center text-gray-500 py-4">
-					{loading.articles
-						? "Just a few seoncds, articles are coming!"
-						: "You've scrolled to the end. There's nothing left!"}
-				</div>
+				<LoadingMessage isLoading={loading.articles} />
 			</section>
 
 			{/* Side col for md screen and larger */}
@@ -261,94 +79,5 @@ export function BaseNewsSection({
 				<NewsSideColumn />
 			</div>
 		</div>
-	);
-}
-
-// HomeContentSections component
-function HomeContentSections() {
-	// TODO: Put these into an object
-	const [expandEditors, setExpandEditors] = useLocalStorage<boolean>(
-		"home_our_editors_expand",
-		true
-	);
-	const [expandCatFacts, setExpandCatFacts] = useLocalStorage<boolean>(
-		"home_cat_facts_expand",
-		true
-	);
-	return (
-		<>
-			{/* Horizontal col for mobile screen for home page */}
-			<section className="md:hidden pb-6 border-b border-gray-400">
-				<div className="flex flex-row items-center space-x-4">
-					<SectionHeader title="OUR EDITORS" />
-					{expandEditors ? (
-						<FaChevronUp
-							className="w-4 h-4 mb-4 fill-current text-gray-500"
-							onClick={() => setExpandEditors(false)}
-						/>
-					) : (
-						<FaChevronDown
-							className="w-4 h-4 mb-4 fill-current text-gray-500"
-							onClick={() => setExpandEditors(true)}
-						/>
-					)}
-				</div>
-				<div
-					className={`grid transition-all duration-500 ease-in-out ${
-						expandEditors ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-					}`}
-				>
-					<div className="flex flex-row overflow-x-auto overflow-y-hidden hide-scrollbar space-x-4">
-						{CATIRE_EDITORS.map((editor: any, index: number) => (
-							<EditorCardVertical
-								key={`editor-${index}`}
-								name={editor.name}
-								role={editor.role}
-								description={editor.description}
-								imageUrl={editor.imageUrl}
-							/>
-						))}
-					</div>
-				</div>
-			</section>
-
-			{/* Horizontal col for cat facts for home page */}
-			<section className="md:hidden pb-6 border-b border-gray-400">
-				<div className="flex flex-row items-center space-x-4">
-					<SectionHeader title="CAT FACTS" />
-					{expandCatFacts ? (
-						<FaChevronUp
-							className="w-4 h-4 mb-4 fill-current text-gray-500"
-							onClick={() => setExpandCatFacts(false)}
-						/>
-					) : (
-						<FaChevronDown
-							className="w-4 h-4 mb-4 fill-current text-gray-500"
-							onClick={() => setExpandCatFacts(true)}
-						/>
-					)}
-				</div>
-				<div
-					className={`grid transition-all duration-500 ease-in-out ${
-						expandCatFacts ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-					}`}
-				>
-					<div
-						className={`flex w-full gap-4 pt-4 hide-scrollbar overflow-y-hidden ${
-							expandCatFacts ? "overflow-x-auto" : "overflow-hidden"
-						}`}
-					>
-						{CAT_FACTS.map((catFact: any, index: number) => (
-							<CatFactsCard
-								key={index}
-								title={catFact.title}
-								fact={catFact.fact}
-								small={true}
-							/>
-						))}
-					</div>
-				</div>
-			</section>
-		</>
 	);
 }
