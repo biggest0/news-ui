@@ -1,4 +1,4 @@
-import NewsCard from "../NewsCard";
+import NewsCard from "../cards/NewsCard";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { ArticleInfo } from "@/types/articleTypes";
 import { SectionHeader } from "@/components/common/SectionHeader";

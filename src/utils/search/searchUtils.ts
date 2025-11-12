@@ -1,6 +1,6 @@
 import type { ArticleInfo } from "@/types/articleTypes";
-import { isWithinNDays } from "@/utils/dateUtils";
-import { sortArticlesByMatchCount } from "@/utils/sortUtils";
+import { isWithinNDays } from "@/utils/date/dateUtils";
+import { sortArticlesByMatchCount } from "@/utils/search/sortUtils";
 
 export type DateRange = "24h" | "7d" | "30d" | "all" | "";
 export type SortOption = "relevant" | "newest" | "";

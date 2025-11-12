@@ -38,7 +38,6 @@ export function CategoryNewsSection() {
 		<BaseNewsSection
 			articles={filteredArticles}
 			loadMoreArticles={loadMoreArticles}
-			showHomeContent={false}
 			resetKey={selectedCategory}
 		/>
 	);

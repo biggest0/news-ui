@@ -2,7 +2,7 @@ import { EditorCardHorizontal } from "@/components/sideColumn/EditorCardHorizont
 import { CATIRE_EDITORS, CAT_FACTS } from "@/components/sideColumn/constants";
 import { CatFactsCard } from "@/components/sideColumn/CatFactsCard";
 import { SectionHeader } from "@/components/common/SectionHeader";
-import { SELECTED_ARTICLES } from "./tempArticles";
+import { SELECTED_ARTICLES } from "../tempArticles";
 import { Link } from "react-router-dom";
 import { incrementArticleViewed } from "@/api/articleApi";
 import { handleLocalStorageUpdate } from "@/service/localStorageService";

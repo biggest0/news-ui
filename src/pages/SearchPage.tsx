@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 
 import type { RootState } from "@/store/store";
-import NewsCard from "@/components/news/NewsCard";
+import NewsCard from "@/components/news/cards/NewsCard";
 import SearchSection from "@/components/search/SearchSection";
 import {
 	useSearchParams,
@@ -10,7 +10,7 @@ import {
 	useSearchPagination,
 	useInfiniteScroll,
 } from "@/hooks/useSearchPage";
-import type { SearchFilters } from "@/utils/searchUtils";
+import type { SearchFilters } from "@/utils/search/searchUtils";
 
 export default function SearchPage() {
 	const { articles } = useSelector((state: RootState) => state.article);

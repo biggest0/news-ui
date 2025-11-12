@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { subscribeToNewsletter } from "@/service/formService";
-import { validateEmail, cleanseEmail } from "@/utils/textUtils";
+import { validateEmail, cleanseEmail } from "@/utils/validation/textUtils";
 
 export default function SubscribeButton() {
 	const [email, setEmail] = useState("");
@@ -62,14 +62,13 @@ export default function SubscribeButton() {
 			</form>
 			{message && (
 				<p
-					className={`text-sm ${
-						message.includes("Thank you") ||
-						message.includes("Check your inbox")
+					className={`text-sm ${message.includes("Thank you") ||
+							message.includes("Check your inbox")
 							? "text-green-600"
 							: message.includes("already subscribed")
-							? "text-yellow-600"
-							: "text-red-600"
-					}`}
+								? "text-yellow-600"
+								: "text-red-600"
+						}`}
 				>
 					{message}
 				</p>

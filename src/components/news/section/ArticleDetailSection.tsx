@@ -4,7 +4,7 @@ interface ArticleDetailProps {
 	article: ArticleDetail;
 }
 
-export default function ArticleDetail({ article }: ArticleDetailProps) {
+export default function ArticleDetailSection({ article }: ArticleDetailProps) {
 	return (
 		<div className="flex flex-col space-y-4">
 			{/* Title and date */}
