@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 
 import type { RootState } from "@/store/store";
-import NewsCard from "@/components/news/NewsCard";
+import NewsCard from "@/components/news/cards/NewsCard";
 import SearchSection from "@/components/search/SearchSection";
 import {
 	useSearchParams,

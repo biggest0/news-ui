@@ -5,7 +5,7 @@ import type { ArticleInfo, ArticleDetail } from "@/types/articleTypes";
 import type { RootState, AppDispatch } from "@/store/store";
 import { loadArticleDetail } from "@/store/articlesSlice";
 import { incrementArticleViewed } from "@/api/articleApi";
-import { ShareButton } from "../common/ShareButton";
+import { ShareButton } from "../../common/ShareButton";
 
 interface NewsCardProp {
 	articleInfo: ArticleInfo;
