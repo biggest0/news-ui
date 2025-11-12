@@ -1,4 +1,4 @@
-import NoticeBar from "@/components/common/NoticeBar";
+import NoticeBar from "@/components/common/feedback/NoticeBar";
 import NavBar from "@/components/navBar/NavBar";
 import CategoryBar from "@/components/layout/CategoryBar";
 
@@ -9,5 +9,5 @@ export default function Header() {
 			<NavBar />
 			<CategoryBar />
 		</header>
-	); 
+	);
 }

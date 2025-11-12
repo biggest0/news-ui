@@ -6,8 +6,8 @@ import { LuX } from "react-icons/lu";
 import type { MobileMenuProps } from "@/types/navBar";
 import { MobileSearchBar } from "@/components/navBar/MobileSearchBar";
 import { NavigationLinks } from "./NavigationLinks";
-import { UserAccount } from "@/components/common/UserAccount";
-import SocialMediaLinks from "@/components/common/SocialMediaLinks";
+import { UserAccountIcon } from "@/components/common/user/UserAccountIcon";
+import SocialMediaLinks from "@/components/common/social/SocialMediaLinks";
 import { APP_VERSION } from "@/config/config";
 
 export const MobileMenu = ({
@@ -87,9 +87,8 @@ export const MobileMenu = ({
 		<>
 			{/* Menu Panel */}
 			<div
-				className={`fixed top-0 right-0 h-full w-full bg-white shadow-xl z-40 transform md:hidden ${
-					isDragging ? "" : "transition-transform duration-300 ease-in-out"
-				} ${menuOpen ? "translate-x-0" : "translate-x-full"}`}
+				className={`fixed top-0 right-0 h-full w-full bg-white shadow-xl z-40 transform md:hidden ${isDragging ? "" : "transition-transform duration-300 ease-in-out"
+					} ${menuOpen ? "translate-x-0" : "translate-x-full"}`}
 				style={{
 					transform:
 						isDragging && menuOpen ? `translateX(${dragOffset}px)` : undefined,
@@ -120,7 +119,7 @@ export const MobileMenu = ({
 						<NavigationLinks onLinkClick={onMenuClose} />
 						{/* User profile */}
 						<div className="border-t pt-4 mt-6">
-							<UserAccount variant="full" onLinkClick={onMenuClose} />
+							<UserAccountIcon variant="full" onLinkClick={onMenuClose} />
 						</div>
 						{/* Social media links */}
 						<div className="border-t pt-4 mt-6 flex justify-center">

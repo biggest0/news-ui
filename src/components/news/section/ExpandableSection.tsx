@@ -1,5 +1,5 @@
 import { FaChevronUp, FaChevronDown } from "react-icons/fa6";
-import { SectionHeader } from "@/components/common/SectionHeader";
+import { SectionHeader } from "@/components/common/layout/SectionHeader";
 
 interface ExpandableSectionProps {
 	title: string;
@@ -33,9 +33,8 @@ export function ExpandableSection({
 				)}
 			</div>
 			<div
-				className={`grid transition-all duration-500 ease-in-out ${
-					isExpanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-				}`}
+				className={`grid transition-all duration-500 ease-in-out ${isExpanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+					}`}
 			>
 				<div className={contentClassName}>{children}</div>
 			</div>

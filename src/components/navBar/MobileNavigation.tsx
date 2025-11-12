@@ -1,4 +1,4 @@
-import { Logo } from "@/components/common/Logo";
+import { AppLogo } from "@/components/common/brand/AppLogo";
 import { AppTitle } from "./AppTitle";
 import { HamburgerButton } from "./HamburgerButton";
 
@@ -14,7 +14,7 @@ export const MobileNavigation = ({
 	return (
 		<div className="md:hidden w-full flex items-center justify-between">
 			{/* Left - Logo */}
-			<Logo size="sm" />
+			<AppLogo size="sm" />
 
 			{/* Center - App Title */}
 			<AppTitle variant="mobile" />

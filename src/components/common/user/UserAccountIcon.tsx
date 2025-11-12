@@ -8,7 +8,7 @@ interface UserAccountProps {
 	onLinkClick?: () => void;
 }
 
-export const UserAccount = ({
+export const UserAccountIcon = ({
 	variant = "icon",
 	onLinkClick,
 }: UserAccountProps) => {
