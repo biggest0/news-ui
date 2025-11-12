@@ -1,6 +1,6 @@
 import { SectionHeader } from "@/components/common/layout/SectionHeader";
 import { AccountNewsSection } from "@/components/news/section/AccountNewsSection";
-import { AccountInfoSection } from "@/components/forms/AccountInfoSection";
+import { AccountInfoSection } from "@/components/account/AccountInfoSection";
 import { USER_ARTICLE_HISTORY } from "@//constants/keys";
 
 export default function AccountPage() {
