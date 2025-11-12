@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import type { AppDispatch, RootState } from "@/store/store";
 import { loadArticleDetail } from "@/store/articlesSlice";
-import ArticleDetail from "@/components/news/ArticleDetail";
+import ArticleDetailSection from "@/components/news/section/ArticleDetailSection";
 
 export default function ArticlePage() {
 	const { id } = useParams();
@@ -22,7 +22,7 @@ export default function ArticlePage() {
 
 	return (
 		<div className="py-6">
-			{articleDetail && <ArticleDetail article={articleDetail} />}
+			{articleDetail && <ArticleDetailSection article={articleDetail} />}
 			{loading.detail && !articleDetail && <div>Loading article details!</div>}
 		</div>
 	);
