@@ -3,7 +3,7 @@
 import { SectionHeader } from "@/components/common/SectionHeader";
 import Image from "@/assets/news_hero_image.jpg";
 // import type { RootState } from "@/store/store";
-import NewsHeroCard from "./NewsHeroCard";
+import NewsHeroCard from "./cards/NewsHeroCard";
 import type { ArticleInfo } from "@/types/articleTypes";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { USER_ARTICLE_HISTORY } from "@/constants/keys";
