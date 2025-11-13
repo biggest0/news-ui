@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import { SectionHeader } from "@/components/common/SectionHeader";
+import { SectionHeader } from "@/components/common/layout/SectionHeader";
 
 export default function About() {
 	return (
