@@ -16,7 +16,7 @@ export const ArticleTitleCard = ({
 	return (
 		<Link
 			to={`/article/${articleId}`}
-			className="font-medium text-black hover:text-amber-600 cursor-pointer"
+			className="font-medium text-black hover:text-amber-600 transition-colors duration-200 cursor-pointer"
 			onClick={() => incrementArticleViewed(articleId)}
 		>
 			{index + 1 + ". " + articleTitle}

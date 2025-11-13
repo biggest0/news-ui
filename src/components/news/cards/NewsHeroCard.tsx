@@ -15,7 +15,7 @@ export default function NewsHeroCard({ articleInfo, small, onOpen }: NewsCardPro
 			<h3
 				className={`${
 					small ? "text-lg" : "text-xl"
-				} font-semibold text-gray-800 hover:text-amber-600 cursor-pointer`}
+				} font-semibold text-gray-800 hover:text-amber-600 transition-colors duration-200 cursor-pointer`}
 			>
 				<Link
 					to={`/article/${articleInfo.id}`}

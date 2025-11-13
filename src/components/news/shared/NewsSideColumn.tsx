@@ -43,7 +43,7 @@ export default function NewsSideColumn() {
 					<div key={`side-${article.id}`}>
 						<Link
 							to={`/article/${article.id}`}
-							className="py-2"
+							className="py-2 hover:text-amber-600 transition-colors duration-200 cursor-pointer"
 							onClick={() => {
 								incrementArticleViewed(article.id);
 								handleLocalStorageUpdate(
