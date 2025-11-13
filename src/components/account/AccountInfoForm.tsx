@@ -16,10 +16,17 @@ export const AccountInfoForm = ({
 	setUserInfo,
 }: AccountInfoFormProp) => {
 	const [inputValue, setInputValue] = useState(userInfo[fieldName] || "");
+	const [saved, setSaved] = useState(false);
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 		setUserInfo((prev) => ({ ...prev, [fieldName]: inputValue }));
+
+		setSaved(true);
+
+		setTimeout(() => {
+			setSaved(false);
+		}, 2000);
 	};
 
 	return (
@@ -41,9 +48,11 @@ export const AccountInfoForm = ({
 					/>
 					<button
 						type="submit"
-						className="text-gray-400 px-4 pt-2 pb-1 hover:text-black transition cursor-pointer"
+						className={`px-4 pt-2 pb-1 transition cursor-pointer ${
+							saved ? "text-green-600" : "text-gray-400 hover:text-black"
+						}`}
 					>
-						Save
+						{saved ? "Field Saved!" : "Save"}
 					</button>
 				</form>
 			</div>
