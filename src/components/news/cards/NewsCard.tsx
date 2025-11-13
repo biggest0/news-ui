@@ -55,54 +55,59 @@ export default function NewsCard({ articleInfo, onRead }: NewsCardProp) {
 				<div className="text-sm">{articleInfo.datePublished}</div>
 			</div>
 
-			{/* Grid transition for article's paragraphs on expand */}
-			<div
-				className={`grid transition-all duration-500 ease-in-out ${expanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-					}`}
-			>
-				{/* Transition to display detail when expanded */}
+			{/* Article Summary/ Paragraphs */}
+			<div>
+				{/* Grid transition for article's paragraphs on expand */}
 				<div
-					className={`overflow-hidden transition-opacity duration-1000 ${expanded ? "opacity-100" : "opacity-0"
-						}`}
+					className={`grid transition-all duration-500 ease-in-out ${
+						expanded ? "grid-rows-[1fr] pb-4" : "grid-rows-[0fr]"
+					}`}
 				>
-					{/* Display loading if waiting for data*/}
-					{isLoadingDetail && !articleDetail && (
-						<div className="py-4 text-gray-500">Loading details...</div>
-					)}
-
-					{articleDetail && (
-						<div className="flex flex-col space-y-4">
-							<div className="space-y-2">
-								{articleDetail.paragraphs?.map((paragraph, index) => (
-									<div key={`${articleDetail.id}-paragraph-${index}}`}>
-										{paragraph}
-									</div>
-								))}
+					{/* Transition to display detail when expanded */}
+					<div
+						className={`overflow-hidden transition-opacity duration-1000 ${
+							expanded ? "opacity-100" : "opacity-0"
+						}`}
+					>
+						{/* Display loading if waiting for data*/}
+						{isLoadingDetail && !articleDetail && (
+							<div className="py-4 text-gray-500">Loading details...</div>
+						)}
+						{articleDetail && (
+							<div className="flex flex-col space-y-4">
+								<div className="space-y-2">
+									{articleDetail.paragraphs?.map((paragraph, index) => (
+										<div key={`${articleDetail.id}-paragraph-${index}}`}>
+											{paragraph}
+										</div>
+									))}
+								</div>
+								<div className="flex flex-wrap space-x-4 underline text-sm">
+									{articleDetail.subCategory?.map((source, index) => (
+										<div key={`${articleDetail.id}-category-${index}}`}>
+											{source}
+										</div>
+									))}
+								</div>
 							</div>
-							<div className="flex flex-wrap space-x-4 underline text-sm">
-								{articleDetail.subCategory?.map((source, index) => (
-									<div key={`${articleDetail.id}-category-${index}}`}>
-										{source}
-									</div>
-								))}
-							</div>
-						</div>
-					)}
+						)}
+					</div>
 				</div>
-			</div>
-
-			{/* Grid transition for showing summary when !expanded,*/}
-			<div
-				className={`grid transition-all duration-500 ease-in-out ${!expanded && articleInfo.summary
-						? "grid-rows-[1fr]"
-						: "grid-rows-[0fr]"
-					}`}
-			>
+				{/* Grid transition for showing summary when !expanded,*/}
 				<div
-					className={`overflow-hidden transition-opacity duration-1000 ${!expanded ? "opacity-100" : "opacity-0"
-						}`}
+					className={`grid transition-all duration-500 ease-in-out ${
+						!expanded && articleInfo.summary
+							? "grid-rows-[1fr]"
+							: "grid-rows-[0fr]"
+					}`}
 				>
-					{articleInfo.summary && <div>{articleInfo.summary}</div>}
+					<div
+						className={`overflow-hidden transition-opacity duration-1000 ${
+							!expanded ? "opacity-100" : "opacity-0"
+						}`}
+					>
+						{articleInfo.summary && <div>{articleInfo.summary}</div>}
+					</div>
 				</div>
 			</div>
 
