@@ -5,7 +5,7 @@ import { loadArticlesInfo } from "@/store/articlesSlice";
 import { BaseNewsSection } from "./BaseNewsSection";
 import type { ArticleInfoRequest } from "@/types/articleTypes";
 // import { useEffect, useState } from "react";
-import { LoadingOverlay } from "@/components/common/LoadingOverlay";
+import { LoadingOverlay } from "@/components/common/feedback/LoadingOverlay";
 
 export function HomeNewsSection() {
 	const dispatch = useDispatch<AppDispatch>();
@@ -31,7 +31,7 @@ export function HomeNewsSection() {
 				loadMoreArticles={loadMoreArticles}
 				resetKey={"home"}
 			/>
-			{<LoadingOverlay loading={loading.homePage}/>}
+			{<LoadingOverlay loading={loading.homePage} />}
 		</>
 	);
 }

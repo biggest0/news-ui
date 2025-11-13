@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import NewsSideColumn from "../../shared/NewsSideColumn";
-import { SectionHeader } from "@/components/common/SectionHeader";
+import { SectionHeader } from "@/components/common/layout/SectionHeader";
 import type { ArticleInfo, ArticleInfoRequest } from "@/types/articleTypes";
 import type { RootState } from "@/store/store";
 import {

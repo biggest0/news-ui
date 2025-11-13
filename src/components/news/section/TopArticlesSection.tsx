@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 import type { RootState, AppDispatch } from "@/store/store";
 import { loadTopTenArticles } from "@/store/articlesSlice";
-import { SectionHeader } from "@/components/common/SectionHeader";
+import { SectionHeader } from "@/components/common/layout/SectionHeader";
 import { ArticleTitleCard } from "@/components/news/cards/ArticleTitleCard";
 
 export default function TopArticlesSection() {
@@ -22,7 +22,7 @@ export default function TopArticlesSection() {
 			<div className="grid grid-cols-1 md:grid-cols-5 md:grid-rows-2 gap-4">
 				{topTenArticles.map((article, index) => (
 					<ArticleTitleCard
-					key={`top-ten-${article.id}`}
+						key={`top-ten-${article.id}`}
 						articleId={article.id}
 						articleTitle={article.title}
 						index={index}

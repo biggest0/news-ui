@@ -1,11 +1,11 @@
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { EditorCardVertical } from "@/components/sideColumn/EditorCardVertical";
-import { CATIRE_EDITORS, CAT_FACTS } from "@/components/sideColumn/constants";
-import { CatFactsCard } from "@/components/sideColumn/CatFactsCard";
+import { EditorCardVertical } from "@/components/layout/sideColumn/EditorCardVertical";
+import { CATIRE_EDITORS, CAT_FACTS } from "@/components/layout/sideColumn/constants";
+import { CatFactsCard } from "@/components/layout/sideColumn/CatFactsCard";
 import type {
 	EditorCardProps,
 	CatFactsProps,
-} from "@/components/sideColumn/type";
+} from "@/components/layout/sideColumn/type";
 import { ExpandableSection } from "./ExpandableSection";
 
 export function HomeContentSections() {

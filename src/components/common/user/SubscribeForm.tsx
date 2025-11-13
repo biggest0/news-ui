@@ -2,7 +2,7 @@ import { useState } from "react";
 import { subscribeToNewsletter } from "@/service/formService";
 import { validateEmail, cleanseEmail } from "@/utils/validation/textUtils";
 
-export default function SubscribeButton() {
+export default function SubscribeForm() {
 	const [email, setEmail] = useState("");
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [message, setMessage] = useState("");
@@ -63,11 +63,11 @@ export default function SubscribeButton() {
 			{message && (
 				<p
 					className={`text-sm ${message.includes("Thank you") ||
-							message.includes("Check your inbox")
-							? "text-green-600"
-							: message.includes("already subscribed")
-								? "text-yellow-600"
-								: "text-red-600"
+						message.includes("Check your inbox")
+						? "text-green-600"
+						: message.includes("already subscribed")
+							? "text-yellow-600"
+							: "text-red-600"
 						}`}
 				>
 					{message}

@@ -5,7 +5,7 @@ import type { ArticleInfo, ArticleDetail } from "@/types/articleTypes";
 import type { RootState, AppDispatch } from "@/store/store";
 import { loadArticleDetail } from "@/store/articlesSlice";
 import { incrementArticleViewed } from "@/api/articleApi";
-import { ShareButton } from "../../common/ShareButton";
+import { ShareButton } from "../../common/social/ShareButton";
 
 interface NewsCardProp {
 	articleInfo: ArticleInfo;
@@ -57,15 +57,13 @@ export default function NewsCard({ articleInfo, onRead }: NewsCardProp) {
 
 			{/* Grid transition for article's paragraphs on expand */}
 			<div
-				className={`grid transition-all duration-500 ease-in-out ${
-					expanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-				}`}
+				className={`grid transition-all duration-500 ease-in-out ${expanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+					}`}
 			>
 				{/* Transition to display detail when expanded */}
 				<div
-					className={`overflow-hidden transition-opacity duration-1000 ${
-						expanded ? "opacity-100" : "opacity-0"
-					}`}
+					className={`overflow-hidden transition-opacity duration-1000 ${expanded ? "opacity-100" : "opacity-0"
+						}`}
 				>
 					{/* Display loading if waiting for data*/}
 					{isLoadingDetail && !articleDetail && (
@@ -95,16 +93,14 @@ export default function NewsCard({ articleInfo, onRead }: NewsCardProp) {
 
 			{/* Grid transition for showing summary when !expanded,*/}
 			<div
-				className={`grid transition-all duration-500 ease-in-out ${
-					!expanded && articleInfo.summary
+				className={`grid transition-all duration-500 ease-in-out ${!expanded && articleInfo.summary
 						? "grid-rows-[1fr]"
 						: "grid-rows-[0fr]"
-				}`}
+					}`}
 			>
 				<div
-					className={`overflow-hidden transition-opacity duration-1000 ${
-						!expanded ? "opacity-100" : "opacity-0"
-					}`}
+					className={`overflow-hidden transition-opacity duration-1000 ${!expanded ? "opacity-100" : "opacity-0"
+						}`}
 				>
 					{articleInfo.summary && <div>{articleInfo.summary}</div>}
 				</div>

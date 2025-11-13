@@ -1,7 +1,7 @@
-import { EditorCardHorizontal } from "@/components/sideColumn/EditorCardHorizontal";
-import { CATIRE_EDITORS, CAT_FACTS } from "@/components/sideColumn/constants";
-import { CatFactsCard } from "@/components/sideColumn/CatFactsCard";
-import { SectionHeader } from "@/components/common/SectionHeader";
+import { EditorCardHorizontal } from "@/components/layout/sideColumn/EditorCardHorizontal";
+import { CATIRE_EDITORS, CAT_FACTS } from "@/components/layout/sideColumn/constants";
+import { CatFactsCard } from "@/components/layout/sideColumn/CatFactsCard";
+import { SectionHeader } from "@/components/common/layout/SectionHeader";
 import { SELECTED_ARTICLES } from "../tempArticles";
 import { Link } from "react-router-dom";
 import { incrementArticleViewed } from "@/api/articleApi";

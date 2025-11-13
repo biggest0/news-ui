@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
-import SubscribeButton from "@/components/common/SubscribeButton";
-import SocialMediaLinks from "@/components/common/SocialMediaLinks";
+import SubscribeForm from "@/components/common/user/SubscribeForm";
+import SocialMediaLinks from "@/components/common/social/SocialMediaLinks";
 
 export default function Footer() {
 	return (
@@ -18,7 +18,7 @@ export default function Footer() {
 				</div>
 
 				{/* Right side - Mailing list */}
-				<SubscribeButton />
+				<SubscribeForm />
 			</div>
 
 			{/* Bottom section */}

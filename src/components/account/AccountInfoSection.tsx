@@ -1,4 +1,4 @@
-import { AccountInfoForm } from "@/components/forms/AccountInfoForm";
+import { AccountInfoForm } from "@/components/account/AccountInfoForm";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { UserInfo } from "@/types/localStorage";
 import { USER_INFO } from "@/constants/keys";

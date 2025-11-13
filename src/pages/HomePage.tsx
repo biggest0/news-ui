@@ -1,6 +1,6 @@
 import TopArticlesSection from "@/components/news/section/TopArticlesSection";
 import FeaturedSection from "@/components/news/section/FeaturedSection";
-import BackToTopButton from "@/components/common/BackToTopButton";
+import BackToTopButton from "@/components/common/navigation/BackToTopButton";
 import { HomeNewsSection } from "@/components/news/section/newsSections/HomeNewsSection";
 import { HomeContentSections } from "@/components/news/section/HomeMobileSections";
 
