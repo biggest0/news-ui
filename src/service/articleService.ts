@@ -7,11 +7,11 @@ import {
 } from "../api/articleApi";
 import type { ArticleDetail } from "../types/articleTypes";
 import type { ArticleInfoQueryDTO } from "@/types/articleDto";
-import { mapDTOtoArticleDetail, mapDTOtoArticleInfo } from "@/mappers/articleMapper";
+import {
+	mapDTOtoArticleDetail,
+	mapDTOtoArticleInfo,
+} from "@/mappers/articleMapper";
 
-// -----------------------------------
-// API functions with transformations
-// -----------------------------------
 export async function getArticlesByCategory(page: number, category: string) {
 	try {
 		const data = await fetchArticlesByCategory(page, category);
