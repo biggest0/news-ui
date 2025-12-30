@@ -9,9 +9,8 @@ import type {
 	ArticleDetail,
 	ArticleInfo,
 	ArticleInfoRequest,
-	ArticleInfoResponse,
-	ArticleDetailResponse,
 } from "../types/articleTypes";
+import type { ArticleInfoDTO, ArticleDetailDTO } from "../types/articleDto";
 
 // -----------------------------------
 // API functions with transformations
@@ -77,7 +76,7 @@ export async function getTopTenArticles() {
 // Data transformation functions
 // ------------------------------
 export function articleInfoTransform(
-	articleInfoResponse: ArticleInfoResponse
+	articleInfoResponse: ArticleInfoDTO
 ): ArticleInfo {
 	return {
 		id: articleInfoResponse._id,
@@ -92,7 +91,7 @@ export function articleInfoTransform(
 }
 
 export function articleDetailTransform(
-	articleDetailResponse: ArticleDetailResponse
+	articleDetailResponse: ArticleDetailDTO
 ): ArticleDetail {
 	return {
 		id: articleDetailResponse._id,

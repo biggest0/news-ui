@@ -1,12 +1,3 @@
-export interface ArticleInfoResponse {
-	_id: string;
-	title: string;
-	summary?: string;
-	date_published: string;
-	main_category: string;
-	viewed: number;
-}
-
 export interface ArticleInfo {
 	id: string;
 	title: string;
@@ -33,18 +24,6 @@ export interface ArticleDetail {
 	paragraphs: string[];
 	mainCategory: string;
 	subCategory: string[];
-	source: string;
-	url: string;
-}
-
-export interface ArticleDetailResponse {
-	_id: string;
-	date_published: string;
-	title: string;
-	summary?: string;
-	paragraphs: string[];
-	main_category: string;
-	sub_category: string[];
 	source: string;
 	url: string;
 }
