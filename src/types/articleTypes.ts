@@ -7,15 +7,6 @@ export interface ArticleInfo {
 	viewed: number;
 }
 
-export interface ArticleInfoRequest {
-	page?: number;
-	limit?: number;
-	category?: string;
-	search?: string;
-	dateRange?: string;
-	sortBy?: string;
-}
-
 export interface ArticleDetail {
 	id: string;
 	datePublished: string;

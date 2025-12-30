@@ -19,7 +19,7 @@ export interface ArticleDetailDTO {
 	url: string;
 }
 
-export interface ArticleInfoQueryDto {
+export interface ArticleInfoQueryDTO {
 	page?: number;
 	limit?: number;
 	category?: string;

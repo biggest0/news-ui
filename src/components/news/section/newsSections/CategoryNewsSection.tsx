@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 import type { RootState, AppDispatch } from "@/store/store";
 import { loadArticlesInfoByCategory } from "@/store/articlesSlice";
 import { BaseNewsSection } from "./BaseNewsSection";
-import type { ArticleInfoRequest } from "@/types/articleTypes";
+import type { ArticleInfoQueryDTO } from "@/types/articleDto";
 
 export function CategoryNewsSection() {
 	const dispatch = useDispatch<AppDispatch>();
@@ -21,7 +21,7 @@ export function CategoryNewsSection() {
 		);
 	}, [selectedCategory, articles]);
 
-	const loadMoreArticles = (request: ArticleInfoRequest) => {
+	const loadMoreArticles = (request: ArticleInfoQueryDTO) => {
 		if (request.page) {
 			dispatch(
 				// using a separate route because store structure is different for category articles and home page articles

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import type { ArticleInfo, ArticleInfoRequest } from "@/types/articleTypes";
+import type { ArticleInfo } from "@/types/articleTypes";
+import type { ArticleInfoQueryDTO } from "@/types/articleDto";
 import { useLocalStorage } from "./useLocalStorage";
 import { USER_ARTICLE_HISTORY } from "@/constants/keys";
 import { isWithinNDays } from "@/utils/date/dateUtils";
@@ -116,7 +117,7 @@ export function useArticleFilters(articles: ArticleInfo[]) {
 interface UseInfiniteScrollProps {
 	articlesLength: number; // Original articles length (for page calculation)
 	filteredArticlesLength: number; // Filtered articles length (for showMore check)
-	loadMoreArticles: (request: ArticleInfoRequest) => void;
+	loadMoreArticles: (request: ArticleInfoQueryDTO) => void;
 	selectedCategory: string;
 	resetKey?: string;
 }

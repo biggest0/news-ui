@@ -5,11 +5,8 @@ import {
 	fetchArticlesInfo,
 	fetchTopTenArticles,
 } from "../api/articleApi";
-import type {
-	ArticleDetail,
-	ArticleInfo,
-	ArticleInfoRequest,
-} from "../types/articleTypes";
+import type { ArticleDetail, ArticleInfo } from "../types/articleTypes";
+import type { ArticleInfoQueryDTO } from "@/types/articleDto";
 import type { ArticleInfoDTO, ArticleDetailDTO } from "../types/articleDto";
 
 // -----------------------------------
@@ -33,7 +30,7 @@ export async function getArticlesBySearch(page: number, search: string) {
 	}
 }
 
-export async function getArticlesInfo(request: ArticleInfoRequest) {
+export async function getArticlesInfo(request: ArticleInfoQueryDTO) {
 	try {
 		const data = await fetchArticlesInfo(request);
 		return data.map(articleInfoTransform);

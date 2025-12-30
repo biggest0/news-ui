@@ -3,7 +3,8 @@ import { useSelector } from "react-redux";
 
 import NewsSideColumn from "../../shared/NewsSideColumn";
 import { SectionHeader } from "@/components/common/layout/SectionHeader";
-import type { ArticleInfo, ArticleInfoRequest } from "@/types/articleTypes";
+import type { ArticleInfo } from "@/types/articleTypes";
+import type { ArticleInfoQueryDTO } from "@/types/articleDto";
 import type { RootState } from "@/store/store";
 import {
 	useArticleHistory,
@@ -16,7 +17,7 @@ import { LoadingMessage } from "../../shared/LoadingMessage";
 
 interface BaseNewsSectionProps {
 	articles: ArticleInfo[];
-	loadMoreArticles: (request: ArticleInfoRequest) => void;
+	loadMoreArticles: (request: ArticleInfoQueryDTO) => void;
 	resetKey?: string;
 }
 
