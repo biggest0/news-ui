@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 
 import { LuX } from "react-icons/lu";
 
-import type { MobileMenuProps } from "@/types/navBar";
+import type { MobileMenuProps } from "@/types/navBarTypes";
 import { MobileSearchBar } from "./MobileSearchBar";
 import { NavigationLinks } from "./NavigationLinks";
 import { UserAccountIcon } from "@/components/common/user/UserAccountIcon";
