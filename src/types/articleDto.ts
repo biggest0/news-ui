@@ -27,3 +27,8 @@ export interface ArticleInfoQueryDTO {
 	dateRange?: string;
 	sortBy?: string;
 }
+
+export interface ArticleInfoResponseDTO {
+	articles: ArticleInfoDTO[];
+	count: number;
+}

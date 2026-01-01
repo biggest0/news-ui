@@ -1,3 +1,8 @@
+export interface ArticleResponse {
+	articles: ArticleInfo[];
+	count: number;
+}
+
 export interface ArticleInfo {
 	id: string;
 	title: string;
