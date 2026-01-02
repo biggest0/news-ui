@@ -1,5 +1,5 @@
 import { BASE_URL } from "@/config/config";
-import type { EditorCardProps } from "./type";
+import type { EditorCardProps } from "@/types/props/sideColumnTypes";
 
 export const EditorCardVertical = ({
 	name,
