@@ -13,8 +13,8 @@ export function parseSearchParams(search: string): SearchParams {
 	const params = new URLSearchParams(search);
 	return {
 		query: params.get("q") || "",
-		dateRange: params.get("dateRange") || "",
-		sortBy: params.get("sortBy") || "",
+		dateRange: params.get("dateRange") || "all",
+		sortBy: params.get("sortBy") || "newest",
 	};
 }
 
@@ -34,9 +34,13 @@ export function buildSearchParams(params: Partial<SearchParams>): string {
 /**
  * Builds a full search URL path
  * @param params - Search parameters object
- * @returns Full URL path (e.g., "/search?q=test&dateRange=7d")
+ * @returns Full URL path (e.g., "/search?q=test&dateRange=7d&sortBy=newest")
  */
 export function buildSearchUrl(params: Partial<SearchParams>): string {
-	const queryString = buildSearchParams(params);
+	const urlParams = new URLSearchParams();
+	if (params.query) urlParams.set("q", params.query);
+	if (params.dateRange) urlParams.set("dateRange", params.dateRange);
+	if (params.sortBy) urlParams.set("sortBy", params.sortBy);
+	const queryString = urlParams.toString();
 	return `/search${queryString ? `?${queryString}` : ""}`;
 }
