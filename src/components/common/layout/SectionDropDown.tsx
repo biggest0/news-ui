@@ -13,7 +13,14 @@ export interface SectionDropDownProps {
 	options: DropDownOption[];
 }
 
-export const SectionDropDown = ({ options = [{label: 'hello', onClick: ()=> console.log('hello world')}] }: SectionDropDownProps) => {
+const testDropDownOptions: DropDownOption[] = [
+  { label: 'Option 1', onClick: () => console.log('Option 1 clicked') },
+  { label: 'Option 2', onClick: () => console.log('Option 2 clicked') },
+  { isDivider: true, label: '', onClick: () => {} },
+  { label: 'Option 3', onClick: () => console.log('Option 3 clicked') },
+]
+
+export const SectionDropDown = ({ options = testDropDownOptions }: SectionDropDownProps) => {
 	const [isExpanded, setIsExpanded] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -54,7 +61,7 @@ export const SectionDropDown = ({ options = [{label: 'hello', onClick: ()=> cons
 			)}
 			{isExpanded && (
 				<div
-					className={`absolute left-0 mt-1 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50`}
+					className={`absolute top-6 left-0 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50`}
 				>
 					<div className="py-1">
 						{options.map((option, index) =>
