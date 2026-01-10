@@ -1,0 +1,58 @@
+import type { DropDownOption } from "@/components/common/layout/SectionDropDown";
+import {
+	togglePagePagination,
+	updateSectionExpansion,
+	updateSectionVisibility,
+} from "@/service/localStorageService";
+import type { ExpandedSections, VisibleSections } from "@/types/localStorageTypes";
+import { getAppSetting } from "@/utils/storage/localStorageUtils";
+import { useMemo } from "react";
+
+type SectionKey = Extract<
+	keyof ExpandedSections | keyof VisibleSections,
+	"newsSection" | "editorsSection" | "catFactsSection"
+>;
+
+export function useSectionDropdown(sectionKey: SectionKey): DropDownOption[] {
+	const appSetting = getAppSetting();
+
+	const dropdownOptions = useMemo(() => {
+		const isVisible = appSetting.homeLayout.visible[sectionKey];
+		const isExpanded = appSetting.homeLayout.expanded[sectionKey];
+		const isPaginated = appSetting.homeLayout.pagePagination;
+
+		const options: DropDownOption[] = [];
+
+		options.push({
+			label: isExpanded ? "Collapse" : "Expand",
+			onClick: () => {
+				updateSectionExpansion(sectionKey, !isExpanded);
+			},
+		});
+
+		if (isVisible) {
+			options.push({
+				label: "Remove",
+				onClick: () => {
+					updateSectionVisibility(sectionKey, false);
+				},
+			});
+		}
+
+		if (sectionKey === "newsSection") {
+			options.push({ isDivider: true, label: "", onClick: () => {} });
+
+			options.push({
+				label: isPaginated ? "Page View" : "Scroll View",
+				onClick: () => {
+					togglePagePagination();
+				},
+			});
+		}
+
+		return options;
+	}, [appSetting]);
+
+	return dropdownOptions;
+}
+
