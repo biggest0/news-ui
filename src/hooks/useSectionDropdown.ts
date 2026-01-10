@@ -4,7 +4,10 @@ import {
 	updateSectionExpansion,
 	updateSectionVisibility,
 } from "@/service/localStorageService";
-import type { ExpandedSections, VisibleSections } from "@/types/localStorageTypes";
+import type {
+	ExpandedSections,
+	VisibleSections,
+} from "@/types/localStorageTypes";
 import { getAppSetting } from "@/utils/storage/localStorageUtils";
 import { useMemo } from "react";
 
@@ -43,7 +46,7 @@ export function useSectionDropdown(sectionKey: SectionKey): DropDownOption[] {
 			options.push({ isDivider: true, label: "", onClick: () => {} });
 
 			options.push({
-				label: isPaginated ? "Page View" : "Scroll View",
+				label: isPaginated ? "Scroll View" : "Page View",
 				onClick: () => {
 					togglePagePagination();
 				},
@@ -55,4 +58,3 @@ export function useSectionDropdown(sectionKey: SectionKey): DropDownOption[] {
 
 	return dropdownOptions;
 }
-
