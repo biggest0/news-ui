@@ -11,6 +11,7 @@ export interface AppSetting {
 export interface HomeLayout {
 	visible: VisibleSections;
 	expanded: ExpandedSections;
+	pagePagination: boolean;
 }
 
 export interface VisibleSections {

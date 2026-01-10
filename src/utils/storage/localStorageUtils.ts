@@ -13,6 +13,7 @@ export function getAppSetting(): AppSetting {
 					expanded: {
 						newsSection: true,
 					},
+          pagePagination: false,
 				},
 		  };
 }
