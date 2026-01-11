@@ -59,9 +59,12 @@ export function toggleDarkMode() {
 export function togglePagePagination() {
 	try {
 		const appSetting = getAppSetting();
-		const pagePagination = appSetting.homeLayout.pagePagination;
-		appSetting.homeLayout.pagePagination = !pagePagination;
+		const newPagePagination = !appSetting.homeLayout.pagePagination;
+		appSetting.homeLayout.pagePagination = newPagePagination;
 		setAppSetting(appSetting);
+		
+		// Dispatch event so usePagePagination hook can update
+		window.dispatchEvent(new CustomEvent("pagePaginationChange", { detail: newPagePagination }));
 	} catch (error) {
 		console.error("Error toggling news section view in localStorage:", error);
 	}
