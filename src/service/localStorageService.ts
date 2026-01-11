@@ -41,6 +41,9 @@ export function updateSectionExpansion(
 		const appSetting = getAppSetting();
 		appSetting.homeLayout.expanded[key] = value;
 		setAppSetting(appSetting);
+
+		// Dispatch event so usePagePagination hook can update
+		window.dispatchEvent(new CustomEvent("newsSectionChange", { detail: value }));
 	} catch (error) {
 		console.error("Error updating app setting in localStorage:", error);
 	}
@@ -62,7 +65,7 @@ export function togglePagePagination() {
 		const newPagePagination = !appSetting.homeLayout.pagePagination;
 		appSetting.homeLayout.pagePagination = newPagePagination;
 		setAppSetting(appSetting);
-		
+
 		// Dispatch event so usePagePagination hook can update
 		window.dispatchEvent(new CustomEvent("pagePaginationChange", { detail: newPagePagination }));
 	} catch (error) {
