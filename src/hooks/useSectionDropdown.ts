@@ -13,14 +13,14 @@ type SectionKey = Extract<
 
 export function useSectionDropdown(sectionKey: SectionKey): DropDownOption[] {
 	const {
-    appSetting,
-    updateSectionExpansion,
-    updateSectionVisibility,
-    togglePagination,
-  } = useAppSettings();
+		appSetting,
+		updateSectionExpansion,
+		updateSectionVisibility,
+		togglePagination,
+	} = useAppSettings();
 
 	const dropdownOptions = useMemo(() => {
-		const isVisible = appSetting.homeLayout.visible[sectionKey];
+		// const isVisible = appSetting.homeLayout.visible[sectionKey];
 		const isExpanded = appSetting.homeLayout.expanded[sectionKey];
 		const isPaginated = appSetting.homeLayout.pagePagination;
 
@@ -33,14 +33,12 @@ export function useSectionDropdown(sectionKey: SectionKey): DropDownOption[] {
 			},
 		});
 
-		if (isVisible) {
-			options.push({
-				label: "Remove",
-				onClick: () => {
-					updateSectionVisibility(sectionKey, false);
-				},
-			});
-		}
+		options.push({
+			label: "Remove",
+			onClick: () => {
+				updateSectionVisibility(sectionKey, false);
+			},
+		});
 
 		if (sectionKey === "newsSection") {
 			options.push({ isDivider: true, label: "", onClick: () => {} });
