@@ -1,5 +1,4 @@
 import { useSectionCollapse } from "@/hooks/useSectionCollapse";
-import { useState } from "react";
 
 interface CollapsibleSectionProps {
 	children: React.ReactNode;

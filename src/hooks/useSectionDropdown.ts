@@ -1,14 +1,9 @@
 import type { DropDownOption } from "@/components/common/layout/SectionDropDown";
-import {
-	togglePagePagination,
-	updateSectionExpansion,
-	updateSectionVisibility,
-} from "@/service/localStorageService";
+import { useAppSettings } from "@/contexts/AppSettingContext";
 import type {
 	ExpandedSections,
 	VisibleSections,
 } from "@/types/localStorageTypes";
-import { getAppSetting } from "@/utils/storage/localStorageUtils";
 import { useMemo } from "react";
 
 type SectionKey = Extract<
@@ -17,7 +12,12 @@ type SectionKey = Extract<
 >;
 
 export function useSectionDropdown(sectionKey: SectionKey): DropDownOption[] {
-	const appSetting = getAppSetting();
+	const {
+    appSetting,
+    updateSectionExpansion,
+    updateSectionVisibility,
+    togglePagination,
+  } = useAppSettings();
 
 	const dropdownOptions = useMemo(() => {
 		const isVisible = appSetting.homeLayout.visible[sectionKey];
@@ -48,7 +48,7 @@ export function useSectionDropdown(sectionKey: SectionKey): DropDownOption[] {
 			options.push({
 				label: isPaginated ? "Scroll View" : "Page View",
 				onClick: () => {
-					togglePagePagination();
+					togglePagination();
 				},
 			});
 		}
