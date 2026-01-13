@@ -115,71 +115,70 @@ export function useArticleFilters(articles: ArticleInfo[]) {
 }
 
 interface UseInfiniteScrollProps {
-	articlesLength: number; // Original articles length (for page calculation)
-	filteredArticlesLength: number; // Filtered articles length (for showMore check)
+	currentArticlesCount: number; // Number of articles currently loaded
+	totalArticlesCount: number; // Total articles available from server
 	loadMoreArticles: (request: ArticleInfoQueryDTO) => void;
 	selectedCategory: string;
 	resetKey?: string;
+	enabled?: boolean; // Whether infinite scroll is active
+	dateRange?: string;
+	sortBy?: string;
 }
 
 export function useInfiniteScroll({
-	articlesLength,
-	filteredArticlesLength,
+	currentArticlesCount,
+	totalArticlesCount,
 	loadMoreArticles,
 	selectedCategory,
 	resetKey,
+	enabled = true,
+	dateRange,
+	sortBy,
 }: UseInfiniteScrollProps) {
-	const prevArticlesLength = useRef(0);
 	const [page, setPage] = useState(1);
-	const [showMore, setShowMore] = useState(true);
 	const [fetching, setFetching] = useState(false);
 
-	// Reset state when component mounts or resetKey changes
+	// Check if there are more articles to load
+	const hasMore = currentArticlesCount < totalArticlesCount;
+
+	// Reset page when resetKey changes
 	useEffect(() => {
-		prevArticlesLength.current = 0;
-		setShowMore(true);
+		setPage(1);
 		setFetching(false);
 	}, [resetKey]);
 
-	// Check if more articles to load (based on filtered articles)
+	// Update page count based on current articles loaded
 	useEffect(() => {
-		if (filteredArticlesLength === prevArticlesLength.current) {
-			setShowMore(false);
-		} else {
-			setShowMore(true);
-			setFetching(false);
-			prevArticlesLength.current = filteredArticlesLength;
+		if (currentArticlesCount > 0) {
+			setPage(Math.ceil(currentArticlesCount / 10));
 		}
-	}, [filteredArticlesLength]);
+	}, [currentArticlesCount]);
 
-	// Update page count based on original articles length
+	// Reset fetching state when new articles are loaded
 	useEffect(() => {
-		if (articlesLength > 0) {
-			setPage(Math.ceil(articlesLength / 10));
-		}
-	}, [articlesLength]);
+		setFetching(false);
+	}, [currentArticlesCount]);
 
-	// Lazy loading more articles
+	// Lazy loading more articles on scroll
 	useEffect(() => {
+		if (!enabled) return;
+
 		const handleScroll = () => {
 			if (
 				!fetching &&
-				showMore &&
+				hasMore &&
 				window.innerHeight + window.scrollY >= document.body.scrollHeight - 700
 			) {
 				setFetching(true);
-				setPage((prev) => prev + 1);
-				loadMoreArticles({ page: page + 1, category: selectedCategory });
+				const nextPage = page + 1;
+				setPage(nextPage);
+				loadMoreArticles({ page: nextPage, category: selectedCategory, dateRange, sortBy });
 			}
 		};
 
 		window.addEventListener("scroll", handleScroll);
 		return () => window.removeEventListener("scroll", handleScroll);
-	}, [fetching, showMore, page, loadMoreArticles, selectedCategory]);
+	}, [fetching, hasMore, page, loadMoreArticles, selectedCategory, enabled, dateRange, sortBy]);
 
-	const resetFilterState = () => {
-		prevArticlesLength.current = 0;
-	};
-
-	return resetFilterState;
+	return { hasMore, page };
 }
