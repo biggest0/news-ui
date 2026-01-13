@@ -11,7 +11,9 @@ export function CategoryNewsSection() {
 	const dispatch = useDispatch<AppDispatch>();
 	const location = useLocation();
 	const selectedCategory = location.pathname.split("/")[1];
-	const { articles } = useSelector((state: RootState) => state.article);
+	const { articles, articlesCount } = useSelector(
+		(state: RootState) => state.article
+	);
 	const [filteredArticles, setFilteredArticles] = useState(articles);
 
 	// Filter articles by category
@@ -37,6 +39,7 @@ export function CategoryNewsSection() {
 	return (
 		<BaseNewsSection
 			articles={filteredArticles}
+			totalCount={articlesCount}
 			loadMoreArticles={loadMoreArticles}
 			resetKey={selectedCategory}
 		/>

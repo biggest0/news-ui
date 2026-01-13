@@ -6,10 +6,11 @@ import { BaseNewsSection } from "./BaseNewsSection";
 import type { ArticleInfoQueryDTO } from "@/types/articleDto";
 // import { useEffect, useState } from "react";
 import { LoadingOverlay } from "@/components/common/feedback/LoadingOverlay";
+import CollapsibleSection from "../CollapsibleSection";
 
 export function HomeNewsSection() {
 	const dispatch = useDispatch<AppDispatch>();
-	const { homeArticles, loading } = useSelector(
+	const { homeArticles, homeArticlesCount, loading } = useSelector(
 		(state: RootState) => state.article
 	);
 
@@ -26,11 +27,14 @@ export function HomeNewsSection() {
 
 	return (
 		<>
-			<BaseNewsSection
-				articles={homeArticles}
-				loadMoreArticles={loadMoreArticles}
-				resetKey={"home"}
-			/>
+			<CollapsibleSection>
+				<BaseNewsSection
+					articles={homeArticles}
+					totalCount={homeArticlesCount}
+					loadMoreArticles={loadMoreArticles}
+					resetKey={"home"}
+				/>
+			</CollapsibleSection>
 			{<LoadingOverlay loading={loading.homePage} />}
 		</>
 	);
