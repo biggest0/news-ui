@@ -16,8 +16,10 @@ export interface HomeLayout {
 
 export interface VisibleSections {
 	newsSection: boolean;
+	editorsSection: boolean;
 }
 
 export interface ExpandedSections {
 	newsSection: boolean;
+	editorsSection: boolean;
 }
