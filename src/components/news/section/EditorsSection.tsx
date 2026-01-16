@@ -9,7 +9,7 @@ export default function EditorsSection() {
 		<section>
 			{/* instead pass in an enum maybe, this enum will give the title, and enum will map to correct options being created */}
 			<SectionHeaderExpandable title="OUR EDITORS" section={SECTIONS.EDITORS} />
-			<CollapsibleSection>
+			<CollapsibleSection section={SECTIONS.EDITORS}>
 				{CATIRE_EDITORS.map((editor, index) => (
 					<EditorCardHorizontal
 						key={`editor-${index}`}

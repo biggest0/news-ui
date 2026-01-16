@@ -1,11 +1,13 @@
 import { useSectionCollapse } from "@/hooks/useSectionCollapse";
+import type { SectionToggleState } from "@/types/localStorageTypes";
 
 interface CollapsibleSectionProps {
+	section: keyof SectionToggleState;
 	children: React.ReactNode;
 }
 
-const CollapsibleSection = ({ children }: CollapsibleSectionProps) => {
-	const isCollapsed = useSectionCollapse();
+const CollapsibleSection = ({ section, children }: CollapsibleSectionProps) => {
+	const isCollapsed = useSectionCollapse(section);
 	const isHidden = false; // Placeholder for future implementation
 
 	return (

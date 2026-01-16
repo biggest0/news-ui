@@ -1,6 +1,7 @@
 import { useAppSettings } from "@/contexts/AppSettingContext";
+import type { SectionToggleState } from "@/types/localStorageTypes";
 
-export function useSectionCollapse() {
+export function useSectionCollapse(section: keyof SectionToggleState) {
 	const { appSetting } = useAppSettings();
-	return appSetting.homeLayout.expanded.newsSection;
+	return appSetting.homeLayout.expanded[section];
 }
