@@ -8,4 +8,4 @@ export const SECTIONS = {
   EDITORS: 'editorsSection',
   CAT_FACTS: 'catFactsSection',
   TOP_TEN: 'topTenSection',
-}
+} as const
