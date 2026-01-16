@@ -1,4 +1,3 @@
-import type { DropDownOption } from "@/components/common/layout/SectionDropDown";
 import { useAppSettings } from "@/contexts/AppSettingContext";
 import type {
 	SectionToggleState
@@ -9,6 +8,14 @@ type SectionKey = Extract<
 	keyof SectionToggleState,
 	"newsSection" | "editorsSection" | "catFactsSection"
 >;
+
+export interface DropDownOption {
+	label: string;
+	onClick: () => void;
+	icon?: React.ReactNode;
+	className?: string;
+	isDivider?: boolean;
+}
 
 export function useSectionDropdown(sectionKey: SectionKey): DropDownOption[] {
 	const {

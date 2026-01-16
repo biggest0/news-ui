@@ -1,28 +1,17 @@
+import { useSectionDropdown, type DropDownOption } from "@/hooks/useSectionDropdown";
+import type { SectionToggleState } from "@/types/localStorageTypes";
 import { useEffect, useRef, useState } from "react";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa6";
 
-export interface DropDownOption {
-	label: string;
-	onClick: () => void;
-	icon?: React.ReactNode;
-	className?: string;
-	isDivider?: boolean;
-}
-
 export interface SectionDropDownProps {
-	options: DropDownOption[];
+	section: keyof SectionToggleState;
 }
 
-const testDropDownOptions: DropDownOption[] = [
-  { label: 'Option 1', onClick: () => console.log('Option 1 clicked') },
-  { label: 'Option 2', onClick: () => console.log('Option 2 clicked') },
-  { isDivider: true, label: '', onClick: () => {} },
-  { label: 'Option 3', onClick: () => console.log('Option 3 clicked') },
-]
-
-export const SectionDropDown = ({ options = testDropDownOptions }: SectionDropDownProps) => {
+export const SectionDropDown = ({ section }: SectionDropDownProps) => {
 	const [isExpanded, setIsExpanded] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const dropDownOptions = useSectionDropdown(section);
 
 	// Close dropdown when clicking outside dropdown
 	useEffect(() => {
@@ -64,7 +53,7 @@ export const SectionDropDown = ({ options = testDropDownOptions }: SectionDropDo
 					className={`absolute top-6 left-0 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50`}
 				>
 					<div className="py-1">
-						{options.map((option, index) =>
+						{dropDownOptions.map((option, index) =>
 							option.isDivider ? (
 								<div
 									key={`divider-${index}`}
