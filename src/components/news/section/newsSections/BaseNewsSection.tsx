@@ -18,6 +18,7 @@ import { LoadingMessage } from "../../shared/LoadingMessage";
 import { PaginationControls } from "../../shared/PaginationControls";
 import { SectionHeaderExpandable } from "@/components/common/layout/SectionHeaderExpandable";
 import { usePagePagination } from "@/hooks/usePagePagination";
+import { SECTIONS } from "@/constants/keys";
 
 interface BaseNewsSectionProps {
 	articles: ArticleInfo[];
@@ -112,7 +113,7 @@ export function BaseNewsSection({
 			<section className="md:col-span-2">
 				<div className="flex flex-row justify-between w-full items-center">
 					<div className="flex flex-row gap-2 items-center">
-						<SectionHeaderExpandable title="MEWS" />
+						<SectionHeaderExpandable title="MEWS" section={SECTIONS.NEWS} />
 						{/* <SectionHeader title="MEWS" /> */}
 					</div>
 					<div className="flex items-center gap-4">
