@@ -1,13 +1,12 @@
 import type { DropDownOption } from "@/components/common/layout/SectionDropDown";
 import { useAppSettings } from "@/contexts/AppSettingContext";
 import type {
-	ExpandedSections,
-	VisibleSections,
+	SectionToggleState
 } from "@/types/localStorageTypes";
 import { useMemo } from "react";
 
 type SectionKey = Extract<
-	keyof ExpandedSections | keyof VisibleSections,
+	keyof SectionToggleState,
 	"newsSection" | "editorsSection" | "catFactsSection"
 >;
 

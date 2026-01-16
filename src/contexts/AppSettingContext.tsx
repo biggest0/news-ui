@@ -7,8 +7,7 @@ import {
 } from "react";
 import type {
 	AppSetting,
-	ExpandedSections,
-	VisibleSections,
+	SectionToggleState
 } from "@/types/localStorageTypes";
 import {
 	getAppSetting,
@@ -17,8 +16,8 @@ import {
 
 interface AppSettingContextType {
 	appSetting: AppSetting;
-	updateSectionVisibility: (key: keyof VisibleSections, value: boolean) => void;
-	updateSectionExpansion: (key: keyof ExpandedSections, value: boolean) => void;
+	updateSectionVisibility: (key: keyof SectionToggleState, value: boolean) => void;
+	updateSectionExpansion: (key: keyof SectionToggleState, value: boolean) => void;
 	toggleDarkMode: () => void;
 	togglePagination: () => void;
 }
@@ -45,7 +44,7 @@ export const AppSettingProvider = ({ children }: { children: ReactNode }) => {
 	}, []);
 
 	const updateSectionVisibility = (
-		key: keyof VisibleSections,
+		key: keyof SectionToggleState,
 		value: boolean
 	) => {
 		const updatedSetting = {
@@ -63,7 +62,7 @@ export const AppSettingProvider = ({ children }: { children: ReactNode }) => {
 	};
 
 	const updateSectionExpansion = (
-		key: keyof ExpandedSections,
+		key: keyof SectionToggleState,
 		value: boolean
 	) => {
 		const updatedSetting: AppSetting = {

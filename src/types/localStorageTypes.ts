@@ -9,17 +9,12 @@ export interface AppSetting {
 }
 
 export interface HomeLayout {
-	visible: VisibleSections;
-	expanded: ExpandedSections;
+	visible: SectionToggleState;
+	expanded: SectionToggleState;
 	pagePagination: boolean;
 }
 
-export interface VisibleSections {
-	newsSection: boolean;
-	editorsSection: boolean;
-}
-
-export interface ExpandedSections {
+export interface SectionToggleState {
 	newsSection: boolean;
 	editorsSection: boolean;
 }

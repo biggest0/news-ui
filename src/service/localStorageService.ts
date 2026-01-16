@@ -1,7 +1,6 @@
 import type { ArticleInfo } from "@/types/articleTypes";
 import type {
-	ExpandedSections,
-	VisibleSections,
+	SectionToggleState
 } from "@/types/localStorageTypes";
 import {
 	getAppSetting,
@@ -21,7 +20,7 @@ export function handleLocalStorageUpdate(
 }
 
 export function updateSectionVisibility(
-	key: keyof VisibleSections,
+	key: keyof SectionToggleState,
 	value: boolean
 ) {
 	try {
@@ -34,7 +33,7 @@ export function updateSectionVisibility(
 }
 
 export function updateSectionExpansion(
-	key: keyof ExpandedSections,
+	key: keyof SectionToggleState,
 	value: boolean
 ) {
 	try {
