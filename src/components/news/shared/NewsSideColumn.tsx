@@ -9,6 +9,7 @@ import { handleLocalStorageUpdate } from "@/service/localStorageService";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { ArticleInfo } from "@/types/articleTypes";
 import { USER_ARTICLE_HISTORY } from "@/constants/keys";
+import EditorsSection from "../section/EditorsSection";
 
 export default function NewsSideColumn() {
 	const [articleHistory, setArticleHistory] = useLocalStorage<ArticleInfo[]>(
@@ -20,20 +21,7 @@ export default function NewsSideColumn() {
 	return (
 		<>
 			{/* our editors */}
-			<section className="">
-				<SectionHeader title="OUR EDITORS" />
-				<div className="">
-					{CATIRE_EDITORS.map((editor, index) => (
-						<EditorCardHorizontal
-							key={`editor-${index}`}
-							name={editor.name}
-							role={editor.role}
-							description={editor.description}
-							imageUrl={editor.imageUrl}
-						/>
-					))}
-				</div>
-			</section>
+			<EditorsSection />
 
 			{/* staff favorites, for future */}
 			<div className="border-b border-gray-400 pb-6 space-y-4">
