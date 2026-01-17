@@ -10,6 +10,7 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { ArticleInfo } from "@/types/articleTypes";
 import { USER_ARTICLE_HISTORY } from "@/constants/keys";
 import EditorsSection from "../section/EditorsSection";
+import CatFactsSection from "../section/CatFactsSection";
 
 export default function NewsSideColumn() {
 	const [articleHistory, setArticleHistory] = useLocalStorage<ArticleInfo[]>(
@@ -48,17 +49,7 @@ export default function NewsSideColumn() {
 			</div>
 
 			{/* cat facts */}
-			<div className="">
-				<SectionHeader title="RANDOM CAT FACTS" />
-				{CAT_FACTS.map((catFact, index) => (
-					<CatFactsCard
-						key={index}
-						title={catFact.title}
-						fact={catFact.fact}
-						small={false}
-					/>
-				))}
-			</div>
+			<CatFactsSection />
 
 			{/* cat merch */}
 			{/* <div className="">
