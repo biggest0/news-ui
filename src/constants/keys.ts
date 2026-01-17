@@ -7,5 +7,6 @@ export const SECTIONS = {
   NEWS: 'newsSection',
   EDITORS: 'editorsSection',
   CAT_FACTS: 'catFactsSection',
-  TOP_TEN: 'topTenSection',
+  STAFF_PICKS: 'staffPicksSection',
+  POPULAR: 'popularSection',
 } as const
