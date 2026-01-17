@@ -5,3 +5,8 @@ export function useSectionCollapse(section: keyof SectionToggleState) {
 	const { appSetting } = useAppSettings();
 	return appSetting.homeLayout.expanded[section];
 }
+
+export function useSectionVisible(section: keyof SectionToggleState) {
+	const { appSetting } = useAppSettings();
+	return appSetting.homeLayout.visible[section];
+}
