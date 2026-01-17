@@ -1,4 +1,4 @@
-import type { ArticleInfoRequest } from "@/types/articleTypes";
+import type { ArticleInfoQueryDTO } from "@/types/articleDto";
 import { API_URL } from "@/config/config";
 
 /**
@@ -19,7 +19,7 @@ export async function fetchArticlesInfo({
 	search,
 	dateRange,
 	sortBy,
-}: ArticleInfoRequest) {
+}: ArticleInfoQueryDTO) {
 	const params = new URLSearchParams();
 	params.append("page", page.toString());
 	params.append("limit", limit.toString());

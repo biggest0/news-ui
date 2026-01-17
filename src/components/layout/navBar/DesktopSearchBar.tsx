@@ -1,5 +1,5 @@
 import { LuSearch, LuX } from "react-icons/lu";
-import type { SearchProps } from "@/types/navBar";
+import type { SearchProps } from "@/types/navBarTypes";
 
 export const DesktopSearchBar = ({
 	searchClicked,

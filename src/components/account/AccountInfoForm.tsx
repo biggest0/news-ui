@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import type { UserInfo } from "@/types/localStorage";
+import type { UserInfo } from "@/types/localStorageTypes";
 
 interface AccountInfoFormProp {
 	userInfo: UserInfo;

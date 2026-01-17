@@ -1,11 +1,8 @@
 import { createSlice, createAsyncThunk, isAnyOf } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-import type {
-	ArticleInfo,
-	ArticleDetail,
-	ArticleInfoRequest,
-} from "@/types/articleTypes";
+import type { ArticleInfo, ArticleDetail, ArticleResponse } from "@/types/articleTypes";
+import type { ArticleInfoQueryDTO } from "@/types/articleDto";
 import {
 	getArticleDetail,
 	getArticlesByCategory,
@@ -17,7 +14,9 @@ import {
 interface ArticlesState {
 	topTenArticles: ArticleInfo[];
 	homeArticles: ArticleInfo[];
+	homeArticlesCount: number;
 	articles: ArticleInfo[];
+	articlesCount: number;
 	articlesDetail: Record<string, ArticleDetail>;
 	loading: {
 		homePage: boolean;
@@ -36,7 +35,9 @@ interface ArticlesState {
 const initialState: ArticlesState = {
 	topTenArticles: [],
 	homeArticles: [],
+	homeArticlesCount: 0,
 	articles: [],
+	articlesCount: 0,
 	articlesDetail: {},
 	loading: {
 		homePage: false,
@@ -56,15 +57,15 @@ const initialState: ArticlesState = {
 // Thunks for async actions
 // -------------------------
 export const loadInitialArticlesInfo = createAsyncThunk<
-	ArticleInfo[],
-	ArticleInfoRequest
+	ArticleResponse,
+	ArticleInfoQueryDTO
 >("articles/loadInitialArticlesInfo", async (request) => {
 	return getArticlesInfo(request);
 });
 
 export const loadArticlesInfo = createAsyncThunk<
-	ArticleInfo[],
-	ArticleInfoRequest
+	ArticleResponse,
+	ArticleInfoQueryDTO
 >("articles/getArticlesInfo", async (request) => {
 	return getArticlesInfo(request);
 });
@@ -77,14 +78,14 @@ export const loadArticleDetail = createAsyncThunk<ArticleDetail, string>(
 );
 
 export const loadArticlesInfoByCategory = createAsyncThunk<
-	ArticleInfo[],
+	ArticleResponse,
 	{ page: number; category: string }
 >("articles/getArticlesInfoByCategory", async ({ page, category }) => {
 	return getArticlesByCategory(page, category);
 });
 
 export const loadArticlesInfoBySearch = createAsyncThunk<
-	ArticleInfo[],
+	ArticleResponse,
 	{ page: number; search: string }
 >("articles/getArticlesInfoBySearch", async ({ page, search }) => {
 	return getArticlesBySearch(page, search);
@@ -161,7 +162,8 @@ const articlesSlice = createSlice({
 			})
 			.addCase(loadInitialArticlesInfo.fulfilled, (state, action) => {
 				state.loading.homePage = false;
-				state.homeArticles = action.payload;
+				state.homeArticles = action.payload.articles;
+				state.homeArticlesCount = action.payload.count;
 			})
 			.addCase(loadInitialArticlesInfo.rejected, (state, action) => {
 				state.loading.homePage = false;
@@ -206,15 +208,16 @@ const articlesSlice = createSlice({
 			})
 			.addCase(loadArticlesInfo.fulfilled, (state, action) => {
 				state.loading.articles = false;
+				state.homeArticlesCount = action.payload.count;
 
-				action.payload.forEach((article) => {
+				action.payload.articles.forEach((article) => {
 					const exists = state.homeArticles.some((a) => a.id === article.id);
 					if (!exists) {
 						state.homeArticles.push(article);
 					}
 				});
 
-				// state.homeArticles = appendUniqueArticles(state.homeArticles, action.payload)
+				// state.homeArticles = appendUniqueArticles(state.homeArticles, action.payload.articles)
 			})
 			.addCase(loadArticlesInfo.rejected, (state, action) => {
 				state.loading.articles = false;
@@ -240,15 +243,16 @@ const articlesSlice = createSlice({
 				),
 				(state, action) => {
 					state.loading.articles = false;
+					state.articlesCount = action.payload.count;
 
-					action.payload.forEach((article) => {
+					action.payload.articles.forEach((article) => {
 						const exists = state.articles.some((a) => a.id === article.id);
 						if (!exists) {
 							state.articles.push(article);
 						}
 					});
 
-					// state.articles = appendUniqueArticles(state.articles, action.payload)
+					// state.articles = appendUniqueArticles(state.articles, action.payload.articles)
 				}
 			)
 			.addMatcher(

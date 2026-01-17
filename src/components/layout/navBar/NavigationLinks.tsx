@@ -1,5 +1,5 @@
 import { MobileNavLink } from "./MobileNavLink";
-import type { NavCategory, NavLink } from "@/types/navBar";
+import type { NavCategory, NavLink } from "@/types/navBarTypes";
 import { ExpandableNavItem } from "./ExpandableNavItem";
 
 interface NavigationLinksProps {

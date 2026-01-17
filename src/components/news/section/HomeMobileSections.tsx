@@ -5,7 +5,7 @@ import { CatFactsCard } from "@/components/layout/sideColumn/CatFactsCard";
 import type {
 	EditorCardProps,
 	CatFactsProps,
-} from "@/components/layout/sideColumn/type";
+} from "@/types/props/sideColumnTypes";
 import { ExpandableSection } from "./ExpandableSection";
 
 export function HomeContentSections() {

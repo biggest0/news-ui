@@ -2,7 +2,7 @@ import { AppLogo } from "@/components/common/brand/AppLogo";
 import { AppTitle } from "./AppTitle";
 import { DesktopSearchBar } from "./DesktopSearchBar";
 import { UserAccountIcon } from "@/components/common/user/UserAccountIcon";
-import type { SearchProps } from "@/types/navBar";
+import type { SearchProps } from "@/types/navBarTypes";
 
 export const DesktopNavigation = (props: SearchProps) => {
 	return (

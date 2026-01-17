@@ -1,4 +1,4 @@
-import type { CatFactsProps } from "./type";
+import type { CatFactsProps } from "@/types/props/sideColumnTypes";
 
 export const CatFactsCard = ({ title, fact, small }: CatFactsProps) => {
 	return (

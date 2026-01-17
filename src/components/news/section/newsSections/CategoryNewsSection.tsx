@@ -5,13 +5,15 @@ import { useLocation } from "react-router-dom";
 import type { RootState, AppDispatch } from "@/store/store";
 import { loadArticlesInfoByCategory } from "@/store/articlesSlice";
 import { BaseNewsSection } from "./BaseNewsSection";
-import type { ArticleInfoRequest } from "@/types/articleTypes";
+import type { ArticleInfoQueryDTO } from "@/types/articleDto";
 
 export function CategoryNewsSection() {
 	const dispatch = useDispatch<AppDispatch>();
 	const location = useLocation();
 	const selectedCategory = location.pathname.split("/")[1];
-	const { articles } = useSelector((state: RootState) => state.article);
+	const { articles, articlesCount } = useSelector(
+		(state: RootState) => state.article
+	);
 	const [filteredArticles, setFilteredArticles] = useState(articles);
 
 	// Filter articles by category
@@ -21,7 +23,7 @@ export function CategoryNewsSection() {
 		);
 	}, [selectedCategory, articles]);
 
-	const loadMoreArticles = (request: ArticleInfoRequest) => {
+	const loadMoreArticles = (request: ArticleInfoQueryDTO) => {
 		if (request.page) {
 			dispatch(
 				// using a separate route because store structure is different for category articles and home page articles
@@ -37,6 +39,7 @@ export function CategoryNewsSection() {
 	return (
 		<BaseNewsSection
 			articles={filteredArticles}
+			totalCount={articlesCount}
 			loadMoreArticles={loadMoreArticles}
 			resetKey={selectedCategory}
 		/>

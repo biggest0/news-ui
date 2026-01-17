@@ -5,48 +5,73 @@ import {
 	fetchArticlesInfo,
 	fetchTopTenArticles,
 } from "../api/articleApi";
+import type { ArticleDetail, ArticleResponse } from "../types/articleTypes";
 import type {
-	ArticleDetail,
-	ArticleInfo,
-	ArticleInfoRequest,
-	ArticleInfoResponse,
-	ArticleDetailResponse,
-} from "../types/articleTypes";
+	ArticleInfoQueryDTO,
+	ArticleInfoResponseDTO,
+} from "@/types/articleDto";
+import {
+	mapDTOtoArticleDetail,
+	mapDTOtoArticleInfo,
+} from "@/mappers/articleMapper";
 
-// -----------------------------------
-// API functions with transformations
-// -----------------------------------
-export async function getArticlesByCategory(page: number, category: string) {
+export async function getArticlesByCategory(
+	page: number,
+	category: string
+): Promise<ArticleResponse> {
 	try {
-		const data = await fetchArticlesByCategory(page, category);
-		return data.map(articleInfoTransform);
+		const data: ArticleInfoResponseDTO = await fetchArticlesByCategory(
+			page,
+			category
+		);
+		return {
+			articles: data.articles.map(mapDTOtoArticleInfo),
+			count: data.count,
+		};
 	} catch (error) {
 		console.error("[Error fetching articles by category]:", error);
+		return { articles: [], count: 0 };
 	}
 }
 
-export async function getArticlesBySearch(page: number, search: string) {
+export async function getArticlesBySearch(
+	page: number,
+	search: string
+): Promise<ArticleResponse> {
 	try {
-		const data = await fetchArticlesBySearch(page, search);
-		return data.map(articleInfoTransform);
+		const data: ArticleInfoResponseDTO = await fetchArticlesBySearch(
+			page,
+			search
+		);
+		return {
+			articles: data.articles.map(mapDTOtoArticleInfo),
+			count: data.count,
+		};
 	} catch (error) {
 		console.error("[Error fetching articles by search]:", error);
+		return { articles: [], count: 0 };
 	}
 }
 
-export async function getArticlesInfo(request: ArticleInfoRequest) {
+export async function getArticlesInfo(
+	request: ArticleInfoQueryDTO
+): Promise<ArticleResponse> {
 	try {
-		const data = await fetchArticlesInfo(request);
-		return data.map(articleInfoTransform);
+		const data: ArticleInfoResponseDTO = await fetchArticlesInfo(request);
+		return {
+			articles: data.articles.map(mapDTOtoArticleInfo),
+			count: data.count,
+		};
 	} catch (error) {
 		console.error("[Error fetching article infos]:", error);
+		return { articles: [], count: 0 };
 	}
 }
 
 export async function getArticleDetail(articleId: string) {
 	try {
 		const data = await fetchArticleDetail(articleId);
-		return articleDetailTransform(data);
+		return mapDTOtoArticleDetail(data);
 	} catch (error) {
 		console.error("[Error fetching article detail]:", error);
 		// have to return a ArticleDetail object or redux thunk will get angry
@@ -67,44 +92,8 @@ export async function getArticleDetail(articleId: string) {
 export async function getTopTenArticles() {
 	try {
 		const data = await fetchTopTenArticles();
-		return data.map(articleInfoTransform);
+		return data.map(mapDTOtoArticleInfo);
 	} catch (error) {
 		console.error("[Error fetching top 10 articles]:", error);
 	}
-}
-
-// ------------------------------
-// Data transformation functions
-// ------------------------------
-export function articleInfoTransform(
-	articleInfoResponse: ArticleInfoResponse
-): ArticleInfo {
-	return {
-		id: articleInfoResponse._id,
-		title: articleInfoResponse.title,
-		summary: articleInfoResponse.summary,
-		datePublished: new Date(
-			articleInfoResponse.date_published
-		).toLocaleDateString(),
-		mainCategory: articleInfoResponse.main_category,
-		viewed: articleInfoResponse.viewed,
-	};
-}
-
-export function articleDetailTransform(
-	articleDetailResponse: ArticleDetailResponse
-): ArticleDetail {
-	return {
-		id: articleDetailResponse._id,
-		datePublished: new Date(
-			articleDetailResponse.date_published
-		).toLocaleDateString(),
-		title: articleDetailResponse.title,
-		summary: articleDetailResponse.summary,
-		paragraphs: articleDetailResponse.paragraphs,
-		mainCategory: articleDetailResponse.main_category,
-		subCategory: articleDetailResponse.sub_category,
-		source: articleDetailResponse.source,
-		url: articleDetailResponse.url,
-	};
 }

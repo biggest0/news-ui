@@ -1,6 +1,6 @@
 import { AccountInfoForm } from "@/components/account/AccountInfoForm";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-import type { UserInfo } from "@/types/localStorage";
+import type { UserInfo } from "@/types/localStorageTypes";
 import { USER_INFO } from "@/constants/keys";
 
 export const AccountInfoSection = () => {
