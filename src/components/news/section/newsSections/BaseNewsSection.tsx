@@ -21,6 +21,7 @@ import { usePagePagination } from "@/hooks/usePagePagination";
 import { SECTIONS } from "@/constants/keys";
 import CollapsibleSection from "../CollapsibleSection";
 import { useSectionVisible } from "@/hooks/useSectionCollapse";
+import { useAppSettings } from "@/contexts/AppSettingContext";
 
 interface BaseNewsSectionProps {
 	articles: ArticleInfo[];
@@ -44,6 +45,8 @@ export function BaseNewsSection({
 	const isPaginationEnabled = usePagePagination();
 
 	const handleLocalStorageUpdate = useArticleHistory();
+
+	const { updateSectionVisibility } = useAppSettings();
 
 	const { articlesToDisplay, dateRange, setDateRange, sortBy, setSortBy } =
 		useArticleFilters(articles);
@@ -114,7 +117,7 @@ export function BaseNewsSection({
 	return (
 		<div className="flex flex-col md:grid md:grid-cols-3 gap-x-4 gap-y-6 pt-6">
 			{/* Articles, main col */}
-			<section className={`md:col-span-2 ${isVisible ? "": "hidden"}`}>
+			<section className={`md:col-span-2 ${isVisible ? "" : "hidden"}`}>
 				{/* Header and filters */}
 				<div className="flex flex-row justify-between w-full items-center">
 					<SectionHeaderExpandable title="MEWS" section={SECTIONS.NEWS} />
@@ -152,6 +155,26 @@ export function BaseNewsSection({
 						/>
 					)}
 				</CollapsibleSection>
+			</section>
+
+			{/* Hidden state with reset option */}
+			<section className={`md:col-span-2 ${isVisible ? "hidden" : ""}`}>
+				<div className="flex flex-col p-8 items-center text-center gap-4">
+					{/* Add cat illustration later*/}
+
+					{/* Text content */}
+					<div className="space-y-2">
+						<p className="text-sm font-medium text-gray-800">
+							Looks like you removed the Mews section
+						</p>
+					</div>
+
+					{/* Reset button */}
+					<button className="underline text-gray-800 text-sm rounded-lg hover:text-amber-600 transition-colors duration-200 cursor-pointer"
+					onClick={() => updateSectionVisibility(SECTIONS.NEWS, true)}>
+						Bring It Back
+					</button>
+				</div>
 			</section>
 
 			{/* Side col for md screen and larger */}
