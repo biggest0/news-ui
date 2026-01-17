@@ -19,5 +19,5 @@ export interface SectionToggleState {
 	editorsSection: boolean;
 	catFactsSection: boolean;
 	staffPicksSection: boolean;
-	topTenSection: boolean;
+	popularSection: boolean;
 }
