@@ -7,14 +7,11 @@ interface CollapsibleSectionProps {
 }
 
 const CollapsibleSection = ({ section, children }: CollapsibleSectionProps) => {
-	const isCollapsed = useSectionCollapse(section);
-	const isHidden = false; // Placeholder for future implementation
-
+	const isExpanded = useSectionCollapse(section);
 	return (
 		<div
 			className={`grid transition-all duration-500 ease-in-out ${
-				isCollapsed ? "grid-rows-[1fr]" : "grid-rows-[0fr]"} ${
-        isHidden ? "hidden" : ""}`}
+				isExpanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
 		>
 			<div className="overflow-hidden">{children}</div>
 		</div>
