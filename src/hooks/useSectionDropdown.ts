@@ -6,7 +6,7 @@ import { useMemo } from "react";
 
 type SectionKey = Extract<
 	keyof SectionToggleState,
-	"newsSection" | "editorsSection" | "catFactsSection"
+	"newsSection" | "editorsSection" | "catFactsSection" | "staffPicksSection" | "topTenSection"
 >;
 
 export interface DropDownOption {
