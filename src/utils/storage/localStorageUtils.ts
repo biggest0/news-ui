@@ -9,11 +9,19 @@ export function getAppSetting(): AppSetting {
 				homeLayout: {
 					visible: {
 						newsSection: true,
+						editorsSection: true,
+						catFactsSection: true,
+						staffPicksSection: true,
+						topTenSection: true,
 					},
 					expanded: {
 						newsSection: true,
+						editorsSection: true,
+						catFactsSection: true,
+						staffPicksSection: true,
+						topTenSection: true,
 					},
-          pagePagination: false,
+					pagePagination: false,
 				},
 		  };
 }

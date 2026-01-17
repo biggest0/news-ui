@@ -17,4 +17,7 @@ export interface HomeLayout {
 export interface SectionToggleState {
 	newsSection: boolean;
 	editorsSection: boolean;
+	catFactsSection: boolean;
+	staffPicksSection: boolean;
+	topTenSection: boolean;
 }
