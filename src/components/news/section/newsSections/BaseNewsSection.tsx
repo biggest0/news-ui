@@ -20,7 +20,7 @@ import { SectionHeaderExpandable } from "@/components/common/layout/SectionHeade
 import { usePagePagination } from "@/hooks/usePagePagination";
 import { SECTIONS } from "@/constants/keys";
 import CollapsibleSection from "../CollapsibleSection";
-import { useSectionVisible } from "@/hooks/useSectionCollapse";
+import { useAllSectionNotVisible, useSectionVisible } from "@/hooks/useSectionCollapse";
 import { useAppSettings } from "@/contexts/AppSettingContext";
 
 interface BaseNewsSectionProps {
@@ -42,6 +42,7 @@ export function BaseNewsSection({
 
 	const isVisible = useSectionVisible(SECTIONS.NEWS);
 
+	const isAllSectionNotVisible = useAllSectionNotVisible();
 	const isPaginationEnabled = usePagePagination();
 
 	const handleLocalStorageUpdate = useArticleHistory();
@@ -158,7 +159,7 @@ export function BaseNewsSection({
 			</section>
 
 			{/* Hidden state with reset option */}
-			<section className={`md:col-span-2 ${isVisible ? "hidden" : ""}`}>
+			<section className={`md:col-span-2 ${isVisible || isAllSectionNotVisible ? "hidden" : ""}`}>
 				<div className="flex flex-col p-8 items-center text-center gap-4">
 					{/* Add cat illustration later*/}
 
