@@ -20,8 +20,12 @@ import { SectionHeaderExpandable } from "@/components/common/layout/SectionHeade
 import { usePagePagination } from "@/hooks/usePagePagination";
 import { SECTIONS } from "@/constants/keys";
 import CollapsibleSection from "../CollapsibleSection";
-import { useAllSectionNotVisible, useSectionVisible } from "@/hooks/useSectionCollapse";
+import {
+	useAllSectionNotVisible,
+	useSectionVisible,
+} from "@/hooks/useSectionCollapse";
 import { useAppSettings } from "@/contexts/AppSettingContext";
+import EmptyStateSection from "../EmptyStateSection";
 
 interface BaseNewsSectionProps {
 	articles: ArticleInfo[];
@@ -41,12 +45,10 @@ export function BaseNewsSection({
 	const { loading } = useSelector((state: RootState) => state.article);
 
 	const isVisible = useSectionVisible(SECTIONS.NEWS);
-
 	const isAllSectionNotVisible = useAllSectionNotVisible();
 	const isPaginationEnabled = usePagePagination();
 
 	const handleLocalStorageUpdate = useArticleHistory();
-
 	const { updateSectionVisibility } = useAppSettings();
 
 	const { articlesToDisplay, dateRange, setDateRange, sortBy, setSortBy } =
@@ -159,24 +161,21 @@ export function BaseNewsSection({
 			</section>
 
 			{/* Hidden state with reset option */}
-			<section className={`md:col-span-2 ${isVisible || isAllSectionNotVisible ? "hidden" : ""}`}>
-				<div className="flex flex-col p-8 items-center text-center gap-4">
-					{/* Add cat illustration later*/}
-
-					{/* Text content */}
-					<div className="space-y-2">
-						<p className="text-sm font-medium text-gray-800">
-							Looks like you removed the Mews section
-						</p>
-					</div>
-
-					{/* Reset button */}
-					<button className="underline text-gray-800 text-sm rounded-lg hover:text-amber-600 transition-colors duration-200 cursor-pointer"
-					onClick={() => updateSectionVisibility(SECTIONS.NEWS, true)}>
-						Bring It Back
-					</button>
-				</div>
-			</section>
+			<div
+				className={`md:col-span-2 ${
+					// mews section not visible, there are some section(s) visible
+					!isVisible && !isAllSectionNotVisible ? "" : "hidden"
+				}`}
+			>
+				<EmptyStateSection
+					isVisible={!isVisible && !isAllSectionNotVisible}
+					resetSectionVisibility={() =>
+						updateSectionVisibility(SECTIONS.NEWS, true)
+					}
+					message="Looks like you removed the Mews section"
+					buttonText="Bring It Back"
+				/>
+			</div>
 
 			{/* Side col for md screen and larger */}
 			<NewsSideColumn />
