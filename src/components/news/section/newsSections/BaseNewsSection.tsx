@@ -19,6 +19,8 @@ import { PaginationControls } from "../../shared/PaginationControls";
 import { SectionHeaderExpandable } from "@/components/common/layout/SectionHeaderExpandable";
 import { usePagePagination } from "@/hooks/usePagePagination";
 import { SECTIONS } from "@/constants/keys";
+import CollapsibleSection from "../CollapsibleSection";
+import { useSectionVisible } from "@/hooks/useSectionCollapse";
 
 interface BaseNewsSectionProps {
 	articles: ArticleInfo[];
@@ -36,6 +38,8 @@ export function BaseNewsSection({
 	const location = useLocation();
 	const selectedCategory = location.pathname.split("/")[1];
 	const { loading } = useSelector((state: RootState) => state.article);
+
+	const isVisible = useSectionVisible(SECTIONS.NEWS);
 
 	const isPaginationEnabled = usePagePagination();
 
@@ -110,53 +114,48 @@ export function BaseNewsSection({
 	return (
 		<div className="flex flex-col md:grid md:grid-cols-3 gap-x-4 gap-y-6 pt-6">
 			{/* Articles, main col */}
-			<section className="md:col-span-2">
+			<section className={`md:col-span-2 ${isVisible ? "": "hidden"}`}>
+				{/* Header and filters */}
 				<div className="flex flex-row justify-between w-full items-center">
-					<div className="flex flex-row gap-2 items-center">
-						<SectionHeaderExpandable title="MEWS" section={SECTIONS.NEWS} />
-						{/* <SectionHeader title="MEWS" /> */}
-					</div>
-					<div className="flex items-center gap-4">
-						<FilterBar
-							dateRange={dateRange}
-							sortBy={sortBy}
-							onDateRangeChange={handleDateRangeChange}
-							onSortByChange={handleSortByChange}
-						/>
-					</div>
+					<SectionHeaderExpandable title="MEWS" section={SECTIONS.NEWS} />
+					<FilterBar
+						dateRange={dateRange}
+						sortBy={sortBy}
+						onDateRangeChange={handleDateRangeChange}
+						onSortByChange={handleSortByChange}
+					/>
 				</div>
 
-				<ArticleList
-					articles={displayedArticles}
-					onArticleRead={handleLocalStorageUpdate}
-				/>
-
-				{/* Show loading message for infinite scroll or pagination */}
-				{!isPaginationEnabled && (
-					<LoadingMessage isLoading={loading.articles} />
-				)}
-				{isPaginationEnabled && (
-					<LoadingMessage isLoading={isPaginationLoading} />
-				)}
-
-				{/* Show pagination controls only in pagination mode */}
-				{isPaginationEnabled && (
-					<PaginationControls
-						currentPage={currentPage}
-						totalPages={totalPages}
-						pageSize={pageSize}
-						onPageChange={goToPage}
-						onPageSizeChange={setPageSize}
-						hasNextPage={hasNextPage}
-						hasPrevPage={hasPrevPage}
+				{/* Article list */}
+				<CollapsibleSection section={SECTIONS.NEWS}>
+					<ArticleList
+						articles={displayedArticles}
+						onArticleRead={handleLocalStorageUpdate}
 					/>
-				)}
+					{/* Show loading message for infinite scroll or pagination */}
+					{!isPaginationEnabled && (
+						<LoadingMessage isLoading={loading.articles} />
+					)}
+					{isPaginationEnabled && (
+						<LoadingMessage isLoading={isPaginationLoading} />
+					)}
+					{/* Show pagination controls only in pagination mode */}
+					{isPaginationEnabled && (
+						<PaginationControls
+							currentPage={currentPage}
+							totalPages={totalPages}
+							pageSize={pageSize}
+							onPageChange={goToPage}
+							onPageSizeChange={setPageSize}
+							hasNextPage={hasNextPage}
+							hasPrevPage={hasPrevPage}
+						/>
+					)}
+				</CollapsibleSection>
 			</section>
 
 			{/* Side col for md screen and larger */}
-			<div className="hidden md:flex flex-col space-y-6 pl-4 border-l border-gray-400">
-				<NewsSideColumn />
-			</div>
+			<NewsSideColumn />
 		</div>
 	);
 }

@@ -6,8 +6,6 @@ import { BaseNewsSection } from "./BaseNewsSection";
 import type { ArticleInfoQueryDTO } from "@/types/articleDto";
 // import { useEffect, useState } from "react";
 import { LoadingOverlay } from "@/components/common/feedback/LoadingOverlay";
-import CollapsibleSection from "../CollapsibleSection";
-import { SECTIONS } from "@/constants/keys";
 
 export function HomeNewsSection() {
 	const dispatch = useDispatch<AppDispatch>();
@@ -28,14 +26,12 @@ export function HomeNewsSection() {
 
 	return (
 		<>
-			<CollapsibleSection section={SECTIONS.NEWS}>
-				<BaseNewsSection
-					articles={homeArticles}
-					totalCount={homeArticlesCount}
-					loadMoreArticles={loadMoreArticles}
-					resetKey={"home"}
-				/>
-			</CollapsibleSection>
+			<BaseNewsSection
+				articles={homeArticles}
+				totalCount={homeArticlesCount}
+				loadMoreArticles={loadMoreArticles}
+				resetKey={"home"}
+			/>
 			{<LoadingOverlay loading={loading.homePage} />}
 		</>
 	);
