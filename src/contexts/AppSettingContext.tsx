@@ -18,6 +18,7 @@ interface AppSettingContextType {
 	appSetting: AppSetting;
 	updateSectionVisibility: (key: keyof SectionToggleState, value: boolean) => void;
 	updateSectionExpansion: (key: keyof SectionToggleState, value: boolean) => void;
+	resetSectionVisibility: () => void;
 	toggleDarkMode: () => void;
 	togglePagination: () => void;
 }
@@ -79,6 +80,29 @@ export const AppSettingProvider = ({ children }: { children: ReactNode }) => {
 		setAppSettingState(updatedSetting);
 	};
 
+		const resetSectionVisibility = (key?: keyof SectionToggleState) => {
+		if (key) {
+			updateSectionVisibility(key, true);
+			return;
+		}
+		
+		const updatedSetting: AppSetting = {
+			...appSetting,
+			homeLayout: {
+				...appSetting.homeLayout,
+				visible: {
+					newsSection: true,
+					editorsSection: true,
+					catFactsSection: true,
+					staffPicksSection: true,
+					popularSection: true,
+				},
+			},
+		};
+		setAppSetting(updatedSetting);
+		setAppSettingState(updatedSetting);
+	};
+
 	const toggleDarkMode = () => {
 		const updatedSetting: AppSetting = {
 			...appSetting,
@@ -106,6 +130,7 @@ export const AppSettingProvider = ({ children }: { children: ReactNode }) => {
 				appSetting,
 				updateSectionVisibility,
 				updateSectionExpansion,
+				resetSectionVisibility,
 				toggleDarkMode,
 				togglePagination,
 			}}

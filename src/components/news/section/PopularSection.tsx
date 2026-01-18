@@ -20,14 +20,14 @@ export default function PopularSection() {
 
 	return (
 		<section
-			className={`border-b border-gray-400 py-6 space-y-4 ${
+			className={`border-b border-gray-400 py-6 ${
 				isVisible ? "" : "hidden"
 			}`}
 		>
 			{/* instead pass in an enum maybe, this enum will give the title, and enum will map to correct options being created */}
 			<SectionHeaderExpandable title="POPULAR" section={SECTIONS.POPULAR} />
 			<CollapsibleSection section={SECTIONS.POPULAR}>
-				<div className="grid grid-cols-1 md:grid-cols-5 md:grid-rows-2 gap-4">
+				<div className="grid grid-cols-1 py-4 md:grid-cols-5 md:grid-rows-2 gap-4">
 					{topTenArticles.map((article, index) => (
 						<ArticleTitleCard
 							key={`top-ten-${article.id}`}

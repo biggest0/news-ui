@@ -20,7 +20,12 @@ import { SectionHeaderExpandable } from "@/components/common/layout/SectionHeade
 import { usePagePagination } from "@/hooks/usePagePagination";
 import { SECTIONS } from "@/constants/keys";
 import CollapsibleSection from "../CollapsibleSection";
-import { useSectionVisible } from "@/hooks/useSectionCollapse";
+import {
+	useAllSectionNotVisible,
+	useSectionVisible,
+} from "@/hooks/useSectionCollapse";
+import { useAppSettings } from "@/contexts/AppSettingContext";
+import EmptyStateSection from "../EmptyStateSection";
 
 interface BaseNewsSectionProps {
 	articles: ArticleInfo[];
@@ -40,10 +45,11 @@ export function BaseNewsSection({
 	const { loading } = useSelector((state: RootState) => state.article);
 
 	const isVisible = useSectionVisible(SECTIONS.NEWS);
-
+	const isAllSectionNotVisible = useAllSectionNotVisible();
 	const isPaginationEnabled = usePagePagination();
 
 	const handleLocalStorageUpdate = useArticleHistory();
+	const { updateSectionVisibility } = useAppSettings();
 
 	const { articlesToDisplay, dateRange, setDateRange, sortBy, setSortBy } =
 		useArticleFilters(articles);
@@ -114,7 +120,7 @@ export function BaseNewsSection({
 	return (
 		<div className="flex flex-col md:grid md:grid-cols-3 gap-x-4 gap-y-6 pt-6">
 			{/* Articles, main col */}
-			<section className={`md:col-span-2 ${isVisible ? "": "hidden"}`}>
+			<section className={`md:col-span-2 ${isVisible ? "" : "hidden"}`}>
 				{/* Header and filters */}
 				<div className="flex flex-row justify-between w-full items-center">
 					<SectionHeaderExpandable title="MEWS" section={SECTIONS.NEWS} />
@@ -136,7 +142,7 @@ export function BaseNewsSection({
 					{!isPaginationEnabled && (
 						<LoadingMessage isLoading={loading.articles} />
 					)}
-					{isPaginationEnabled && (
+					{isPaginationEnabled && !hasNextPage && (
 						<LoadingMessage isLoading={isPaginationLoading} />
 					)}
 					{/* Show pagination controls only in pagination mode */}
@@ -153,6 +159,23 @@ export function BaseNewsSection({
 					)}
 				</CollapsibleSection>
 			</section>
+
+			{/* Hidden state with reset option */}
+			<div
+				className={`md:col-span-2 ${
+					// mews section not visible, there are some section(s) visible
+					!isVisible && !isAllSectionNotVisible ? "" : "hidden"
+				}`}
+			>
+				<EmptyStateSection
+					isVisible={!isVisible && !isAllSectionNotVisible}
+					resetSectionVisibility={() =>
+						updateSectionVisibility(SECTIONS.NEWS, true)
+					}
+					message="Looks like you removed the Mews section"
+					buttonText="Bring It Back"
+				/>
+			</div>
 
 			{/* Side col for md screen and larger */}
 			<NewsSideColumn />
