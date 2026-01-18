@@ -142,7 +142,7 @@ export function BaseNewsSection({
 					{!isPaginationEnabled && (
 						<LoadingMessage isLoading={loading.articles} />
 					)}
-					{isPaginationEnabled && (
+					{isPaginationEnabled && !hasNextPage && (
 						<LoadingMessage isLoading={isPaginationLoading} />
 					)}
 					{/* Show pagination controls only in pagination mode */}
