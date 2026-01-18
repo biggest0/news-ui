@@ -7,6 +7,7 @@ import MobileCatFactsSection from "@/components/news/section/mobileSections/Mobi
 import { useAllSectionNotVisible } from "@/hooks/useSectionCollapse";
 import { useAppSettings } from "@/contexts/AppSettingContext";
 import EmptyStateSection from "@/components/news/section/EmptyStateSection";
+import MobileStaffPicksSection from "@/components/news/section/mobileSections/MobileStaffPicksSection";
 
 export default function HomePage() {
 	const isAllSectionNotVisible = useAllSectionNotVisible();
@@ -14,6 +15,7 @@ export default function HomePage() {
 	return (
 		<>
 			<FeaturedSection />
+			<MobileStaffPicksSection />
 			<PopularSection />
 			<MobileEditorsSection />
 			<MobileCatFactsSection />
