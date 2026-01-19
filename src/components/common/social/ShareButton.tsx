@@ -21,7 +21,7 @@ export const ShareButton = ({ articleId }: { articleId: string }) => {
 		<button
 			onClick={handleCopy}
 			className={`flex items-center gap-2 transition-colors duration-200 ${
-				!copied ? "hover:text-amber-500" : ""
+				!copied ? "hover:text-amber-600" : ""
 			}`}
 		>
 			{copied ? (

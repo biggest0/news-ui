@@ -113,7 +113,7 @@ export default function NewsCard({ articleInfo, onRead }: NewsCardProp) {
 
 			<div className="flex flex-row justify-between items-center">
 				<div
-					className="cursor-pointer hover:text-amber-500 self-start"
+					className="cursor-pointer hover:text-amber-600 self-start"
 					onClick={handleExpand}
 				>
 					{!expanded ? "Read More" : "Hide"}
