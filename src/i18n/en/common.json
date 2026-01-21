@@ -2,9 +2,46 @@
   "APP": {
     "TITLE": "Çatire Time"
   },
+  "CATEGORY": {
+    "ALL": "All",
+    "WORLD": "World",
+    "LIFESTYLE": "Lifestyle",
+    "SCIENCE": "Science",
+    "TECHNOLOGY": "Technology",
+    "BUSINESS": "Business",
+    "SPORT": "Sport",
+    "POLITICS": "Politics",
+    "OTHER": "Other"
+  },
   "SECTION": {
     "MEWS": "Mews",
-    "EDITORS": "Editors"
+    "EDITORS": "Editors",
+    "POPULAR": "Popular",
+    "OUR_EDITORS": "Our Editors",
+    "STAFF_FAVORITES": "Staff Favorites",
+    "CAT_FACTS": "Cat Facts"
+  },
+  "ARTICLE_CARD": {
+    "READ_MORE": "Read More",
+    "HIDE": "Hide",
+    "SHARE": "Share"
+  },
+  "FILTER": {
+    "ALL_TIME": "All Time",
+    "LAST_24_HOURS": "Last 24 Hours",
+    "LAST_7_DAYS": "Last 7 Days",
+    "LAST_30_DAYS": "Last 30 Days",
+    "SORT_BY": "Sort By",
+    "NEWEST": "Newest",
+    "MOST_VIEWED": "Most Viewed",
+    "RELEVANT": "Relevant"
+  },
+  "FOOTER": {
+    "SUBSCRIBE": "Subscribe",
+    "SUBSCRIBE_MESSAGE_TITLE": "Subscribe to our newsletter",
+    "SUBSCRIBE_MESSAGE": "Get the latest news delivered to your inbox",
+    "SUBSCRIBE_INPUT_PLACEHOLDER": "Enter your email",
+    "FOOTER_MESSAGE": "Your daily dose of humour... I mean mews"
   },
   "LANGUAGE": {
     "EN": "English",

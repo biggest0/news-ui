@@ -2,9 +2,46 @@
   "APP": {
     "TITLE": "Çatire Temps"
   },
+  "CATEGORY": {
+    "ALL": "Tout",
+    "WORLD": "Monde",
+    "LIFESTYLE": "Style de vie",
+    "SCIENCE": "Science",
+    "TECHNOLOGY": "Technologie",
+    "BUSINESS": "Affaires",
+    "SPORT": "Sport",
+    "POLITICS": "Politique",
+    "OTHER": "Autre"
+  },
   "SECTION": {
     "MEWS": "Meowelles",
-    "EDITORS": "La Rédaction"
+    "EDITORS": "La Rédaction",
+    "POPULAR": "Populaire",
+    "OUR_EDITORS": "Nos rédacteurs",
+    "STAFF_FAVORITES": "Coups de cœur de l’équipe",
+    "CAT_FACTS": "Faits sur les chats"
+  },
+  "ARTICLE_CARD": {
+    "READ_MORE": "Lire la suite",
+    "HIDE": "Masquer",
+    "SHARE": "Partager"
+  },
+  "FILTER": {
+    "ALL_TIME": "Tout le temps",
+    "LAST_24_HOURS": "Dernières 24 heures",
+    "LAST_7_DAYS": "7 derniers jours",
+    "LAST_30_DAYS": "30 derniers jours",
+    "SORT_BY": "Trier par",
+    "NEWEST": "Les plus récents",
+    "MOST_VIEWED": "Les plus consultés",
+    "RELEVANT": "Pertinent"
+  },
+  "FOOTER": {
+    "SUBSCRIBE": "S’abonner",
+    "SUBSCRIBE_MESSAGE_TITLE": "Abonnez-vous à notre infolettre",
+    "SUBSCRIBE_MESSAGE": "Recevez les dernières nouvelles directement dans votre boîte de réception",
+    "SUBSCRIBE_INPUT_PLACEHOLDER": "Entrez votre adresse courriel",
+    "FOOTER_MESSAGE": "Votre dose quotidienne d’humour… enfin, de miaulements"
   },
   "LANGUAGE": {
     "EN": "Anglais",
