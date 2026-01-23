@@ -68,7 +68,7 @@ export default function NewsCard({ articleInfo, onRead }: NewsCardProp) {
 				return "text-[rgba(21,128,61,0.7)]"; // green
 
 			case "politics":
-				return "text-[rgba(107,121,154,0.9)]"; // muted navy
+				return "text-[rgba(37,51,80,0.8)]"; // muted navy
 
 			case "other":
 				return "text-[rgba(107,114,128,0.7)]"; // gray
