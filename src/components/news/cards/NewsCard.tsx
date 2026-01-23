@@ -6,6 +6,7 @@ import type { RootState, AppDispatch } from "@/store/store";
 import { loadArticleDetail } from "@/store/articlesSlice";
 import { incrementArticleViewed } from "@/api/articleApi";
 import { ShareButton } from "../../common/social/ShareButton";
+import { capitalizeWord } from "@/utils/text/wordUtils";
 
 interface NewsCardProp {
 	articleInfo: ArticleInfo;
@@ -46,6 +47,37 @@ export default function NewsCard({ articleInfo, onRead }: NewsCardProp) {
 		}
 	}
 
+	function categoryColor(category: string): string {
+		switch (category) {
+			case "world":
+				return "text-[rgba(209,45,22,0.7)]"; // orange
+
+			case "business":
+				return "text-[rgba(37,99,235,0.8)]"; // blue
+
+			case "lifestyle":
+				return "text-[rgba(168,55,207,0.7)]"; // purple
+
+			case "science":
+				return "text-[rgba(20,124,166,0.8)]"; // teal
+
+			case "technology":
+				return "text-[rgba(6,152,212,0.7)]"; // cyan
+
+			case "sport":
+				return "text-[rgba(21,128,61,0.7)]"; // green
+
+			case "politics":
+				return "text-[rgba(107,121,154,0.9)]"; // muted navy
+
+			case "other":
+				return "text-[rgba(107,114,128,0.7)]"; // gray
+
+			default:
+				return "text-gray-700";
+		}
+	}
+
 	return (
 		<div className="flex flex-col justify-between min-h-48 max-h-full border-b border-gray-400 py-4 w-full space-y-8">
 			<div>
@@ -53,6 +85,11 @@ export default function NewsCard({ articleInfo, onRead }: NewsCardProp) {
 					{articleInfo.title}
 				</h3>
 				<div className="text-sm">{articleInfo.datePublished}</div>
+				<div
+					className={`text-sm ${categoryColor(articleInfo.mainCategory ?? "")}`}
+				>
+					{capitalizeWord(articleInfo.mainCategory)}
+				</div>
 			</div>
 
 			{/* Article Summary/ Paragraphs */}
