@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { useState, useRef, useEffect } from "react";
-import { GrLanguage } from "react-icons/gr";
 import { IoCheckmark } from "react-icons/io5";
+import { HiMiniLanguage } from "react-icons/hi2";
 
 type Language = "en" | "fr";
 
@@ -76,7 +76,7 @@ export default function LanguageSwitcherDesktop() {
 				aria-expanded={isOpen}
 				aria-haspopup="true"
 			>
-				<GrLanguage size={20} className="text-gray-700" />
+				<HiMiniLanguage size={24} className="text-gray-600"/>
 			</button>
 
 			{isOpen && (
