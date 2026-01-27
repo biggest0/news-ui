@@ -19,7 +19,7 @@
 		"POPULAR": "Popular",
 		"OUR_EDITORS": "Our Editors",
 		"STAFF_FAVORITES": "Staff Favorites",
-		"STAFF_PICKS": "STAFF PICKS",
+		"STAFF_PICKS": "Staff Picks",
 		"CAT_FACTS": "Cat Facts"
 	},
 	"ARTICLE_CARD": {
@@ -97,6 +97,16 @@
 		"ABOUT": "About",
 		"CONTACT": "Contact",
 		"SEARCH": "Search"
+	},
+	"PAGINATION": {
+		"SHOW": "Show",
+		"PER_PAGE": "per page",
+		"PAGE": "Page",
+		"OF": "of",
+		"FIRST_PAGE": "First page",
+		"PREVIOUS_PAGE": "Previous page",
+		"NEXT_PAGE": "Next page",
+		"LAST_PAGE": "Last page"
 	},
 	"EDITORS": {
 		"MEOWSTEIN": {

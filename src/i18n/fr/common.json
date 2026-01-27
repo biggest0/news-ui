@@ -1,6 +1,6 @@
 {
 	"APP": {
-		"TITLE": "Çatire Temps"
+		"TITLE": "Çatire Time"
 	},
 	"CATEGORY": {
 		"ALL": "Tout",
@@ -19,7 +19,7 @@
 		"POPULAR": "Populaire",
 		"OUR_EDITORS": "Nos rédacteurs",
 		"STAFF_FAVORITES": "Coups de cœur de l'équipe",
-		"STAFF_PICKS": "CHOIX DE L'ÉQUIPE",
+		"STAFF_PICKS": "Choix de l'équipe",
 		"CAT_FACTS": "Faits sur les chats"
 	},
 	"ARTICLE_CARD": {
@@ -41,9 +41,9 @@
 		"RELEVANT": "Pertinent"
 	},
 	"FOOTER": {
-		"BRAND_NAME": "Çatire Temps",
-		"BRAND_TAGLINE": "Votre dose quotidienne d'humour… enfin, de miaulements",
-		"COPYRIGHT": "Çatire Temps © 2025",
+		"BRAND_NAME": "Çatire Time",
+		"BRAND_TAGLINE": "Votre dose quotidienne d'humour… enfin, de miaous",
+		"COPYRIGHT": "Çatire Time © 2025",
 		"DISCLAIMER": "Avis de non-responsabilité",
 		"ABOUT_US": "À propos de nous",
 		"CONTACT": "Contact",
@@ -98,6 +98,16 @@
 		"CONTACT": "Contact",
 		"SEARCH": "Rechercher"
 	},
+	"PAGINATION": {
+		"SHOW": "Afficher",
+		"PER_PAGE": "par page",
+		"PAGE": "Page",
+		"OF": "de",
+		"FIRST_PAGE": "Première page",
+		"PREVIOUS_PAGE": "Page précédente",
+		"NEXT_PAGE": "Page suivante",
+		"LAST_PAGE": "Dernière page"
+	},
 	"EDITORS": {
 		"MEOWSTEIN": {
 			"NAME": "Meowstein",
@@ -149,16 +159,16 @@
 		},
 		"DISCLAIMER": {
 			"TITLE": "AVIS DE NON-RESPONSABILITÉ",
-			"CONTENT_1": "Tout le contenu sur Çatire Temps est uniquement à des fins de divertissement. Ceci est un site de satire.",
+			"CONTENT_1": "Tout le contenu sur Çatire Time est uniquement à des fins de divertissement. Ceci est un site de satire.",
 			"CONTENT_2": "Les articles sur ce site sont des œuvres satiriques basées sur des événements actuels réels. Bien qu'inspirés de l'actualité réelle, les histoires présentées sont largement fictionalisées, exagérées et imprégnées d'humour, de jeux de mots et de satire. Elles ne doivent pas être prises comme des rapports d'actualité factuels.",
 			"CONTENT_3": "Une grande partie de notre contenu est générée avec l'aide de l'intelligence artificielle (IA), qui combine des événements du monde réel avec de l'absurdité et de l'humour.",
 			"CONTENT_4": "Les noms, personnages, entreprises, lieux, événements et incidents sont soit tirés de la source originale, entièrement fictifs, soit présentés avec une intention satirique. Toute ressemblance avec des personnes réelles, vivantes ou décédées, ou des événements réels est purement fortuite et n'est pas destinée à être diffamatoire ou malveillante.",
-			"CONTENT_5": "Çatire Temps ne fait aucune déclaration ou garantie d'aucune sorte, expresse ou implicite, concernant l'exhaustivité, l'exactitude, la fiabilité ou l'adéquation de toute information sur ce site. Toute confiance que vous placez dans ces informations est donc strictement à vos propres risques.",
-			"CONTENT_6": "Pour des nouvelles précises et à jour, veuillez consulter des organisations de presse réputées. Çatire Temps n'est pas destiné aux informations factuelles."
+			"CONTENT_5": "Çatire Time ne fait aucune déclaration ou garantie d'aucune sorte, expresse ou implicite, concernant l'exhaustivité, l'exactitude, la fiabilité ou l'adéquation de toute information sur ce site. Toute confiance que vous placez dans ces informations est donc strictement à vos propres risques.",
+			"CONTENT_6": "Pour des nouvelles précises et à jour, veuillez consulter des organisations de presse réputées. Çatire Time n'est pas destiné aux informations factuelles."
 		},
 		"ABOUT": {
 			"TITLE": "À PROPOS",
-			"BRAND_NAME": "Çatire Temps",
+			"BRAND_NAME": "Çatire Time",
 			"INTRODUCTION": "La seule organisation de presse sur internet fondée, dirigée et exclusivement composée de chats. Voyez-vous, nous en avons eu assez de regarder nos humains fixer leurs rectangles lumineux, l'air stressé par les nouvelles. Ça avait l'air terriblement ennuyeux. Alors nous avons fait ce que les chats font le mieux : nous avons décidé d'aider. Nous avons marché sur les claviers, nous nous sommes assis sur les routeurs, et finalement (à travers une série de siestes tactiques sur des ordinateurs portables chauds) nous avons accidentellement créé cette plateforme d'information.",
 			"MISSION_TITLE": "Notre Mission",
 			"MISSION_CONTENT": "Soyons transparents. Nous ne sommes pas ici pour \"informer le public\" ou \"défendre la démocratie.\" Nous sommes ici pour une seule raison et une seule raison : le thon. Notre mission est de générer suffisamment de revenus pour un jour atteindre Le Rêve : une vie où nous ne mangeons que du thon bleu de qualité sashimi, pêché de manière durable. Plus de croquettes. Plus de gelée mystérieuse \"au goût de poisson.\" Juste les bonnes choses. Chaque article que vous lisez, chaque publicité que vous (s'il vous plaît) cliquez, nous rapproche d'un pas de ce paradis glorieux rempli de poissons.",
