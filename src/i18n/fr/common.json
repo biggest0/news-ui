@@ -14,7 +14,7 @@
 		"OTHER": "Autre"
 	},
 	"SECTION": {
-		"MEWS": "Meowelles",
+		"MEWS": "Miaous",
 		"EDITORS": "La Rédaction",
 		"POPULAR": "Populaire",
 		"OUR_EDITORS": "Nos rédacteurs",
@@ -63,6 +63,7 @@
 		"EMPTY_HISTORY": "Votre historique de lecture est vide."
 	},
 	"COMMON": {
+		"LOAD": "Chargement",
 		"LOADING": "Chargement...",
 		"BACK_TO_TOP": "Retour en haut",
 		"COPIED": "Copié",
@@ -71,7 +72,7 @@
 	},
 	"MAINTENANCE": {
 		"IMAGE_ALT": "Chats au travail",
-		"TITLE": "Cette page est encore en purr-duction 🐱🔧",
+		"TITLE": "Cette page est encore en miau-tenance 🐱🔧",
 		"MESSAGE": "Notre équipe travaille dur !"
 	},
 	"NOTICE": {
@@ -135,9 +136,6 @@
 			"TITLE": "Les chats peuvent courir à 48 km/h",
 			"CONTENT": "Impressionnant — jusqu'à ce que vous réalisiez qu'ils n'utilisent cette vitesse olympique que pour se lancer à travers votre lit à 3h du matin."
 		}
-	},
-	"APP_TITLE": {
-		"PARTIAL": "TEMPS"
 	},
 	"PAGES": {
 		"CONTACT": {

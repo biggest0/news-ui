@@ -63,6 +63,7 @@
 		"EMPTY_HISTORY": "Your reading history is empty."
 	},
 	"COMMON": {
+		"LOAD": "Loading",
 		"LOADING": "Loading...",
 		"BACK_TO_TOP": "Back to top",
 		"COPIED": "Copied",
@@ -135,9 +136,6 @@
 			"TITLE": "Cats can run 30 mph",
 			"CONTENT": "Impressive — until you realize they only use this Olympic-level speed to launch themselves across your bed at 3 a.m."
 		}
-	},
-	"APP_TITLE": {
-		"PARTIAL": "ATIRE TIME"
 	},
 	"PAGES": {
 		"CONTACT": {
