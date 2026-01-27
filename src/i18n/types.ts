@@ -8,3 +8,5 @@ export interface Resources {
 export type Language = "en" | "fr";
 
 export type TranslationNamespace = keyof Resources;
+
+export type CategoryKey = keyof typeof common.CATEGORY;

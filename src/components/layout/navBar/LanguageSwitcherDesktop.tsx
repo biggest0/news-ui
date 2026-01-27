@@ -2,8 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useState, useRef, useEffect } from "react";
 import { IoCheckmark } from "react-icons/io5";
 import { HiMiniLanguage } from "react-icons/hi2";
-
-type Language = "en" | "fr";
+import type { Language } from "@/i18n/types";
 
 interface LanguageOption {
 	code: Language;

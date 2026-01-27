@@ -26,4 +26,6 @@ export const ARTICLE_ROUTES = [
 	"sport",
 	"politics",
 	"other",
-];
+] as const;
+
+export type ArticleCategory = (typeof ARTICLE_ROUTES)[number];
