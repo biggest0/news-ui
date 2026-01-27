@@ -5,7 +5,7 @@ import StaffPicksSection from "../section/StaffPicksSection";
 export default function NewsSideColumn() {
 
 	return (
-		<div className="hidden md:flex flex-col space-y-6 pl-4 border-l border-gray-400">
+		<div className="hidden md:flex flex-col space-y-6 pl-4 border-l border-gray-400 sticky top-4 max-h-[calc(100vh-2rem)] overflow-y-auto">
 			{/* Cat editors */}
 			<EditorsSection />
 

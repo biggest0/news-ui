@@ -120,7 +120,7 @@ export function BaseNewsSection({
 		: articlesToDisplay;
 
 	return (
-		<div className="flex flex-col md:grid md:grid-cols-3 gap-x-4 gap-y-6 pt-6">
+		<div className="flex flex-col md:grid md:grid-cols-3 md:items-start gap-x-4 gap-y-6 pt-6">
 			{/* Articles, main col */}
 			<section className={`md:col-span-2 ${isVisible ? "" : "hidden"}`}>
 				{/* Header and filters */}
