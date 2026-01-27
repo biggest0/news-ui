@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
+
 import { subscribeToNewsletter } from "@/service/formService";
 import { validateEmail, cleanseEmail } from "@/utils/validation/textUtils";
 
 export default function SubscribeForm() {
+	const { t } = useTranslation();
 	const [email, setEmail] = useState("");
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [message, setMessage] = useState("");
@@ -12,7 +15,7 @@ export default function SubscribeForm() {
 		const cleansedEmail = cleanseEmail(email);
 
 		if (!validateEmail(cleansedEmail)) {
-			setMessage("Please enter a valid email address.");
+			setMessage(t("SUBSCRIBE.VALIDATION_ERROR"));
 			return;
 		}
 
@@ -21,14 +24,14 @@ export default function SubscribeForm() {
 
 		try {
 			await subscribeToNewsletter(cleansedEmail);
-			setMessage("Thank you for subscribing! Check your inbox to confirm.");
+			setMessage(t("SUBSCRIBE.SUCCESS_MESSAGE"));
 			setEmail("");
 		} catch (error) {
 			// Display the specific error message from the form service
 			if (error instanceof Error) {
 				setMessage(error.message);
 			} else {
-				setMessage("Something went wrong. Please try again.");
+				setMessage(t("SUBSCRIBE.GENERIC_ERROR"));
 			}
 		} finally {
 			setIsSubmitting(false);
@@ -38,15 +41,15 @@ export default function SubscribeForm() {
 	return (
 		<div className="flex flex-col space-y-2">
 			<h4 className="text-lg font-semibold text-gray-800">
-				Subscribe to our newsletter
+				{t("FOOTER.SUBSCRIBE_MESSAGE_TITLE")}
 			</h4>
 			<p className="text-sm text-gray-600">
-				Get the latest news delivered to your inbox.
+				{t("FOOTER.SUBSCRIBE_MESSAGE")}
 			</p>
 			<form className="flex gap-2" onSubmit={handleSubmit}>
 				<input
 					type="email"
-					placeholder="Enter your email"
+					placeholder={t("FOOTER.SUBSCRIBE_INPUT_PLACEHOLDER")}
 					value={email}
 					onChange={(e) => setEmail(e.target.value)}
 					disabled={isSubmitting}
@@ -57,13 +60,12 @@ export default function SubscribeForm() {
 					disabled={!validateEmail(email) || isSubmitting}
 					className="bg-amber-500 text-white px-4 py-2 rounded-lg hover:bg-amber-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
 				>
-					{isSubmitting ? "Subscribing..." : "Subscribe"}
+					{isSubmitting ? t("SUBSCRIBE.SUBSCRIBING") : t("FOOTER.SUBSCRIBE")}
 				</button>
 			</form>
 			{message && (
 				<p
-					className={`text-sm ${message.includes("Thank you") ||
-						message.includes("Check your inbox")
+					className={`text-sm ${message === t("SUBSCRIBE.SUCCESS_MESSAGE")
 						? "text-green-600"
 						: message.includes("already subscribed")
 							? "text-yellow-600"

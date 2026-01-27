@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { CiShare1 } from "react-icons/ci";
 import { IoCheckmark } from "react-icons/io5";
+import { useTranslation } from "react-i18next";
 
 export const ShareButton = ({ articleId }: { articleId: string }) => {
 	const [copied, setCopied] = useState(false);
+	const { t } = useTranslation();
 
 	const handleCopy = async () => {
 		try {
@@ -27,12 +29,12 @@ export const ShareButton = ({ articleId }: { articleId: string }) => {
 			{copied ? (
 				<>
 					<IoCheckmark className="w-4 h-4" />
-					<span>Copied</span>
+					<span>{t("COMMON.COPIED")}</span>
 				</>
 			) : (
 				<>
 					<CiShare1 className="w-4 h-4" />
-					<span>Share</span>
+					<span>{t("COMMON.SHARE")}</span>
 				</>
 			)}
 		</button>

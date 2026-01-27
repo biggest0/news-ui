@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import type { UserInfo } from "@/types/localStorageTypes";
 
@@ -15,6 +16,7 @@ export const AccountInfoForm = ({
 	placeHolderText,
 	setUserInfo,
 }: AccountInfoFormProp) => {
+	const { t } = useTranslation();
 	const [inputValue, setInputValue] = useState(userInfo[fieldName] || "");
 	const [saved, setSaved] = useState(false);
 
@@ -52,7 +54,7 @@ export const AccountInfoForm = ({
 							saved ? "text-green-600" : "text-gray-400 hover:text-black"
 						}`}
 					>
-						{saved ? "Field Saved!" : "Save"}
+						{saved ? t("ACCOUNT.FIELD_SAVED") : t("ACCOUNT.SAVE")}
 					</button>
 				</form>
 			</div>

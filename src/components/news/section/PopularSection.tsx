@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 import type { RootState, AppDispatch } from "@/store/store";
 import { loadTopTenArticles } from "@/store/articlesSlice";
@@ -10,7 +11,8 @@ import { SECTIONS } from "@/constants/keys";
 import { useSectionVisible } from "@/hooks/useSectionCollapse";
 
 export default function PopularSection() {
-  const dispatch = useDispatch<AppDispatch>();
+	const dispatch = useDispatch<AppDispatch>();
+	const { t } = useTranslation();
 	const { topTenArticles } = useSelector((state: RootState) => state.article);
 	const isVisible = useSectionVisible(SECTIONS.POPULAR);
 
@@ -25,7 +27,10 @@ export default function PopularSection() {
 			}`}
 		>
 			{/* instead pass in an enum maybe, this enum will give the title, and enum will map to correct options being created */}
-			<SectionHeaderExpandable title="POPULAR" section={SECTIONS.POPULAR} />
+			<SectionHeaderExpandable
+				title={t("SECTION.POPULAR")}
+				section={SECTIONS.POPULAR}
+			/>
 			<CollapsibleSection section={SECTIONS.POPULAR}>
 				<div className="grid grid-cols-1 py-4 md:grid-cols-5 md:grid-rows-2 gap-4">
 					{topTenArticles.map((article, index) => (

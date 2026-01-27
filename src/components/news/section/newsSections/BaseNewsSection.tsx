@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import NewsSideColumn from "../../shared/NewsSideColumn";
 import type { ArticleInfo } from "@/types/articleTypes";
@@ -111,6 +112,7 @@ export function BaseNewsSection({
 	const handleSortByChange = (value: string) => {
 		setSortBy(value);
 	};
+	const { t } = useTranslation();
 
 	// Determine which articles to show based on mode
 	const displayedArticles = isPaginationEnabled
@@ -123,7 +125,10 @@ export function BaseNewsSection({
 			<section className={`md:col-span-2 ${isVisible ? "" : "hidden"}`}>
 				{/* Header and filters */}
 				<div className="flex flex-row justify-between w-full items-center">
-					<SectionHeaderExpandable title="MEWS" section={SECTIONS.NEWS} />
+					<SectionHeaderExpandable
+						title={t("SECTION.MEWS")}
+						section={SECTIONS.NEWS}
+					/>
 					<FilterBar
 						dateRange={dateRange}
 						sortBy={sortBy}
@@ -172,8 +177,8 @@ export function BaseNewsSection({
 					resetSectionVisibility={() =>
 						updateSectionVisibility(SECTIONS.NEWS, true)
 					}
-					message="Looks like you removed the Mews section"
-					buttonText="Bring It Back"
+					message={t("EMPTY_STATE.NEWS_SECTION_MESSAGE")}
+					buttonText={t("EMPTY_STATE.BRING_BACK_BUTTON")}
 				/>
 			</div>
 

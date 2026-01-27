@@ -1,7 +1,10 @@
-import CatLoading from "@/assets/cat_loading.gif";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+
+import CatLoading from "@/assets/cat_loading.gif";
 
 export const LoadingOverlay = ({ loading }: { loading: boolean }) => {
+	const { t } = useTranslation();
 	const [show, setShow] = useState(loading);
 
 	// Handle fade-out effect
@@ -19,8 +22,8 @@ export const LoadingOverlay = ({ loading }: { loading: boolean }) => {
 					loading ? "opacity-100" : "opacity-0"
 				}`}
 			>
-				<img src={CatLoading} alt="Loading" className="w-32 h-32" />
-				<div>Loading...</div>
+				<img src={CatLoading} alt={t("COMMON.LOAD")} className="w-32 h-32" />
+				<div>{t("COMMON.LOADING")}</div>
 			</div>
 		)
 	);

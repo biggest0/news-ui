@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import type { ArticleInfo, ArticleDetail } from "@/types/articleTypes";
 import type { RootState, AppDispatch } from "@/store/store";
@@ -14,6 +15,7 @@ interface NewsCardProp {
 }
 
 export default function NewsCard({ articleInfo, onRead }: NewsCardProp) {
+	const { t } = useTranslation();
 	const dispatch = useDispatch<AppDispatch>();
 	// const {articlesDetail, loading, error} = useSelector((state: RootState) => state.article)
 	const articleDetail: ArticleDetail = useSelector(
@@ -108,7 +110,7 @@ export default function NewsCard({ articleInfo, onRead }: NewsCardProp) {
 					>
 						{/* Display loading if waiting for data*/}
 						{isLoadingDetail && !articleDetail && (
-							<div className="py-4 text-gray-500">Loading details...</div>
+							<div className="py-4 text-gray-500">{t("ARTICLE_CARD.LOADING_DETAILS")}</div>
 						)}
 						{articleDetail && (
 							<div className="flex flex-col space-y-4">
@@ -153,7 +155,7 @@ export default function NewsCard({ articleInfo, onRead }: NewsCardProp) {
 					className="cursor-pointer hover:text-amber-600 self-start"
 					onClick={handleExpand}
 				>
-					{!expanded ? "Read More" : "Hide"}
+					{!expanded ? t("ARTICLE_CARD.READ_MORE") : t("ARTICLE_CARD.HIDE")}
 				</div>
 				<ShareButton articleId={articleInfo.id} />
 			</div>

@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 import { MobileNavLink } from "./MobileNavLink";
 import type { NavCategory, NavLink } from "@/types/navBarTypes";
 import { ExpandableNavItem } from "./ExpandableNavItem";
@@ -7,24 +9,26 @@ interface NavigationLinksProps {
 }
 
 export const NavigationLinks = ({ onLinkClick }: NavigationLinksProps) => {
+	const { t } = useTranslation();
+
 	const NewsItems: NavCategory = {
-		label: "News",
+		label: t("NAVIGATION.NEWS"),
 		links: [
-			{ to: "/world", label: "World" },
-			{ to: "/lifestyle", label: "Lifestyle" },
-			{ to: "/science", label: "Science" },
-			{ to: "/technology", label: "Technology" },
-			{ to: "/business", label: "Business" },
-			{ to: "/sport", label: "Sport" },
-			{ to: "/politics", label: "Politics" },
-			{ to: "/other", label: "Other" },
+			{ to: "/world", label: t("CATEGORY.WORLD") },
+			{ to: "/lifestyle", label: t("CATEGORY.LIFESTYLE") },
+			{ to: "/science", label: t("CATEGORY.SCIENCE") },
+			{ to: "/technology", label: t("CATEGORY.TECHNOLOGY") },
+			{ to: "/business", label: t("CATEGORY.BUSINESS") },
+			{ to: "/sport", label: t("CATEGORY.SPORT") },
+			{ to: "/politics", label: t("CATEGORY.POLITICS") },
+			{ to: "/other", label: t("CATEGORY.OTHER") },
 		],
 	};
-	const NavHome: NavLink = { to: "/", label: "Home" };
+	const NavHome: NavLink = { to: "/", label: t("NAVIGATION.HOME") };
 	const NavItems: NavLink[] = [
-		{ to: "/about", label: "About" },
-		{ to: "/contact", label: "Contact" },
-		{ to: "/search", label: "Search" },
+		{ to: "/about", label: t("NAVIGATION.ABOUT") },
+		{ to: "/contact", label: t("NAVIGATION.CONTACT") },
+		{ to: "/search", label: t("NAVIGATION.SEARCH") },
 	];
 
 	return (

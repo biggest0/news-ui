@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	LuChevronLeft,
 	LuChevronRight,
@@ -6,6 +7,7 @@ import {
 	LuChevronsRight,
 } from "react-icons/lu";
 import { BsChevronDown } from "react-icons/bs";
+
 import type { PageSize } from "@/hooks/usePagination";
 
 interface PaginationControlsProps {
@@ -30,6 +32,7 @@ export function PaginationControls({
 	hasPrevPage,
 }: PaginationControlsProps) {
 	const [pageInput, setPageInput] = useState(currentPage.toString());
+	const { t } = useTranslation();
 
 	// Sync input with current page when it changes externally
 	useEffect(() => {
@@ -69,7 +72,7 @@ export function PaginationControls({
 		<div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-4 border-t border-gray-200">
 			{/* Page size selector */}
 			<div className="flex items-center gap-2 text-sm text-gray-600">
-				<span className="font-medium">Show</span>
+				<span className="font-medium">{t("PAGINATION.SHOW")}</span>
 				<div className="relative">
 					<select
 						value={pageSize}
@@ -88,7 +91,7 @@ export function PaginationControls({
 						<BsChevronDown className="w-3 h-3 text-gray-600" />
 					</div>
 				</div>
-				<span className="font-medium">per page</span>
+				<span className="font-medium">{t("PAGINATION.PER_PAGE")}</span>
 			</div>
 
 			{/* Page navigation */}
@@ -100,8 +103,8 @@ export function PaginationControls({
 					className={`${buttonBaseClass} ${
 						hasPrevPage ? buttonEnabledClass : buttonDisabledClass
 					}`}
-					aria-label="Go to first page"
-					title="First page"
+					aria-label={t("PAGINATION.FIRST_PAGE")}
+					title={t("PAGINATION.FIRST_PAGE")}
 				>
 					<LuChevronsLeft className="w-5 h-5" />
 				</button>
@@ -113,15 +116,15 @@ export function PaginationControls({
 					className={`${buttonBaseClass} ${
 						hasPrevPage ? buttonEnabledClass : buttonDisabledClass
 					}`}
-					aria-label="Go to previous page"
-					title="Previous page"
+					aria-label={t("PAGINATION.PREVIOUS_PAGE")}
+					title={t("PAGINATION.PREVIOUS_PAGE")}
 				>
 					<LuChevronLeft className="w-5 h-5" />
 				</button>
 
 				{/* Page input */}
 				<div className="flex items-center gap-2 mx-2 text-sm">
-					<span className="text-gray-600 font-medium">Page</span>
+					<span className="text-gray-600 font-medium">{t("PAGINATION.PAGE")}</span>
 					<input
 						type="text"
 						value={pageInput}
@@ -131,7 +134,9 @@ export function PaginationControls({
 						className="w-12 text-center border border-gray-300 rounded-md py-1 font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
 						aria-label="Page number"
 					/>
-					<span className="text-gray-600 font-medium">of {totalPages}</span>
+					<span className="text-gray-600 font-medium">
+						{t("PAGINATION.OF")} {totalPages}
+					</span>
 				</div>
 
 				{/* Next page button */}
@@ -141,8 +146,8 @@ export function PaginationControls({
 					className={`${buttonBaseClass} ${
 						hasNextPage ? buttonEnabledClass : buttonDisabledClass
 					}`}
-					aria-label="Go to next page"
-					title="Next page"
+					aria-label={t("PAGINATION.NEXT_PAGE")}
+					title={t("PAGINATION.NEXT_PAGE")}
 				>
 					<LuChevronRight className="w-5 h-5" />
 				</button>
@@ -154,8 +159,8 @@ export function PaginationControls({
 					className={`${buttonBaseClass} ${
 						hasNextPage ? buttonEnabledClass : buttonDisabledClass
 					}`}
-					aria-label="Go to last page"
-					title="Last page"
+					aria-label={t("PAGINATION.LAST_PAGE")}
+					title={t("PAGINATION.LAST_PAGE")}
 				>
 					<LuChevronsRight className="w-5 h-5" />
 				</button>

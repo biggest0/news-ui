@@ -8,6 +8,7 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { USER_ARTICLE_HISTORY } from "@/constants/keys";
 import { handleLocalStorageUpdate } from "@/service/localStorageService";
 import { SELECTED_ARTICLES } from "../tempArticles";
+import { useTranslation } from "react-i18next";
 
 export default function FeaturedSection() {
 	// const { topTenArticles } = useSelector((state: RootState) => state.article);
@@ -17,6 +18,7 @@ export default function FeaturedSection() {
 	);
 
 	const selectedArticles = SELECTED_ARTICLES;
+	const { t } = useTranslation();
 
 	const onArticleClick = (article: ArticleInfo) => {
 		handleLocalStorageUpdate(article, articleHistory, setArticleHistory);
@@ -44,12 +46,11 @@ export default function FeaturedSection() {
 			<div className="col-span-2 row-span-2 relative overflow-y-hidden">
 				<img
 					src={Image}
-					alt="Featured News"
+					alt={t("HERO.IMAGE_ALT")}
 					className="w-full h-full object-cover"
 				/>
 				<div className="absolute bottom-0 left-0 right-0 bg-black/70 p-4 text-white text-xl">
-					"Reading satire news is like getting your veggies in cake form—tasty,
-					fun, and surprisingly informative." — Albert Mewstein
+					{t("HERO.QUOTE")}
 				</div>
 			</div>
 
