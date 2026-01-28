@@ -21,7 +21,7 @@ export function getAppSetting(): AppSetting {
 						staffPicksSection: true,
 						popularSection: true,
 					},
-					pagePagination: false,
+					pagePagination: true,
 				},
 		  };
 }
