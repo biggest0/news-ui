@@ -1,8 +1,10 @@
+import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
+
 import { useAppSettings } from "@/contexts/AppSettingContext";
 import type {
 	SectionToggleState
 } from "@/types/localStorageTypes";
-import { useMemo } from "react";
 
 type SectionKey = Extract<
 	keyof SectionToggleState,
@@ -18,6 +20,7 @@ export interface DropDownOption {
 }
 
 export function useSectionDropdown(sectionKey: SectionKey): DropDownOption[] {
+	const { t } = useTranslation();
 	const {
 		appSetting,
 		updateSectionExpansion,
@@ -33,14 +36,14 @@ export function useSectionDropdown(sectionKey: SectionKey): DropDownOption[] {
 		const options: DropDownOption[] = [];
 
 		options.push({
-			label: isExpanded ? "Collapse" : "Expand",
+			label: isExpanded ? t("DROPDOWN.COLLAPSE") : t("DROPDOWN.EXPAND"),
 			onClick: () => {
 				updateSectionExpansion(sectionKey, !isExpanded);
 			},
 		});
 
 		options.push({
-			label: "Remove",
+			label: t("DROPDOWN.REMOVE"),
 			onClick: () => {
 				updateSectionVisibility(sectionKey, false);
 			},
@@ -50,7 +53,7 @@ export function useSectionDropdown(sectionKey: SectionKey): DropDownOption[] {
 			options.push({ isDivider: true, label: "", onClick: () => {} });
 
 			options.push({
-				label: isPaginated ? "Scroll View" : "Page View",
+				label: isPaginated ? t("DROPDOWN.SCROLL_VIEW") : t("DROPDOWN.PAGE_VIEW"),
 				onClick: () => {
 					togglePagination();
 				},
@@ -58,7 +61,7 @@ export function useSectionDropdown(sectionKey: SectionKey): DropDownOption[] {
 		}
 
 		return options;
-	}, [appSetting]);
+	}, [appSetting, t]);
 
 	return dropdownOptions;
 }

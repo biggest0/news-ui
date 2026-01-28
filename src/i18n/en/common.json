@@ -194,5 +194,12 @@
 	"LANGUAGE": {
 		"EN": "English",
 		"FR": "French"
+	},
+	"DROPDOWN": {
+		"COLLAPSE": "Collapse",
+		"EXPAND": "Expand",
+		"REMOVE": "Remove",
+		"SCROLL_VIEW": "Scroll View",
+		"PAGE_VIEW": "Page View"
 	}
 }
