@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import type { ArticleInfo } from "@/types/articleTypes";
 import type { ArticleInfoQueryDTO } from "@/types/articleDto";
 import { useLocalStorage } from "./useLocalStorage";
