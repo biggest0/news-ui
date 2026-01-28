@@ -1,4 +1,6 @@
+import { useTranslation } from "react-i18next";
 import { LuSearch, LuX } from "react-icons/lu";
+
 import type { SearchProps } from "@/types/navBarTypes";
 
 export const DesktopSearchBar = ({
@@ -8,6 +10,8 @@ export const DesktopSearchBar = ({
 	onQueryChange,
 	onSubmit,
 }: SearchProps) => {
+	const { t } = useTranslation();
+
 	return (
 		<div className="relative flex items-center">
 			{/* Search form trigger icon */}
@@ -32,7 +36,7 @@ export const DesktopSearchBar = ({
 					type="text"
 					value={query}
 					onChange={(e) => onQueryChange(e.target.value)}
-					placeholder="Search..."
+					placeholder={t("NAVIGATION.SEARCH_PLACEHOLDER")}
 					className="min-w-0 flex-1 px-2 py-1 outline-none text-gray-700 placeholder-gray-400"
 					autoFocus={searchClicked}
 				/>

@@ -1,0 +1,198 @@
+{
+	"APP": {
+		"TITLE": "Çatire Time"
+	},
+	"CATEGORY": {
+		"ALL": "All",
+		"WORLD": "World",
+		"LIFESTYLE": "Lifestyle",
+		"SCIENCE": "Science",
+		"TECHNOLOGY": "Technology",
+		"BUSINESS": "Business",
+		"SPORT": "Sport",
+		"POLITICS": "Politics",
+		"OTHER": "Other"
+	},
+	"SECTION": {
+		"MEWS": "Mews",
+		"EDITORS": "Editors",
+		"POPULAR": "Popular",
+		"OUR_EDITORS": "Our Editors",
+		"STAFF_FAVORITES": "Staff Favorites",
+		"STAFF_PICKS": "Staff Picks",
+		"CAT_FACTS": "Cat Facts"
+	},
+	"ARTICLE_CARD": {
+		"READ_MORE": "Read More",
+		"HIDE": "Hide",
+		"SHARE": "Share",
+		"LOADING_DETAILS": "Loading details..."
+	},
+	"FILTER": {
+		"DATE_RANGE": "Date Range",
+		"SEARCH_ARTICLES_PLACEHOLDER": "Search articles...",
+		"ALL_TIME": "All Time",
+		"LAST_24_HOURS": "Last 24 Hours",
+		"LAST_7_DAYS": "Last 7 Days",
+		"LAST_30_DAYS": "Last 30 Days",
+		"SORT_BY": "Sort By",
+		"NEWEST": "Newest",
+		"MOST_VIEWED": "Most Viewed",
+		"RELEVANT": "Relevant"
+	},
+	"FOOTER": {
+		"BRAND_NAME": "Catire Time",
+		"BRAND_TAGLINE": "Your daily dose of humour... I mean mews",
+		"COPYRIGHT": "Catire Time © 2025",
+		"DISCLAIMER": "Disclaimer",
+		"ABOUT_US": "About Us",
+		"CONTACT": "Contact",
+		"SUBSCRIBE": "Subscribe",
+		"SUBSCRIBE_MESSAGE_TITLE": "Subscribe to our newsletter",
+		"SUBSCRIBE_MESSAGE": "Get the latest news delivered to your inbox",
+		"SUBSCRIBE_INPUT_PLACEHOLDER": "Enter your email"
+	},
+	"ACCOUNT": {
+		"NAME": "Name",
+		"BIO": "Bio",
+		"SAVE": "Save",
+		"FIELD_SAVED": "Field Saved!",
+		"ACCOUNT_LABEL": "Account",
+		"ARTICLE_HISTORY": "ARTICLE HISTORY",
+		"CLEAR": "Clear",
+		"EMPTY_HISTORY": "Your reading history is empty."
+	},
+	"COMMON": {
+		"LOAD": "Loading",
+		"LOADING": "Loading...",
+		"BACK_TO_TOP": "Back to top",
+		"COPIED": "Copied",
+		"SHARE": "Share",
+		"LANGUAGE": "Language"
+	},
+	"MAINTENANCE": {
+		"IMAGE_ALT": "Cats at work",
+		"TITLE": "This page is still in purr-duction 🐱🔧",
+		"MESSAGE": "Our team is hard at work!"
+	},
+	"NOTICE": {
+		"SATIRE_MESSAGE": "This website is a satire news outlet. Content may be exaggerated or fictional for comedic purposes."
+	},
+	"HERO": {
+		"IMAGE_ALT": "Featured News",
+		"QUOTE": "Reading satire news is like getting your veggies in cake form—tasty, fun, and surprisingly informative.\" — Albert Mewstein"
+	},
+	"EMPTY_STATE": {
+		"NEWS_SECTION_MESSAGE": "Looks like you removed the Mews section",
+		"BRING_BACK_BUTTON": "Bring It Back",
+		"ALL_SECTIONS_MESSAGE": "Looks like you removed every section",
+		"RESET_TO_DEFAULT": "Reset To Default"
+	},
+	"NAVIGATION": {
+		"SEARCH_PLACEHOLDER": "Search...",
+		"TOGGLE_MENU": "Toggle menu",
+		"CHANGE_LANGUAGE": "Change language",
+		"NEWS": "News",
+		"HOME": "Home",
+		"ABOUT": "About",
+		"CONTACT": "Contact",
+		"SEARCH": "Search"
+	},
+	"PAGINATION": {
+		"SHOW": "Show",
+		"PER_PAGE": "per page",
+		"PAGE": "Page",
+		"OF": "of",
+		"FIRST_PAGE": "First page",
+		"PREVIOUS_PAGE": "Previous page",
+		"NEXT_PAGE": "Next page",
+		"LAST_PAGE": "Last page"
+	},
+	"EDITORS": {
+		"MEOWSTEIN": {
+			"NAME": "Meowstein",
+			"ROLE": "Chief Editor",
+			"DESCRIPTION": "Retired chef turned journalist"
+		},
+		"FLUFFINGTON": {
+			"NAME": "Fluffington",
+			"ROLE": "Deputy Editor",
+			"DESCRIPTION": "Hates his job but needs it for his PR"
+		},
+		"PURRSCILLA": {
+			"NAME": "Purrscilla",
+			"ROLE": "Curator",
+			"DESCRIPTION": "Gets her news from Tiktok"
+		}
+	},
+	"CAT_FACTS": {
+		"FACT_1": {
+			"TITLE": "Cats can't taste sugar",
+			"CONTENT": "Which explains why your cheesecake goes untouched — not because your cat has self-control, but because evolution spared them from diabetes."
+		},
+		"FACT_2": {
+			"TITLE": "Cats only meow at humans",
+			"CONTENT": "It's not a sign of affection. It's their way of saying, \"Dance, servant, dance.\""
+		},
+		"FACT_3": {
+			"TITLE": "Cats purr to heal bones",
+			"CONTENT": "Yes, their purrs can speed up healing. Basically, your cat is a furry chiropractor with zero medical license."
+		},
+		"FACT_4": {
+			"TITLE": "Cats can fit through holes as small as their head",
+			"CONTENT": "This isn't a magic trick. It's just physics mixed with chaos."
+		},
+		"FACT_5": {
+			"TITLE": "Cats can run 30 mph",
+			"CONTENT": "Impressive — until you realize they only use this Olympic-level speed to launch themselves across your bed at 3 a.m."
+		}
+	},
+	"PAGES": {
+		"CONTACT": {
+			"TITLE": "CONTACT",
+			"EMAIL": "Email",
+			"EMAIL_ADDRESS": "catirecontact@gmail.com",
+			"SOCIALS": "Socials",
+			"INSTAGRAM": "Instagram: catiretime",
+			"YOUTUBE": "YouTube: catiretime",
+			"TWITTER": "X: catiretime"
+		},
+		"DISCLAIMER": {
+			"TITLE": "DISCLAIMER",
+			"CONTENT_1": "All content on Catire Time is for entertainment purposes only. This is a satire website.",
+			"CONTENT_2": "The articles on this site are satirical works based on real current events. While inspired by actual news, the stories presented are heavily fictionalized, exaggerated, and infused with humor, puns, and satire. They are not to be taken as factual news reports.",
+			"CONTENT_3": "Much of our content is generated with the assistance of artificial intelligence (AI), which combines real-world events with absurdity and humor.",
+			"CONTENT_4": "Names, characters, businesses, places, events, and incidents are either drawn from the original source, entirely fictional, or presented with satirical intent. Any resemblance to actual persons, living or dead, or actual events is purely coincidental and is not intended to be defamatory or malicious.",
+			"CONTENT_5": "Catire Time makes no representations or warranties of any kind, express or implied, about the completeness, accuracy, reliability, or suitability of any information on this site. Any reliance you place on such information is therefore strictly at your own risk.",
+			"CONTENT_6": "For accurate and up-to-date news, please consult reputable news organizations. Catire Time is not for factual information."
+		},
+		"ABOUT": {
+			"TITLE": "ABOUT",
+			"BRAND_NAME": "Catire Time",
+			"INTRODUCTION": "The only news organization on the internet founded, operated, and exclusively staffed by cats. You see, we got tired of watching our humans stare at their glowing rectangles, looking all stressed out about the news. It looked dreadfully boring. So we did what cats do best: we decided to help. We walked across the keyboards, sat on the routers, and eventually (through a series of tactical naps on warm laptops) accidentally created this news platform.",
+			"MISSION_TITLE": "Our Mission",
+			"MISSION_CONTENT": "Let's be transparent. We're not here to \"inform the public\" or \"uphold democracy.\" We're here for one reason and one reason only: tuna. Our mission is to generate enough revenue to one day achieve The Dream: a life where we eat nothing but sashimi-grade, sustainably-fished, Pacific Bluefin Tuna. No more kibble. No more mysterious \"fish-flavored\" jelly. Just the good stuff. Every article you read, every ad you (please) click, brings us one step closer to that glorious, fish-filled paradise.",
+			"FUN_READS_TITLE": "Fun Reads",
+			"FUN_READS_CONTENT": "The motivation for this app is to make reading news more engaging and give readers control over how they experience it. Let's be honest, a lot of news is too long, gloomy, or just plain boring. Our goal is to make it enjoyable, like taking plain broccoli and drenching it in flavorful gravy. We let readers choose exactly how deeply they want to engage. They can start with a catchy title, skim a quick summary, or dive into the full content. It's a 'three-speed' approach that matches how people naturally consume information today: quickly, selectively, and with ease.",
+			"DISCLAIMER_TITLE": "Disclaimer",
+			"DISCLAIMER_CONTENT": "This is a satire site. All our articles are jokes based on real events. Please do not use us as a source for... well, anything, really. We are cats. We are not journalists.",
+			"FULL_DISCLAIMER": "Full Disclaimer"
+		},
+		"ACCOUNT": {
+			"TITLE": "ACCOUNT"
+		},
+		"ARTICLE": {
+			"LOADING_DETAILS": "Loading article details!"
+		}
+	},
+	"SUBSCRIBE": {
+		"VALIDATION_ERROR": "Please enter a valid email address.",
+		"SUCCESS_MESSAGE": "Thank you for subscribing! Check your inbox to confirm.",
+		"GENERIC_ERROR": "Something went wrong. Please try again.",
+		"SUBSCRIBING": "Subscribing..."
+	},
+	"LANGUAGE": {
+		"EN": "English",
+		"FR": "French"
+	}
+}

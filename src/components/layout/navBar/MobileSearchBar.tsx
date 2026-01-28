@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { LuSearch } from "react-icons/lu";
 import { useLocation } from "react-router-dom";
 
@@ -13,6 +14,7 @@ export const MobileSearchBar = ({
 	onQueryChange,
 	onSubmit,
 }: MobileSearchBarProps) => {
+	const { t } = useTranslation();
 	const location = useLocation();
 	const params = new URLSearchParams(location.search);
 	const urlQuery = params.get("q") || "";
@@ -34,7 +36,7 @@ export const MobileSearchBar = ({
 					type="text"
 					value={query}
 					onChange={(e) => onQueryChange(e.target.value)}
-					placeholder="Search..."
+					placeholder={t("NAVIGATION.SEARCH_PLACEHOLDER")}
 					className="flex-1 outline-none text-gray-700 placeholder-gray-400"
 				/>
 			</form>

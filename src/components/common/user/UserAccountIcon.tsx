@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { LuUserRound } from "react-icons/lu";
 
@@ -12,6 +13,8 @@ export const UserAccountIcon = ({
 	variant = "icon",
 	onLinkClick,
 }: UserAccountProps) => {
+	const { t } = useTranslation();
+
 	if (variant === "icon") {
 		// Icon display
 		return (
@@ -29,7 +32,7 @@ export const UserAccountIcon = ({
 		<MobileNavLink
 			key="/account"
 			linkTo="/account"
-			linkLabel="Account"
+			linkLabel={t("ACCOUNT.ACCOUNT_LABEL")}
 			onLinkClick={onLinkClick}
 		/>
 	);

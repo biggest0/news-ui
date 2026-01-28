@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 import { SectionHeaderExpandable } from "@/components/common/layout/SectionHeaderExpandable";
 import { CATIRE_EDITORS } from "@/components/layout/sideColumn/constants";
 import CollapsibleSection from "../CollapsibleSection";
@@ -8,6 +10,7 @@ import type { EditorCardProps } from "@/types/props/sideColumnTypes";
 
 export default function MobileEditorsSection() {
 	const isVisible = useSectionVisible(SECTIONS.EDITORS);
+	const { t } = useTranslation();
 
 	return (
 		<section
@@ -16,7 +19,10 @@ export default function MobileEditorsSection() {
 			}`}
 		>
 			{/* instead pass in an enum maybe, this enum will give the title, and enum will map to correct options being created */}
-			<SectionHeaderExpandable title="OUR EDITORS" section={SECTIONS.EDITORS} />
+			<SectionHeaderExpandable
+				title={t("SECTION.OUR_EDITORS")}
+				section={SECTIONS.EDITORS}
+			/>
 			<CollapsibleSection section={SECTIONS.EDITORS}>
 				<div className="flex flex-row overflow-x-auto overflow-y-hidden hide-scrollbar space-x-4">
 					{CATIRE_EDITORS.map((editor: EditorCardProps, index: number) => (

@@ -9,6 +9,7 @@ import { NavigationLinks } from "./NavigationLinks";
 import { UserAccountIcon } from "@/components/common/user/UserAccountIcon";
 import SocialMediaLinks from "@/components/common/social/SocialMediaLinks";
 import { APP_VERSION } from "@/config/config";
+import LanguageSwitcher from "./LanguageSwitcherMobile";
 
 export const MobileMenu = ({
 	menuOpen,
@@ -120,6 +121,7 @@ export const MobileMenu = ({
 						{/* User profile */}
 						<div className="border-t pt-4 mt-6">
 							<UserAccountIcon variant="full" onLinkClick={onMenuClose} />
+							<LanguageSwitcher />
 						</div>
 						{/* Social media links */}
 						<div className="border-t pt-4 mt-6 flex justify-center">

@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 import { SectionHeaderExpandable } from "@/components/common/layout/SectionHeaderExpandable";
 import CollapsibleSection from "../CollapsibleSection";
 import { SECTIONS, USER_ARTICLE_HISTORY } from "@/constants/keys";
@@ -11,6 +13,7 @@ import Image from "@/assets/news_hero_image.jpg";
 
 export default function MobileStaffPicksSection() {
 	const isVisible = useSectionVisible(SECTIONS.STAFF_PICKS);
+	const { t } = useTranslation();
 	const [articleHistory, setArticleHistory] = useLocalStorage<ArticleInfo[]>(
 		USER_ARTICLE_HISTORY,
 		[]
@@ -26,14 +29,11 @@ export default function MobileStaffPicksSection() {
 				<div className="relative w-full h-64 overflow-hidden">
 					<img
 						src={Image}
-						alt="Featured News"
+						alt={t("HERO.IMAGE_ALT")}
 						className="w-full h-full object-cover"
 					/>
 				</div>
-				<div className="text-center">
-					"Reading satire news is like getting your veggies in cake form—tasty,
-					fun, and surprisingly informative." — Albert Mewstein
-				</div>
+				<div className="text-center">{t("HERO.QUOTE")}</div>
 			</section>
 
 			{/* Staff Picks Section */}
@@ -42,7 +42,7 @@ export default function MobileStaffPicksSection() {
 			>
 				{/* instead pass in an enum maybe, this enum will give the title, and enum will map to correct options being created */}
 				<SectionHeaderExpandable
-					title="STAFF PICKS"
+					title={t("SECTION.STAFF_PICKS")}
 					section={SECTIONS.STAFF_PICKS}
 				/>
 				<CollapsibleSection section={SECTIONS.STAFF_PICKS}>

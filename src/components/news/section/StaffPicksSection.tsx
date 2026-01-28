@@ -9,6 +9,7 @@ import { incrementArticleViewed } from "@/api/articleApi";
 import { handleLocalStorageUpdate } from "@/service/localStorageService";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { ArticleInfo } from "@/types/articleTypes";
+import { useTranslation } from "react-i18next";
 
 export default function StaffPicksSection() {
 	const isVisible = useSectionVisible(SECTIONS.STAFF_PICKS);
@@ -16,12 +17,13 @@ export default function StaffPicksSection() {
 		USER_ARTICLE_HISTORY,
 		[]
 	);
+	const { t } = useTranslation();
 
 	return (
 		<section className={`${isVisible ? "" : "hidden"}`}>
 			{/* instead pass in an enum maybe, this enum will give the title, and enum will map to correct options being created */}
 			<SectionHeaderExpandable
-				title="STAFF PICKS"
+				title={t("SECTION.STAFF_PICKS")}
 				section={SECTIONS.STAFF_PICKS}
 			/>
 			<CollapsibleSection section={SECTIONS.STAFF_PICKS}>

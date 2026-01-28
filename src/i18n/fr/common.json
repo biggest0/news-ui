@@ -1,0 +1,198 @@
+{
+	"APP": {
+		"TITLE": "Çatire Time"
+	},
+	"CATEGORY": {
+		"ALL": "Tout",
+		"WORLD": "Monde",
+		"LIFESTYLE": "Style de vie",
+		"SCIENCE": "Science",
+		"TECHNOLOGY": "Technologie",
+		"BUSINESS": "Affaires",
+		"SPORT": "Sport",
+		"POLITICS": "Politique",
+		"OTHER": "Autre"
+	},
+	"SECTION": {
+		"MEWS": "Miaous",
+		"EDITORS": "La Rédaction",
+		"POPULAR": "Populaire",
+		"OUR_EDITORS": "Nos rédacteurs",
+		"STAFF_FAVORITES": "Coups de cœur de l'équipe",
+		"STAFF_PICKS": "Choix de l'équipe",
+		"CAT_FACTS": "Faits sur les chats"
+	},
+	"ARTICLE_CARD": {
+		"READ_MORE": "Lire la suite",
+		"HIDE": "Masquer",
+		"SHARE": "Partager",
+		"LOADING_DETAILS": "Chargement des détails..."
+	},
+	"FILTER": {
+		"DATE_RANGE": "Période",
+		"SEARCH_ARTICLES_PLACEHOLDER": "Rechercher des articles...",
+		"ALL_TIME": "Tout le temps",
+		"LAST_24_HOURS": "Dernières 24 heures",
+		"LAST_7_DAYS": "7 derniers jours",
+		"LAST_30_DAYS": "30 derniers jours",
+		"SORT_BY": "Trier par",
+		"NEWEST": "Les plus récents",
+		"MOST_VIEWED": "Les plus consultés",
+		"RELEVANT": "Pertinent"
+	},
+	"FOOTER": {
+		"BRAND_NAME": "Çatire Time",
+		"BRAND_TAGLINE": "Votre dose quotidienne d'humour… enfin, de miaous",
+		"COPYRIGHT": "Çatire Time © 2025",
+		"DISCLAIMER": "Avis de non-responsabilité",
+		"ABOUT_US": "À propos de nous",
+		"CONTACT": "Contact",
+		"SUBSCRIBE": "S'abonner",
+		"SUBSCRIBE_MESSAGE_TITLE": "Abonnez-vous à notre infolettre",
+		"SUBSCRIBE_MESSAGE": "Recevez les dernières nouvelles directement dans votre boîte de réception",
+		"SUBSCRIBE_INPUT_PLACEHOLDER": "Entrez votre adresse courriel"
+	},
+	"ACCOUNT": {
+		"NAME": "Nom",
+		"BIO": "Bio",
+		"SAVE": "Enregistrer",
+		"FIELD_SAVED": "Champ enregistré !",
+		"ACCOUNT_LABEL": "Compte",
+		"ARTICLE_HISTORY": "HISTORIQUE DES ARTICLES",
+		"CLEAR": "Effacer",
+		"EMPTY_HISTORY": "Votre historique de lecture est vide."
+	},
+	"COMMON": {
+		"LOAD": "Chargement",
+		"LOADING": "Chargement...",
+		"BACK_TO_TOP": "Retour en haut",
+		"COPIED": "Copié",
+		"SHARE": "Partager",
+		"LANGUAGE": "Langue"
+	},
+	"MAINTENANCE": {
+		"IMAGE_ALT": "Chats au travail",
+		"TITLE": "Cette page est encore en miau-tenance 🐱🔧",
+		"MESSAGE": "Notre équipe travaille dur !"
+	},
+	"NOTICE": {
+		"SATIRE_MESSAGE": "Ce site web est un journal satirique. Le contenu peut être exagéré ou fictif à des fins comiques."
+	},
+	"HERO": {
+		"IMAGE_ALT": "Nouvelles en vedette",
+		"QUOTE": "Lire des nouvelles satiriques, c'est comme manger des légumes sous forme de gâteau — savoureux, amusant et surprenamment instructif.\" — Albert Mewstein"
+	},
+	"EMPTY_STATE": {
+		"NEWS_SECTION_MESSAGE": "Il semble que vous ayez supprimé la section Meowelles",
+		"BRING_BACK_BUTTON": "Ramenez-la",
+		"ALL_SECTIONS_MESSAGE": "Il semble que vous ayez supprimé toutes les sections",
+		"RESET_TO_DEFAULT": "Réinitialiser par défaut"
+	},
+	"NAVIGATION": {
+		"SEARCH_PLACEHOLDER": "Rechercher...",
+		"TOGGLE_MENU": "Basculer le menu",
+		"CHANGE_LANGUAGE": "Changer de langue",
+		"NEWS": "Nouvelles",
+		"HOME": "Accueil",
+		"ABOUT": "À propos",
+		"CONTACT": "Contact",
+		"SEARCH": "Rechercher"
+	},
+	"PAGINATION": {
+		"SHOW": "Afficher",
+		"PER_PAGE": "par page",
+		"PAGE": "Page",
+		"OF": "de",
+		"FIRST_PAGE": "Première page",
+		"PREVIOUS_PAGE": "Page précédente",
+		"NEXT_PAGE": "Page suivante",
+		"LAST_PAGE": "Dernière page"
+	},
+	"EDITORS": {
+		"MEOWSTEIN": {
+			"NAME": "Meowstein",
+			"ROLE": "Rédacteur en chef",
+			"DESCRIPTION": "Chef retraité devenu journaliste"
+		},
+		"FLUFFINGTON": {
+			"NAME": "Fluffington",
+			"ROLE": "Rédacteur adjoint",
+			"DESCRIPTION": "Déteste son travail mais en a besoin pour son image"
+		},
+		"PURRSCILLA": {
+			"NAME": "Purrscilla",
+			"ROLE": "Curatrice",
+			"DESCRIPTION": "Obtient ses nouvelles de Tiktok"
+		}
+	},
+	"CAT_FACTS": {
+		"FACT_1": {
+			"TITLE": "Les chats ne peuvent pas goûter le sucre",
+			"CONTENT": "Ce qui explique pourquoi votre cheesecake reste intact — pas parce que votre chat a de la volonté, mais parce que l'évolution l'a épargné du diabète."
+		},
+		"FACT_2": {
+			"TITLE": "Les chats ne miaulent qu'aux humains",
+			"CONTENT": "Ce n'est pas un signe d'affection. C'est leur façon de dire : « Danse, serviteur, danse. »"
+		},
+		"FACT_3": {
+			"TITLE": "Les chats ronronnent pour guérir les os",
+			"CONTENT": "Oui, leurs ronronnements peuvent accélérer la guérison. En gros, votre chat est un chiropracteur poilu sans licence médicale."
+		},
+		"FACT_4": {
+			"TITLE": "Les chats peuvent passer par des trous aussi petits que leur tête",
+			"CONTENT": "Ce n'est pas un tour de magie. C'est juste de la physique mélangée au chaos."
+		},
+		"FACT_5": {
+			"TITLE": "Les chats peuvent courir à 48 km/h",
+			"CONTENT": "Impressionnant — jusqu'à ce que vous réalisiez qu'ils n'utilisent cette vitesse olympique que pour se lancer à travers votre lit à 3h du matin."
+		}
+	},
+	"PAGES": {
+		"CONTACT": {
+			"TITLE": "CONTACT",
+			"EMAIL": "Courriel",
+			"EMAIL_ADDRESS": "catirecontact@gmail.com",
+			"SOCIALS": "Réseaux sociaux",
+			"INSTAGRAM": "Instagram : catiretime",
+			"YOUTUBE": "YouTube : catiretime",
+			"TWITTER": "X : catiretime"
+		},
+		"DISCLAIMER": {
+			"TITLE": "AVIS DE NON-RESPONSABILITÉ",
+			"CONTENT_1": "Tout le contenu sur Çatire Time est uniquement à des fins de divertissement. Ceci est un site de satire.",
+			"CONTENT_2": "Les articles sur ce site sont des œuvres satiriques basées sur des événements actuels réels. Bien qu'inspirés de l'actualité réelle, les histoires présentées sont largement fictionalisées, exagérées et imprégnées d'humour, de jeux de mots et de satire. Elles ne doivent pas être prises comme des rapports d'actualité factuels.",
+			"CONTENT_3": "Une grande partie de notre contenu est générée avec l'aide de l'intelligence artificielle (IA), qui combine des événements du monde réel avec de l'absurdité et de l'humour.",
+			"CONTENT_4": "Les noms, personnages, entreprises, lieux, événements et incidents sont soit tirés de la source originale, entièrement fictifs, soit présentés avec une intention satirique. Toute ressemblance avec des personnes réelles, vivantes ou décédées, ou des événements réels est purement fortuite et n'est pas destinée à être diffamatoire ou malveillante.",
+			"CONTENT_5": "Çatire Time ne fait aucune déclaration ou garantie d'aucune sorte, expresse ou implicite, concernant l'exhaustivité, l'exactitude, la fiabilité ou l'adéquation de toute information sur ce site. Toute confiance que vous placez dans ces informations est donc strictement à vos propres risques.",
+			"CONTENT_6": "Pour des nouvelles précises et à jour, veuillez consulter des organisations de presse réputées. Çatire Time n'est pas destiné aux informations factuelles."
+		},
+		"ABOUT": {
+			"TITLE": "À PROPOS",
+			"BRAND_NAME": "Çatire Time",
+			"INTRODUCTION": "La seule organisation de presse sur internet fondée, dirigée et exclusivement composée de chats. Voyez-vous, nous en avons eu assez de regarder nos humains fixer leurs rectangles lumineux, l'air stressé par les nouvelles. Ça avait l'air terriblement ennuyeux. Alors nous avons fait ce que les chats font le mieux : nous avons décidé d'aider. Nous avons marché sur les claviers, nous nous sommes assis sur les routeurs, et finalement (à travers une série de siestes tactiques sur des ordinateurs portables chauds) nous avons accidentellement créé cette plateforme d'information.",
+			"MISSION_TITLE": "Notre Mission",
+			"MISSION_CONTENT": "Soyons transparents. Nous ne sommes pas ici pour \"informer le public\" ou \"défendre la démocratie.\" Nous sommes ici pour une seule raison et une seule raison : le thon. Notre mission est de générer suffisamment de revenus pour un jour atteindre Le Rêve : une vie où nous ne mangeons que du thon bleu de qualité sashimi, pêché de manière durable. Plus de croquettes. Plus de gelée mystérieuse \"au goût de poisson.\" Juste les bonnes choses. Chaque article que vous lisez, chaque publicité que vous (s'il vous plaît) cliquez, nous rapproche d'un pas de ce paradis glorieux rempli de poissons.",
+			"FUN_READS_TITLE": "Lectures amusantes",
+			"FUN_READS_CONTENT": "La motivation pour cette application est de rendre la lecture des nouvelles plus engageante et de donner aux lecteurs le contrôle sur la façon dont ils l'expérimentent. Soyons honnêtes, beaucoup de nouvelles sont trop longues, sombres ou simplement ennuyeuses. Notre objectif est de les rendre agréables, comme prendre du brocoli ordinaire et le tremper dans une sauce savoureuse. Nous laissons les lecteurs choisir exactement à quel point ils veulent s'engager. Ils peuvent commencer par un titre accrocheur, parcourir un résumé rapide, ou plonger dans le contenu complet. C'est une approche \"à trois vitesses\" qui correspond à la façon dont les gens consomment naturellement l'information aujourd'hui : rapidement, de manière sélective, et avec facilité.",
+			"DISCLAIMER_TITLE": "Avis de non-responsabilité",
+			"DISCLAIMER_CONTENT": "Ceci est un site de satire. Tous nos articles sont des blagues basées sur des événements réels. Veuillez ne pas nous utiliser comme source pour... eh bien, quoi que ce soit, vraiment. Nous sommes des chats. Nous ne sommes pas des journalistes.",
+			"FULL_DISCLAIMER": "Avis de non-responsabilité complet"
+		},
+		"ACCOUNT": {
+			"TITLE": "COMPTE"
+		},
+		"ARTICLE": {
+			"LOADING_DETAILS": "Chargement des détails de l'article !"
+		}
+	},
+	"SUBSCRIBE": {
+		"VALIDATION_ERROR": "Veuillez saisir une adresse e-mail valide.",
+		"SUCCESS_MESSAGE": "Merci de vous être abonné ! Vérifiez votre boîte de réception pour confirmer.",
+		"GENERIC_ERROR": "Quelque chose s'est mal passé. Veuillez réessayer.",
+		"SUBSCRIBING": "Abonnement en cours..."
+	},
+	"LANGUAGE": {
+		"EN": "Anglais",
+		"FR": "Français"
+	}
+}

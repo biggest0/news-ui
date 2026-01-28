@@ -1,9 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { GoChevronLeft, GoChevronRight } from "react-icons/go";
 
-import { ARTICLE_ROUTES } from "@/constants/routes";
+import { ARTICLE_ROUTES, type ArticleCategory } from "@/constants/routes";
+import type { CategoryKey } from "@/i18n/types";
 import type { AppDispatch } from "@/store/store";
 import {
 	loadArticlesInfoByCategory,
@@ -13,6 +15,7 @@ import {
 export default function CategoryBar() {
 	// get url/{category}
 	const location = useLocation();
+	const { t } = useTranslation();
 	const currentCategory = location.pathname.split("/")[1]; // grabs part after "/"
 	const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -22,16 +25,16 @@ export default function CategoryBar() {
 	const dispatch = useDispatch<AppDispatch>();
 	// instead of setting the category, you link it
 	// and then in sections just grab the param again and filter
-	useEffect(() => {
-		if (currentCategory === "") {
-			// defaults to grabbing all articles
-			dispatch(loadInitialArticlesInfo({ page: 1 }));
-		} else if (ARTICLE_ROUTES.includes(currentCategory)) {
-			dispatch(
-				loadArticlesInfoByCategory({ page: 1, category: currentCategory })
-			);
-		}
-	}, [currentCategory, dispatch]);
+useEffect(() => {
+	if (currentCategory === "") {
+		// defaults to grabbing all articles
+		dispatch(loadInitialArticlesInfo({ page: 1 }));
+	} else if (ARTICLE_ROUTES.includes(currentCategory as ArticleCategory)) {
+		dispatch(
+			loadArticlesInfoByCategory({ page: 1, category: currentCategory as ArticleCategory })
+		);
+	}
+}, [currentCategory, dispatch]);
 
 	// Set up scroll listeners
 	useEffect(() => {
@@ -90,7 +93,7 @@ export default function CategoryBar() {
 										: "text-gray-600 hover:text-black"
 								} ${index !== 0 ? "ml-6" : ""}`}
 							>
-								{category.toUpperCase()}
+								{t(`CATEGORY.${category.toUpperCase() as CategoryKey}`).toUpperCase()}
 							</Link>
 						))}
 					</div>

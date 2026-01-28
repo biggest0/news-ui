@@ -3,5 +3,5 @@ interface SectionHeaderProps {
 }
 
 export const SectionHeader = ({ title }: SectionHeaderProps) => {
-	return <h3 className="text-gray-500 pb-4">{title}</h3>;
+	return <h3 className="text-gray-500 pb-4">{title.toUpperCase()}</h3>;
 };

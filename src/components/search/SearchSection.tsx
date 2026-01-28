@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { LuSearch } from "react-icons/lu";
 
 import { buildSearchUrl } from "@/utils/search/searchUrlUtils";
@@ -17,6 +18,7 @@ export default function SearchSection({
 	dateRange,
 	sortBy,
 }: SearchSectionProps) {
+	const { t } = useTranslation();
 	const navigate = useNavigate();
 
 	const [input, setInput] = useState(query ?? "");
@@ -54,7 +56,7 @@ export default function SearchSection({
 					type="text"
 					value={input}
 					onChange={(e) => setInput(e.target.value)}
-					placeholder="Search articles..."
+					placeholder={t("FILTER.SEARCH_ARTICLES_PLACEHOLDER")}
 					className="flex-grow py-2 outline-none text-gray-700 text-2xl"
 				/>
 				<button
