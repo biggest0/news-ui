@@ -2,6 +2,7 @@ import {
 	fetchArticleDetail,
 	fetchArticlesByCategory,
 	fetchArticlesBySearch,
+	fetchArticlesBySubCategory,
 	fetchArticlesInfo,
 	fetchTopTenArticles,
 } from "../api/articleApi";
@@ -49,6 +50,25 @@ export async function getArticlesBySearch(
 		};
 	} catch (error) {
 		console.error("[Error fetching articles by search]:", error);
+		return { articles: [], count: 0 };
+	}
+}
+
+export async function getArticlesBySubCategory(
+	page: number,
+	subCategory: string
+): Promise<ArticleResponse> {
+	try {
+		const data: ArticleInfoResponseDTO = await fetchArticlesBySubCategory(
+			page,
+			subCategory
+		);
+		return {
+			articles: data.articles.map(mapDTOtoArticleInfo),
+			count: data.count,
+		};
+	} catch (error) {
+		console.error("[Error fetching articles by subcategory]:", error);
 		return { articles: [], count: 0 };
 	}
 }

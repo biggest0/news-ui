@@ -7,6 +7,7 @@ import {
 	getArticleDetail,
 	getArticlesByCategory,
 	getArticlesBySearch,
+	getArticlesBySubCategory,
 	getArticlesInfo,
 	getTopTenArticles,
 } from "@/service/articleService";
@@ -89,6 +90,13 @@ export const loadArticlesInfoBySearch = createAsyncThunk<
 	{ page: number; search: string }
 >("articles/getArticlesInfoBySearch", async ({ page, search }) => {
 	return getArticlesBySearch(page, search);
+});
+
+export const loadArticlesBySubCategory = createAsyncThunk<
+	ArticleResponse,
+	{ page: number; subCategory: string }
+>("articles/getArticlesBySubCategory", async ({ page, subCategory }) => {
+	return getArticlesBySubCategory(page, subCategory);
 });
 
 export const loadTopTenArticles = createAsyncThunk<ArticleInfo[]>(
@@ -229,7 +237,8 @@ const articlesSlice = createSlice({
 			.addMatcher(
 				isAnyOf(
 					loadArticlesInfoByCategory.pending,
-					loadArticlesInfoBySearch.pending
+					loadArticlesInfoBySearch.pending,
+					loadArticlesBySubCategory.pending
 				),
 				(state) => {
 					state.loading.articles = true;
@@ -239,7 +248,8 @@ const articlesSlice = createSlice({
 			.addMatcher(
 				isAnyOf(
 					loadArticlesInfoByCategory.fulfilled,
-					loadArticlesInfoBySearch.fulfilled
+					loadArticlesInfoBySearch.fulfilled,
+					loadArticlesBySubCategory.fulfilled
 				),
 				(state, action) => {
 					state.loading.articles = false;
@@ -258,7 +268,8 @@ const articlesSlice = createSlice({
 			.addMatcher(
 				isAnyOf(
 					loadArticlesInfoByCategory.rejected,
-					loadArticlesInfoBySearch.rejected
+					loadArticlesInfoBySearch.rejected,
+					loadArticlesBySubCategory.rejected
 				),
 				(state, action) => {
 					state.loading.articles = false;
