@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 import type { ArticleInfo, ArticleDetail } from "@/types/articleTypes";
 import type { RootState, AppDispatch } from "@/store/store";
@@ -122,10 +123,14 @@ export default function NewsCard({ articleInfo, onRead }: NewsCardProp) {
 									))}
 								</div>
 								<div className="flex flex-wrap space-x-4 underline text-sm">
-									{articleDetail.subCategory?.map((source, index) => (
-										<div key={`${articleDetail.id}-category-${index}}`}>
-											{source}
-										</div>
+									{articleDetail.subCategory?.map((subCat, index) => (
+										<Link
+											key={`${articleDetail.id}-category-${index}}`}
+											to={`/subcategory/${encodeURIComponent(subCat)}`}
+											className="hover:text-amber-600 transition-colors"
+										>
+											{subCat}
+										</Link>
 									))}
 								</div>
 							</div>
