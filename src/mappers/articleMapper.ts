@@ -12,6 +12,7 @@ export function mapDTOtoArticleInfo(
 			articleInfoResponse.date_published
 		).toLocaleDateString(),
 		mainCategory: articleInfoResponse.main_category,
+		subCategory: articleInfoResponse.sub_category || [],
 		viewed: articleInfoResponse.viewed,
 	};
 }
