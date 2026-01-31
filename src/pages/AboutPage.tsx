@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 import { SectionHeader } from "@/components/common/layout/SectionHeader";
-import { useTranslation } from "node_modules/react-i18next";
+import { useTranslation } from "react-i18next";
 
 export default function About() {
 	const { t } = useTranslation();
