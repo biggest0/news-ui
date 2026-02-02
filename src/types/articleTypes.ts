@@ -7,8 +7,9 @@ export interface ArticleInfo {
 	id: string;
 	title: string;
 	summary?: string;
-	datePublished: string | undefined;
+	datePublished: string;
 	mainCategory: string | undefined;
+	subCategory: string[];
 	viewed: number;
 }
 

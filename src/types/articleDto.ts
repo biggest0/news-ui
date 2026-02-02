@@ -4,6 +4,7 @@ export interface ArticleInfoDTO {
 	summary?: string;
 	date_published: string;
 	main_category: string;
+	sub_category?: string[];
 	viewed: number;
 }
 

@@ -1,19 +1,23 @@
+import { useTranslation } from "react-i18next";
+
 import { SectionHeader } from "@/components/common/layout/SectionHeader";
 
 export default function Contact() {
+	const { t } = useTranslation();
+
 	return (
 		<>
 			<section className="border-b border-gray-400 py-6">
-				<SectionHeader title="CONTACT" />
+				<SectionHeader title={t('PAGES.CONTACT.TITLE')}/>
 				{/* Text body */}
 				<div className="space-y-6 pt-4">
 					{/* Catire Time */}
 					<div className="text-center">
-						<h3 className="text-lg text-gray-800">Email</h3>
+						<h3 className="text-lg text-gray-800">{t('PAGES.CONTACT.EMAIL')}</h3>
 						<div>catirecontact@gmail.com</div>
 					</div>
 					<div className="text-center flex flex-col">
-						<h3 className="text-lg text-gray-800">Socials</h3>
+						<h3 className="text-lg text-gray-800">{t('PAGES.CONTACT.SOCIALS')}</h3>
 						<a
 							href="https://www.instagram.com/catiretime"
 							target="_blank"

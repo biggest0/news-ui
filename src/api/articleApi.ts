@@ -81,6 +81,27 @@ export async function fetchArticlesBySearch(page: number, search: string) {
 }
 
 /**
+ * Fetches articles filtered by subcategory from the server
+ * @param page - The page number to fetch
+ * @param subCategory - The subcategory to filter articles by
+ * @returns The response data from the server containing article information
+ * @throws Error if the HTTP request fails
+ */
+export async function fetchArticlesBySubCategory(page: number, subCategory: string) {
+	const response = await fetch(
+		`${API_URL}/article-info?page=${page}&limit=10&subCategory=${subCategory}`,
+		{
+			method: "GET",
+			headers: { "Content-Type": "application/json" },
+		}
+	);
+	if (!response.ok) {
+		throw new Error(`Error: ${response.statusText}`);
+	}
+	return response.json();
+}
+
+/**
  * Fetches detailed information for a specific article from the server
  * @param articleId - The unique identifier of the article
  * @returns The response data from the server containing detailed article information

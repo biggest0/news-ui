@@ -4,6 +4,7 @@ import "./App.css";
 import HomePage from "@/pages/HomePage";
 import ArticlePages from "@/pages/ArticlesPage";
 import SearchPage from "./pages/SearchPage";
+import SubCategoryPage from "./pages/SubCategoryPage";
 import About from "./pages/AboutPage";
 import Contact from "./pages/ContactPage";
 import AccountPage from "./pages/AccountPage";
@@ -35,6 +36,7 @@ function App() {
 						))}
 						{/* Article pages */}
 						<Route path="/article/:id" element={<ArticlePage />} />
+						<Route path="/subcategory/:subCategory" element={<SubCategoryPage />} />
 						<Route path="/search" element={<SearchPage />} />
 						<Route path="/about" element={<About />} />
 						<Route path="/contact" element={<Contact />} />
