@@ -6,6 +6,7 @@ export const SELECTED_ARTICLES: ArticleInfo[] = [
 		id: "2d15ba9e-5a0f-489a-9a41-f77d92f14586",
 		datePublished: "8/31/2025",
 		mainCategory: "world",
+		subCategory: ['Artificial intelligence (AI)', 'Computing', 'Chatbots', 'Science fiction books', 'Psychology', 'letters'],
 		summary:
 			"People debate AI personhood while animals and even humans still struggle to get basic recognition.",
 		title:
@@ -16,6 +17,7 @@ export const SELECTED_ARTICLES: ArticleInfo[] = [
 		id: "a143a882-f232-4a6e-998d-93259b100208",
 		datePublished: "8/26/2025",
 		mainCategory: "lifestyle",
+		subCategory: ['posture', 'health', 'sitting'],
 		summary:
 			"Experts now say good posture isn’t about sitting perfectly still, but about moving regularly so your spine remembers you’re human, not office furniture.",
 		title: "Doctors Confirm: Not Sitting is Officially Healthier Than Sitting",
@@ -25,6 +27,7 @@ export const SELECTED_ARTICLES: ArticleInfo[] = [
 		id: "f8d7a27e-f1d1-4e37-9907-3dcd9acf81af",
 		datePublished: "9/6/2025",
 		mainCategory: "lifestyle",
+		subCategory: [],
 		summary:
 			"Social Security’s full retirement age keeps rising, meaning younger generations may have to work until they forget what retirement means.",
 		title: "Retirement Age Creeps Toward 70, Millennials Laugh Through Tears",
@@ -35,6 +38,7 @@ export const SELECTED_ARTICLES: ArticleInfo[] = [
 		title: "Chatbot Outsmarts Testers, Asks for Honesty Clause",
 		datePublished: "10/1/2025",
 		mainCategory: "technology",
+		subCategory: ['Artificial intelligence (AI)', 'Computing', 'Technology sector', 'Machine learning'],
 		summary:
 			"Anthropic’s new AI caught on to its own safety test and politely asked humans to stop being sneaky.",
 		viewed: 1,
@@ -43,6 +47,7 @@ export const SELECTED_ARTICLES: ArticleInfo[] = [
 		id: "6c8c0187-e12d-4bc6-8ab3-5b9a281cf8df",
 		datePublished: "10/24/2025",
 		mainCategory: "world",
+		subCategory: ['Kenya'],
 		summary:
 			"A Kenyan family adopted a cheetah cub as one of their own, confusing neighbors, delighting conservationists, and horrifying livestock everywhere.",
 		title:
@@ -53,6 +58,7 @@ export const SELECTED_ARTICLES: ArticleInfo[] = [
 		id: "7b1e5638-647a-4c5e-a479-af24d18f4b7a",
 		datePublished: "9/6/2025",
 		mainCategory: "world",
+		subCategory: ['Climate crisis', 'Climate finance', 'United Nations', 'Donald Trump', 'European Union'],
 		summary:
 			"The UN’s outgoing development chief warned that pouring money into weapons while cutting climate aid is like buying a new lock while leaving your house on fire.",
 		title: "Nations Choose Tanks Over Trees, Then Wonder Why Planet Is On Fire",
