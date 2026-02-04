@@ -27,7 +27,7 @@ export const MobileMenu = ({
 	// Minimum swipe distance (in px) to trigger close
 	const minSwipeDistance = 100;
 	// Left edge zone for browser back navigation (in px)
-	const leftEdgeZone = 50;
+	const leftEdgeZone = 20;
 
 	// Prevent body scroll when menu is open
 	useEffect(() => {
