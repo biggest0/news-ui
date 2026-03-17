@@ -15,8 +15,8 @@ export default function ThemeToggle({ showLabel = false, className = "" }: Theme
 			className={`
 				flex items-center gap-2 p-2 rounded-lg
 				transition-all duration-200 ease-in-out
-				hover:bg-gray-100 dark:hover:bg-slate-700
-				text-gray-600 dark:text-slate-300
+				hover:bg-hover-bg
+				text-secondary
 				focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2
 				dark:focus:ring-offset-slate-800
 				${className}
@@ -25,9 +25,9 @@ export default function ThemeToggle({ showLabel = false, className = "" }: Theme
 			title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
 		>
 			{isDarkMode ? (
-				<HiSun className="w-5 h-5 text-amber-400" />
+				<HiMoon className="w-5 h-5 text-secondary" />
 			) : (
-				<HiMoon className="w-5 h-5 text-slate-600" />
+				<HiSun className="w-5 h-5 text-accent-bg" />
 			)}
 			{showLabel && (
 				<span className="text-sm font-medium">
@@ -37,4 +37,5 @@ export default function ThemeToggle({ showLabel = false, className = "" }: Theme
 		</button>
 	);
 }
+
 
