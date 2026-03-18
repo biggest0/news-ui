@@ -22,7 +22,7 @@ function App() {
 		<BrowserRouter basename="/">
 			<AppSettingProvider>
 				<Header />
-				<main className="w-full max-w-[1280px] min-h-screen mx-auto px-4">
+				<main className="w-full max-w-[1280px] min-h-screen mx-auto px-4 bg-surface transition-colors duration-200">
 					<ScrollToTop />
 					<Routes>
 						<Route path="/" element={<HomePage />} />
