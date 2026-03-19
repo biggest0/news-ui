@@ -18,7 +18,7 @@ export default function LanguageSwitcher() {
 
 	return (
 		<div
-			className="flex items-center px-4 text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
+			className="flex items-center px-4 text-secondary hover:bg-hover-bg rounded-md transition-colors"
 			onClick={() => setIsExpanded(!isExpanded)}
 		>
 			<div className="cursor-pointer mr-4">{t("COMMON.LANGUAGE")}</div>
@@ -36,7 +36,7 @@ export default function LanguageSwitcher() {
 						className={`px-4 py-2 whitespace-nowrap transition-colors ${
 							i18n.language === language.code
 								? "underline"
-								: "hover:text-amber-600 cursor-pointer"
+								: "hover:text-accent cursor-pointer"
 						}`}
 					>
 						{language.label}

@@ -19,12 +19,12 @@ export const ExpandableNavItem = ({
 		<div>
 			<button
 				onClick={() => setIsOpen((prev) => !prev)}
-				className={`w-full flex items-center justify-between py-2 px-4 text-left hover:bg-gray-50 rounded-lg transition-colors
+				className={`w-full flex items-center justify-between py-2 px-4 text-left hover:bg-hover-bg rounded-lg transition-colors
           ${isOpen ? "underline" : ""}`}
 			>
-				<span className="font-medium text-gray-700">{NavLinks.label}</span>
+				<span className="font-medium text-secondary">{NavLinks.label}</span>
 				<LuChevronDown
-					className={`w-5 h-5 text-gray-500 transition-transform duration-200 ${
+					className={`w-5 h-5 text-muted transition-transform duration-200 ${
 						isOpen ? "rotate-180" : ""
 					}`}
 				/>

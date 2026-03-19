@@ -15,7 +15,7 @@ export const MobileNavLink = ({
 		<Link
 			to={linkTo}
 			onClick={onLinkClick}
-			className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
+			className="flex items-center px-4 py-2 text-secondary hover:bg-hover-bg rounded-md transition-colors"
 		>
 			{linkLabel}
 		</Link>

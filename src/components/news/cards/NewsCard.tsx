@@ -53,41 +53,41 @@ export default function NewsCard({ articleInfo, onRead }: NewsCardProp) {
 	function categoryColor(category: string): string {
 		switch (category) {
 			case "world":
-				return "text-[rgba(209,45,22,0.7)]"; // orange
+				return "text-[rgba(209,45,22,0.7)] dark:text-red-400";
 
 			case "business":
-				return "text-[rgba(37,99,235,0.8)]"; // blue
+				return "text-[rgba(37,99,235,0.8)] dark:text-blue-400";
 
 			case "lifestyle":
-				return "text-[rgba(168,55,207,0.7)]"; // purple
+				return "text-[rgba(168,55,207,0.7)] dark:text-purple-400";
 
 			case "science":
-				return "text-[rgba(20,124,166,0.8)]"; // teal
+				return "text-[rgba(20,124,166,0.8)] dark:text-teal-400";
 
 			case "technology":
-				return "text-[rgba(6,152,212,0.7)]"; // cyan
+				return "text-[rgba(6,152,212,0.7)] dark:text-cyan-400";
 
 			case "sport":
-				return "text-[rgba(21,128,61,0.7)]"; // green
+				return "text-[rgba(21,128,61,0.7)] dark:text-green-400";
 
 			case "politics":
-				return "text-[rgba(37,51,80,0.8)]"; // dark gray
+				return "text-[rgba(37,51,80,0.8)] dark:text-slate-300";
 
 			case "other":
-				return "text-[rgba(107,114,128,0.7)]"; // light gray
+				return "text-[rgba(107,114,128,0.7)] dark:text-slate-400";
 
 			default:
-				return "text-gray-700";
+				return "text-secondary";
 		}
 	}
 
 	return (
-		<div className="flex flex-col justify-between min-h-48 max-h-full border-b border-gray-400 py-4 w-full space-y-8">
+		<div className="flex flex-col justify-between min-h-48 max-h-full border-b border-border py-4 w-full space-y-8 transition-colors duration-200">
 			<div>
-				<h3 className="text-xl font-semibold text-gray-800">
+				<h3 className="text-xl font-semibold text-primary">
 					{articleInfo.title}
 				</h3>
-				<div className="text-sm">{articleInfo.datePublished}</div>
+				<div className="text-sm text-muted">{articleInfo.datePublished}</div>
 				<div
 					className={`text-sm ${categoryColor(articleInfo.mainCategory ?? "")}`}
 				>
@@ -96,7 +96,7 @@ export default function NewsCard({ articleInfo, onRead }: NewsCardProp) {
 			</div>
 
 			{/* Article Summary/ Paragraphs */}
-			<div>
+			<div className="text-secondary">
 				{/* Grid transition for article's paragraphs on expand */}
 				<div
 					className={`grid transition-all duration-500 ease-in-out ${
@@ -111,7 +111,7 @@ export default function NewsCard({ articleInfo, onRead }: NewsCardProp) {
 					>
 						{/* Display loading if waiting for data*/}
 						{isLoadingDetail && !articleDetail && (
-							<div className="py-4 text-gray-500">{t("ARTICLE_CARD.LOADING_DETAILS")}</div>
+							<div className="py-4 text-muted">{t("ARTICLE_CARD.LOADING_DETAILS")}</div>
 						)}
 						{articleDetail && (
 							<div className="flex flex-col space-y-4">
@@ -127,7 +127,7 @@ export default function NewsCard({ articleInfo, onRead }: NewsCardProp) {
 										<Link
 											key={`${articleDetail.id}-category-${index}}`}
 											to={`/subcategory/${encodeURIComponent(subCat)}`}
-											className="hover:text-amber-600 transition-colors"
+											className="hover:text-accent transition-colors"
 										>
 											{subCat}
 										</Link>
@@ -157,7 +157,7 @@ export default function NewsCard({ articleInfo, onRead }: NewsCardProp) {
 
 			<div className="flex flex-row justify-between items-center">
 				<div
-					className="cursor-pointer hover:text-amber-600 self-start"
+					className="cursor-pointer hover:text-accent self-start transition-colors"
 					onClick={handleExpand}
 				>
 					{!expanded ? t("ARTICLE_CARD.READ_MORE") : t("ARTICLE_CARD.HIDE")}

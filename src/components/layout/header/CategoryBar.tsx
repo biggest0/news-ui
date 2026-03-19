@@ -63,17 +63,16 @@ useEffect(() => {
 	};
 
 	return (
-		<nav className="border-b-2 pb-2">
+		<nav className="border-b-2 border-border-subtle pb-2 transition-colors duration-200">
 			<div className="relative w-full">
 				{/* Left arrow */}
 				{canScrollLeft && (
 					<button
 						onClick={() => scrollBy(-100)}
-						className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-r from-white via-white/90 to-transparent pr-4"
+						className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-r from-surface via-surface/90 to-transparent pr-4"
 					>
 						<GoChevronLeft
-							className="w-4 h-4 text-gray-600 transition-opacity duration-200
-			"
+							className="w-4 h-4 text-muted transition-opacity duration-200"
 						/>
 					</button>
 				)}
@@ -87,10 +86,10 @@ useEffect(() => {
 							<Link
 								key={category}
 								to={`/${category}`}
-								className={`cursor-pointer lg:pt-1 text-base md:text-lg font-medium whitespace-nowrap ${
+								className={`cursor-pointer lg:pt-1 text-base md:text-lg font-medium whitespace-nowrap transition-colors ${
 									currentCategory === category
-										? "text-amber-600 underline"
-										: "text-gray-600 hover:text-black"
+										? "text-accent underline"
+										: "text-secondary hover:text-primary"
 								} ${index !== 0 ? "ml-6" : ""}`}
 							>
 								{t(`CATEGORY.${category.toUpperCase() as CategoryKey}`).toUpperCase()}
@@ -102,11 +101,10 @@ useEffect(() => {
 				{canScrollRight && (
 					<button
 						onClick={() => scrollBy(100)}
-						className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-l from-white via-white/90 to-transparent pl-4"
+						className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-l from-surface via-surface/90 to-transparent pl-4"
 					>
 						<GoChevronRight
-							className="w-4 h-4 text-gray-600 transition-opacity duration-200
-			"
+							className="w-4 h-4 text-muted transition-opacity duration-200"
 						/>
 					</button>
 				)}

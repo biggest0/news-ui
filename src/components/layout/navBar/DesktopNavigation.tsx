@@ -4,6 +4,7 @@ import { DesktopSearchBar } from "./DesktopSearchBar";
 import { UserAccountIcon } from "@/components/common/user/UserAccountIcon";
 import type { SearchProps } from "@/types/navBarTypes";
 import LanguageSwitcherDesktop from "./LanguageSwitcherDesktop";
+import ThemeToggle from "@/components/common/theme/ThemeToggle";
 
 export const DesktopNavigation = (props: SearchProps) => {
 	return (
@@ -15,9 +16,10 @@ export const DesktopNavigation = (props: SearchProps) => {
 			<AppTitle variant="desktop" />
 
 			{/* Right - Search and User */}
-			<div className="flex gap-4 items-center text-gray-600">
+			<div className="flex gap-4 items-center text-muted">
 				<DesktopSearchBar {...props} />
 				<LanguageSwitcherDesktop />
+				<ThemeToggle />
 				<UserAccountIcon variant="icon" />
 			</div>
 		</div>

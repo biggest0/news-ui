@@ -8,7 +8,7 @@ export const EditorCardVertical = ({
 	imageUrl,
 }: EditorCardProps) => {
 	return (
-		<div className="flex flex-col items-center text-center space-y-4 w-1/3 border-b border-gray-200 bg-gradient-to-b py-4">
+		<div className="flex flex-col items-center text-center space-y-4 w-1/3 border-b border-border-subtle bg-gradient-to-b py-4">
 			{/* Image */}
 			<img
 				src={`${BASE_URL}images/${imageUrl}`}
@@ -18,11 +18,11 @@ export const EditorCardVertical = ({
 
 			{/* Text */}
 			<div>
-				<div className="font-semibold">{name}</div>
-				<div className="text-gray-600">{role}</div>
+				<div className="font-semibold text-primary">{name}</div>
+				<div className="text-secondary">{role}</div>
 			</div>
       {/* Text */}
-			<div className="text-sm text-gray-500 max-w-sm break-words">
+			<div className="text-sm text-muted max-w-sm break-words">
 				{description}
 			</div>
 		</div>

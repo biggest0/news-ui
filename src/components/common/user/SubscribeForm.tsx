@@ -40,10 +40,10 @@ export default function SubscribeForm() {
 
 	return (
 		<div className="flex flex-col space-y-2">
-			<h4 className="text-lg font-semibold text-gray-800">
+			<h4 className="text-lg font-semibold text-primary">
 				{t("FOOTER.SUBSCRIBE_MESSAGE_TITLE")}
 			</h4>
-			<p className="text-sm text-gray-600">
+			<p className="text-sm text-secondary">
 				{t("FOOTER.SUBSCRIBE_MESSAGE")}
 			</p>
 			<form className="flex gap-2" onSubmit={handleSubmit}>
@@ -53,12 +53,21 @@ export default function SubscribeForm() {
 					value={email}
 					onChange={(e) => setEmail(e.target.value)}
 					disabled={isSubmitting}
-					className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+					className="border border-disabled rounded-lg px-4 py-2 w-full
+						bg-elevated
+						text-primary dark:text-slate-100
+						placeholder:text-gray-400 dark:placeholder:text-slate-500
+						focus:outline-none focus:ring-2 focus:ring-amber-500 dark:focus:ring-amber-400
+						disabled:bg-hover-bg
+						transition-colors duration-200"
 				/>
 				<button
 					type="submit"
 					disabled={!validateEmail(email) || isSubmitting}
-					className="bg-amber-500 text-white px-4 py-2 rounded-lg hover:bg-amber-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
+					className="bg-accent-bg text-white px-4 py-2 rounded-lg
+						hover:bg-amber-700 dark:hover:bg-amber-500
+						transition-colors duration-200
+						disabled:bg-gray-400 dark:disabled:bg-slate-600 disabled:cursor-not-allowed"
 				>
 					{isSubmitting ? t("SUBSCRIBE.SUBSCRIBING") : t("FOOTER.SUBSCRIBE")}
 				</button>
@@ -66,10 +75,10 @@ export default function SubscribeForm() {
 			{message && (
 				<p
 					className={`text-sm ${message === t("SUBSCRIBE.SUCCESS_MESSAGE")
-						? "text-green-600"
+						? "text-green-600 dark:text-green-400"
 						: message.includes("already subscribed")
-							? "text-yellow-600"
-							: "text-red-600"
+							? "text-yellow-600 dark:text-yellow-400"
+							: "text-red-600 dark:text-red-400"
 						}`}
 				>
 					{message}

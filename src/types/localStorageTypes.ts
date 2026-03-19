@@ -3,8 +3,11 @@ export interface UserInfo {
 	biography?: string;
 }
 
+export type ThemeMode = "light" | "dark" | "system";
+
 export interface AppSetting {
 	darkMode: boolean;
+	themeMode?: ThemeMode; // Optional for backward compatibility
 	homeLayout: HomeLayout;
 }
 

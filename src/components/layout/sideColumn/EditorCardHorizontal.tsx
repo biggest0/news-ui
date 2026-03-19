@@ -14,15 +14,15 @@ export const EditorCardHorizontal = ({
 	imageUrl,
 }: EditorCardProps) => {
 	return (
-		<div className="border-b border-gray-400 py-4">
+		<div className="border-b border-border py-4">
 			<div className="flex flex-row space-x-8 items-stretch justify-between w-full">
 				{/* Text */}
 				<div className="flex flex-col justify-between max-w-sm">
 					<div className="flex flex-col">
-						<div>{name}</div>
-						<div>{role}</div>
+						<div className="text-primary">{name}</div>
+						<div className="text-secondary">{role}</div>
 					</div>
-					<div className="text-sm text-gray-500 whitespace-normal break-words">
+					<div className="text-sm text-muted whitespace-normal break-words">
 						{description}
 					</div>
 				</div>
