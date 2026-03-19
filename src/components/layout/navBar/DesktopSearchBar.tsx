@@ -25,8 +25,8 @@ export const DesktopSearchBar = ({
 			{/* Expanded search form */}
 			<form
 				onSubmit={onSubmit}
-				className={`flex items-center overflow-hidden bg-elevated transition-all duration-300 ease-in-out ${
-					searchClicked ? "w-64 px-2 opacity-100" : "w-0 px-0 opacity-0"
+				className={`flex items-center overflow-hidden bg-elevated border border-border-subtle rounded-md transition-all duration-300 ease-in-out ${
+					searchClicked ? "w-64 px-2 opacity-100" : "w-0 px-0 opacity-0 border-transparent"
 				}`}
 			>
 				<button type="submit">
