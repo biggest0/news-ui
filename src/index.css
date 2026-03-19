@@ -13,19 +13,19 @@
  * Light values live in @theme; dark overrides are in html.dark below.
  */
 @theme {
-	--color-primary: #1f2937;                        /* gray-800  → slate-100  */
-	--color-secondary: #4b5563;                      /* gray-600  → slate-300  */
-	--color-muted: #6b7280;                          /* gray-500  → slate-400  */
-	--color-disabled: #d1d5db;                       /* gray-300  → slate-600  */
-	--color-border: #9ca3af;                         /* gray-400  → slate-600  */
-	--color-border-subtle: #e5e7eb;                  /* gray-200  → slate-700  */
-	--color-surface: #ffffff;                        /* white     → slate-900  */
-	--color-elevated: #ffffff;                       /* white     → slate-800  */
-	--color-elevated-glass: rgba(255, 255, 255, 0.5); /* translucent surface   */
-	--color-accent: #d97706;                         /* amber-600 → amber-400  */
-	--color-accent-bg: #f59e0b;                      /* amber-500 → amber-600  */
-	--color-accent-subtle: #fef3c7;                  /* amber-100 → amber-900/40 */
-	--color-hover-bg: #f3f4f6;                       /* gray-100  → slate-700  */
+	--color-primary: #1f2937;                        /* gray-800  → slate-100  | Headings, titles, bold labels (h1–h6, card titles, footer brand) */
+	--color-secondary: #4b5563;                      /* gray-600  → slate-300  | Body text, form inputs, navigation links (body base color) */
+	--color-muted: #6b7280;                          /* gray-500  → slate-400  | Dates, captions, metadata, icons, copyright, version text */
+	--color-disabled: #d1d5db;                       /* gray-300  → slate-600  | Disabled input borders, disabled UI element borders */
+	--color-border: #9ca3af;                         /* gray-400  → slate-600  | Standard dividers (stronger than subtle) */
+	--color-border-subtle: #e5e7eb;                  /* gray-200  → slate-700  | Section dividers, nav borders, footer borders, mobile menu separators */
+	--color-surface: #ffffff;                        /* white     → slate-900  | Page background, footer background, mobile menu panel */
+	--color-elevated: #ffffff;                       /* white     → slate-800  | Cards, input fields, dropdowns */
+	--color-elevated-glass: rgba(255, 255, 255, 0.5); /* translucent surface   | Sticky/glassmorphism surfaces (e.g. navbar on scroll) */
+	--color-accent: #d97706;                         /* amber-600 → amber-400  | Active category links, interactive text, icon highlights */
+	--color-accent-bg: #f59e0b;                      /* amber-500 → amber-600  | Button fills (e.g. subscribe button) */
+	--color-accent-subtle: #fef3c7;                  /* amber-100 → amber-900/40 | Hover tints on controls, selected state backgrounds */
+	--color-hover-bg: #f3f4f6;                       /* gray-100  → slate-700  | Neutral hover backgrounds, disabled input backgrounds */
 }
 
 /* Dark mode: override same variable names — components need no changes */
