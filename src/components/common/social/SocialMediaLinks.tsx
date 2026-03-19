@@ -10,7 +10,7 @@ export default function SocialMediaLinks() {
                 target="_blank"
                 rel="noopener noreferrer"
             >
-                <CgInstagram className="w-5 h-5 text-gray-500 hover:text-black cursor-pointer" />
+                <CgInstagram className="w-5 h-5 text-muted hover:text-primary cursor-pointer" />
             </a>
 
             <a
@@ -18,7 +18,7 @@ export default function SocialMediaLinks() {
                 target="_blank"
                 rel="noopener noreferrer"
             >
-                <RiTwitterXFill className="w-5 h-5 text-gray-500 hover:text-black cursor-pointer" />
+                <RiTwitterXFill className="w-5 h-5 text-muted hover:text-primary cursor-pointer" />
             </a>
 
             <a
@@ -26,7 +26,7 @@ export default function SocialMediaLinks() {
                 target="_blank"
                 rel="noopener noreferrer"
             >
-                <TfiYoutube className="w-5 h-5 text-gray-500 hover:text-black cursor-pointer" />
+                <TfiYoutube className="w-5 h-5 text-muted hover:text-primary cursor-pointer" />
             </a>
         </div>
     );
