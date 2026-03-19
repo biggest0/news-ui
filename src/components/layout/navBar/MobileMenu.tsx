@@ -10,6 +10,7 @@ import { UserAccountIcon } from "@/components/common/user/UserAccountIcon";
 import SocialMediaLinks from "@/components/common/social/SocialMediaLinks";
 import { APP_VERSION } from "@/config/config";
 import LanguageSwitcher from "./LanguageSwitcherMobile";
+import ThemeToggle from "@/components/common/theme/ThemeToggle";
 
 export const MobileMenu = ({
 	menuOpen,
@@ -88,7 +89,7 @@ export const MobileMenu = ({
 		<>
 			{/* Menu Panel */}
 			<div
-				className={`fixed top-0 right-0 h-full w-full bg-white shadow-xl z-40 transform md:hidden ${isDragging ? "" : "transition-transform duration-300 ease-in-out"
+				className={`fixed top-0 right-0 h-full w-full bg-surface shadow-xl z-40 transform md:hidden transition-colors duration-200 ${isDragging ? "" : "transition-transform duration-300 ease-in-out"
 					} ${menuOpen ? "translate-x-0" : "translate-x-full"}`}
 				style={{
 					transform:
@@ -104,9 +105,9 @@ export const MobileMenu = ({
 						<div className="flex justify-end mb-6">
 							<button
 								onClick={onMenuClose}
-								className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+								className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-hover-bg transition-colors"
 							>
-								<LuX className="w-5 h-5 text-gray-600" />
+								<LuX className="w-5 h-5 text-muted" />
 							</button>
 						</div>
 
@@ -118,19 +119,22 @@ export const MobileMenu = ({
 						/>
 						{/* Navigation links */}
 						<NavigationLinks onLinkClick={onMenuClose} />
-						{/* User profile */}
-						<div className="border-t pt-4 mt-6">
+						{/* User profile and theme */}
+						<div className="border-t border-border-subtle pt-4 mt-6">
 							<UserAccountIcon variant="full" onLinkClick={onMenuClose} />
-							<LanguageSwitcher />
+							<div className="flex items-center justify-between mt-4">
+								<LanguageSwitcher />
+								<ThemeToggle showLabel />
+							</div>
 						</div>
 						{/* Social media links */}
-						<div className="border-t pt-4 mt-6 flex justify-center">
+						<div className="border-t border-border-subtle pt-4 mt-6 flex justify-center">
 							<SocialMediaLinks />
 						</div>
 					</div>
 
 					{/* App version */}
-					<div className="flex justify-end text-xs">{APP_VERSION}</div>
+					<div className="flex justify-end text-xs text-muted">{APP_VERSION}</div>
 				</div>
 			</div>
 		</>

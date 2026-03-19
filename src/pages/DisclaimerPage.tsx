@@ -6,10 +6,10 @@ export default function DisclaimerPage() {
 
 	return (
 		<>
-			<section className="border-b border-gray-400 py-6">
+			<section className="border-b border-border py-6">
 				<SectionHeader title={t("PAGES.DISCLAIMER.TITLE")} />
 				{/* Text body */}
-				<div className="space-y-6 pt-4 text-center flex flex-col">
+				<div className="space-y-6 pt-4 text-center flex flex-col text-secondary">
 					<div>
 						{t("PAGES.DISCLAIMER.CONTENT_1")}
 					</div>

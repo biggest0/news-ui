@@ -15,7 +15,7 @@ export default function NewsHeroCard({ articleInfo, small, onOpen }: NewsCardPro
 			<h3
 				className={`${
 					small ? "text-lg" : "text-xl"
-				} font-semibold text-gray-800 hover:text-amber-600 transition-colors duration-200 cursor-pointer`}
+				} font-semibold text-primary hover:text-accent transition-colors duration-200 cursor-pointer`}
 			>
 				<Link
 					to={`/article/${articleInfo.id}`}
@@ -27,9 +27,9 @@ export default function NewsHeroCard({ articleInfo, small, onOpen }: NewsCardPro
 				</Link>
 			</h3>
 			{!small && articleInfo.summary && (
-				<div className="text-sm lg:text-base">{articleInfo.summary}</div>
+				<div className="text-sm lg:text-base text-secondary">{articleInfo.summary}</div>
 			)}
-			{small && <div className="text-sm">{articleInfo.datePublished}</div>}
+			{small && <div className="text-sm text-muted">{articleInfo.datePublished}</div>}
 		</div>
 	);
 }
