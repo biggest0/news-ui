@@ -89,8 +89,9 @@ export const MobileMenu = ({
 		<>
 			{/* Menu Panel */}
 			<div
-				className={`fixed top-0 right-0 h-full w-full bg-surface shadow-xl z-40 transform md:hidden transition-colors duration-200 ${isDragging ? "" : "transition-transform duration-300 ease-in-out"
-					} ${menuOpen ? "translate-x-0" : "translate-x-full"}`}
+				className={`fixed top-0 right-0 h-full w-full bg-surface shadow-xl z-40 transform md:hidden transition-colors duration-200 ${
+					isDragging ? "" : "transition-transform duration-300 ease-in-out"
+				} ${menuOpen ? "translate-x-0" : "translate-x-full"}`}
 				style={{
 					transform:
 						isDragging && menuOpen ? `translateX(${dragOffset}px)` : undefined,
@@ -101,8 +102,9 @@ export const MobileMenu = ({
 			>
 				<div className="p-4 h-full flex flex-col justify-between">
 					<div>
-						{/* Close button */}
-						<div className="flex justify-end mb-6">
+						{/* Top bar: theme toggle left, close button right */}
+						<div className="flex justify-between items-center mb-6">
+							<ThemeToggle />
 							<button
 								onClick={onMenuClose}
 								className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-hover-bg transition-colors"
@@ -122,9 +124,8 @@ export const MobileMenu = ({
 						{/* User profile and theme */}
 						<div className="border-t border-border-subtle pt-4 mt-6">
 							<UserAccountIcon variant="full" onLinkClick={onMenuClose} />
-							<div className="flex items-center justify-between mt-4">
+							<div className="mt-4">
 								<LanguageSwitcher />
-								<ThemeToggle showLabel />
 							</div>
 						</div>
 						{/* Social media links */}
@@ -134,7 +135,9 @@ export const MobileMenu = ({
 					</div>
 
 					{/* App version */}
-					<div className="flex justify-end text-xs text-muted">{APP_VERSION}</div>
+					<div className="flex justify-end text-xs text-muted">
+						{APP_VERSION}
+					</div>
 				</div>
 			</div>
 		</>
