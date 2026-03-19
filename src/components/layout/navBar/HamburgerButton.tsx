@@ -11,17 +11,17 @@ export const HamburgerButton = ({ isOpen, onClick }: HamburgerButtonProps) => {
 			aria-label="Toggle menu"
 		>
 			<span
-				className={`w-5 h-0.5 bg-gray-600 transition-all duration-300 ${
+				className={`w-5 h-0.5 bg-secondary transition-all duration-300 ${
 					isOpen ? "rotate-45 translate-y-1.5" : ""
 				}`}
 			/>
 			<span
-				className={`w-5 h-0.5 bg-gray-600 transition-all duration-300 mt-1 ${
+				className={`w-5 h-0.5 bg-secondary transition-all duration-300 mt-1 ${
 					isOpen ? "opacity-0" : ""
 				}`}
 			/>
 			<span
-				className={`w-5 h-0.5 bg-gray-600 transition-all duration-300 mt-1 ${
+				className={`w-5 h-0.5 bg-secondary transition-all duration-300 mt-1 ${
 					isOpen ? "-rotate-45 -translate-y-1.5" : ""
 				}`}
 			/>
