@@ -1,4 +1,4 @@
-# Catire Time v1.3.0
+# Catire Time v1.3.1
 
 A modern, cat-themed news aggregator built with React, TypeScript, and TailwindCSS. Stay informed with the latest news while enjoying adorable feline companions throughout your browsing experience.
 
