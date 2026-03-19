@@ -20,9 +20,6 @@ export default function LanguageSwitcherDesktop() {
 	];
 
 	const currentLanguage = i18n.language as Language;
-	// const currentLangOption = languages.find(
-	// 	(lang) => lang.code === currentLanguage
-	// );
 
 	const changeLanguage = (language: Language) => {
 		i18n.changeLanguage(language);
@@ -75,24 +72,24 @@ export default function LanguageSwitcherDesktop() {
 				aria-expanded={isOpen}
 				aria-haspopup="true"
 			>
-				<HiMiniLanguage size={24} className="text-gray-600"/>
+				<HiMiniLanguage className="w-6 h-6 cursor-pointer transition-colors hover:text-primary" />
 			</button>
 
 			{isOpen && (
-				<div className="absolute top-6 right-0 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+				<div className="absolute top-6 right-0 w-48 bg-elevated rounded-lg shadow-lg z-50">
 					<div className="py-1">
 						{languages.map(({ code, label }) => (
 							<button
 								key={code}
 								onClick={() => changeLanguage(code)}
-								className={`w-full text-left px-4 py-2 hover:bg-gray-50 transition-colors flex items-center gap-3 ${
-									currentLanguage === code ? "text-amber-600" : "text-gray-600"
+								className={`w-full text-left px-4 py-2 hover:bg-hover-bg transition-colors flex items-center gap-3 ${
+									currentLanguage === code ? "text-accent" : "text-secondary"
 								}`}
 							>
-								<span className="">{code.toUpperCase()}</span>
+								<span>{code.toUpperCase()}</span>
 								<span className="font-medium flex-1">{label}</span>
 								{currentLanguage === code && (
-									<IoCheckmark size={18} className="text-amber-600" />
+									<IoCheckmark size={18} className="text-accent" />
 								)}
 							</button>
 						))}

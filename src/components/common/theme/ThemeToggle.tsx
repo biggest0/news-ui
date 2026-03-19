@@ -9,33 +9,38 @@ interface ThemeToggleProps {
 export default function ThemeToggle({ showLabel = false, className = "" }: ThemeToggleProps) {
 	const { isDarkMode, toggleDarkMode } = useAppSettings();
 
+	if (showLabel) {
+		return (
+			<button
+				onClick={toggleDarkMode}
+				className={`flex items-center gap-2 p-2 rounded-lg transition-colors hover:bg-hover-bg text-secondary ${className}`}
+				aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+				title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+			>
+				{isDarkMode ? (
+					<HiMoon className="w-5 h-5" />
+				) : (
+					<HiSun className="w-5 h-5" />
+				)}
+				<span className="text-sm font-medium">
+					{isDarkMode ? "Light" : "Dark"}
+				</span>
+			</button>
+		);
+	}
+
 	return (
 		<button
 			onClick={toggleDarkMode}
-			className={`
-				flex items-center gap-2 p-2 rounded-lg
-				transition-all duration-200 ease-in-out
-				hover:bg-hover-bg
-				text-secondary
-				focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2
-				dark:focus:ring-offset-slate-800
-				${className}
-			`}
+			className={`cursor-pointer transition-colors hover:text-primary ${className}`}
 			aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
 			title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
 		>
 			{isDarkMode ? (
-				<HiMoon className="w-5 h-5 text-secondary" />
+				<HiMoon className="w-6 h-6" />
 			) : (
-				<HiSun className="w-5 h-5 text-accent-bg" />
-			)}
-			{showLabel && (
-				<span className="text-sm font-medium">
-					{isDarkMode ? "Light" : "Dark"}
-				</span>
+				<HiSun className="w-6 h-6" />
 			)}
 		</button>
 	);
 }
-
-
