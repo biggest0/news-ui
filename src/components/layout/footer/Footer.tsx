@@ -39,8 +39,6 @@ export default function Footer() {
 				<Link className="cursor-pointer hover:text-primary transition-colors" to="/contact">
 					{t("FOOTER.CONTACT")}
 				</Link>
-				{/* Theme Toggle */}
-				<ThemeToggle showLabel />
 			</div>
 		</footer>
 	);
