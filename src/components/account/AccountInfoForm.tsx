@@ -36,7 +36,7 @@ export const AccountInfoForm = ({
 			<div>
 				<h2 className="text-sm">{placeHolderText}</h2>
 				<form
-					className="flex items-center w-full max-w-96 border-b overflow-hidden mb-4"
+					className="flex items-center w-full max-w-96 border-b border-border-subtle overflow-hidden mb-4"
 					onSubmit={handleSubmit}
 				>
 					<input
@@ -46,12 +46,12 @@ export const AccountInfoForm = ({
 						value={inputValue}
 						onChange={(e) => setInputValue(e.target.value)}
 						placeholder={placeHolderText}
-						className="flex-grow pt-2 pb-1 outline-none text-gray-700"
+						className="flex-grow pt-2 pb-1 outline-none bg-transparent text-secondary placeholder:text-muted"
 					/>
 					<button
 						type="submit"
 						className={`px-4 pt-2 pb-1 transition cursor-pointer ${
-							saved ? "text-green-600" : "text-gray-400 hover:text-black"
+							saved ? "text-green-600" : "text-muted hover:text-primary"
 						}`}
 					>
 						{saved ? t("ACCOUNT.FIELD_SAVED") : t("ACCOUNT.SAVE")}

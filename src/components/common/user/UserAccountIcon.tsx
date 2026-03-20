@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { LuUserRound } from "react-icons/lu";
 
 import { MobileNavLink } from "@/components/layout/navBar/MobileNavLink";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface UserAccountProps {
 	variant?: "icon" | "full";
@@ -14,11 +15,13 @@ export const UserAccountIcon = ({
 	onLinkClick,
 }: UserAccountProps) => {
 	const { t } = useTranslation();
+	const { isAuthenticated } = useAuth();
+
+	const linkTo = isAuthenticated ? "/account" : "/login";
 
 	if (variant === "icon") {
-		// Icon display
 		return (
-			<Link to="/account">
+			<Link to={linkTo}>
 				<LuUserRound
 					className="w-6 h-6 hover:text-primary cursor-pointer transition-colors"
 					onClick={onLinkClick}
@@ -27,12 +30,11 @@ export const UserAccountIcon = ({
 		);
 	}
 
-	// Text display
 	return (
 		<MobileNavLink
-			key="/account"
-			linkTo="/account"
-			linkLabel={t("ACCOUNT.ACCOUNT_LABEL")}
+			key={linkTo}
+			linkTo={linkTo}
+			linkLabel={isAuthenticated ? t("ACCOUNT.ACCOUNT_LABEL") : t("AUTH.LOGIN")}
 			onLinkClick={onLinkClick}
 		/>
 	);

@@ -185,6 +185,24 @@
 			"LOADING_DETAILS": "Loading article details!"
 		}
 	},
+	"AUTH": {
+		"LOGIN": "Log In",
+		"REGISTER": "Register",
+		"LOGOUT": "Log Out",
+		"EMAIL": "Email",
+		"PASSWORD": "Password",
+		"CONFIRM_PASSWORD": "Confirm Password",
+		"LOGIN_TITLE": "LOG IN",
+		"REGISTER_TITLE": "REGISTER",
+		"NO_ACCOUNT": "Don't have an account?",
+		"HAS_ACCOUNT": "Already have an account?",
+		"LOGGING_IN": "Logging in...",
+		"REGISTERING": "Registering...",
+		"PASSWORDS_MISMATCH": "Passwords do not match.",
+		"VALIDATION_ERROR": "Please fill in all fields.",
+		"LOGIN_SUCCESS": "Logged in successfully.",
+		"REGISTER_SUCCESS": "Account created successfully."
+	},
 	"SUBSCRIBE": {
 		"VALIDATION_ERROR": "Please enter a valid email address.",
 		"SUCCESS_MESSAGE": "Thank you for subscribing! Check your inbox to confirm.",

@@ -185,6 +185,24 @@
 			"LOADING_DETAILS": "Chargement des détails de l'article !"
 		}
 	},
+	"AUTH": {
+		"LOGIN": "Se connecter",
+		"REGISTER": "S'inscrire",
+		"LOGOUT": "Se déconnecter",
+		"EMAIL": "Courriel",
+		"PASSWORD": "Mot de passe",
+		"CONFIRM_PASSWORD": "Confirmer le mot de passe",
+		"LOGIN_TITLE": "CONNEXION",
+		"REGISTER_TITLE": "INSCRIPTION",
+		"NO_ACCOUNT": "Vous n'avez pas de compte ?",
+		"HAS_ACCOUNT": "Vous avez déjà un compte ?",
+		"LOGGING_IN": "Connexion en cours...",
+		"REGISTERING": "Inscription en cours...",
+		"PASSWORDS_MISMATCH": "Les mots de passe ne correspondent pas.",
+		"VALIDATION_ERROR": "Veuillez remplir tous les champs.",
+		"LOGIN_SUCCESS": "Connexion réussie.",
+		"REGISTER_SUCCESS": "Compte créé avec succès."
+	},
 	"SUBSCRIBE": {
 		"VALIDATION_ERROR": "Veuillez saisir une adresse e-mail valide.",
 		"SUCCESS_MESSAGE": "Merci de vous être abonné ! Vérifiez votre boîte de réception pour confirmer.",
