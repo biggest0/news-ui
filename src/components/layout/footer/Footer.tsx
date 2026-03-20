@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 
 import SubscribeForm from "@/components/common/user/SubscribeForm";
 import SocialMediaLinks from "@/components/common/social/SocialMediaLinks";
-import ThemeToggle from "@/components/common/theme/ThemeToggle";
 
 export default function Footer() {
 	const { t } = useTranslation();
