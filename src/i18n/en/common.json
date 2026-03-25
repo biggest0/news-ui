@@ -26,7 +26,8 @@
 		"READ_MORE": "Read More",
 		"HIDE": "Hide",
 		"SHARE": "Share",
-		"LOADING_DETAILS": "Loading details..."
+		"LOADING_DETAILS": "Loading details...",
+		"LOGIN_TO_LIKE": "Log in to like this article"
 	},
 	"FILTER": {
 		"DATE_RANGE": "Date Range",

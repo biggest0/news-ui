@@ -29,12 +29,12 @@ export const ShareButton = ({ articleId }: { articleId: string }) => {
 			{copied ? (
 				<>
 					<IoCheckmark className="w-4 h-4" />
-					<span>{t("COMMON.COPIED")}</span>
+					{/* <span>{t("COMMON.COPIED")}</span> */}
 				</>
 			) : (
 				<>
 					<CiShare1 className="w-4 h-4" />
-					<span>{t("COMMON.SHARE")}</span>
+					{/* <span>{t("COMMON.SHARE")}</span> */}
 				</>
 			)}
 		</button>

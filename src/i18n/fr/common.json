@@ -26,7 +26,8 @@
 		"READ_MORE": "Lire la suite",
 		"HIDE": "Masquer",
 		"SHARE": "Partager",
-		"LOADING_DETAILS": "Chargement des détails..."
+		"LOADING_DETAILS": "Chargement des détails...",
+		"LOGIN_TO_LIKE": "Connectez-vous pour aimer cet article"
 	},
 	"FILTER": {
 		"DATE_RANGE": "Période",
