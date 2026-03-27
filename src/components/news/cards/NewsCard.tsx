@@ -7,18 +7,20 @@ import type { ArticleInfo, ArticleDetail } from "@/types/articleTypes";
 import type { RootState, AppDispatch } from "@/store/store";
 import { loadArticleDetail } from "@/store/articlesSlice";
 import { incrementArticleViewed } from "@/api/articleApi";
+import { recordArticleRead } from "@/service/userArticleService";
+import { useAuth } from "@/contexts/AuthContext";
 import { ShareButton } from "../../common/social/ShareButton";
+import { LikeButton } from "../../common/social/LikeButton";
 import { capitalizeWord } from "@/utils/text/wordUtils";
 
 interface NewsCardProp {
 	articleInfo: ArticleInfo;
-	onRead?: (article: ArticleInfo) => void;
 }
 
-export default function NewsCard({ articleInfo, onRead }: NewsCardProp) {
+export default function NewsCard({ articleInfo }: NewsCardProp) {
 	const { t } = useTranslation();
 	const dispatch = useDispatch<AppDispatch>();
-	// const {articlesDetail, loading, error} = useSelector((state: RootState) => state.article)
+	const { accessToken } = useAuth();
 	const articleDetail: ArticleDetail = useSelector(
 		(state: RootState) => state.article.articlesDetail[articleInfo.id]
 	);
@@ -28,9 +30,6 @@ export default function NewsCard({ articleInfo, onRead }: NewsCardProp) {
 	const [isLoadingDetail, setIsLoadingDetail] = useState(false);
 
 	async function handleExpand() {
-		if (!expanded && onRead) {
-			onRead(articleInfo);
-		}
 		setExpanded((prev) => !prev);
 		if (!articleDetailfetched && !isLoadingDetail) {
 			setIsLoadingDetail(true);
@@ -47,6 +46,9 @@ export default function NewsCard({ articleInfo, onRead }: NewsCardProp) {
 					setIsLoadingDetail(false);
 				});
 			incrementArticleViewed(articleInfo.id);
+			if (accessToken) {
+				recordArticleRead(articleInfo.id, accessToken);
+			}
 		}
 	}
 
@@ -162,7 +164,12 @@ export default function NewsCard({ articleInfo, onRead }: NewsCardProp) {
 				>
 					{!expanded ? t("ARTICLE_CARD.READ_MORE") : t("ARTICLE_CARD.HIDE")}
 				</div>
-				<ShareButton articleId={articleInfo.id} />
+				<div className="flex items-center gap-2">
+					<div className="min-w-12">
+						<LikeButton articleId={articleInfo.id} initialLikeCount={articleInfo.likeCount} />
+					</div>
+					<ShareButton articleId={articleInfo.id} />
+				</div>
 			</div>
 		</div>
 	);

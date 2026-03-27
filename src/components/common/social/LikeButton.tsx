@@ -1,25 +1,44 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { GoHeart, GoHeartFill } from "react-icons/go";
 import { useTranslation } from "react-i18next";
 
 import { useAuth } from "@/contexts/AuthContext";
-import { toggleArticleLike } from "@/service/userArticleService";
+import {
+	toggleArticleLike,
+	getArticleLikeStatus,
+} from "@/service/userArticleService";
 
 interface LikeButtonProps {
 	articleId: string;
 	initialLikeCount: number;
-	initialLiked?: boolean;
 }
 
 export const LikeButton = ({
 	articleId,
 	initialLikeCount,
-	initialLiked = false,
 }: LikeButtonProps) => {
 	const { t } = useTranslation();
 	const { accessToken, isAuthenticated } = useAuth();
-	const [liked, setLiked] = useState(initialLiked);
+	const [liked, setLiked] = useState(false);
 	const [likeCount, setLikeCount] = useState(initialLikeCount);
+
+	// When the user is authenticated, fetch the real like status from the server
+	// (whether they've liked this article, and the current like count).
+	// The cancellation flag prevents a stale response from updating state
+	// if the component unmounts or the article/token changes before the fetch resolves.
+	useEffect(() => {
+		if (!isAuthenticated || !accessToken) return;
+
+		let cancelled = false;
+		getArticleLikeStatus(articleId, accessToken).then((status) => {
+			if (cancelled) return;
+			setLiked(status.liked);
+			setLikeCount(status.likeCount);
+		});
+		return () => {
+			cancelled = true;
+		};
+	}, [articleId, accessToken, isAuthenticated]);
 	const [isToggling, setIsToggling] = useState(false);
 	const [showLoginMessage, setShowLoginMessage] = useState(false);
 
@@ -58,8 +77,8 @@ export const LikeButton = ({
 				onClick={handleToggleLike}
 				className={`flex items-center gap-1.5 transition-colors duration-200 cursor-pointer ${
 					liked
-						? "text-accent"
-						: "hover:text-accent"
+						? "text-red-300"
+						: "hover:text-red-300"
 				}`}
 			>
 				{liked ? (
