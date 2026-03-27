@@ -2,14 +2,24 @@ import { Link } from "react-router-dom";
 
 import type { ArticleInfo } from "@/types/articleTypes";
 import { incrementArticleViewed } from "@/api/articleApi";
+import { recordArticleRead } from "@/service/userArticleService";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface NewsCardProp {
 	articleInfo: ArticleInfo;
 	small: boolean;
-	onOpen?: (article: ArticleInfo) => void;
 }
 
-export default function NewsHeroCard({ articleInfo, small, onOpen }: NewsCardProp) {
+export default function NewsHeroCard({ articleInfo, small }: NewsCardProp) {
+	const { accessToken } = useAuth();
+
+	const handleClick = () => {
+		incrementArticleViewed(articleInfo.id);
+		if (accessToken) {
+			recordArticleRead(articleInfo.id, accessToken);
+		}
+	};
+
 	return (
 		<div className={`${small ? "min-h-24" : "min-h-48"}`}>
 			<h3
@@ -19,9 +29,7 @@ export default function NewsHeroCard({ articleInfo, small, onOpen }: NewsCardPro
 			>
 				<Link
 					to={`/article/${articleInfo.id}`}
-					onClick={() => {incrementArticleViewed(articleInfo.id)
-						onOpen?.(articleInfo);
-					}}
+					onClick={handleClick}
 				>
 					{articleInfo.title}
 				</Link>
