@@ -6,6 +6,29 @@ export interface ArticleInfoDTO {
 	main_category: string;
 	sub_category?: string[];
 	viewed: number;
+	like_count: number;
+}
+
+export interface ArticleLikeStatusDTO {
+	liked: boolean;
+	like_count: number;
+}
+
+export interface ArticleHistoryItemDTO {
+	_id: string;
+	title: string;
+	summary?: string;
+	date_published: string;
+	main_category: string;
+	sub_category?: string[];
+	viewed: number;
+	like_count: number;
+	read_at: string;
+}
+
+export interface ArticleHistoryResponseDTO {
+	articles: ArticleHistoryItemDTO[];
+	count: number;
 }
 
 export interface ArticleDetailDTO {
