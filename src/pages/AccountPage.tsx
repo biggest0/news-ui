@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { SectionHeader } from "@/components/common/layout/SectionHeader";
 import { AccountNewsSection } from "@/components/news/section/AccountNewsSection";
 import { AccountInfoSection } from "@/components/account/AccountInfoSection";
-import { USER_ARTICLE_HISTORY } from "@/constants/keys";
 import { useAuth } from "@/contexts/AuthContext";
 
 export default function AccountPage() {
@@ -38,7 +37,7 @@ export default function AccountPage() {
 				</div>
 
 				<div className="pt-6">
-					<AccountNewsSection localStorageKey={USER_ARTICLE_HISTORY} />
+					<AccountNewsSection />
 				</div>
 			</section>
 		</>

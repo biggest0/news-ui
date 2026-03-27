@@ -1,28 +1,11 @@
-// import { useSelector } from "react-redux";
-
 import Image from "@/assets/news_hero_image.jpg";
-// import type { RootState } from "@/store/store";
 import NewsHeroCard from "../cards/NewsHeroCard";
-import type { ArticleInfo } from "@/types/articleTypes";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { USER_ARTICLE_HISTORY } from "@/constants/keys";
-import { handleLocalStorageUpdate } from "@/service/localStorageService";
 import { SELECTED_ARTICLES } from "../tempArticles";
 import { useTranslation } from "react-i18next";
 
 export default function FeaturedSection() {
-	// const { topTenArticles } = useSelector((state: RootState) => state.article);
-	const [articleHistory, setArticleHistory] = useLocalStorage<ArticleInfo[]>(
-		USER_ARTICLE_HISTORY,
-		[]
-	);
-
 	const selectedArticles = SELECTED_ARTICLES;
 	const { t } = useTranslation();
-
-	const onArticleClick = (article: ArticleInfo) => {
-		handleLocalStorageUpdate(article, articleHistory, setArticleHistory);
-	};
 
 	return (
 		<section className="border-b border-gray-400 py-6 hidden md:grid grid-cols-4 grid-rows-2 gap-4 min-h-112">
@@ -37,7 +20,6 @@ export default function FeaturedSection() {
 								key={`top-${article.id}`}
 								articleInfo={article}
 								small={false}
-								onOpen={onArticleClick}
 							/>
 						))}
 			</div>
@@ -64,7 +46,6 @@ export default function FeaturedSection() {
 								key={`top-${article.id}`}
 								articleInfo={article}
 								small={true}
-								onOpen={onArticleClick}
 							/>
 						))}
 			</div>

@@ -8,7 +8,6 @@ import type { ArticleInfo } from "@/types/articleTypes";
 import type { ArticleInfoQueryDTO } from "@/types/articleDto";
 import type { RootState } from "@/store/store";
 import {
-	useArticleHistory,
 	useArticleFilters,
 	useInfiniteScroll,
 } from "@/hooks/useArticleHooks";
@@ -49,7 +48,6 @@ export function BaseNewsSection({
 	const isAllSectionNotVisible = useAllSectionNotVisible();
 	const isPaginationEnabled = usePagePagination();
 
-	const handleLocalStorageUpdate = useArticleHistory();
 	const { updateSectionVisibility } = useAppSettings();
 
 	const { articlesToDisplay, dateRange, setDateRange, sortBy, setSortBy } =
@@ -141,7 +139,6 @@ export function BaseNewsSection({
 				<CollapsibleSection section={SECTIONS.NEWS}>
 					<ArticleList
 						articles={displayedArticles}
-						onArticleRead={handleLocalStorageUpdate}
 					/>
 					{/* Show loading message for infinite scroll or pagination */}
 					{!isPaginationEnabled && (

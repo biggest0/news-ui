@@ -1,37 +1,7 @@
 import { useEffect, useState } from "react";
 import type { ArticleInfo } from "@/types/articleTypes";
 import type { ArticleInfoQueryDTO } from "@/types/articleDto";
-import { useLocalStorage } from "./useLocalStorage";
-import { USER_ARTICLE_HISTORY } from "@/constants/keys";
 import { isWithinNDays } from "@/utils/date/dateUtils";
-
-export function useArticleHistory() {
-	const [articleHistory, setArticleHistory] = useLocalStorage<ArticleInfo[]>(
-		USER_ARTICLE_HISTORY,
-		[]
-	);
-
-	const handleLocalStorageUpdate = (clickedArticle: ArticleInfo) => {
-		// Maintain a max of 100 articles in history
-		if (articleHistory.length === 100) {
-			articleHistory.pop();
-		}
-		// Check if article already exists in history
-		if (!articleHistory.some((a) => a.id === clickedArticle.id)) {
-			const updatedArticles = [clickedArticle, ...articleHistory];
-			setArticleHistory(updatedArticles);
-		} else {
-			// Move the clicked article to the front
-			const filteredArticles = articleHistory.filter(
-				(a) => a.id !== clickedArticle.id
-			);
-			const updatedArticles = [clickedArticle, ...filteredArticles];
-			setArticleHistory(updatedArticles);
-		}
-	};
-
-	return handleLocalStorageUpdate;
-}
 
 export function useArticleFilters(articles: ArticleInfo[]) {
 	const [articlesToDisplay, setArticlesToDisplay] = useState(articles);
