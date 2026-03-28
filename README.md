@@ -51,6 +51,8 @@ npm run dev
 - `npm run build` - Build for production
 - `npm run preview` - Preview production build locally
 - `npm run lint` - Run ESLint
+- `npm run test` - Run unit tests
+- `npm run test:watch` - Run tests in watch mode
 - `npm run deploy` - Deploy to GitHub Pages
 
 ## 📁 Project Structure
@@ -69,6 +71,24 @@ src/
 ├── types/         # TypeScript type definitions
 ├── utils/         # Utility functions
 └── constants/     # Application constants
+```
+
+## 🧪 Testing
+
+Unit tests are written with [Vitest](https://vitest.dev/) and cover mappers, utilities, and service layers.
+
+```bash
+npm run test          # single run
+npm run test:watch    # re-run on file changes
+```
+
+Test files live in `src/__tests__/` mirroring the source structure:
+
+```
+src/__tests__/
+├── mappers/       # DTO → domain type mapping
+├── service/       # articleService, authService, userArticleService, formService, localStorageService
+└── utils/         # date, search, sort, text, validation, storage utilities
 ```
 
 ## 🎯 News Categories
