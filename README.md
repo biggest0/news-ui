@@ -53,6 +53,8 @@ npm run dev
 - `npm run lint` - Run ESLint
 - `npm run test` - Run unit tests
 - `npm run test:watch` - Run tests in watch mode
+- `npm run cy:open` - Open Cypress E2E test runner (interactive)
+- `npm run cy:run` - Run Cypress E2E tests headless
 - `npm run deploy` - Deploy to GitHub Pages
 
 ## 📁 Project Structure
@@ -75,7 +77,9 @@ src/
 
 ## 🧪 Testing
 
-Unit tests are written with [Vitest](https://vitest.dev/) and cover mappers, utilities, and service layers.
+### Unit Tests (Vitest)
+
+Unit and component tests are written with [Vitest](https://vitest.dev/) + [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/). They cover mappers, utilities, services, and component behavior.
 
 ```bash
 npm run test          # single run
@@ -86,10 +90,50 @@ Test files live in `src/__tests__/` mirroring the source structure:
 
 ```
 src/__tests__/
+├── helpers/       # renderWithProviders (Redux + Router + i18n wrapper)
 ├── mappers/       # DTO → domain type mapping
 ├── service/       # articleService, authService, userArticleService, formService, localStorageService
-└── utils/         # date, search, sort, text, validation, storage utilities
+├── utils/         # date, search, sort, text, validation, storage utilities
+└── components/
+    └── news/
+        ├── cards/             # ArticleTitleCard, NewsHeroCard, NewsCard
+        └── section/
+            └── newsSections/  # HomeNewsSection, CategoryNewsSection, BaseNewsSection
 ```
+
+### E2E Tests (Cypress)
+
+End-to-end tests use [Cypress](https://www.cypress.io/) to test full user flows in the browser. All API calls are stubbed with fixtures so tests run without a backend.
+
+```bash
+npm run cy:open       # interactive Cypress runner (requires dev server running)
+npm run cy:run        # headless run in terminal
+```
+
+Before running Cypress, start the dev server in a separate terminal:
+
+```bash
+npm run dev
+```
+
+E2E test files live in `cypress/e2e/`:
+
+| Spec file | Flows covered |
+|---|---|
+| `home.cy.ts` | Home page load, app title, category bar, article rendering, footer |
+| `navigation.cy.ts` | Category navigation, active link highlight, footer links, back button |
+| `search.cy.ts` | Search bar expand, query submission, results display, empty search |
+| `theme.cy.ts` | Dark mode toggle, light/dark round-trip, persistence across reload |
+| `article.cy.ts` | NewsCard expand/collapse, paragraph display, view count increment, detail page |
+| `auth.cy.ts` | Login form + validation, register form + password mismatch, logout, session |
+| `subscribe.cy.ts` | Newsletter form validation, submit button state, success message |
+| `static-pages.cy.ts` | About, Contact, Disclaimer content, 404 page |
+
+**Key architecture decisions:**
+- `cy.stubApi()` — Custom command that intercepts every API endpoint with fixture data
+- `cy.login()` — Seeds localStorage with auth tokens to simulate a logged-in user
+- `cy.waitForApp()` — Waits for initial article + top ten API calls to resolve
+- Fixtures in `cypress/fixtures/` provide deterministic API responses
 
 ## 🎯 News Categories
 
