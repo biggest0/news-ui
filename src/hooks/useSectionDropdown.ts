@@ -8,7 +8,7 @@ import type {
 
 type SectionKey = Extract<
 	keyof SectionToggleState,
-	"newsSection" | "editorsSection" | "catFactsSection" | "staffPicksSection" | "popularSection"
+	"newsSection" | "editorsSection" | "catFactsSection" | "staffPicksSection" | "popularSection" | "recommendedSection"
 >;
 
 export interface DropDownOption {
