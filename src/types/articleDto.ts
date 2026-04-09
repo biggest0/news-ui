@@ -56,3 +56,17 @@ export interface ArticleInfoResponseDTO {
 	articles: ArticleInfoDTO[];
 	count: number;
 }
+
+export interface RecommendedArticleDTO {
+	_id: string;
+	title: string;
+	summary?: string;
+	main_category: string;
+	sub_category?: string[];
+	date_published: string;
+	score: number;
+}
+
+export interface RecommendedArticlesResponseDTO {
+	articles: RecommendedArticleDTO[];
+}

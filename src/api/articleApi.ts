@@ -1,4 +1,4 @@
-import type { ArticleInfoQueryDTO } from "@/types/articleDto";
+import type { ArticleInfoQueryDTO, RecommendedArticlesResponseDTO } from "@/types/articleDto";
 import { API_URL } from "@/config/config";
 
 /**
@@ -153,16 +153,46 @@ export async function fetchTopTenArticles() {
 // tie breakers do time published
 // grab 6
 
-// export async function fetchTodayPopularArticles() {
-// 	const today = new Date()
-// 	const response = await fetch(`${API_URL}/article-info`, {
-// 		method: "POST",
-// 		headers: { "Content-Type": "application/json" },
-// 		body: JSON.stringify({ today: today }),
-// 	});
-// 	if (!response.ok) {
-// 		throw new Error(`Error: ${response.statusText}`);
-// 	}
-// 	const data = await response.json();
-// 	return articleDetailTransform(data);
-// }
+/**
+ * Fetches articles semantically similar to a given article.
+ * Public endpoint — no auth required.
+ * @param articleId - The seed article to find similar articles for
+ * @returns The response containing similar articles with similarity scores
+ * @throws Error if the HTTP request fails
+ */
+export async function fetchSimilarArticles(
+	articleId: string
+): Promise<RecommendedArticlesResponseDTO> {
+	const response = await fetch(`${API_URL}/api/articles/${articleId}/similar`, {
+		method: "GET",
+		headers: { "Content-Type": "application/json" },
+	});
+	if (!response.ok) {
+		throw new Error(`Error: ${response.statusText}`);
+	}
+	return response.json();
+}
+
+/**
+ * Fetches personalised article recommendations for the logged-in user.
+ * Requires a valid access token. The backend builds a profile vector
+ * from the user's reading history and returns semantically similar articles.
+ * @param accessToken - Bearer token for authentication
+ * @returns The response containing recommended articles with similarity scores
+ * @throws Error if the HTTP request fails
+ */
+export async function fetchRecommendedArticles(
+	accessToken: string
+): Promise<RecommendedArticlesResponseDTO> {
+	const response = await fetch(`${API_URL}/api/recommendations`, {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${accessToken}`,
+		},
+	});
+	if (!response.ok) {
+		throw new Error(`Error: ${response.statusText}`);
+	}
+	return response.json();
+}

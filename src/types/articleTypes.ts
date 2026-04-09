@@ -47,3 +47,13 @@ export interface ArticleDetail {
 	source: string;
 	url: string;
 }
+
+export interface RecommendedArticle {
+	id: string;
+	title: string;
+	summary?: string;
+	mainCategory: string;
+	subCategory: string[];
+	datePublished: string;
+	score: number;
+}
