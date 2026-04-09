@@ -23,4 +23,5 @@ export interface SectionToggleState {
 	catFactsSection: boolean;
 	staffPicksSection: boolean;
 	popularSection: boolean;
+	recommendedSection: boolean;
 }
