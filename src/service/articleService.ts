@@ -5,8 +5,10 @@ import {
 	fetchArticlesBySubCategory,
 	fetchArticlesInfo,
 	fetchTopTenArticles,
+	fetchSimilarArticles,
+	fetchRecommendedArticles,
 } from "../api/articleApi";
-import type { ArticleDetail, ArticleResponse } from "../types/articleTypes";
+import type { ArticleDetail, ArticleResponse, RecommendedArticle } from "../types/articleTypes";
 import type {
 	ArticleInfoQueryDTO,
 	ArticleInfoResponseDTO,
@@ -14,6 +16,7 @@ import type {
 import {
 	mapDTOtoArticleDetail,
 	mapDTOtoArticleInfo,
+	mapDTOtoRecommendedArticle,
 } from "@/mappers/articleMapper";
 
 export async function getArticlesByCategory(
@@ -115,5 +118,29 @@ export async function getTopTenArticles() {
 		return data.map(mapDTOtoArticleInfo);
 	} catch (error) {
 		console.error("[Error fetching top 10 articles]:", error);
+	}
+}
+
+export async function getSimilarArticles(
+	articleId: string
+): Promise<RecommendedArticle[]> {
+	try {
+		const data = await fetchSimilarArticles(articleId);
+		return data.articles.map(mapDTOtoRecommendedArticle);
+	} catch (error) {
+		console.error("[Error fetching similar articles]:", error);
+		return [];
+	}
+}
+
+export async function getRecommendedArticles(
+	accessToken: string
+): Promise<RecommendedArticle[]> {
+	try {
+		const data = await fetchRecommendedArticles(accessToken);
+		return data.articles.map(mapDTOtoRecommendedArticle);
+	} catch (error) {
+		console.error("[Error fetching recommended articles]:", error);
+		return [];
 	}
 }

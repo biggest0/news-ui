@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk, isAnyOf } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-import type { ArticleInfo, ArticleDetail, ArticleResponse } from "@/types/articleTypes";
+import type { ArticleInfo, ArticleDetail, ArticleResponse, RecommendedArticle } from "@/types/articleTypes";
 import type { ArticleInfoQueryDTO } from "@/types/articleDto";
+import type { RootState } from "@/store/store";
 import {
 	getArticleDetail,
 	getArticlesByCategory,
@@ -10,6 +11,8 @@ import {
 	getArticlesBySubCategory,
 	getArticlesInfo,
 	getTopTenArticles,
+	getSimilarArticles,
+	getRecommendedArticles,
 } from "@/service/articleService";
 
 interface ArticlesState {
@@ -19,17 +22,23 @@ interface ArticlesState {
 	articles: ArticleInfo[];
 	articlesCount: number;
 	articlesDetail: Record<string, ArticleDetail>;
+	similarArticles: Record<string, RecommendedArticle[]>;
+	recommendedArticles: RecommendedArticle[];
 	loading: {
 		homePage: boolean;
 		topTen: boolean;
 		articles: boolean;
 		detail: boolean;
+		similar: boolean;
+		recommended: boolean;
 	};
 	error: {
 		homePage: string | undefined;
 		topTen: string | undefined;
 		articles: string | undefined;
 		detail: string | undefined;
+		similar: string | undefined;
+		recommended: string | undefined;
 	};
 }
 
@@ -40,17 +49,23 @@ const initialState: ArticlesState = {
 	articles: [],
 	articlesCount: 0,
 	articlesDetail: {},
+	similarArticles: {},
+	recommendedArticles: [],
 	loading: {
 		homePage: false,
 		topTen: false,
 		articles: false,
 		detail: false,
+		similar: false,
+		recommended: false,
 	},
 	error: {
 		homePage: undefined,
 		topTen: undefined,
 		articles: undefined,
 		detail: undefined,
+		similar: undefined,
+		recommended: undefined,
 	},
 };
 
@@ -106,6 +121,25 @@ export const loadTopTenArticles = createAsyncThunk<ArticleInfo[]>(
 	}
 );
 
+export const loadSimilarArticles = createAsyncThunk<
+	{ articleId: string; articles: RecommendedArticle[] },
+	string
+>("articles/loadSimilar", async (articleId, { getState }) => {
+	const state = getState() as RootState;
+	if (state.article.similarArticles[articleId]) {
+		return { articleId, articles: state.article.similarArticles[articleId] };
+	}
+	const articles = await getSimilarArticles(articleId);
+	return { articleId, articles };
+});
+
+export const loadRecommendedArticles = createAsyncThunk<
+	RecommendedArticle[],
+	string
+>("articles/loadRecommended", async (accessToken) => {
+	return await getRecommendedArticles(accessToken);
+});
+
 // -------------------------
 // Helper functions
 // -------------------------
@@ -158,7 +192,12 @@ const articlesSlice = createSlice({
 				topTen: undefined,
 				articles: undefined,
 				detail: undefined,
+				similar: undefined,
+				recommended: undefined,
 			};
+		},
+		clearRecommendedArticles: (state) => {
+			state.recommendedArticles = [];
 		},
 	},
 	extraReducers: (builder) => {
@@ -232,6 +271,36 @@ const articlesSlice = createSlice({
 				state.error.articles = action.error.message;
 			});
 
+		// load similar articles for "more like this"
+		builder
+			.addCase(loadSimilarArticles.pending, (state) => {
+				state.loading.similar = true;
+				state.error.similar = undefined;
+			})
+			.addCase(loadSimilarArticles.fulfilled, (state, action) => {
+				state.loading.similar = false;
+				state.similarArticles[action.payload.articleId] = action.payload.articles;
+			})
+			.addCase(loadSimilarArticles.rejected, (state, action) => {
+				state.loading.similar = false;
+				state.error.similar = action.error.message;
+			});
+
+		// load personalised recommendations
+		builder
+			.addCase(loadRecommendedArticles.pending, (state) => {
+				state.loading.recommended = true;
+				state.error.recommended = undefined;
+			})
+			.addCase(loadRecommendedArticles.fulfilled, (state, action) => {
+				state.loading.recommended = false;
+				state.recommendedArticles = action.payload;
+			})
+			.addCase(loadRecommendedArticles.rejected, (state, action) => {
+				state.loading.recommended = false;
+				state.error.recommended = action.error.message;
+			});
+
 		// fetch for basic article info
 		builder
 			.addMatcher(
@@ -279,4 +348,5 @@ const articlesSlice = createSlice({
 	},
 });
 
+export const { clearRecommendedArticles } = articlesSlice.actions;
 export default articlesSlice.reducer;
