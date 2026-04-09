@@ -19,6 +19,7 @@ export function useAllSectionNotVisible() {
 		!visibility.editorsSection &&
 		!visibility.catFactsSection &&
 		!visibility.staffPicksSection &&
-		!visibility.popularSection
+		!visibility.popularSection &&
+		!visibility.recommendedSection
 	);
 }

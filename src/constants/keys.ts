@@ -10,4 +10,5 @@ export const SECTIONS = {
   CAT_FACTS: 'catFactsSection',
   STAFF_PICKS: 'staffPicksSection',
   POPULAR: 'popularSection',
+  RECOMMENDED: 'recommendedSection',
 } as const

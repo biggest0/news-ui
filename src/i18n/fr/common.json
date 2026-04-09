@@ -20,7 +20,9 @@
 		"OUR_EDITORS": "Nos rédacteurs",
 		"STAFF_FAVORITES": "Coups de cœur de l'équipe",
 		"STAFF_PICKS": "Choix de l'équipe",
-		"CAT_FACTS": "Faits sur les chats"
+		"CAT_FACTS": "Faits sur les chats",
+		"RECOMMENDED": "Recommandé pour vous",
+		"MORE_LIKE_THIS": "Articles similaires"
 	},
 	"ARTICLE_CARD": {
 		"READ_MORE": "Lire la suite",
