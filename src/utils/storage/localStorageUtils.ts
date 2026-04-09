@@ -2,7 +2,7 @@ import type { AppSetting } from "@/types/localStorageTypes";
 
 const DEFAULT_APP_SETTING: AppSetting = {
 	darkMode: false,
-	themeMode: "light", // Options: "light" | "dark" | "system"
+	themeMode: "light",
 	homeLayout: {
 		visible: {
 			newsSection: true,
@@ -10,6 +10,7 @@ const DEFAULT_APP_SETTING: AppSetting = {
 			catFactsSection: true,
 			staffPicksSection: true,
 			popularSection: true,
+			recommendedSection: true,
 		},
 		expanded: {
 			newsSection: true,
@@ -17,6 +18,7 @@ const DEFAULT_APP_SETTING: AppSetting = {
 			catFactsSection: true,
 			staffPicksSection: true,
 			popularSection: true,
+			recommendedSection: true,
 		},
 		pagePagination: true,
 	},

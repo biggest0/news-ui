@@ -4,6 +4,7 @@ import {
 	useState,
 	useEffect,
 	useCallback,
+	useRef,
 	type ReactNode,
 } from "react";
 import type { AuthTokens, AuthUser } from "@/types/authTypes";
@@ -39,6 +40,7 @@ import {
  */
 interface AuthContextType {
 	user: AuthUser | null;
+	accessToken: string | null;
 	isAuthenticated: boolean;
 	isLoading: boolean;
 	login: (email: string, password: string) => Promise<void>;
@@ -89,8 +91,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 	const isAuthenticated = !!user && !!tokens;
 
-	// Try to refresh token on mount to validate session
+	// Guard against StrictMode double-mount causing concurrent refresh requests.
+	// Token rotation invalidates the old token on the first call, so a second
+	// concurrent call with the same token will fail with "Refresh token not recognized".
+	const refreshingRef = useRef(false);
+
 	useEffect(() => {
+		if (refreshingRef.current) return;
+		refreshingRef.current = true;
+
 		const validateSession = async () => {
 			const storedTokens = getStoredTokens();
 			if (!storedTokens) {
@@ -99,10 +108,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 			}
 
 			try {
-				const { accessToken } = await refreshAccessToken(
+				const { accessToken, refreshToken } = await refreshAccessToken(
 					storedTokens.refreshToken
 				);
-				const updatedTokens = { ...storedTokens, accessToken };
+				const updatedTokens: AuthTokens = {
+					accessToken,
+					refreshToken: refreshToken ?? storedTokens.refreshToken,
+				};
 				setTokens(updatedTokens);
 				localStorage.setItem(AUTH_TOKENS, JSON.stringify(updatedTokens));
 			} catch {
@@ -155,7 +167,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 	return (
 		<AuthContext.Provider
-			value={{ user, isAuthenticated, isLoading, login, register, logout }}
+			value={{ user, accessToken: tokens?.accessToken ?? null, isAuthenticated, isLoading, login, register, logout }}
 		>
 			{children}
 		</AuthContext.Provider>

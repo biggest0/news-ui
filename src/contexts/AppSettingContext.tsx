@@ -141,6 +141,7 @@ export const AppSettingProvider = ({ children }: { children: ReactNode }) => {
 					catFactsSection: true,
 					staffPicksSection: true,
 					popularSection: true,
+					recommendedSection: true,
 				},
 			},
 		};

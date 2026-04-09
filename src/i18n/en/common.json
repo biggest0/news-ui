@@ -20,13 +20,16 @@
 		"OUR_EDITORS": "Our Editors",
 		"STAFF_FAVORITES": "Staff Favorites",
 		"STAFF_PICKS": "Staff Picks",
-		"CAT_FACTS": "Cat Facts"
+		"CAT_FACTS": "Cat Facts",
+		"RECOMMENDED": "Recommended for You",
+		"MORE_LIKE_THIS": "More Like This"
 	},
 	"ARTICLE_CARD": {
 		"READ_MORE": "Read More",
 		"HIDE": "Hide",
 		"SHARE": "Share",
-		"LOADING_DETAILS": "Loading details..."
+		"LOADING_DETAILS": "Loading details...",
+		"LOGIN_TO_LIKE": "Log in to like this article"
 	},
 	"FILTER": {
 		"DATE_RANGE": "Date Range",

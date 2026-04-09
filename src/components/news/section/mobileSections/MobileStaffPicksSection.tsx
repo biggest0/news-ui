@@ -2,25 +2,15 @@ import { useTranslation } from "react-i18next";
 
 import { SectionHeaderExpandable } from "@/components/common/layout/SectionHeaderExpandable";
 import CollapsibleSection from "../CollapsibleSection";
-import { SECTIONS, USER_ARTICLE_HISTORY } from "@/constants/keys";
+import { SECTIONS } from "@/constants/keys";
 import { useSectionVisible } from "@/hooks/useSectionCollapse";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
-import type { ArticleInfo } from "@/types/articleTypes";
 import { SELECTED_ARTICLES } from "../../tempArticles";
 import NewsHeroCard from "../../cards/NewsHeroCard";
-import { handleLocalStorageUpdate } from "@/service/localStorageService";
 import Image from "@/assets/news_hero_image.jpg";
 
 export default function MobileStaffPicksSection() {
 	const isVisible = useSectionVisible(SECTIONS.STAFF_PICKS);
 	const { t } = useTranslation();
-	const [articleHistory, setArticleHistory] = useLocalStorage<ArticleInfo[]>(
-		USER_ARTICLE_HISTORY,
-		[]
-	);
-	const onArticleClick = (article: ArticleInfo) => {
-		handleLocalStorageUpdate(article, articleHistory, setArticleHistory);
-	};
 
 	return (
 		<div className="flex flex-col md:hidden">
@@ -56,7 +46,6 @@ export default function MobileStaffPicksSection() {
 									<NewsHeroCard
 										articleInfo={article}
 										small={true}
-										onOpen={onArticleClick}
 									/>
 								</div>
 							))}

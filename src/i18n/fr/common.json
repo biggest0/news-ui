@@ -20,13 +20,16 @@
 		"OUR_EDITORS": "Nos rédacteurs",
 		"STAFF_FAVORITES": "Coups de cœur de l'équipe",
 		"STAFF_PICKS": "Choix de l'équipe",
-		"CAT_FACTS": "Faits sur les chats"
+		"CAT_FACTS": "Faits sur les chats",
+		"RECOMMENDED": "Recommandé pour vous",
+		"MORE_LIKE_THIS": "Articles similaires"
 	},
 	"ARTICLE_CARD": {
 		"READ_MORE": "Lire la suite",
 		"HIDE": "Masquer",
 		"SHARE": "Partager",
-		"LOADING_DETAILS": "Chargement des détails..."
+		"LOADING_DETAILS": "Chargement des détails...",
+		"LOGIN_TO_LIKE": "Connectez-vous pour aimer cet article"
 	},
 	"FILTER": {
 		"DATE_RANGE": "Période",

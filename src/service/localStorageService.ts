@@ -1,4 +1,3 @@
-import type { ArticleInfo } from "@/types/articleTypes";
 import type {
 	SectionToggleState
 } from "@/types/localStorageTypes";
@@ -6,18 +5,6 @@ import {
 	getAppSetting,
 	setAppSetting,
 } from "@/utils/storage/localStorageUtils";
-
-export function handleLocalStorageUpdate(
-	clickedArticle: ArticleInfo,
-	articleHistory: ArticleInfo[],
-	setArticleHistory: (articles: ArticleInfo[]) => void
-) {
-	const filterClickedArticle = articleHistory.filter(
-		(a) => a.id !== clickedArticle.id
-	);
-	const updatedArticles = [clickedArticle, ...filterClickedArticle];
-	setArticleHistory(updatedArticles.slice(0, 100));
-}
 
 export function updateSectionVisibility(
 	key: keyof SectionToggleState,

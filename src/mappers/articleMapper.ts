@@ -1,5 +1,5 @@
-import type { ArticleDetail, ArticleInfo } from "@/types/articleTypes";
-import type { ArticleDetailDTO, ArticleInfoDTO } from "@/types/articleDto";
+import type { ArticleDetail, ArticleHistoryItem, ArticleInfo, RecommendedArticle } from "@/types/articleTypes";
+import type { ArticleDetailDTO, ArticleHistoryItemDTO, ArticleInfoDTO, RecommendedArticleDTO } from "@/types/articleDto";
 
 export function mapDTOtoArticleInfo(
 	articleInfoResponse: ArticleInfoDTO
@@ -14,6 +14,37 @@ export function mapDTOtoArticleInfo(
 		mainCategory: articleInfoResponse.main_category,
 		subCategory: articleInfoResponse.sub_category || [],
 		viewed: articleInfoResponse.viewed,
+		likeCount: articleInfoResponse.like_count ?? 0,
+	};
+}
+
+export function mapDTOtoArticleHistoryItem(
+	dto: ArticleHistoryItemDTO
+): ArticleHistoryItem {
+	return {
+		id: dto._id,
+		title: dto.title,
+		summary: dto.summary,
+		datePublished: new Date(dto.date_published).toLocaleDateString(),
+		mainCategory: dto.main_category,
+		subCategory: dto.sub_category || [],
+		viewed: dto.viewed,
+		likeCount: dto.like_count ?? 0,
+		readAt: new Date(dto.read_at).toLocaleDateString(),
+	};
+}
+
+export function mapDTOtoRecommendedArticle(
+	dto: RecommendedArticleDTO
+): RecommendedArticle {
+	return {
+		id: dto._id,
+		title: dto.title,
+		summary: dto.summary,
+		mainCategory: dto.main_category,
+		subCategory: dto.sub_category || [],
+		datePublished: new Date(dto.date_published).toLocaleDateString(),
+		score: dto.score,
 	};
 }
 
