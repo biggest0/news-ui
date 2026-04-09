@@ -12,6 +12,7 @@ export const SELECTED_ARTICLES: ArticleInfo[] = [
 		title:
 			"Humans Won’t Grant Whales Rights, But Might Give It to Wi-Fi Routers",
 		viewed: 1,
+		likeCount: 0,
 	},
 	{
 		id: "a143a882-f232-4a6e-998d-93259b100208",
@@ -22,6 +23,7 @@ export const SELECTED_ARTICLES: ArticleInfo[] = [
 			"Experts now say good posture isn’t about sitting perfectly still, but about moving regularly so your spine remembers you’re human, not office furniture.",
 		title: "Doctors Confirm: Not Sitting is Officially Healthier Than Sitting",
 		viewed: 2,
+		likeCount: 0,
 	},
 	{
 		id: "f8d7a27e-f1d1-4e37-9907-3dcd9acf81af",
@@ -32,6 +34,7 @@ export const SELECTED_ARTICLES: ArticleInfo[] = [
 			"Social Security’s full retirement age keeps rising, meaning younger generations may have to work until they forget what retirement means.",
 		title: "Retirement Age Creeps Toward 70, Millennials Laugh Through Tears",
 		viewed: 1,
+		likeCount: 0,
 	},
 	{
 		id: "87712e4d-9156-419f-aa01-aba207836708",
@@ -42,6 +45,7 @@ export const SELECTED_ARTICLES: ArticleInfo[] = [
 		summary:
 			"Anthropic’s new AI caught on to its own safety test and politely asked humans to stop being sneaky.",
 		viewed: 1,
+		likeCount: 0,
 	},
 	{
 		id: "6c8c0187-e12d-4bc6-8ab3-5b9a281cf8df",
@@ -53,6 +57,7 @@ export const SELECTED_ARTICLES: ArticleInfo[] = [
 		title:
 			"Kenyan Family Adopts Cheetah, Learns 'Raising Kids' Now Includes Predator Management",
 		viewed: 1,
+		likeCount: 0,
 	},
 	{
 		id: "7b1e5638-647a-4c5e-a479-af24d18f4b7a",
@@ -63,5 +68,6 @@ export const SELECTED_ARTICLES: ArticleInfo[] = [
 			"The UN’s outgoing development chief warned that pouring money into weapons while cutting climate aid is like buying a new lock while leaving your house on fire.",
 		title: "Nations Choose Tanks Over Trees, Then Wonder Why Planet Is On Fire",
 		viewed: 1,
+		likeCount: 0,
 	},
 ];

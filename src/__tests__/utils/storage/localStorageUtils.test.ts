@@ -14,6 +14,7 @@ const DEFAULT_APP_SETTING: AppSetting = {
 			catFactsSection: true,
 			staffPicksSection: true,
 			popularSection: true,
+			recommendedSection: true,
 		},
 		expanded: {
 			newsSection: true,
@@ -21,6 +22,7 @@ const DEFAULT_APP_SETTING: AppSetting = {
 			catFactsSection: true,
 			staffPicksSection: true,
 			popularSection: true,
+			recommendedSection: true,
 		},
 		pagePagination: true,
 	},
@@ -126,6 +128,7 @@ describe("round-trip: set → get", () => {
 					catFactsSection: true,
 					staffPicksSection: true,
 					popularSection: false,
+					recommendedSection: true,
 				},
 				expanded: {
 					newsSection: true,
@@ -133,6 +136,7 @@ describe("round-trip: set → get", () => {
 					catFactsSection: false,
 					staffPicksSection: true,
 					popularSection: true,
+					recommendedSection: true,
 				},
 				pagePagination: false,
 			},

@@ -19,8 +19,7 @@
  * - @/service/articleService — all exports (needed by articlesSlice thunks)
  */
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { screen } from "@testing-library/react";
 import { renderWithProviders } from "@/__tests__/helpers/renderWithProviders";
 import { HomeNewsSection } from "@/components/news/section/newsSections/HomeNewsSection";
 import type { ArticleInfo } from "@/types/articleTypes";
@@ -95,8 +94,10 @@ function buildState(overrides: Partial<RootState["article"]> = {}): { article: R
 			articles: [],
 			articlesCount: 0,
 			articlesDetail: {},
-			loading: { homePage: false, topTen: false, articles: false, detail: false },
-			error: { homePage: undefined, topTen: undefined, articles: undefined, detail: undefined },
+			similarArticles: {},
+			recommendedArticles: [],
+			loading: { homePage: false, topTen: false, articles: false, detail: false, similar: false, recommended: false },
+			error: { homePage: undefined, topTen: undefined, articles: undefined, detail: undefined, similar: undefined, recommended: undefined },
 			...overrides,
 		},
 	};
@@ -143,7 +144,7 @@ describe("HomeNewsSection", () => {
 	it("shows LoadingOverlay when homePage is loading", () => {
 		renderWithProviders(<HomeNewsSection />, {
 			preloadedState: buildState({
-				loading: { homePage: true, topTen: false, articles: false, detail: false },
+				loading: { homePage: true, topTen: false, articles: false, detail: false, similar: false, recommended: false },
 			}),
 		});
 
@@ -154,7 +155,7 @@ describe("HomeNewsSection", () => {
 	it("hides LoadingOverlay when homePage is not loading", () => {
 		renderWithProviders(<HomeNewsSection />, {
 			preloadedState: buildState({
-				loading: { homePage: false, topTen: false, articles: false, detail: false },
+				loading: { homePage: false, topTen: false, articles: false, detail: false, similar: false, recommended: false },
 			}),
 		});
 

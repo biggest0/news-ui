@@ -1,11 +1,8 @@
 import { useState } from "react";
 import { CiShare1 } from "react-icons/ci";
 import { IoCheckmark } from "react-icons/io5";
-import { useTranslation } from "react-i18next";
-
 export const ShareButton = ({ articleId }: { articleId: string }) => {
 	const [copied, setCopied] = useState(false);
-	const { t } = useTranslation();
 
 	const handleCopy = async () => {
 		try {

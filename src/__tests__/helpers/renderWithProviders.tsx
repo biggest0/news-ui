@@ -14,7 +14,7 @@ import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import { I18nextProvider } from "react-i18next";
 import i18n from "i18next";
-import { createContext, useContext, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import type { RootState } from "@/store/store";
 import articlesReducer from "@/store/articlesSlice";
 
@@ -91,22 +91,6 @@ interface MockAuthValues {
 	accessToken: string | null;
 	isAuthenticated: boolean;
 }
-
-const MockAuthContext = createContext<MockAuthValues & {
-	user: null;
-	isLoading: false;
-	login: () => Promise<void>;
-	register: () => Promise<void>;
-	logout: () => Promise<void>;
-}>({
-	user: null,
-	accessToken: null,
-	isAuthenticated: false,
-	isLoading: false,
-	login: async () => {},
-	register: async () => {},
-	logout: async () => {},
-});
 
 /**
  * A mock version of the useAuth hook.

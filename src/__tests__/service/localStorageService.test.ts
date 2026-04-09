@@ -34,6 +34,7 @@ const FRESH_DEFAULTS: AppSetting = {
 			catFactsSection: true,
 			staffPicksSection: true,
 			popularSection: true,
+			recommendedSection: true,
 		},
 		expanded: {
 			newsSection: true,
@@ -41,6 +42,7 @@ const FRESH_DEFAULTS: AppSetting = {
 			catFactsSection: true,
 			staffPicksSection: true,
 			popularSection: true,
+			recommendedSection: true,
 		},
 		pagePagination: true,
 	},
