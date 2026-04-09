@@ -8,6 +8,7 @@ import { incrementArticleViewed } from "@/api/articleApi";
 import { recordArticleRead } from "@/service/userArticleService";
 import { useAuth } from "@/contexts/AuthContext";
 import ArticleDetailSection from "@/components/news/section/ArticleDetailSection";
+import SimilarArticlesSection from "@/components/news/section/SimilarArticlesSection";
 
 export default function ArticlePage() {
 	const { id } = useParams();
@@ -32,6 +33,7 @@ export default function ArticlePage() {
 		<div className="py-6">
 			{articleDetail && <ArticleDetailSection article={articleDetail} />}
 			{loading.detail && !articleDetail && <div>Loading article details!</div>}
+			{id && <SimilarArticlesSection articleId={id} />}
 		</div>
 	);
 }
