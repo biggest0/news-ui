@@ -46,29 +46,29 @@ export default function SearchSection({
 	};
 
 	return (
-		<section className="w-full flex flex-col justify-center items-center py-4 h-48 bg-gray-50">
+		<section className="w-full flex flex-col justify-center items-center py-4 h-48 bg-surface">
 			{/* Search bar */}
 			<form
 				onSubmit={handleSubmit}
-				className="flex items-center w-full max-w-md border-b overflow-hidden mb-4"
+				className="flex items-center w-full max-w-md border-b border-border overflow-hidden mb-4"
 			>
 				<input
 					type="text"
 					value={input}
 					onChange={(e) => setInput(e.target.value)}
 					placeholder={t("FILTER.SEARCH_ARTICLES_PLACEHOLDER")}
-					className="flex-grow py-2 outline-none text-gray-700 text-2xl"
+					className="flex-grow py-2 outline-none text-secondary bg-transparent text-2xl"
 				/>
 				<button
 					type="submit"
-					className="text-gray-400 px-4 py-2 hover:text-black transition cursor-pointer"
+					className="text-muted px-4 py-2 hover:text-primary transition cursor-pointer"
 				>
 					<LuSearch />
 				</button>
 			</form>
 
 			{/* Filter bar */}
-			<div className="flex justify-start gap-8 w-full max-w-md text-sm text-gray-600">
+			<div className="flex justify-start gap-8 w-full max-w-md text-sm text-secondary">
 				<DateRangeFilter
 					value={dateRange}
 					onChange={(value) => updateUrl(query, value, sortBy)}
