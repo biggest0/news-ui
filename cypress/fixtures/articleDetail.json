@@ -1,0 +1,15 @@
+{
+	"_id": "art-001",
+	"date_published": "2026-03-27T10:00:00.000Z",
+	"title": "Cat Mayor Declares International Nap Day",
+	"summary": "Mayor Whiskers signed the decree from atop his favourite radiator",
+	"paragraphs": [
+		"In a historic move that has divided the nation, Mayor Whiskers of Catville officially signed the International Nap Day decree this morning.",
+		"The ceremony took place atop his favourite radiator in City Hall, where the feline leader purred contentedly while aides held the ceremonial pen.",
+		"Critics argue this is the most productive legislation the mayor has passed in years."
+	],
+	"main_category": "politics",
+	"sub_category": ["government", "cats"],
+	"source": "Catire Press",
+	"url": "https://example.com/art-001"
+}
