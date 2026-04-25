@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import { GoHeart, GoHeartFill } from "react-icons/go";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { unwrapResult } from "@reduxjs/toolkit";
 
 import { useAuth } from "@/contexts/AuthContext";
+import type { AppDispatch, RootState } from "@/store/store";
 import {
-	toggleArticleLike,
-	getArticleLikeStatus,
-} from "@/service/userArticleService";
+	loadArticleLikeStatus,
+	toggleArticleLikeThunk,
+} from "@/store/userContentSlice";
 
 interface LikeButtonProps {
 	articleId: string;
@@ -18,27 +21,21 @@ export const LikeButton = ({
 	initialLikeCount,
 }: LikeButtonProps) => {
 	const { t } = useTranslation();
+	const dispatch = useDispatch<AppDispatch>();
 	const { accessToken, isAuthenticated } = useAuth();
-	const [liked, setLiked] = useState(false);
-	const [likeCount, setLikeCount] = useState(initialLikeCount);
+	const likeStatus = useSelector(
+		(state: RootState) => state.userContent.likes[articleId]
+	);
+	const liked = likeStatus?.liked ?? false;
+	const likeCount = likeStatus?.likeCount ?? initialLikeCount;
 
 	// When the user is authenticated, fetch the real like status from the server
 	// (whether they've liked this article, and the current like count).
-	// The cancellation flag prevents a stale response from updating state
-	// if the component unmounts or the article/token changes before the fetch resolves.
 	useEffect(() => {
 		if (!isAuthenticated || !accessToken) return;
+		dispatch(loadArticleLikeStatus({ articleId, accessToken }));
+	}, [articleId, accessToken, isAuthenticated, dispatch]);
 
-		let cancelled = false;
-		getArticleLikeStatus(articleId, accessToken).then((status) => {
-			if (cancelled) return;
-			setLiked(status.liked);
-			setLikeCount(status.likeCount);
-		});
-		return () => {
-			cancelled = true;
-		};
-	}, [articleId, accessToken, isAuthenticated]);
 	const [isToggling, setIsToggling] = useState(false);
 	const [showLoginMessage, setShowLoginMessage] = useState(false);
 
@@ -51,21 +48,14 @@ export const LikeButton = ({
 
 		if (isToggling) return;
 
-		// Optimistic update
-		const previousLiked = liked;
-		const previousCount = likeCount;
-		setLiked(!liked);
-		setLikeCount(liked ? likeCount - 1 : likeCount + 1);
 		setIsToggling(true);
-
 		try {
-			const result = await toggleArticleLike(articleId, accessToken);
-			setLiked(result.liked);
-			setLikeCount(result.likeCount);
+			unwrapResult(
+				await dispatch(toggleArticleLikeThunk({ articleId, accessToken }))
+			);
 		} catch {
-			// Revert on failure
-			setLiked(previousLiked);
-			setLikeCount(previousCount);
+			// Thunk reducer captures the error; state is derived from Redux
+			// so there's no local state to revert.
 		} finally {
 			setIsToggling(false);
 		}

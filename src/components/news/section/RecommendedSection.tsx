@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import type { RootState, AppDispatch } from "@/store/store";
-import { loadRecommendedArticles } from "@/store/articlesSlice";
+import { loadRecommendedArticles } from "@/store/recommendationsSlice";
 import { SectionHeaderExpandable } from "@/components/common/layout/SectionHeaderExpandable";
 import CollapsibleSection from "@/components/news/section/CollapsibleSection";
 import { SECTIONS } from "@/constants/keys";
@@ -18,8 +18,8 @@ export default function RecommendedSection() {
 	const { t } = useTranslation();
 	const { accessToken, isAuthenticated } = useAuth();
 	const isVisible = useSectionVisible(SECTIONS.RECOMMENDED);
-	const { recommendedArticles, loading } = useSelector(
-		(state: RootState) => state.article
+	const { recommended: recommendedArticles, loading } = useSelector(
+		(state: RootState) => state.recommendations
 	);
 
 	useEffect(() => {
