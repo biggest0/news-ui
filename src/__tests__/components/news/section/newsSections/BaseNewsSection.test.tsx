@@ -241,10 +241,8 @@ describe("BaseNewsSection", () => {
 						articles: [],
 						articlesCount: 0,
 						articlesDetail: {},
-						loading: { homePage: false, topTen: false, articles: true, detail: false, similar: false, recommended: false },
-						error: { homePage: undefined, topTen: undefined, articles: undefined, detail: undefined, similar: undefined, recommended: undefined },
-						similarArticles: {},
-						recommendedArticles: [],
+						loading: { homePage: false, topTen: false, articles: true, detail: false },
+						error: { homePage: undefined, topTen: undefined, articles: undefined, detail: undefined },
 					},
 				},
 			}

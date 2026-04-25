@@ -85,7 +85,7 @@ const sampleArticles: ArticleInfo[] = [
 	},
 ];
 
-function buildState(overrides: Partial<RootState["article"]> = {}): { article: RootState["article"] } {
+function buildState(overrides: Partial<RootState["article"]> = {}): Partial<RootState> {
 	return {
 		article: {
 			topTenArticles: [],
@@ -94,10 +94,8 @@ function buildState(overrides: Partial<RootState["article"]> = {}): { article: R
 			articles: [],
 			articlesCount: 0,
 			articlesDetail: {},
-			similarArticles: {},
-			recommendedArticles: [],
-			loading: { homePage: false, topTen: false, articles: false, detail: false, similar: false, recommended: false },
-			error: { homePage: undefined, topTen: undefined, articles: undefined, detail: undefined, similar: undefined, recommended: undefined },
+			loading: { homePage: false, topTen: false, articles: false, detail: false },
+			error: { homePage: undefined, topTen: undefined, articles: undefined, detail: undefined },
 			...overrides,
 		},
 	};
@@ -144,7 +142,7 @@ describe("HomeNewsSection", () => {
 	it("shows LoadingOverlay when homePage is loading", () => {
 		renderWithProviders(<HomeNewsSection />, {
 			preloadedState: buildState({
-				loading: { homePage: true, topTen: false, articles: false, detail: false, similar: false, recommended: false },
+				loading: { homePage: true, topTen: false, articles: false, detail: false },
 			}),
 		});
 
@@ -155,7 +153,7 @@ describe("HomeNewsSection", () => {
 	it("hides LoadingOverlay when homePage is not loading", () => {
 		renderWithProviders(<HomeNewsSection />, {
 			preloadedState: buildState({
-				loading: { homePage: false, topTen: false, articles: false, detail: false, similar: false, recommended: false },
+				loading: { homePage: false, topTen: false, articles: false, detail: false },
 			}),
 		});
 

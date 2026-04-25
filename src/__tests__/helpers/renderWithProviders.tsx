@@ -17,6 +17,8 @@ import i18n from "i18next";
 import { type ReactNode } from "react";
 import type { RootState } from "@/store/store";
 import articlesReducer from "@/store/articlesSlice";
+import recommendationsReducer from "@/store/recommendationsSlice";
+import userContentReducer from "@/store/userContentSlice";
 
 // ── Minimal i18n instance for tests ──────────────────────────────────
 
@@ -127,7 +129,11 @@ export function renderWithProviders(
 	}: ExtendedRenderOptions = {}
 ) {
 	const store = configureStore({
-		reducer: { article: articlesReducer },
+		reducer: {
+			article: articlesReducer,
+			recommendations: recommendationsReducer,
+			userContent: userContentReducer,
+		},
 		preloadedState: preloadedState as RootState,
 	});
 
