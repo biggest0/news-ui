@@ -41,7 +41,10 @@
 		"SORT_BY": "Sort By",
 		"NEWEST": "Newest",
 		"MOST_VIEWED": "Most Viewed",
-		"RELEVANT": "Relevant"
+		"RELEVANT": "Relevant",
+		"SEARCH_TYPE": "Search Type",
+		"KEYWORD": "Keyword",
+		"SEMANTIC": "Semantic"
 	},
 	"FOOTER": {
 		"BRAND_NAME": "Catire Time",

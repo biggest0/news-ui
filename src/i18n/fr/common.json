@@ -41,7 +41,10 @@
 		"SORT_BY": "Trier par",
 		"NEWEST": "Les plus récents",
 		"MOST_VIEWED": "Les plus consultés",
-		"RELEVANT": "Pertinent"
+		"RELEVANT": "Pertinent",
+		"SEARCH_TYPE": "Type de recherche",
+		"KEYWORD": "Mot-clé",
+		"SEMANTIC": "Sémantique"
 	},
 	"FOOTER": {
 		"BRAND_NAME": "Çatire Time",
