@@ -50,7 +50,7 @@ testI18n.init({
 				},
 				FILTER: {
 					DATE_RANGE: "Date Range",
-					ALL_TIME: "All Time",
+					ANY_TIME: "Any Time",
 					LAST_24_HOURS: "Last 24 Hours",
 					LAST_7_DAYS: "Last 7 Days",
 					LAST_30_DAYS: "Last 30 Days",

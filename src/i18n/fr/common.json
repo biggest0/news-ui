@@ -34,7 +34,7 @@
 	"FILTER": {
 		"DATE_RANGE": "Période",
 		"SEARCH_ARTICLES_PLACEHOLDER": "Rechercher des articles...",
-		"ALL_TIME": "Tout le temps",
+		"ANY_TIME": "Toutes les périodes",
 		"LAST_24_HOURS": "Dernières 24 heures",
 		"LAST_7_DAYS": "7 derniers jours",
 		"LAST_30_DAYS": "30 derniers jours",
