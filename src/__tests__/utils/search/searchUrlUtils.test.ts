@@ -14,6 +14,7 @@ describe("parseSearchParams", () => {
 			query: "cat",
 			dateRange: "7d",
 			sortBy: "newest",
+			searchType: "keyword",
 		});
 	});
 
@@ -23,6 +24,7 @@ describe("parseSearchParams", () => {
 			query: "dog",
 			dateRange: "all",
 			sortBy: "newest",
+			searchType: "keyword",
 		});
 	});
 
@@ -37,6 +39,7 @@ describe("parseSearchParams", () => {
 			query: "",
 			dateRange: "all",
 			sortBy: "newest",
+			searchType: "keyword",
 		});
 	});
 

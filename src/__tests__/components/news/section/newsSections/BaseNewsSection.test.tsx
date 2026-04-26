@@ -202,7 +202,7 @@ describe("BaseNewsSection", () => {
 			<BaseNewsSection articles={sampleArticles} totalCount={20} loadMoreArticles={mockLoadMore} />
 		);
 
-		expect(screen.getByText("All Time")).toBeInTheDocument();
+		expect(screen.getByText("Any Time")).toBeInTheDocument();
 		expect(screen.getByText("Newest")).toBeInTheDocument();
 	});
 
