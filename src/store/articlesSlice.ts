@@ -87,9 +87,9 @@ export const loadArticlesInfoByCategory = createAsyncThunk<
 
 export const loadArticlesInfoBySearch = createAsyncThunk<
 	ArticleResponse,
-	{ page: number; search: string }
->("articles/getArticlesInfoBySearch", async ({ page, search }) => {
-	return getArticlesBySearch(page, search);
+	{ page: number; search: string; dateRange?: string; sortBy?: string }
+>("articles/getArticlesInfoBySearch", async ({ page, search, dateRange, sortBy }) => {
+	return getArticlesBySearch({ q: search, page, dateRange, sortBy });
 });
 
 export const loadArticlesBySubCategory = createAsyncThunk<

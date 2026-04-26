@@ -35,7 +35,7 @@ export function useSearchArticles(
 		if (searchType === "semantic") {
 			dispatch(loadSemanticSearchResults({ q: query, page: 1, dateRange, sortBy }));
 		} else {
-			dispatch(loadArticlesInfoBySearch({ page: 1, search: query }));
+			dispatch(loadArticlesInfoBySearch({ page: 1, search: query, dateRange, sortBy }));
 		}
 	}, [query, searchType, dateRange, sortBy, dispatch]);
 }
@@ -150,6 +150,8 @@ export function useInfiniteScroll(
 						loadArticlesInfoBySearch({
 							page: page + 1,
 							search: query,
+							dateRange,
+							sortBy,
 						})
 					);
 				}

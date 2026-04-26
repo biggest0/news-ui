@@ -39,15 +39,24 @@ export async function getArticlesByCategory(
 	}
 }
 
-export async function getArticlesBySearch(
-	page: number,
-	search: string
-): Promise<ArticleResponse> {
+export async function getArticlesBySearch({
+	q,
+	page = 1,
+	dateRange,
+	sortBy,
+}: {
+	q: string;
+	page?: number;
+	dateRange?: string;
+	sortBy?: string;
+}): Promise<ArticleResponse> {
 	try {
-		const data: ArticleInfoResponseDTO = await fetchArticlesBySearch(
+		const data: ArticleInfoResponseDTO = await fetchArticlesBySearch({
+			q,
 			page,
-			search
-		);
+			dateRange,
+			sortBy,
+		});
 		return {
 			articles: data.articles.map(mapDTOtoArticleInfo),
 			count: data.count,
