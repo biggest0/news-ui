@@ -202,7 +202,7 @@ describe("BaseNewsSection", () => {
 			<BaseNewsSection articles={sampleArticles} totalCount={20} loadMoreArticles={mockLoadMore} />
 		);
 
-		expect(screen.getByText("All Time")).toBeInTheDocument();
+		expect(screen.getByText("Any Time")).toBeInTheDocument();
 		expect(screen.getByText("Newest")).toBeInTheDocument();
 	});
 
@@ -241,10 +241,8 @@ describe("BaseNewsSection", () => {
 						articles: [],
 						articlesCount: 0,
 						articlesDetail: {},
-						loading: { homePage: false, topTen: false, articles: true, detail: false, similar: false, recommended: false },
-						error: { homePage: undefined, topTen: undefined, articles: undefined, detail: undefined, similar: undefined, recommended: undefined },
-						similarArticles: {},
-						recommendedArticles: [],
+						loading: { homePage: false, topTen: false, articles: true, detail: false },
+						error: { homePage: undefined, topTen: undefined, articles: undefined, detail: undefined },
 					},
 				},
 			}

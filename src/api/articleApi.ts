@@ -1,4 +1,4 @@
-import type { ArticleInfoQueryDTO, RecommendedArticlesResponseDTO } from "@/types/articleDto";
+import type { ArticleInfoQueryDTO, RecommendedArticlesResponseDTO, SemanticSearchResponseDTO } from "@/types/articleDto";
 import { API_URL } from "@/config/config";
 
 /**
@@ -60,15 +60,34 @@ export async function fetchArticlesByCategory(page: number, category: string) {
 }
 
 /**
- * Fetches articles filtered by search query from the server
- * @param page - The page number to fetch
- * @param search - The search query to filter articles by
+ * Fetches articles matching a keyword search query from the server.
+ * GET /api/articles/search/keyword
+ * @param q         - Search text (required)
+ * @param page      - Page number (default: 1)
+ * @param dateRange - "all" | "24h" | "7d" | "30d"
+ * @param sortBy    - "newest" | "relevant"
  * @returns The response data from the server containing article information
  * @throws Error if the HTTP request fails
  */
-export async function fetchArticlesBySearch(page: number, search: string) {
+export async function fetchArticlesBySearch({
+	q,
+	page = 1,
+	dateRange = "all",
+	sortBy = "newest",
+}: {
+	q: string;
+	page?: number;
+	dateRange?: string;
+	sortBy?: string;
+}) {
+	const params = new URLSearchParams();
+	params.set("q", q);
+	params.set("page", page.toString());
+	if (dateRange) params.set("dateRange", dateRange);
+	if (sortBy) params.set("sortBy", sortBy);
+
 	const response = await fetch(
-		`${API_URL}/article-info?page=${page}&limit=10&search=${search}`,
+		`${API_URL}/api/articles/search/keyword?${params}`,
 		{
 			method: "GET",
 			headers: { "Content-Type": "application/json" },
@@ -191,6 +210,46 @@ export async function fetchRecommendedArticles(
 			Authorization: `Bearer ${accessToken}`,
 		},
 	});
+	if (!response.ok) {
+		throw new Error(`Error: ${response.statusText}`);
+	}
+	return response.json();
+}
+
+/**
+ * Vectorises the query string and returns semantically similar articles.
+ * GET /api/articles/search/similar
+ * @param q         - Search text (required)
+ * @param page      - Page number (default: 1)
+ * @param dateRange - "all" | "24h" | "7d" | "30d"
+ * @param sortBy    - "newest" | "relevant"
+ * @returns Articles with similarity scores and total count
+ * @throws Error if the HTTP request fails
+ */
+export async function fetchSemanticSearch({
+	q,
+	page = 1,
+	dateRange = "all",
+	sortBy = "newest",
+}: {
+	q: string;
+	page?: number;
+	dateRange?: string;
+	sortBy?: string;
+}): Promise<SemanticSearchResponseDTO> {
+	const params = new URLSearchParams();
+	params.set("q", q);
+	params.set("page", page.toString());
+	if (dateRange) params.set("dateRange", dateRange);
+	if (sortBy) params.set("sortBy", sortBy);
+
+	const response = await fetch(
+		`${API_URL}/api/articles/search/similar?${params}`,
+		{
+			method: "GET",
+			headers: { "Content-Type": "application/json" },
+		}
+	);
 	if (!response.ok) {
 		throw new Error(`Error: ${response.statusText}`);
 	}

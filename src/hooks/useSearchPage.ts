@@ -5,7 +5,8 @@ import { useDispatch } from "react-redux";
 import type { AppDispatch } from "@/store/store";
 import type { ArticleInfo } from "@/types/articleTypes";
 import { loadArticlesInfoBySearch } from "@/store/articlesSlice";
-import { parseSearchParams, type SearchParams } from "@/utils/search/searchUrlUtils";
+import { loadSemanticSearchResults } from "@/store/recommendationsSlice";
+import { parseSearchParams, type SearchParams, type SearchType } from "@/utils/search/searchUrlUtils";
 import { filterAndSortArticles, type SearchFilters } from "@/utils/search/searchUtils";
 
 /**
@@ -18,17 +19,25 @@ export function useSearchParams(): SearchParams {
 }
 
 /**
- * Hook to load articles when search query changes
- * @param query - Search query string
+ * Hook to load articles when search query or search type changes.
+ * Dispatches keyword or semantic search thunk based on searchType.
  */
-export function useSearchArticles(query: string) {
+export function useSearchArticles(
+	query: string,
+	searchType: SearchType,
+	dateRange: string,
+	sortBy: string
+) {
 	const dispatch = useDispatch<AppDispatch>();
 
 	useEffect(() => {
-		if (query) {
-			dispatch(loadArticlesInfoBySearch({ page: 1, search: query }));
+		if (!query) return;
+		if (searchType === "semantic") {
+			dispatch(loadSemanticSearchResults({ q: query, page: 1, dateRange, sortBy }));
+		} else {
+			dispatch(loadArticlesInfoBySearch({ page: 1, search: query, dateRange, sortBy }));
 		}
-	}, [query, dispatch]);
+	}, [query, searchType, dateRange, sortBy, dispatch]);
 }
 
 /**
@@ -104,15 +113,12 @@ export function useSearchPagination(
 
 /**
  * Hook to handle infinite scroll loading of articles
- * @param query - Search query string
- * @param showMore - Whether more articles can be loaded (based on filtered articles)
- * @param fetching - Whether a fetch is currently in progress
- * @param page - Current page number
- * @param setPage - Function to update page number
- * @param setFetching - Function to update fetching state
  */
 export function useInfiniteScroll(
 	query: string,
+	searchType: SearchType,
+	dateRange: string,
+	sortBy: string,
 	showMore: boolean,
 	fetching: boolean,
 	page: number,
@@ -123,7 +129,6 @@ export function useInfiniteScroll(
 
 	useEffect(() => {
 		const handleScroll = () => {
-			// Only load more if not fetching and more articles can be shown
 			if (
 				!fetching &&
 				showMore &&
@@ -131,16 +136,29 @@ export function useInfiniteScroll(
 			) {
 				setFetching(true);
 				setPage((prev) => prev + 1);
-				dispatch(
-					loadArticlesInfoBySearch({
-						page: page + 1,
-						search: query,
-					})
-				);
+				if (searchType === "semantic") {
+					dispatch(
+						loadSemanticSearchResults({
+							q: query,
+							page: page + 1,
+							dateRange,
+							sortBy,
+						})
+					);
+				} else {
+					dispatch(
+						loadArticlesInfoBySearch({
+							page: page + 1,
+							search: query,
+							dateRange,
+							sortBy,
+						})
+					);
+				}
 			}
 		};
 
 		window.addEventListener("scroll", handleScroll);
 		return () => window.removeEventListener("scroll", handleScroll);
-	}, [fetching, showMore, query, page, dispatch, setPage, setFetching]);
+	}, [fetching, showMore, query, searchType, dateRange, sortBy, page, dispatch, setPage, setFetching]);
 }

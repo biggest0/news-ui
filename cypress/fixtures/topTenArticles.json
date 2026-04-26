@@ -1,0 +1,32 @@
+[
+	{
+		"_id": "top-001",
+		"title": "Cat Mayor Declares International Nap Day",
+		"summary": "Mayor Whiskers signed the decree from atop his favourite radiator",
+		"date_published": "2026-03-27T10:00:00.000Z",
+		"main_category": "politics",
+		"sub_category": ["government"],
+		"viewed": 4200,
+		"like_count": 120
+	},
+	{
+		"_id": "top-002",
+		"title": "Scientists Discover Cats Can Teleport Short Distances",
+		"summary": "New study proves what cat owners have long suspected",
+		"date_published": "2026-03-25T14:00:00.000Z",
+		"main_category": "science",
+		"sub_category": ["physics"],
+		"viewed": 8900,
+		"like_count": 310
+	},
+	{
+		"_id": "top-003",
+		"title": "Cat Olympics Introduces Competitive Napping",
+		"summary": "The new sport has drawn record viewership across 50 countries",
+		"date_published": "2026-03-23T16:30:00.000Z",
+		"main_category": "sport",
+		"sub_category": ["olympics"],
+		"viewed": 7200,
+		"like_count": 450
+	}
+]

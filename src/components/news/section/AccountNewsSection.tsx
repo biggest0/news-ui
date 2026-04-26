@@ -1,38 +1,36 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import NewsCard from "../cards/NewsCard";
-import type { ArticleHistoryItem } from "@/types/articleTypes";
 import { SectionHeader } from "@/components/common/layout/SectionHeader";
-import { useTranslation } from "react-i18next";
 import { useAuth } from "@/contexts/AuthContext";
-import { getArticleHistory, clearArticleHistory } from "@/service/userArticleService";
+import type { AppDispatch, RootState } from "@/store/store";
+import {
+	loadArticleHistory,
+	clearArticleHistoryThunk,
+} from "@/store/userContentSlice";
 
 export const AccountNewsSection = () => {
 	const { t } = useTranslation();
+	const dispatch = useDispatch<AppDispatch>();
 	const { accessToken } = useAuth();
-	const [articles, setArticles] = useState<ArticleHistoryItem[]>([]);
-	const [isLoading, setIsLoading] = useState(true);
+	const { articles } = useSelector(
+		(state: RootState) => state.userContent.history
+	);
+	const isLoading = useSelector(
+		(state: RootState) => state.userContent.loading.history
+	);
 
 	useEffect(() => {
-		if (!accessToken) {
-			setIsLoading(false);
-			return;
-		}
-
-		const loadHistory = async () => {
-			const result = await getArticleHistory(accessToken);
-			setArticles(result.articles);
-			setIsLoading(false);
-		};
-
-		loadHistory();
-	}, [accessToken]);
+		if (!accessToken) return;
+		dispatch(loadArticleHistory({ accessToken }));
+	}, [accessToken, dispatch]);
 
 	const handleClear = async () => {
 		if (!accessToken) return;
 		try {
-			await clearArticleHistory(accessToken);
-			setArticles([]);
+			await dispatch(clearArticleHistoryThunk(accessToken)).unwrap();
 		} catch (error) {
 			console.error("Failed to clear history:", error);
 		}

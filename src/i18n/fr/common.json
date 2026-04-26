@@ -34,14 +34,18 @@
 	"FILTER": {
 		"DATE_RANGE": "Période",
 		"SEARCH_ARTICLES_PLACEHOLDER": "Rechercher des articles...",
-		"ALL_TIME": "Tout le temps",
+		"ANY_TIME": "Toutes les périodes",
 		"LAST_24_HOURS": "Dernières 24 heures",
 		"LAST_7_DAYS": "7 derniers jours",
 		"LAST_30_DAYS": "30 derniers jours",
 		"SORT_BY": "Trier par",
 		"NEWEST": "Les plus récents",
 		"MOST_VIEWED": "Les plus consultés",
-		"RELEVANT": "Pertinent"
+		"RELEVANT": "Pertinent",
+		"SEARCH_TYPE": "Type de recherche",
+		"KEYWORD": "Mot-clé",
+		"SEMANTIC": "Connexe",
+		"TIME_PERIOD": "Période de temps"
 	},
 	"FOOTER": {
 		"BRAND_NAME": "Çatire Time",

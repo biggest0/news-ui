@@ -17,6 +17,8 @@ import i18n from "i18next";
 import { type ReactNode } from "react";
 import type { RootState } from "@/store/store";
 import articlesReducer from "@/store/articlesSlice";
+import recommendationsReducer from "@/store/recommendationsSlice";
+import userContentReducer from "@/store/userContentSlice";
 
 // ── Minimal i18n instance for tests ──────────────────────────────────
 
@@ -48,7 +50,7 @@ testI18n.init({
 				},
 				FILTER: {
 					DATE_RANGE: "Date Range",
-					ALL_TIME: "All Time",
+					ANY_TIME: "Any Time",
 					LAST_24_HOURS: "Last 24 Hours",
 					LAST_7_DAYS: "Last 7 Days",
 					LAST_30_DAYS: "Last 30 Days",
@@ -127,7 +129,11 @@ export function renderWithProviders(
 	}: ExtendedRenderOptions = {}
 ) {
 	const store = configureStore({
-		reducer: { article: articlesReducer },
+		reducer: {
+			article: articlesReducer,
+			recommendations: recommendationsReducer,
+			userContent: userContentReducer,
+		},
 		preloadedState: preloadedState as RootState,
 	});
 

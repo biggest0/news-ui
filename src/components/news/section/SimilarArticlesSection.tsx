@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import type { RootState, AppDispatch } from "@/store/store";
-import { loadSimilarArticles } from "@/store/articlesSlice";
+import { loadSimilarArticles } from "@/store/recommendationsSlice";
 import { SectionHeader } from "@/components/common/layout/SectionHeader";
 import { incrementArticleViewed } from "@/api/articleApi";
 import { recordArticleRead } from "@/service/userArticleService";
@@ -19,9 +19,11 @@ export default function SimilarArticlesSection({ articleId }: SimilarArticlesSec
 	const { t } = useTranslation();
 	const { accessToken } = useAuth();
 	const similarArticles = useSelector(
-		(state: RootState) => state.article.similarArticles[articleId]
+		(state: RootState) => state.recommendations.similar[articleId]
 	);
-	const loading = useSelector((state: RootState) => state.article.loading.similar);
+	const loading = useSelector(
+		(state: RootState) => state.recommendations.loading.similar
+	);
 
 	useEffect(() => {
 		if (articleId) {

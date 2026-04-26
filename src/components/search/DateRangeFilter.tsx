@@ -20,9 +20,9 @@ export default function DateRangeFilter({
 				onChange={(e) => onChange(e.target.value)}
 			>
 				<option value="" disabled>
-					{t("FILTER.ALL_TIME")}
+					{t("FILTER.TIME_PERIOD")}
 				</option>
-				<option value="all">{t("FILTER.ALL_TIME")}</option>
+				<option value="all">{t("FILTER.ANY_TIME")}</option>
 				<option value="24h">{t("FILTER.LAST_24_HOURS")}</option>
 				<option value="7d">{t("FILTER.LAST_7_DAYS")}</option>
 				<option value="30d">{t("FILTER.LAST_30_DAYS")}</option>

@@ -34,14 +34,18 @@
 	"FILTER": {
 		"DATE_RANGE": "Date Range",
 		"SEARCH_ARTICLES_PLACEHOLDER": "Search articles...",
-		"ALL_TIME": "All Time",
+		"ANY_TIME": "Any Time",
 		"LAST_24_HOURS": "Last 24 Hours",
 		"LAST_7_DAYS": "Last 7 Days",
 		"LAST_30_DAYS": "Last 30 Days",
 		"SORT_BY": "Sort By",
 		"NEWEST": "Newest",
 		"MOST_VIEWED": "Most Viewed",
-		"RELEVANT": "Relevant"
+		"RELEVANT": "Relevant",
+		"SEARCH_TYPE": "Search Type",
+		"KEYWORD": "Keyword",
+		"SEMANTIC": "Related",
+		"TIME_PERIOD": "Time Period"
 	},
 	"FOOTER": {
 		"BRAND_NAME": "Catire Time",

@@ -107,16 +107,16 @@ describe("getArticlesBySearch", () => {
 			count: 1,
 		});
 
-		const result = await getArticlesBySearch(1, "cat");
+		const result = await getArticlesBySearch({ q: "cat", page: 1 });
 
-		expect(fetchArticlesBySearch).toHaveBeenCalledWith(1, "cat");
+		expect(fetchArticlesBySearch).toHaveBeenCalledWith({ q: "cat", page: 1, dateRange: undefined, sortBy: undefined });
 		expect(result.articles[0].title).toBe("Cat Search Result");
 	});
 
 	it("returns empty fallback on API failure", async () => {
 		vi.mocked(fetchArticlesBySearch).mockRejectedValue(new Error("500"));
 
-		const result = await getArticlesBySearch(1, "cat");
+		const result = await getArticlesBySearch({ q: "cat", page: 1 });
 
 		expect(result).toEqual({ articles: [], count: 0 });
 	});
