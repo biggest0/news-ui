@@ -44,7 +44,8 @@
 		"RELEVANT": "Pertinent",
 		"SEARCH_TYPE": "Type de recherche",
 		"KEYWORD": "Mot-clé",
-		"SEMANTIC": "Sémantique"
+		"SEMANTIC": "Connexe",
+		"TIME_PERIOD": "Période de temps"
 	},
 	"FOOTER": {
 		"BRAND_NAME": "Çatire Time",
