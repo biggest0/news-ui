@@ -7,6 +7,7 @@ import {
 	fetchTopTenArticles,
 	fetchSimilarArticles,
 	fetchRecommendedArticles,
+	fetchSemanticSearch,
 } from "../api/articleApi";
 import type { ArticleDetail, ArticleResponse, RecommendedArticle } from "../types/articleTypes";
 import type {
@@ -142,5 +143,28 @@ export async function getRecommendedArticles(
 	} catch (error) {
 		console.error("[Error fetching recommended articles]:", error);
 		return [];
+	}
+}
+
+export async function getSemanticSearchResults({
+	q,
+	page = 1,
+	dateRange,
+	sortBy,
+}: {
+	q: string;
+	page?: number;
+	dateRange?: string;
+	sortBy?: string;
+}): Promise<{ articles: RecommendedArticle[]; count: number }> {
+	try {
+		const data = await fetchSemanticSearch({ q, page, dateRange, sortBy });
+		return {
+			articles: data.articles.map(mapDTOtoRecommendedArticle),
+			count: data.count,
+		};
+	} catch (error) {
+		console.error("[Error fetching semantic search results]:", error);
+		return { articles: [], count: 0 };
 	}
 }

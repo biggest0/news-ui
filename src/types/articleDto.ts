@@ -70,3 +70,8 @@ export interface RecommendedArticleDTO {
 export interface RecommendedArticlesResponseDTO {
 	articles: RecommendedArticleDTO[];
 }
+
+export interface SemanticSearchResponseDTO {
+	articles: RecommendedArticleDTO[];
+	count: number;
+}
