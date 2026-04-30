@@ -11,6 +11,7 @@ import AccountPage from "./pages/AccountPage";
 import DisclaimerPage from "./pages/DisclaimerPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import GoogleCallbackPage from "./pages/GoogleCallbackPage";
 
 import Header from "./components/layout/header/Header";
 import Footer from "@/components/layout/footer/Footer";
@@ -47,6 +48,7 @@ function App() {
 							<Route path="/account" element={<AccountPage />} />
 							<Route path="/login" element={<LoginPage />} />
 							<Route path="/register" element={<RegisterPage />} />
+							<Route path="/auth/google/callback" element={<GoogleCallbackPage />} />
 							<Route path="/disclaimer" element={<DisclaimerPage />} />
 							{/* Other routes */}
 							<Route path="*" element={<div>Page not Found</div>} />
