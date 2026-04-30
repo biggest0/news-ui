@@ -14,6 +14,7 @@ import {
 	loginUser as loginService,
 	logoutUser as logoutService,
 	refreshAccessToken,
+	exchangeGoogleLoginCode,
 } from "@/service/authService";
 
 /**
@@ -46,6 +47,7 @@ interface AuthContextType {
 	login: (email: string, password: string) => Promise<void>;
 	register: (email: string, password: string) => Promise<void>;
 	logout: () => Promise<void>;
+	loginWithGoogle: (loginCode: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -152,6 +154,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 		setUser(response.user);
 	}, []);
 
+	const loginWithGoogle = useCallback(async (loginCode: string) => {
+		const response = await exchangeGoogleLoginCode(loginCode);
+		const newTokens: AuthTokens = {
+			accessToken: response.accessToken,
+			refreshToken: response.refreshToken,
+		};
+		storeAuth(newTokens, response.user);
+		setTokens(newTokens);
+		setUser(response.user);
+	}, []);
+
 	const logout = useCallback(async () => {
 		if (tokens) {
 			try {
@@ -167,7 +180,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 	return (
 		<AuthContext.Provider
-			value={{ user, accessToken: tokens?.accessToken ?? null, isAuthenticated, isLoading, login, register, logout }}
+			value={{ user, accessToken: tokens?.accessToken ?? null, isAuthenticated, isLoading, login, register, logout, loginWithGoogle }}
 		>
 			{children}
 		</AuthContext.Provider>

@@ -81,6 +81,34 @@ export async function postRefreshToken(
 }
 
 /**
+ * POST /auth/user/google/exchange
+ * Exchanges the one-time loginCode (from the Google callback redirect) for real tokens.
+ * @param loginCode - Short-lived UUID from the backend's redirect query param
+ * @returns Auth tokens and the authenticated user object
+ * @throws Error with the server's error field, or a generic HTTP error
+ */
+export async function postGoogleExchange(loginCode: string): Promise<AuthResponse> {
+	const response = await fetch(`${API_URL}/auth/user/google/exchange`, {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify({ loginCode }),
+	});
+
+	if (!response.ok) {
+		const body = await response.json().catch(() => null);
+		if (response.status === 429) {
+			throw Object.assign(new Error("Too many attempts. Please wait a few minutes."), { status: 429 });
+		}
+		throw Object.assign(
+			new Error(body?.error || "Google sign-in failed. Please try again."),
+			{ status: response.status }
+		);
+	}
+
+	return await response.json();
+}
+
+/**
  * POST /auth/user/logout
  * Invalidates the user's tokens on the server.
  * Requires a valid access token in the Authorization header.

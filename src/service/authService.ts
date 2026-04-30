@@ -1,4 +1,4 @@
-import { postRegister, postLogin, postLogout, postRefreshToken } from "@/api/authApi";
+import { postRegister, postLogin, postLogout, postRefreshToken, postGoogleExchange } from "@/api/authApi";
 import type {
 	AuthResponse,
 	LoginRequest,
@@ -59,6 +59,16 @@ export async function refreshAccessToken(
 	refreshToken: string
 ): Promise<RefreshResponse> {
 	return await postRefreshToken(refreshToken);
+}
+
+/**
+ * Exchanges the one-time Google loginCode for real auth tokens.
+ * @param loginCode - UUID from the /auth/google/callback redirect query param
+ * @returns Auth tokens and user info on success
+ * @throws Error with a user-facing message on failure
+ */
+export async function exchangeGoogleLoginCode(loginCode: string): Promise<AuthResponse> {
+	return await postGoogleExchange(loginCode);
 }
 
 /**
