@@ -54,6 +54,7 @@
 		"DISCLAIMER": "Avis de non-responsabilité",
 		"ABOUT_US": "À propos de nous",
 		"CONTACT": "Contact",
+		"BLOG": "Blog",
 		"SUBSCRIBE": "S'abonner",
 		"SUBSCRIBE_MESSAGE_TITLE": "Abonnez-vous à notre infolettre",
 		"SUBSCRIBE_MESSAGE": "Recevez les dernières nouvelles directement dans votre boîte de réception",
@@ -103,7 +104,15 @@
 		"HOME": "Accueil",
 		"ABOUT": "À propos",
 		"CONTACT": "Contact",
-		"SEARCH": "Rechercher"
+		"SEARCH": "Rechercher",
+		"BLOG": "Blog"
+	},
+	"BLOG": {
+		"TITLE": "Blog",
+		"READ_MORE": "Lire la suite",
+		"BACK_TO_BLOG": "Retour au blog",
+		"NOT_FOUND": "Cet article n'existe pas.",
+		"NO_POSTS": "Aucun article pour le moment. Revenez bientôt."
 	},
 	"PAGINATION": {
 		"SHOW": "Afficher",
