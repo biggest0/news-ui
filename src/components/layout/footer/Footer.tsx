@@ -38,6 +38,9 @@ export default function Footer() {
 				<Link className="cursor-pointer hover:text-primary transition-colors" to="/contact">
 					{t("FOOTER.CONTACT")}
 				</Link>
+				<Link className="cursor-pointer hover:text-primary transition-colors" to="/blog">
+					{t("FOOTER.BLOG")}
+				</Link>
 			</div>
 		</footer>
 	);

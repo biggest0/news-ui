@@ -75,6 +75,55 @@ h6 {
 	line-height: 1.4;
 }
 
+/* Typography for blog post bodies — keeps post .tsx files free of utility classes */
+.blog-prose p {
+	color: var(--color-secondary);
+	line-height: 1.7;
+	margin-bottom: 1rem;
+}
+.blog-prose h2 {
+	color: var(--color-primary);
+	font-size: 1.25rem;
+	margin-top: 2rem;
+	margin-bottom: 0.5rem;
+}
+.blog-prose h3 {
+	color: var(--color-primary);
+	font-size: 1.125rem;
+	margin-top: 1.5rem;
+	margin-bottom: 0.5rem;
+}
+.blog-prose a {
+	color: var(--color-accent);
+}
+.blog-prose a:hover {
+	text-decoration: underline;
+}
+.blog-prose code {
+	background-color: var(--color-elevated);
+	padding: 0.125rem 0.375rem;
+	border-radius: 0.25rem;
+	font-size: 0.875rem;
+	color: var(--color-accent);
+	font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+}
+.blog-prose ul {
+	list-style: disc;
+	padding-left: 1.5rem;
+	color: var(--color-secondary);
+	margin-bottom: 1rem;
+}
+.blog-prose ul li {
+	margin-bottom: 0.375rem;
+}
+.blog-prose blockquote {
+	border-left: 3px solid var(--color-border-subtle);
+	padding-left: 1rem;
+	color: var(--color-muted);
+	font-style: italic;
+	margin: 1rem 0;
+}
+
 .hide-scrollbar {
 	scrollbar-width: thin; /* Firefox */
 	scrollbar-color: #b7b7b7 transparent; /* Firefox */

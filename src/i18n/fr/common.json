@@ -54,6 +54,7 @@
 		"DISCLAIMER": "Avis de non-responsabilité",
 		"ABOUT_US": "À propos de nous",
 		"CONTACT": "Contact",
+		"BLOG": "Blog",
 		"SUBSCRIBE": "S'abonner",
 		"SUBSCRIBE_MESSAGE_TITLE": "Abonnez-vous à notre infolettre",
 		"SUBSCRIBE_MESSAGE": "Recevez les dernières nouvelles directement dans votre boîte de réception",
@@ -103,7 +104,15 @@
 		"HOME": "Accueil",
 		"ABOUT": "À propos",
 		"CONTACT": "Contact",
-		"SEARCH": "Rechercher"
+		"SEARCH": "Rechercher",
+		"BLOG": "Blog"
+	},
+	"BLOG": {
+		"TITLE": "Blog",
+		"READ_MORE": "Lire la suite",
+		"BACK_TO_BLOG": "Retour au blog",
+		"NOT_FOUND": "Cet article n'existe pas.",
+		"NO_POSTS": "Aucun article pour le moment. Revenez bientôt."
 	},
 	"PAGINATION": {
 		"SHOW": "Afficher",
@@ -208,7 +217,13 @@
 		"PASSWORDS_MISMATCH": "Les mots de passe ne correspondent pas.",
 		"VALIDATION_ERROR": "Veuillez remplir tous les champs.",
 		"LOGIN_SUCCESS": "Connexion réussie.",
-		"REGISTER_SUCCESS": "Compte créé avec succès."
+		"REGISTER_SUCCESS": "Compte créé avec succès.",
+		"OR": "ou",
+		"SIGN_IN_GOOGLE": "Se connecter avec Google",
+		"GOOGLE_SIGNING_IN": "Connexion avec Google en cours...",
+		"GOOGLE_FAILED": "La connexion avec Google a échoué. Veuillez réessayer.",
+		"GOOGLE_STATE_INVALID": "La demande de connexion était invalide. Veuillez réessayer.",
+		"GOOGLE_RATE_LIMITED": "Trop de tentatives. Veuillez patienter quelques minutes."
 	},
 	"SUBSCRIBE": {
 		"VALIDATION_ERROR": "Veuillez saisir une adresse e-mail valide.",

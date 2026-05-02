@@ -22,7 +22,7 @@ export const LikeButton = ({
 }: LikeButtonProps) => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch<AppDispatch>();
-	const { accessToken, isAuthenticated } = useAuth();
+	const { accessToken, isAuthenticated, isLoading: isAuthLoading } = useAuth();
 	const likeStatus = useSelector(
 		(state: RootState) => state.userContent.likes[articleId]
 	);
@@ -32,9 +32,9 @@ export const LikeButton = ({
 	// When the user is authenticated, fetch the real like status from the server
 	// (whether they've liked this article, and the current like count).
 	useEffect(() => {
-		if (!isAuthenticated || !accessToken) return;
+		if (isAuthLoading || !isAuthenticated || !accessToken) return;
 		dispatch(loadArticleLikeStatus({ articleId, accessToken }));
-	}, [articleId, accessToken, isAuthenticated, dispatch]);
+	}, [articleId, accessToken, isAuthenticated, isAuthLoading, dispatch]);
 
 	const [isToggling, setIsToggling] = useState(false);
 	const [showLoginMessage, setShowLoginMessage] = useState(false);

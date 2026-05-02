@@ -49,6 +49,7 @@ function setAuth(accessToken: string | null) {
 		login: vi.fn(),
 		register: vi.fn(),
 		logout: vi.fn(),
+		loginWithGoogle: vi.fn(),
 	});
 }
 

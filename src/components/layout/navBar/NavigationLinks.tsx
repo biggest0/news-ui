@@ -26,6 +26,7 @@ export const NavigationLinks = ({ onLinkClick }: NavigationLinksProps) => {
 	};
 	const NavHome: NavLink = { to: "/", label: t("NAVIGATION.HOME") };
 	const NavItems: NavLink[] = [
+		{ to: "/blog", label: t("NAVIGATION.BLOG") },
 		{ to: "/about", label: t("NAVIGATION.ABOUT") },
 		{ to: "/contact", label: t("NAVIGATION.CONTACT") },
 		{ to: "/search", label: t("NAVIGATION.SEARCH") },

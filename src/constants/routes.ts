@@ -4,18 +4,8 @@ export const PAGE_ROUTES = {
 	ABOUT: "/about",
 	SEARCH: "/search",
 	CATS: "/cats",
+	BLOG: "/blog",
 };
-
-// export const ARTICLE_ROUTES = {
-//   WORLD: "/world",
-// 	LIEFSTYLE: "/lifestyle",
-// 	SCIENCE: "/science",
-// 	TECHNOLOGY: "/technology",
-// 	BUSINESS: "/business",
-// 	SPORT: "/sport",
-// 	POLITICS: "/politics",
-// 	OTHER: "other",
-// }
 
 export const ARTICLE_ROUTES = [
 	"world",

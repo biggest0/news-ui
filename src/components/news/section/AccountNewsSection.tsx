@@ -14,7 +14,7 @@ import {
 export const AccountNewsSection = () => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch<AppDispatch>();
-	const { accessToken } = useAuth();
+	const { accessToken, isLoading: isAuthLoading } = useAuth();
 	const { articles } = useSelector(
 		(state: RootState) => state.userContent.history
 	);
@@ -23,9 +23,9 @@ export const AccountNewsSection = () => {
 	);
 
 	useEffect(() => {
-		if (!accessToken) return;
+		if (isAuthLoading || !accessToken) return;
 		dispatch(loadArticleHistory({ accessToken }));
-	}, [accessToken, dispatch]);
+	}, [isAuthLoading, accessToken, dispatch]);
 
 	const handleClear = async () => {
 		if (!accessToken) return;

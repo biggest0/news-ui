@@ -54,6 +54,7 @@
 		"DISCLAIMER": "Disclaimer",
 		"ABOUT_US": "About Us",
 		"CONTACT": "Contact",
+		"BLOG": "Blog",
 		"SUBSCRIBE": "Subscribe",
 		"SUBSCRIBE_MESSAGE_TITLE": "Subscribe to our newsletter",
 		"SUBSCRIBE_MESSAGE": "Get the latest news delivered to your inbox",
@@ -103,7 +104,15 @@
 		"HOME": "Home",
 		"ABOUT": "About",
 		"CONTACT": "Contact",
-		"SEARCH": "Search"
+		"SEARCH": "Search",
+		"BLOG": "Blog"
+	},
+	"BLOG": {
+		"TITLE": "Blog",
+		"READ_MORE": "Read more",
+		"BACK_TO_BLOG": "Back to blog",
+		"NOT_FOUND": "That post doesn't exist.",
+		"NO_POSTS": "No posts yet. Check back soon."
 	},
 	"PAGINATION": {
 		"SHOW": "Show",
@@ -208,7 +217,13 @@
 		"PASSWORDS_MISMATCH": "Passwords do not match.",
 		"VALIDATION_ERROR": "Please fill in all fields.",
 		"LOGIN_SUCCESS": "Logged in successfully.",
-		"REGISTER_SUCCESS": "Account created successfully."
+		"REGISTER_SUCCESS": "Account created successfully.",
+		"OR": "or",
+		"SIGN_IN_GOOGLE": "Sign in with Google",
+		"GOOGLE_SIGNING_IN": "Signing in with Google...",
+		"GOOGLE_FAILED": "Google sign-in failed. Please try again.",
+		"GOOGLE_STATE_INVALID": "Sign-in request was invalid. Please try again.",
+		"GOOGLE_RATE_LIMITED": "Too many attempts. Please wait a few minutes."
 	},
 	"SUBSCRIBE": {
 		"VALIDATION_ERROR": "Please enter a valid email address.",
