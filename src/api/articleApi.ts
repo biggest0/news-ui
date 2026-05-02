@@ -1,5 +1,6 @@
 import type { ArticleInfoQueryDTO, RecommendedArticlesResponseDTO, SemanticSearchResponseDTO } from "@/types/articleDto";
 import { API_URL } from "@/config/config";
+import { authFetch } from "@/api/authFetch";
 
 /**
  * Fetches article information from the server with optional filters
@@ -203,12 +204,9 @@ export async function fetchSimilarArticles(
 export async function fetchRecommendedArticles(
 	accessToken: string
 ): Promise<RecommendedArticlesResponseDTO> {
-	const response = await fetch(`${API_URL}/api/recommendations`, {
+	const response = await authFetch(`${API_URL}/api/recommendations`, accessToken, {
 		method: "GET",
-		headers: {
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${accessToken}`,
-		},
+		headers: { "Content-Type": "application/json" },
 	});
 	if (!response.ok) {
 		throw new Error(`Error: ${response.statusText}`);

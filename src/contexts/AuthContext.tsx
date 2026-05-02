@@ -1,45 +1,43 @@
-import {
-	createContext,
-	useContext,
-	useState,
-	useEffect,
-	useCallback,
-	useRef,
-	type ReactNode,
-} from "react";
-import type { AuthTokens, AuthUser } from "@/types/authTypes";
-import { AUTH_TOKENS, AUTH_USER } from "@/constants/keys";
-import {
-	registerUser as registerService,
-	loginUser as loginService,
-	logoutUser as logoutService,
-	refreshAccessToken,
-	exchangeGoogleLoginCode,
-} from "@/service/authService";
+import { useEffect, useRef, useSyncExternalStore, type ReactNode } from "react";
+
+import type { AuthUser } from "@/types/authTypes";
+import { AUTH_TOKENS } from "@/constants/keys";
+import { authStore } from "@/auth/authStore";
 
 /**
- * AuthContext provides authentication state and actions to the entire app.
+ * AuthProvider — bootstraps the session on mount by attempting a silent token
+ * refresh. Auth state itself lives in the module-level `authStore`, so this
+ * provider only needs to trigger the initial validation.
  *
- * State:
- * - `user`            — The authenticated user (email), or null if logged out
- * - `isAuthenticated` — True when both user and tokens are present
- * - `isLoading`       — True while the session is being validated on mount
- *
- * Actions:
- * - `login`    — Calls the login endpoint, stores tokens, sets user state
- * - `register` — Calls the register endpoint, stores tokens, sets user state
- * - `logout`   — Invalidates tokens on the server and clears local state
- *
- * Session validation:
- * On mount, AuthProvider attempts a silent token refresh. If the refresh token
- * is valid, the access token is renewed and the session is restored. If it
- * fails (expired or invalid), the user is logged out.
- *
- * Storage:
- * Tokens and user info are persisted in localStorage under AUTH_TOKENS and
- * AUTH_USER keys so the session survives page reloads.
+ * Children can call `useAuth()` from anywhere; no Context.Provider is needed
+ * because the store is module-level and shared across the app.
  */
-interface AuthContextType {
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
+	const bootstrappedRef = useRef(false);
+
+	useEffect(() => {
+		if (bootstrappedRef.current) return;
+		bootstrappedRef.current = true;
+
+		if (!localStorage.getItem(AUTH_TOKENS)) {
+			authStore.setLoading(false);
+			return;
+		}
+
+		authStore
+			.refresh()
+			.then((token) => {
+				if (!token) authStore.clearSession();
+			})
+			.finally(() => {
+				authStore.setLoading(false);
+			});
+	}, []);
+
+	return <>{children}</>;
+};
+
+interface AuthApi {
 	user: AuthUser | null;
 	accessToken: string | null;
 	isAuthenticated: boolean;
@@ -50,151 +48,20 @@ interface AuthContextType {
 	loginWithGoogle: (loginCode: string) => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-/** Reads auth tokens from localStorage. Returns null if missing or malformed. */
-const getStoredTokens = (): AuthTokens | null => {
-	try {
-		const raw = localStorage.getItem(AUTH_TOKENS);
-		return raw ? JSON.parse(raw) : null;
-	} catch {
-		return null;
-	}
-};
-
-/** Reads user info from localStorage. Returns null if missing or malformed. */
-const getStoredUser = (): AuthUser | null => {
-	try {
-		const raw = localStorage.getItem(AUTH_USER);
-		return raw ? JSON.parse(raw) : null;
-	} catch {
-		return null;
-	}
-};
-
-/** Persists tokens and user info to localStorage after login or register. */
-const storeAuth = (tokens: AuthTokens, user: AuthUser) => {
-	localStorage.setItem(AUTH_TOKENS, JSON.stringify(tokens));
-	localStorage.setItem(AUTH_USER, JSON.stringify(user));
-};
-
-/** Removes auth tokens and user info from localStorage on logout or session expiry. */
-const clearAuth = () => {
-	localStorage.removeItem(AUTH_TOKENS);
-	localStorage.removeItem(AUTH_USER);
-};
-
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
-	const [user, setUser] = useState<AuthUser | null>(() => getStoredUser());
-	const [tokens, setTokens] = useState<AuthTokens | null>(
-		() => getStoredTokens()
-	);
-	const [isLoading, setIsLoading] = useState(true);
-
-	const isAuthenticated = !!user && !!tokens;
-
-	// Guard against StrictMode double-mount causing concurrent refresh requests.
-	// Token rotation invalidates the old token on the first call, so a second
-	// concurrent call with the same token will fail with "Refresh token not recognized".
-	const refreshingRef = useRef(false);
-
-	useEffect(() => {
-		if (refreshingRef.current) return;
-		refreshingRef.current = true;
-
-		const validateSession = async () => {
-			const storedTokens = getStoredTokens();
-			if (!storedTokens) {
-				setIsLoading(false);
-				return;
-			}
-
-			try {
-				const { accessToken, refreshToken } = await refreshAccessToken(
-					storedTokens.refreshToken
-				);
-				const updatedTokens: AuthTokens = {
-					accessToken,
-					refreshToken: refreshToken ?? storedTokens.refreshToken,
-				};
-				setTokens(updatedTokens);
-				localStorage.setItem(AUTH_TOKENS, JSON.stringify(updatedTokens));
-			} catch {
-				// Refresh failed — session expired
-				clearAuth();
-				setUser(null);
-				setTokens(null);
-			} finally {
-				setIsLoading(false);
-			}
-		};
-
-		validateSession();
-	}, []);
-
-	const login = useCallback(async (email: string, password: string) => {
-		const response = await loginService({ email, password });
-		const newTokens: AuthTokens = {
-			accessToken: response.accessToken,
-			refreshToken: response.refreshToken,
-		};
-		storeAuth(newTokens, response.user);
-		setTokens(newTokens);
-		setUser(response.user);
-	}, []);
-
-	const register = useCallback(async (email: string, password: string) => {
-		const response = await registerService({ email, password });
-		const newTokens: AuthTokens = {
-			accessToken: response.accessToken,
-			refreshToken: response.refreshToken,
-		};
-		storeAuth(newTokens, response.user);
-		setTokens(newTokens);
-		setUser(response.user);
-	}, []);
-
-	const loginWithGoogle = useCallback(async (loginCode: string) => {
-		const response = await exchangeGoogleLoginCode(loginCode);
-		const newTokens: AuthTokens = {
-			accessToken: response.accessToken,
-			refreshToken: response.refreshToken,
-		};
-		storeAuth(newTokens, response.user);
-		setTokens(newTokens);
-		setUser(response.user);
-	}, []);
-
-	const logout = useCallback(async () => {
-		if (tokens) {
-			try {
-				await logoutService(tokens.accessToken, tokens.refreshToken);
-			} catch {
-				// Logout failed on server — still clear locally
-			}
-		}
-		clearAuth();
-		setUser(null);
-		setTokens(null);
-	}, [tokens]);
-
-	return (
-		<AuthContext.Provider
-			value={{ user, accessToken: tokens?.accessToken ?? null, isAuthenticated, isLoading, login, register, logout, loginWithGoogle }}
-		>
-			{children}
-		</AuthContext.Provider>
-	);
-};
-
 /**
- * Hook to access authentication state and actions.
- * Must be used inside AuthProvider.
+ * Subscribes to the auth store. Same shape as before so all existing callers
+ * (and test mocks) keep working without changes.
  */
-export const useAuth = () => {
-	const context = useContext(AuthContext);
-	if (!context) {
-		throw new Error("useAuth must be used within AuthProvider");
-	}
-	return context;
+export const useAuth = (): AuthApi => {
+	const state = useSyncExternalStore(authStore.subscribe, authStore.getState);
+	return {
+		user: state.user,
+		accessToken: state.tokens?.accessToken ?? null,
+		isAuthenticated: !!state.user && !!state.tokens,
+		isLoading: state.isLoading,
+		login: authStore.login,
+		register: authStore.register,
+		logout: authStore.logout,
+		loginWithGoogle: authStore.loginWithGoogle,
+	};
 };
