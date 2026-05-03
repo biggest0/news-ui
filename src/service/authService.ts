@@ -1,4 +1,4 @@
-import { postRegister, postLogin, postLogout, postRefreshToken, postGoogleExchange } from "@/api/authApi";
+import { postRegister, postLogin, postLogout, postRefreshToken, postGoogleExchange, postForgotPassword, postResetPassword } from "@/api/authApi";
 import type {
 	AuthResponse,
 	LoginRequest,
@@ -66,6 +66,45 @@ export async function refreshAccessToken(): Promise<RefreshResponse> {
  */
 export async function exchangeGoogleLoginCode(loginCode: string): Promise<AuthResponse> {
 	return await postGoogleExchange(loginCode);
+}
+
+/**
+ * Requests a password reset email for the given address.
+ * @param email - The user's email address
+ * @throws Error with a user-friendly message on failure
+ */
+export async function requestPasswordReset(email: string): Promise<void> {
+	try {
+		await postForgotPassword(email);
+	} catch (error) {
+		if (error instanceof Error) {
+			if (error.message.includes("HTTP error")) {
+				throw new Error("Failed to connect to server. Please try again later.");
+			}
+			throw error;
+		}
+		throw new Error("Something went wrong. Please try again.");
+	}
+}
+
+/**
+ * Resets the user's password using a valid reset token.
+ * @param token - The reset token from the email link
+ * @param newPassword - The new password to set
+ * @throws Error with a user-friendly message on failure
+ */
+export async function resetPassword(token: string, newPassword: string): Promise<void> {
+	try {
+		await postResetPassword(token, newPassword);
+	} catch (error) {
+		if (error instanceof Error) {
+			if (error.message.includes("HTTP error")) {
+				throw new Error("Failed to connect to server. Please try again later.");
+			}
+			throw error;
+		}
+		throw new Error("Something went wrong. Please try again.");
+	}
 }
 
 /**

@@ -131,7 +131,16 @@ export default function LoginPage() {
 					{t("AUTH.SIGN_IN_GOOGLE")}
 				</button>
 
-				<p className="mt-6 text-sm text-muted">
+				<p className="mt-4 text-sm text-muted">
+					<Link
+						to="/reset-password"
+						className="text-accent hover:underline transition-colors"
+					>
+						{t("AUTH.FORGOT_PASSWORD")}
+					</Link>
+				</p>
+
+				<p className="mt-2 text-sm text-muted">
 					{t("AUTH.NO_ACCOUNT")}{" "}
 					<Link
 						to="/register"

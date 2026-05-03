@@ -14,6 +14,8 @@ import RegisterPage from "./pages/RegisterPage";
 import GoogleCallbackPage from "./pages/GoogleCallbackPage";
 import BlogPage from "./pages/BlogPage";
 import BlogPostPage from "./pages/BlogPostPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
+import NewPasswordPage from "./pages/NewPasswordPage";
 
 import Header from "./components/layout/header/Header";
 import Footer from "@/components/layout/footer/Footer";
@@ -50,6 +52,8 @@ function App() {
 							<Route path="/account" element={<AccountPage />} />
 							<Route path="/login" element={<LoginPage />} />
 							<Route path="/register" element={<RegisterPage />} />
+							<Route path="/reset-password" element={<ResetPasswordPage />} />
+							<Route path="/reset-password/:token" element={<NewPasswordPage />} />
 							<Route path="/auth/google/callback" element={<GoogleCallbackPage />} />
 							<Route path="/blog" element={<BlogPage />} />
 							<Route path="/blog/:slug" element={<BlogPostPage />} />

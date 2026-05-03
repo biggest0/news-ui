@@ -125,6 +125,52 @@ export async function postLogout(): Promise<void> {
 }
 
 /**
+ * POST /auth/user/forgot-password
+ * Requests a password reset email for the given address.
+ * Always returns 200 to prevent user enumeration.
+ * @param email - The user's email address
+ * @returns The server's message
+ * @throws Error if the request fails
+ */
+export async function postForgotPassword(email: string): Promise<{ message: string }> {
+	const response = await fetch(`${API_URL}/auth/user/forgot-password`, {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify({ email }),
+	});
+
+	if (!response.ok) {
+		const error = await response.json().catch(() => null);
+		throw new Error(error?.error || `HTTP error! status: ${response.status}`);
+	}
+
+	return await response.json();
+}
+
+/**
+ * POST /auth/user/reset-password
+ * Sets a new password using the reset token from the email link.
+ * @param token - The reset token from the URL
+ * @param newPassword - The new password to set
+ * @returns The server's message
+ * @throws Error with the server's error field on failure
+ */
+export async function postResetPassword(token: string, newPassword: string): Promise<{ message: string }> {
+	const response = await fetch(`${API_URL}/auth/user/reset-password`, {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify({ token, newPassword }),
+	});
+
+	if (!response.ok) {
+		const error = await response.json().catch(() => null);
+		throw new Error(error?.error || `HTTP error! status: ${response.status}`);
+	}
+
+	return await response.json();
+}
+
+/**
  * GET /auth/user/me
  * Returns the current user info from the access token cookie.
  * @returns The current user object
