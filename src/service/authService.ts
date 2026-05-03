@@ -39,6 +39,9 @@ export async function loginUser(data: LoginRequest): Promise<AuthResponse> {
 		return await postLogin(data);
 	} catch (error) {
 		if (error instanceof Error) {
+			if (error.message.includes("401")) {
+				throw new Error("Invalid email or password.");
+			}
 			if (error.message.includes("HTTP error")) {
 				throw new Error("Failed to connect to server. Please try again later.");
 			}
