@@ -1,6 +1,5 @@
 // LocalStorage
 export const USER_INFO = 'user_info'
-export const AUTH_TOKENS = 'auth_tokens'
 export const AUTH_USER = 'auth_user'
 
 // Sections

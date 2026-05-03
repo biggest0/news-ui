@@ -15,15 +15,15 @@ export const ArticleTitleCard = ({
 	articleTitle,
 	index,
 }: ArticleTitleCardProps) => {
-	const { accessToken } = useAuth();
+	const { isAuthenticated } = useAuth();
 
-	
+
 	const handleClick = () => {
 		// Fire-and-forget: increment the public view counter for all users,
 		// and record this article in the authenticated user's reading history if logged in.
 		incrementArticleViewed(articleId);
-		if (accessToken) {
-			recordArticleRead(articleId, accessToken);
+		if (isAuthenticated) {
+			recordArticleRead(articleId);
 		}
 	};
 

@@ -33,14 +33,11 @@ import {
 // ── Helpers ──────────────────────────────────────────────────────────
 
 const mockAuthResponse: AuthResponse = {
-	accessToken: "access-123",
-	refreshToken: "refresh-456",
 	user: { email: "cat@example.com" },
 };
 
 const mockRefreshResponse: RefreshResponse = {
-	accessToken: "new-access-789",
-	refreshToken: "new-refresh-012",
+	user: { email: "cat@example.com" },
 };
 
 beforeEach(() => {
@@ -124,19 +121,19 @@ describe("loginUser", () => {
 // ── refreshAccessToken ───────────────────────────────────────────────
 
 describe("refreshAccessToken", () => {
-	it("returns new tokens on success", async () => {
+	it("returns user info on success", async () => {
 		vi.mocked(postRefreshToken).mockResolvedValue(mockRefreshResponse);
 
-		const result = await refreshAccessToken("refresh-456");
+		const result = await refreshAccessToken();
 
-		expect(postRefreshToken).toHaveBeenCalledWith("refresh-456");
+		expect(postRefreshToken).toHaveBeenCalled();
 		expect(result).toEqual(mockRefreshResponse);
 	});
 
 	it("propagates errors directly (no wrapping — caller handles)", async () => {
 		vi.mocked(postRefreshToken).mockRejectedValue(new Error("HTTP error! status: 401"));
 
-		await expect(refreshAccessToken("expired-token")).rejects.toThrow(
+		await expect(refreshAccessToken()).rejects.toThrow(
 			"HTTP error! status: 401"
 		);
 	});
@@ -148,14 +145,14 @@ describe("logoutUser", () => {
 	it("resolves silently on success", async () => {
 		vi.mocked(postLogout).mockResolvedValue(undefined);
 
-		await expect(logoutUser("access-123", "refresh-456")).resolves.toBeUndefined();
-		expect(postLogout).toHaveBeenCalledWith("access-123", "refresh-456");
+		await expect(logoutUser()).resolves.toBeUndefined();
+		expect(postLogout).toHaveBeenCalled();
 	});
 
 	it("throws user-friendly message on HTTP error", async () => {
 		vi.mocked(postLogout).mockRejectedValue(new Error("HTTP error! status: 500"));
 
-		await expect(logoutUser("access-123", "refresh-456")).rejects.toThrow(
+		await expect(logoutUser()).rejects.toThrow(
 			"Failed to connect to server. Please try again later."
 		);
 	});
@@ -163,7 +160,7 @@ describe("logoutUser", () => {
 	it("re-throws non-HTTP Error instances as-is", async () => {
 		vi.mocked(postLogout).mockRejectedValue(new Error("Session not found"));
 
-		await expect(logoutUser("access-123", "refresh-456")).rejects.toThrow(
+		await expect(logoutUser()).rejects.toThrow(
 			"Session not found"
 		);
 	});
@@ -171,7 +168,7 @@ describe("logoutUser", () => {
 	it("throws generic connection message for non-Error exceptions", async () => {
 		vi.mocked(postLogout).mockRejectedValue("string error");
 
-		await expect(logoutUser("access-123", "refresh-456")).rejects.toThrow(
+		await expect(logoutUser()).rejects.toThrow(
 			"Unable to log out. Please check your connection."
 		);
 	});

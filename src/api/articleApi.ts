@@ -195,16 +195,13 @@ export async function fetchSimilarArticles(
 
 /**
  * Fetches personalised article recommendations for the logged-in user.
- * Requires a valid access token. The backend builds a profile vector
- * from the user's reading history and returns semantically similar articles.
- * @param accessToken - Bearer token for authentication
+ * The backend builds a profile vector from the user's reading history
+ * and returns semantically similar articles. Auth via HttpOnly cookies.
  * @returns The response containing recommended articles with similarity scores
  * @throws Error if the HTTP request fails
  */
-export async function fetchRecommendedArticles(
-	accessToken: string
-): Promise<RecommendedArticlesResponseDTO> {
-	const response = await authFetch(`${API_URL}/api/recommendations`, accessToken, {
+export async function fetchRecommendedArticles(): Promise<RecommendedArticlesResponseDTO> {
+	const response = await authFetch(`${API_URL}/api/recommendations`, {
 		method: "GET",
 		headers: { "Content-Type": "application/json" },
 	});

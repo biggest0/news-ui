@@ -1,8 +1,3 @@
-export interface AuthTokens {
-	accessToken: string;
-	refreshToken: string;
-}
-
 export interface AuthUser {
 	id?: string;
 	email: string;
@@ -19,12 +14,9 @@ export interface RegisterRequest {
 }
 
 export interface AuthResponse {
-	accessToken: string;
-	refreshToken: string;
 	user: AuthUser;
 }
 
 export interface RefreshResponse {
-	accessToken: string;
-	refreshToken: string;
+	user: AuthUser;
 }

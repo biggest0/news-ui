@@ -69,9 +69,9 @@ export const loadSimilarArticles = createAsyncThunk<
 
 export const loadRecommendedArticles = createAsyncThunk<
 	RecommendedArticle[],
-	string
->("recommendations/loadRecommended", async (accessToken) => {
-	return await getRecommendedArticles(accessToken);
+	void
+>("recommendations/loadRecommended", async () => {
+	return await getRecommendedArticles();
 });
 
 export const loadSemanticSearchResults = createAsyncThunk<

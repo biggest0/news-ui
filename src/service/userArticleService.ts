@@ -15,11 +15,10 @@ import type { ArticleLikeStatus, ArticleHistoryResponse } from "@/types/articleT
  * @throws Error with a user-friendly message on failure
  */
 export async function toggleArticleLike(
-	articleId: string,
-	accessToken: string
+	articleId: string
 ): Promise<ArticleLikeStatus> {
 	try {
-		const data = await postToggleLike(articleId, accessToken);
+		const data = await postToggleLike(articleId);
 		return { liked: data.liked, likeCount: data.like_count };
 	} catch (error) {
 		if (error instanceof Error) {
@@ -37,11 +36,10 @@ export async function toggleArticleLike(
  * @returns The like status and count, or defaults on error
  */
 export async function getArticleLikeStatus(
-	articleId: string,
-	accessToken?: string | null
+	articleId: string
 ): Promise<ArticleLikeStatus> {
 	try {
-		const data = await fetchLikeStatus(articleId, accessToken);
+		const data = await fetchLikeStatus(articleId);
 		return { liked: data.liked, likeCount: data.like_count };
 	} catch (error) {
 		console.error("[Error fetching like status]:", error);
@@ -53,8 +51,8 @@ export async function getArticleLikeStatus(
  * Records that the user read an article.
  * Fire-and-forget — do not await.
  */
-export function recordArticleRead(articleId: string, accessToken: string) {
-	postArticleRead(articleId, accessToken);
+export function recordArticleRead(articleId: string) {
+	postArticleRead(articleId);
 }
 
 /**
@@ -62,12 +60,11 @@ export function recordArticleRead(articleId: string, accessToken: string) {
  * @returns Paginated history with article info and read timestamps
  */
 export async function getArticleHistory(
-	accessToken: string,
 	page: number = 1,
 	limit: number = 20
 ): Promise<ArticleHistoryResponse> {
 	try {
-		const data = await fetchArticleHistory(accessToken, page, limit);
+		const data = await fetchArticleHistory(page, limit);
 		return {
 			articles: data.articles.map(mapDTOtoArticleHistoryItem),
 			count: data.count,
@@ -82,9 +79,9 @@ export async function getArticleHistory(
  * Clears all reading history for the authenticated user.
  * @throws Error with a user-friendly message on failure
  */
-export async function clearArticleHistory(accessToken: string): Promise<void> {
+export async function clearArticleHistory(): Promise<void> {
 	try {
-		await deleteArticleHistory(accessToken);
+		await deleteArticleHistory();
 	} catch (error) {
 		if (error instanceof Error) {
 			if (error.message.includes("HTTP error")) {
@@ -101,11 +98,10 @@ export async function clearArticleHistory(accessToken: string): Promise<void> {
  * @throws Error with a user-friendly message on failure
  */
 export async function removeArticleFromHistory(
-	articleId: string,
-	accessToken: string
+	articleId: string
 ): Promise<void> {
 	try {
-		await deleteArticleHistoryItem(articleId, accessToken);
+		await deleteArticleHistoryItem(articleId);
 	} catch (error) {
 		if (error instanceof Error) {
 			if (error.message.includes("HTTP error")) {

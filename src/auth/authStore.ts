@@ -1,5 +1,5 @@
-import type { AuthTokens, AuthUser } from "@/types/authTypes";
-import { AUTH_TOKENS, AUTH_USER } from "@/constants/keys";
+import type { AuthUser } from "@/types/authTypes";
+import { AUTH_USER } from "@/constants/keys";
 import {
 	registerUser as registerService,
 	loginUser as loginService,
@@ -11,6 +11,9 @@ import {
 /**
  * Module-level auth store. Single source of truth for the user's session.
  *
+ * Tokens are managed entirely via HttpOnly cookies — the frontend only
+ * tracks the user object (for UI rendering) and an authenticated flag.
+ *
  * - React reads via `useAuth` (which subscribes through useSyncExternalStore).
  * - The API layer (authFetch) calls `refresh()` and `clearSession()` directly.
  * - Concurrent refreshes share one in-flight promise so token rotation can't
@@ -19,7 +22,7 @@ import {
 
 interface AuthState {
 	user: AuthUser | null;
-	tokens: AuthTokens | null;
+	isAuthenticated: boolean;
 	isLoading: boolean;
 }
 
@@ -34,7 +37,7 @@ const readJSON = <T,>(key: string): T | null => {
 
 let state: AuthState = {
 	user: readJSON<AuthUser>(AUTH_USER),
-	tokens: readJSON<AuthTokens>(AUTH_TOKENS),
+	isAuthenticated: !!readJSON<AuthUser>(AUTH_USER),
 	isLoading: true,
 };
 
@@ -45,34 +48,25 @@ const setState = (patch: Partial<AuthState>) => {
 	subscribers.forEach((fn) => fn());
 };
 
-const persistSession = (user: AuthUser, tokens: AuthTokens) => {
-	localStorage.setItem(AUTH_TOKENS, JSON.stringify(tokens));
+const persistUser = (user: AuthUser) => {
 	localStorage.setItem(AUTH_USER, JSON.stringify(user));
-	setState({ user, tokens });
+	setState({ user, isAuthenticated: true });
 };
 
 const clearSessionInternal = () => {
-	localStorage.removeItem(AUTH_TOKENS);
 	localStorage.removeItem(AUTH_USER);
-	setState({ user: null, tokens: null });
+	setState({ user: null, isAuthenticated: false });
 };
 
-let inflightRefresh: Promise<string | null> | null = null;
+let inflightRefresh: Promise<boolean> | null = null;
 
-const performRefresh = async (): Promise<string | null> => {
-	const stored = readJSON<AuthTokens>(AUTH_TOKENS);
-	if (!stored) return null;
+const performRefresh = async (): Promise<boolean> => {
 	try {
-		const result = await refreshAccessToken(stored.refreshToken);
-		const updated: AuthTokens = {
-			accessToken: result.accessToken,
-			refreshToken: result.refreshToken ?? stored.refreshToken,
-		};
-		localStorage.setItem(AUTH_TOKENS, JSON.stringify(updated));
-		setState({ tokens: updated });
-		return updated.accessToken;
+		const result = await refreshAccessToken();
+		persistUser(result.user);
+		return true;
 	} catch {
-		return null;
+		return false;
 	}
 };
 
@@ -86,7 +80,7 @@ export const authStore = {
 		};
 	},
 
-	refresh(): Promise<string | null> {
+	refresh(): Promise<boolean> {
 		if (!inflightRefresh) {
 			inflightRefresh = performRefresh().finally(() => {
 				inflightRefresh = null;
@@ -105,36 +99,24 @@ export const authStore = {
 
 	async login(email: string, password: string) {
 		const response = await loginService({ email, password });
-		persistSession(response.user, {
-			accessToken: response.accessToken,
-			refreshToken: response.refreshToken,
-		});
+		persistUser(response.user);
 	},
 
 	async register(email: string, password: string) {
 		const response = await registerService({ email, password });
-		persistSession(response.user, {
-			accessToken: response.accessToken,
-			refreshToken: response.refreshToken,
-		});
+		persistUser(response.user);
 	},
 
 	async loginWithGoogle(loginCode: string) {
 		const response = await exchangeGoogleLoginCode(loginCode);
-		persistSession(response.user, {
-			accessToken: response.accessToken,
-			refreshToken: response.refreshToken,
-		});
+		persistUser(response.user);
 	},
 
 	async logout() {
-		const current = state.tokens;
-		if (current) {
-			try {
-				await logoutService(current.accessToken, current.refreshToken);
-			} catch {
-				// Logout failed on server — clear locally anyway
-			}
+		try {
+			await logoutService();
+		} catch {
+			// Logout failed on server — clear locally anyway
 		}
 		clearSessionInternal();
 	},

@@ -9,7 +9,7 @@ import type {
 /**
  * Registers a new user account.
  * @param data - Email and password for the new account
- * @returns Auth tokens and user info on success
+ * @returns User info on success (tokens are set as HttpOnly cookies)
  * @throws Error with a user-friendly message on failure
  */
 export async function registerUser(
@@ -31,7 +31,7 @@ export async function registerUser(
 /**
  * Logs in an existing user.
  * @param data - Email and password credentials
- * @returns Auth tokens and user info on success
+ * @returns User info on success (tokens are set as HttpOnly cookies)
  * @throws Error with a user-friendly message on failure
  */
 export async function loginUser(data: LoginRequest): Promise<AuthResponse> {
@@ -49,22 +49,19 @@ export async function loginUser(data: LoginRequest): Promise<AuthResponse> {
 }
 
 /**
- * Exchanges a refresh token for a new access token.
+ * Exchanges a refresh token cookie for new auth cookies.
  * Used on app load to silently restore a session.
- * @param refreshToken - The stored refresh token
- * @returns A new access token
+ * @returns User info from the refreshed session
  * @throws Error if the refresh token is expired or invalid
  */
-export async function refreshAccessToken(
-	refreshToken: string
-): Promise<RefreshResponse> {
-	return await postRefreshToken(refreshToken);
+export async function refreshAccessToken(): Promise<RefreshResponse> {
+	return await postRefreshToken();
 }
 
 /**
- * Exchanges the one-time Google loginCode for real auth tokens.
+ * Exchanges the one-time Google loginCode for auth cookies.
  * @param loginCode - UUID from the /auth/google/callback redirect query param
- * @returns Auth tokens and user info on success
+ * @returns User info on success (tokens are set as HttpOnly cookies)
  * @throws Error with a user-facing message on failure
  */
 export async function exchangeGoogleLoginCode(loginCode: string): Promise<AuthResponse> {
@@ -72,17 +69,12 @@ export async function exchangeGoogleLoginCode(loginCode: string): Promise<AuthRe
 }
 
 /**
- * Logs out the current user by invalidating tokens on the server.
- * @param accessToken - The current access token (sent as Bearer header)
- * @param refreshToken - The refresh token to invalidate
+ * Logs out the current user by invalidating cookies on the server.
  * @throws Error with a user-friendly message on failure
  */
-export async function logoutUser(
-	accessToken: string,
-	refreshToken: string
-): Promise<void> {
+export async function logoutUser(): Promise<void> {
 	try {
-		await postLogout(accessToken, refreshToken);
+		await postLogout();
 	} catch (error) {
 		if (error instanceof Error) {
 			if (error.message.includes("HTTP error")) {

@@ -13,7 +13,7 @@ import SimilarArticlesSection from "@/components/news/section/SimilarArticlesSec
 export default function ArticlePage() {
 	const { id } = useParams();
 	const dispatch = useDispatch<AppDispatch>();
-	const { accessToken } = useAuth();
+	const { isAuthenticated } = useAuth();
 	const articleDetail = useSelector((state: RootState) =>
 		id ? state.article.articlesDetail[id] : undefined
 	);
@@ -23,8 +23,8 @@ export default function ArticlePage() {
 		if (id) {
 			dispatch(loadArticleDetail(id));
 			incrementArticleViewed(id);
-			if (accessToken) {
-				recordArticleRead(id, accessToken);
+			if (isAuthenticated) {
+				recordArticleRead(id);
 			}
 		}
 	}, [id]);
