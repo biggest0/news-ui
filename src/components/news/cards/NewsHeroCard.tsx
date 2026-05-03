@@ -11,12 +11,12 @@ interface NewsCardProp {
 }
 
 export default function NewsHeroCard({ articleInfo, small }: NewsCardProp) {
-	const { accessToken } = useAuth();
+	const { isAuthenticated } = useAuth();
 
 	const handleClick = () => {
 		incrementArticleViewed(articleInfo.id);
-		if (accessToken) {
-			recordArticleRead(articleInfo.id, accessToken);
+		if (isAuthenticated) {
+			recordArticleRead(articleInfo.id);
 		}
 	};
 

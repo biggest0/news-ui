@@ -20,7 +20,7 @@ interface NewsCardProp {
 export default function NewsCard({ articleInfo }: NewsCardProp) {
 	const { t } = useTranslation();
 	const dispatch = useDispatch<AppDispatch>();
-	const { accessToken } = useAuth();
+	const { isAuthenticated } = useAuth();
 	const articleDetail: ArticleDetail = useSelector(
 		(state: RootState) => state.article.articlesDetail[articleInfo.id]
 	);
@@ -46,8 +46,8 @@ export default function NewsCard({ articleInfo }: NewsCardProp) {
 					setIsLoadingDetail(false);
 				});
 			incrementArticleViewed(articleInfo.id);
-			if (accessToken) {
-				recordArticleRead(articleInfo.id, accessToken);
+			if (isAuthenticated) {
+				recordArticleRead(articleInfo.id);
 			}
 		}
 	}

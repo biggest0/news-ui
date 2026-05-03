@@ -22,7 +22,7 @@ export const LikeButton = ({
 }: LikeButtonProps) => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch<AppDispatch>();
-	const { accessToken, isAuthenticated, isLoading: isAuthLoading } = useAuth();
+	const { isAuthenticated, isLoading: isAuthLoading } = useAuth();
 	const likeStatus = useSelector(
 		(state: RootState) => state.userContent.likes[articleId]
 	);
@@ -32,15 +32,15 @@ export const LikeButton = ({
 	// When the user is authenticated, fetch the real like status from the server
 	// (whether they've liked this article, and the current like count).
 	useEffect(() => {
-		if (isAuthLoading || !isAuthenticated || !accessToken) return;
-		dispatch(loadArticleLikeStatus({ articleId, accessToken }));
-	}, [articleId, accessToken, isAuthenticated, isAuthLoading, dispatch]);
+		if (isAuthLoading || !isAuthenticated) return;
+		dispatch(loadArticleLikeStatus({ articleId }));
+	}, [articleId, isAuthenticated, isAuthLoading, dispatch]);
 
 	const [isToggling, setIsToggling] = useState(false);
 	const [showLoginMessage, setShowLoginMessage] = useState(false);
 
 	const handleToggleLike = async () => {
-		if (!isAuthenticated || !accessToken) {
+		if (!isAuthenticated) {
 			setShowLoginMessage(true);
 			setTimeout(() => setShowLoginMessage(false), 3000);
 			return;
@@ -51,7 +51,7 @@ export const LikeButton = ({
 		setIsToggling(true);
 		try {
 			unwrapResult(
-				await dispatch(toggleArticleLikeThunk({ articleId, accessToken }))
+				await dispatch(toggleArticleLikeThunk({ articleId }))
 			);
 		} catch {
 			// Thunk reducer captures the error; state is derived from Redux

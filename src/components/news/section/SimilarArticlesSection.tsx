@@ -17,7 +17,7 @@ interface SimilarArticlesSectionProps {
 export default function SimilarArticlesSection({ articleId }: SimilarArticlesSectionProps) {
 	const dispatch = useDispatch<AppDispatch>();
 	const { t } = useTranslation();
-	const { accessToken } = useAuth();
+	const { isAuthenticated } = useAuth();
 	const similarArticles = useSelector(
 		(state: RootState) => state.recommendations.similar[articleId]
 	);
@@ -33,8 +33,8 @@ export default function SimilarArticlesSection({ articleId }: SimilarArticlesSec
 
 	const handleClick = (clickedArticleId: string) => {
 		incrementArticleViewed(clickedArticleId);
-		if (accessToken) {
-			recordArticleRead(clickedArticleId, accessToken);
+		if (isAuthenticated) {
+			recordArticleRead(clickedArticleId);
 		}
 	};
 

@@ -16,17 +16,17 @@ import { recordArticleRead } from "@/service/userArticleService";
 export default function RecommendedSection() {
 	const dispatch = useDispatch<AppDispatch>();
 	const { t } = useTranslation();
-	const { accessToken, isAuthenticated, isLoading } = useAuth();
+	const { isAuthenticated, isLoading } = useAuth();
 	const isVisible = useSectionVisible(SECTIONS.RECOMMENDED);
 	const { recommended: recommendedArticles, loading } = useSelector(
 		(state: RootState) => state.recommendations
 	);
 
 	useEffect(() => {
-		if (!isLoading && isAuthenticated && accessToken) {
-			dispatch(loadRecommendedArticles(accessToken));
+		if (!isLoading && isAuthenticated) {
+			dispatch(loadRecommendedArticles());
 		}
-	}, [isLoading, isAuthenticated, accessToken, dispatch]);
+	}, [isLoading, isAuthenticated, dispatch]);
 
 	if (!isAuthenticated || (!loading.recommended && recommendedArticles.length === 0)) {
 		return null;
@@ -34,8 +34,8 @@ export default function RecommendedSection() {
 
 	const handleClick = (articleId: string) => {
 		incrementArticleViewed(articleId);
-		if (accessToken) {
-			recordArticleRead(articleId, accessToken);
+		if (isAuthenticated) {
+			recordArticleRead(articleId);
 		}
 	};
 

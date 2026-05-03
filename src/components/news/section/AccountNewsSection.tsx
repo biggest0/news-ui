@@ -14,7 +14,7 @@ import {
 export const AccountNewsSection = () => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch<AppDispatch>();
-	const { accessToken, isLoading: isAuthLoading } = useAuth();
+	const { isAuthenticated, isLoading: isAuthLoading } = useAuth();
 	const { articles } = useSelector(
 		(state: RootState) => state.userContent.history
 	);
@@ -23,14 +23,14 @@ export const AccountNewsSection = () => {
 	);
 
 	useEffect(() => {
-		if (isAuthLoading || !accessToken) return;
-		dispatch(loadArticleHistory({ accessToken }));
-	}, [isAuthLoading, accessToken, dispatch]);
+		if (isAuthLoading || !isAuthenticated) return;
+		dispatch(loadArticleHistory({}));
+	}, [isAuthLoading, isAuthenticated, dispatch]);
 
 	const handleClear = async () => {
-		if (!accessToken) return;
+		if (!isAuthenticated) return;
 		try {
-			await dispatch(clearArticleHistoryThunk(accessToken)).unwrap();
+			await dispatch(clearArticleHistoryThunk()).unwrap();
 		} catch (error) {
 			console.error("Failed to clear history:", error);
 		}

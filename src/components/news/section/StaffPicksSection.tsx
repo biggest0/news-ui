@@ -12,13 +12,13 @@ import { useTranslation } from "react-i18next";
 
 export default function StaffPicksSection() {
 	const isVisible = useSectionVisible(SECTIONS.STAFF_PICKS);
-	const { accessToken } = useAuth();
+	const { isAuthenticated } = useAuth();
 	const { t } = useTranslation();
 
 	const handleClick = (articleId: string) => {
 		incrementArticleViewed(articleId);
-		if (accessToken) {
-			recordArticleRead(articleId, accessToken);
+		if (isAuthenticated) {
+			recordArticleRead(articleId);
 		}
 	};
 
