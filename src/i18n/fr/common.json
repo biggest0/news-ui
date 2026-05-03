@@ -241,7 +241,19 @@
 		"RESETTING_PASSWORD": "Réinitialisation...",
 		"RESET_SUCCESS": "Votre mot de passe a été réinitialisé avec succès.",
 		"RESET_TOKEN_INVALID": "Ce lien est invalide ou a expiré. Veuillez en demander un nouveau.",
-		"RESET_GO_TO_LOGIN": "Aller à la connexion"
+		"RESET_GO_TO_LOGIN": "Aller à la connexion",
+		"VERIFY_EMAIL_TITLE": "VÉRIFIEZ VOTRE COURRIEL",
+		"VERIFY_EMAIL_HEADING": "Vérifiez Votre Boîte de Réception",
+		"VERIFY_EMAIL_BODY": "Nous avons envoyé un courriel de vérification à <strong>{{email}}</strong>. Cliquez sur le lien pour vérifier votre compte.",
+		"VERIFY_RESEND": "Renvoyer le courriel de vérification",
+		"VERIFY_RESEND_IN": "Renvoyer dans {{seconds}}s",
+		"VERIFY_SUCCESS_TITLE": "COURRIEL VÉRIFIÉ",
+		"VERIFY_SUCCESS": "Votre adresse courriel a été vérifiée avec succès !",
+		"VERIFY_GO_TO_ACCOUNT": "Aller au compte",
+		"VERIFY_FAILED": "La vérification a échoué. Le lien est peut-être invalide ou expiré.",
+		"VERIFY_VERIFYING": "Vérification en cours...",
+		"VERIFY_RESEND_SUCCESS": "Courriel de vérification envoyé !",
+		"VERIFY_RESEND_FAILED": "Échec du renvoi. Veuillez réessayer."
 	},
 	"SUBSCRIBE": {
 		"VALIDATION_ERROR": "Veuillez saisir une adresse e-mail valide.",

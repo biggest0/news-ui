@@ -171,6 +171,49 @@ export async function postResetPassword(token: string, newPassword: string): Pro
 }
 
 /**
+ * POST /auth/user/verify-email
+ * Verifies the user's email using the token from the verification email link.
+ * @param token - The verification token from the URL
+ * @returns The server's message
+ * @throws Error with the server's error field on failure
+ */
+export async function postVerifyEmail(token: string): Promise<{ message: string }> {
+	const response = await fetch(`${API_URL}/auth/user/verify-email`, {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify({ token }),
+	});
+
+	if (!response.ok) {
+		const error = await response.json().catch(() => null);
+		throw new Error(error?.error || `HTTP error! status: ${response.status}`);
+	}
+
+	return await response.json();
+}
+
+/**
+ * POST /auth/user/resend-verification
+ * Resends the verification email for the authenticated user.
+ * Requires an active session (HttpOnly cookies).
+ * @returns The server's message
+ * @throws Error with the server's error field on failure
+ */
+export async function postResendVerification(): Promise<{ message: string }> {
+	const response = await fetch(`${API_URL}/auth/user/resend-verification`, {
+		method: "POST",
+		credentials: "include",
+	});
+
+	if (!response.ok) {
+		const error = await response.json().catch(() => null);
+		throw new Error(error?.error || `HTTP error! status: ${response.status}`);
+	}
+
+	return await response.json();
+}
+
+/**
  * GET /auth/user/me
  * Returns the current user info from the access token cookie.
  * @returns The current user object

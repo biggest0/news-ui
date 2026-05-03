@@ -241,7 +241,19 @@
 		"RESETTING_PASSWORD": "Resetting...",
 		"RESET_SUCCESS": "Your password has been reset successfully.",
 		"RESET_TOKEN_INVALID": "This reset link is invalid or has expired. Please request a new one.",
-		"RESET_GO_TO_LOGIN": "Go to login"
+		"RESET_GO_TO_LOGIN": "Go to login",
+		"VERIFY_EMAIL_TITLE": "VERIFY YOUR EMAIL",
+		"VERIFY_EMAIL_HEADING": "Check Your Inbox",
+		"VERIFY_EMAIL_BODY": "We've sent a verification email to <strong>{{email}}</strong>. Click the link inside to verify your account.",
+		"VERIFY_RESEND": "Resend Verification Email",
+		"VERIFY_RESEND_IN": "Resend in {{seconds}}s",
+		"VERIFY_SUCCESS_TITLE": "EMAIL VERIFIED",
+		"VERIFY_SUCCESS": "Your email has been verified successfully!",
+		"VERIFY_GO_TO_ACCOUNT": "Go to account",
+		"VERIFY_FAILED": "Verification failed. The link may be invalid or expired.",
+		"VERIFY_VERIFYING": "Verifying...",
+		"VERIFY_RESEND_SUCCESS": "Verification email sent!",
+		"VERIFY_RESEND_FAILED": "Failed to resend. Please try again."
 	},
 	"SUBSCRIBE": {
 		"VALIDATION_ERROR": "Please enter a valid email address.",

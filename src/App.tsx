@@ -16,6 +16,7 @@ import BlogPage from "./pages/BlogPage";
 import BlogPostPage from "./pages/BlogPostPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import NewPasswordPage from "./pages/NewPasswordPage";
+import EmailVerificationPage from "./pages/EmailVerificationPage";
 
 import Header from "./components/layout/header/Header";
 import Footer from "@/components/layout/footer/Footer";
@@ -52,6 +53,7 @@ function App() {
 							<Route path="/account" element={<AccountPage />} />
 							<Route path="/login" element={<LoginPage />} />
 							<Route path="/register" element={<RegisterPage />} />
+							<Route path="/account/verification" element={<EmailVerificationPage />} />
 							<Route path="/reset-password" element={<ResetPasswordPage />} />
 							<Route path="/reset-password/:token" element={<NewPasswordPage />} />
 							<Route path="/auth/google/callback" element={<GoogleCallbackPage />} />
