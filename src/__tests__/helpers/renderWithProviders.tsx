@@ -3,10 +3,10 @@
  * the card components: Redux store, React Router, i18next, and AuthContext.
  *
  * Usage:
- *   renderWithProviders(<MyComponent />, { accessToken: "tok", preloadedState: { ... } });
+ *   renderWithProviders(<MyComponent />, { preloadedState: { ... } });
  *
  * The AuthContext is mocked directly (no real AuthProvider) so tests can
- * control `accessToken` and `isAuthenticated` without touching localStorage.
+ * control `isAuthenticated` without touching localStorage or cookies.
  */
 import { render, type RenderOptions } from "@testing-library/react";
 import { configureStore } from "@reduxjs/toolkit";
@@ -90,7 +90,6 @@ testI18n.init({
 // ── Mock AuthContext (avoids importing the real provider) ─────────────
 
 interface MockAuthValues {
-	accessToken: string | null;
 	isAuthenticated: boolean;
 }
 

@@ -45,11 +45,10 @@ beforeEach(() => {
 	vi.resetAllMocks();
 });
 
-function setAuth(accessToken: string | null) {
+function setAuth(isAuthenticated: boolean) {
 	vi.mocked(useAuth).mockReturnValue({
 		user: null,
-		accessToken,
-		isAuthenticated: !!accessToken,
+		isAuthenticated,
 		isLoading: false,
 		login: vi.fn(),
 		register: vi.fn(),
@@ -76,7 +75,7 @@ describe("NewsHeroCard", () => {
 
 	/** Verifies the article title is rendered and links to /article/:id. */
 	it("renders the title as a link to the article detail page", () => {
-		setAuth(null);
+		setAuth(false);
 		renderWithProviders(
 			<NewsHeroCard articleInfo={sampleArticle} small={false} />
 		);
@@ -87,7 +86,7 @@ describe("NewsHeroCard", () => {
 
 	/** In hero mode (small=false), the summary is displayed. */
 	it("shows the summary in hero mode (small=false)", () => {
-		setAuth(null);
+		setAuth(false);
 		renderWithProviders(
 			<NewsHeroCard articleInfo={sampleArticle} small={false} />
 		);
@@ -97,7 +96,7 @@ describe("NewsHeroCard", () => {
 
 	/** In hero mode, the date is NOT shown. */
 	it("does not show the date in hero mode", () => {
-		setAuth(null);
+		setAuth(false);
 		renderWithProviders(
 			<NewsHeroCard articleInfo={sampleArticle} small={false} />
 		);
@@ -107,7 +106,7 @@ describe("NewsHeroCard", () => {
 
 	/** In compact mode (small=true), the date is shown instead of the summary. */
 	it("shows the date in compact mode (small=true)", () => {
-		setAuth(null);
+		setAuth(false);
 		renderWithProviders(
 			<NewsHeroCard articleInfo={sampleArticle} small={true} />
 		);
@@ -117,7 +116,7 @@ describe("NewsHeroCard", () => {
 
 	/** In compact mode, the summary is NOT rendered. */
 	it("does not show the summary in compact mode", () => {
-		setAuth(null);
+		setAuth(false);
 		renderWithProviders(
 			<NewsHeroCard articleInfo={sampleArticle} small={true} />
 		);
@@ -127,7 +126,7 @@ describe("NewsHeroCard", () => {
 
 	/** When the article has no summary, nothing extra is shown in hero mode. */
 	it("handles missing summary gracefully in hero mode", () => {
-		setAuth(null);
+		setAuth(false);
 		const noSummary = { ...sampleArticle, summary: undefined };
 		renderWithProviders(
 			<NewsHeroCard articleInfo={noSummary} small={false} />
@@ -141,7 +140,7 @@ describe("NewsHeroCard", () => {
 
 	/** Click always fires incrementArticleViewed, even when unauthenticated. */
 	it("increments view count on click (unauthenticated)", async () => {
-		setAuth(null);
+		setAuth(false);
 		renderWithProviders(
 			<NewsHeroCard articleInfo={sampleArticle} small={false} />
 		);
@@ -154,7 +153,7 @@ describe("NewsHeroCard", () => {
 
 	/** When authenticated, click both increments views and records read history. */
 	it("records article read when authenticated", async () => {
-		setAuth("hero-token");
+		setAuth(true);
 		renderWithProviders(
 			<NewsHeroCard articleInfo={sampleArticle} small={false} />
 		);
@@ -162,6 +161,6 @@ describe("NewsHeroCard", () => {
 		await userEvent.click(screen.getByRole("link"));
 
 		expect(incrementArticleViewed).toHaveBeenCalledWith("hero-1");
-		expect(recordArticleRead).toHaveBeenCalledWith("hero-1", "hero-token");
+		expect(recordArticleRead).toHaveBeenCalledWith("hero-1");
 	});
 });

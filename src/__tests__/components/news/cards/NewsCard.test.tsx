@@ -67,11 +67,10 @@ beforeEach(() => {
 	vi.mocked(getArticleLikeStatus).mockResolvedValue({ liked: false, likeCount: 0 });
 });
 
-function setAuth(accessToken: string | null) {
+function setAuth(isAuthenticated: boolean) {
 	vi.mocked(useAuth).mockReturnValue({
 		user: null,
-		accessToken,
-		isAuthenticated: !!accessToken,
+		isAuthenticated,
 		isLoading: false,
 		login: vi.fn(),
 		register: vi.fn(),
@@ -110,7 +109,7 @@ describe("NewsCard", () => {
 
 	/** Verifies the article title is rendered. */
 	it("renders the article title", () => {
-		setAuth(null);
+		setAuth(false);
 		renderWithProviders(<NewsCard articleInfo={sampleArticle} />);
 
 		expect(screen.getByText("Cat Takes Over Parliament")).toBeInTheDocument();
@@ -118,7 +117,7 @@ describe("NewsCard", () => {
 
 	/** Verifies the published date is displayed. */
 	it("renders the published date", () => {
-		setAuth(null);
+		setAuth(false);
 		renderWithProviders(<NewsCard articleInfo={sampleArticle} />);
 
 		expect(screen.getByText("3/20/2026")).toBeInTheDocument();
@@ -126,7 +125,7 @@ describe("NewsCard", () => {
 
 	/** Verifies the category is capitalized via capitalizeWord. */
 	it("renders the category capitalized", () => {
-		setAuth(null);
+		setAuth(false);
 		renderWithProviders(<NewsCard articleInfo={sampleArticle} />);
 
 		expect(screen.getByText("Politics")).toBeInTheDocument();
@@ -134,7 +133,7 @@ describe("NewsCard", () => {
 
 	/** Verifies the summary is visible when the card is collapsed. */
 	it("shows the summary in collapsed state", () => {
-		setAuth(null);
+		setAuth(false);
 		renderWithProviders(<NewsCard articleInfo={sampleArticle} />);
 
 		expect(
@@ -144,7 +143,7 @@ describe("NewsCard", () => {
 
 	/** Verifies the "Read More" toggle is shown initially. */
 	it("shows 'Read More' label when collapsed", () => {
-		setAuth(null);
+		setAuth(false);
 		renderWithProviders(<NewsCard articleInfo={sampleArticle} />);
 
 		expect(screen.getByText("Read More")).toBeInTheDocument();
@@ -152,7 +151,7 @@ describe("NewsCard", () => {
 
 	/** Verifies the LikeButton component is present. */
 	it("renders the LikeButton", () => {
-		setAuth(null);
+		setAuth(false);
 		renderWithProviders(<NewsCard articleInfo={sampleArticle} />);
 
 		// LikeButton renders a button element
@@ -164,7 +163,7 @@ describe("NewsCard", () => {
 
 	/** Clicking "Read More" toggles the label to "Hide". */
 	it("toggles to 'Hide' label when expanded", async () => {
-		setAuth(null);
+		setAuth(false);
 		vi.mocked(getArticleDetail).mockResolvedValue(sampleDetail);
 		renderWithProviders(<NewsCard articleInfo={sampleArticle} />, {
 			preloadedState: {
@@ -188,7 +187,7 @@ describe("NewsCard", () => {
 
 	/** When expanded with preloaded detail, the article paragraphs are rendered. */
 	it("displays article paragraphs when expanded with cached detail", async () => {
-		setAuth(null);
+		setAuth(false);
 		vi.mocked(getArticleDetail).mockResolvedValue(sampleDetail);
 		renderWithProviders(<NewsCard articleInfo={sampleArticle} />, {
 			preloadedState: {
@@ -213,7 +212,7 @@ describe("NewsCard", () => {
 
 	/** When expanded with cached detail, subcategory links are rendered. */
 	it("displays subcategory links when expanded", async () => {
-		setAuth(null);
+		setAuth(false);
 		vi.mocked(getArticleDetail).mockResolvedValue(sampleDetail);
 		renderWithProviders(<NewsCard articleInfo={sampleArticle} />, {
 			preloadedState: {
@@ -241,7 +240,7 @@ describe("NewsCard", () => {
 
 	/** Clicking "Hide" after expanding collapses back and shows "Read More". */
 	it("collapses back to 'Read More' on second click", async () => {
-		setAuth(null);
+		setAuth(false);
 		vi.mocked(getArticleDetail).mockResolvedValue(sampleDetail);
 		renderWithProviders(<NewsCard articleInfo={sampleArticle} />, {
 			preloadedState: {
@@ -268,7 +267,7 @@ describe("NewsCard", () => {
 
 	/** Expanding the card increments the article view counter (fire-and-forget). */
 	it("increments view count on first expand", async () => {
-		setAuth(null);
+		setAuth(false);
 		renderWithProviders(<NewsCard articleInfo={sampleArticle} />);
 
 		await userEvent.click(screen.getByText("Read More"));
@@ -280,19 +279,19 @@ describe("NewsCard", () => {
 
 	/** When authenticated, expanding records the read in the user's history. */
 	it("records article read on expand when authenticated", async () => {
-		setAuth("card-token");
+		setAuth(true);
 		renderWithProviders(<NewsCard articleInfo={sampleArticle} />);
 
 		await userEvent.click(screen.getByText("Read More"));
 
 		await waitFor(() => {
-			expect(recordArticleRead).toHaveBeenCalledWith("card-1", "card-token");
+			expect(recordArticleRead).toHaveBeenCalledWith("card-1");
 		});
 	});
 
 	/** When unauthenticated, expanding does NOT record a read. */
 	it("does not record article read when unauthenticated", async () => {
-		setAuth(null);
+		setAuth(false);
 		renderWithProviders(<NewsCard articleInfo={sampleArticle} />);
 
 		await userEvent.click(screen.getByText("Read More"));
@@ -305,7 +304,7 @@ describe("NewsCard", () => {
 
 	/** Expanding a second time does NOT re-trigger view increment or read recording. */
 	it("does not re-fetch or re-record on subsequent expand/collapse cycles", async () => {
-		setAuth("card-token");
+		setAuth(true);
 		vi.mocked(getArticleDetail).mockResolvedValue(sampleDetail);
 		renderWithProviders(<NewsCard articleInfo={sampleArticle} />, {
 			preloadedState: {
@@ -340,7 +339,7 @@ describe("NewsCard", () => {
 
 	/** Handles articles with no summary. */
 	it("renders without crashing when summary is undefined", () => {
-		setAuth(null);
+		setAuth(false);
 		const noSummary = { ...sampleArticle, summary: undefined };
 		renderWithProviders(<NewsCard articleInfo={noSummary} />);
 
@@ -349,7 +348,7 @@ describe("NewsCard", () => {
 
 	/** Handles articles with undefined mainCategory. */
 	it("renders without crashing when mainCategory is undefined", () => {
-		setAuth(null);
+		setAuth(false);
 		const noCategory = { ...sampleArticle, mainCategory: undefined };
 		renderWithProviders(<NewsCard articleInfo={noCategory} />);
 

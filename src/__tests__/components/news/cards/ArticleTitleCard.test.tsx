@@ -40,11 +40,10 @@ beforeEach(() => {
 	vi.resetAllMocks();
 });
 
-function setAuth(accessToken: string | null) {
+function setAuth(isAuthenticated: boolean) {
 	vi.mocked(useAuth).mockReturnValue({
 		user: null,
-		accessToken,
-		isAuthenticated: !!accessToken,
+		isAuthenticated,
 		isLoading: false,
 		login: vi.fn(),
 		register: vi.fn(),
@@ -64,7 +63,7 @@ const defaultProps = {
 describe("ArticleTitleCard", () => {
 	/** Verifies the title is prefixed with the 1-based index number. */
 	it("renders the article title with 1-based index prefix", () => {
-		setAuth(null);
+		setAuth(false);
 		renderWithProviders(<ArticleTitleCard {...defaultProps} />);
 
 		expect(screen.getByText("1. Cat Takes Over Parliament")).toBeInTheDocument();
@@ -72,7 +71,7 @@ describe("ArticleTitleCard", () => {
 
 	/** Verifies the index number matches the prop (0 → "1.", 4 → "5."). */
 	it("formats index correctly for non-zero values", () => {
-		setAuth(null);
+		setAuth(false);
 		renderWithProviders(<ArticleTitleCard {...defaultProps} index={4} />);
 
 		expect(screen.getByText("5. Cat Takes Over Parliament")).toBeInTheDocument();
@@ -80,7 +79,7 @@ describe("ArticleTitleCard", () => {
 
 	/** Verifies the link navigates to /article/:id. */
 	it("links to the article detail page", () => {
-		setAuth(null);
+		setAuth(false);
 		renderWithProviders(<ArticleTitleCard {...defaultProps} />);
 
 		const link = screen.getByRole("link", { name: /Cat Takes Over Parliament/ });
@@ -89,7 +88,7 @@ describe("ArticleTitleCard", () => {
 
 	/** Verifies incrementArticleViewed is always called on click, regardless of auth. */
 	it("increments article view count on click (unauthenticated)", async () => {
-		setAuth(null);
+		setAuth(false);
 		renderWithProviders(<ArticleTitleCard {...defaultProps} />);
 
 		await userEvent.click(screen.getByRole("link", { name: /Cat Takes Over Parliament/ }));
@@ -99,7 +98,7 @@ describe("ArticleTitleCard", () => {
 
 	/** Verifies recordArticleRead is NOT called when the user is unauthenticated. */
 	it("does not record article read when not authenticated", async () => {
-		setAuth(null);
+		setAuth(false);
 		renderWithProviders(<ArticleTitleCard {...defaultProps} />);
 
 		await userEvent.click(screen.getByRole("link", { name: /Cat Takes Over Parliament/ }));
@@ -109,12 +108,12 @@ describe("ArticleTitleCard", () => {
 
 	/** Verifies both incrementArticleViewed and recordArticleRead are called when authenticated. */
 	it("records article read when authenticated", async () => {
-		setAuth("test-token");
+		setAuth(true);
 		renderWithProviders(<ArticleTitleCard {...defaultProps} />);
 
 		await userEvent.click(screen.getByRole("link", { name: /Cat Takes Over Parliament/ }));
 
 		expect(incrementArticleViewed).toHaveBeenCalledWith("art-1");
-		expect(recordArticleRead).toHaveBeenCalledWith("art-1", "test-token");
+		expect(recordArticleRead).toHaveBeenCalledWith("art-1");
 	});
 });
