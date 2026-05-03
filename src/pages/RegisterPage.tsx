@@ -1,13 +1,13 @@
-import { useState } from "react";
-import { useTranslation } from "react-i18next";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useTranslation, Trans } from "react-i18next";
+import { Link } from "react-router-dom";
 
 import { SectionHeader } from "@/components/common/layout/SectionHeader";
 import { useAuth } from "@/contexts/AuthContext";
+import { resendVerification } from "@/service/authService";
 
 export default function RegisterPage() {
 	const { t } = useTranslation();
-	const navigate = useNavigate();
 	const { register } = useAuth();
 
 	const [email, setEmail] = useState("");
@@ -15,6 +15,16 @@ export default function RegisterPage() {
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [error, setError] = useState("");
+	const [registered, setRegistered] = useState(false);
+	const [countdown, setCountdown] = useState(0);
+	const [resendError, setResendError] = useState("");
+	const [resendSuccess, setResendSuccess] = useState(false);
+
+	useEffect(() => {
+		if (countdown <= 0) return;
+		const timer = setTimeout(() => setCountdown((c) => c - 1), 1000);
+		return () => clearTimeout(timer);
+	}, [countdown]);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -34,7 +44,8 @@ export default function RegisterPage() {
 
 		try {
 			await register(email, password);
-			navigate("/account");
+			setRegistered(true);
+			setCountdown(30);
 		} catch (err) {
 			if (err instanceof Error) {
 				setError(err.message);
@@ -45,6 +56,61 @@ export default function RegisterPage() {
 			setIsSubmitting(false);
 		}
 	};
+
+	const handleResend = async () => {
+		setResendError("");
+		setResendSuccess(false);
+		try {
+			await resendVerification();
+			setResendSuccess(true);
+			setCountdown(30);
+		} catch {
+			setResendError(t("AUTH.VERIFY_RESEND_FAILED"));
+		}
+	};
+
+	if (registered) {
+		return (
+			<section className="py-6">
+				<SectionHeader title={t("AUTH.VERIFY_EMAIL_TITLE")} />
+
+				<div className="max-w-md pt-6 flex flex-col gap-4">
+					<h2 className="text-lg font-semibold text-primary">
+						{t("AUTH.VERIFY_EMAIL_HEADING")}
+					</h2>
+					<p className="text-secondary">
+						<Trans
+							i18nKey="AUTH.VERIFY_EMAIL_BODY"
+							values={{ email }}
+							components={{ strong: <strong /> }}
+						/>
+					</p>
+
+					{resendSuccess && (
+						<p className="text-sm text-green-600 dark:text-green-400">
+							{t("AUTH.VERIFY_RESEND_SUCCESS")}
+						</p>
+					)}
+					{resendError && (
+						<p className="text-sm text-red-600 dark:text-red-400">
+							{resendError}
+						</p>
+					)}
+
+					<button
+						type="button"
+						onClick={handleResend}
+						disabled={countdown > 0}
+						className="bg-accent-bg text-white py-2 rounded-lg hover:bg-amber-700 dark:hover:bg-amber-500 transition-colors disabled:bg-gray-400 dark:disabled:bg-slate-600 disabled:cursor-not-allowed"
+					>
+						{countdown > 0
+							? t("AUTH.VERIFY_RESEND_IN", { seconds: countdown })
+							: t("AUTH.VERIFY_RESEND")}
+					</button>
+				</div>
+			</section>
+		);
+	}
 
 	return (
 		<section className="py-6">

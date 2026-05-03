@@ -93,11 +93,19 @@ describe("loginUser", () => {
 		expect(result).toEqual(mockAuthResponse);
 	});
 
-	it("throws user-friendly message on HTTP error", async () => {
+	it("throws invalid credentials message on 401", async () => {
 		vi.mocked(postLogin).mockRejectedValue(new Error("HTTP error! status: 401"));
 
 		await expect(
 			loginUser({ email: "cat@example.com", password: "wrong" })
+		).rejects.toThrow("Invalid email or password.");
+	});
+
+	it("throws user-friendly message on non-auth HTTP error", async () => {
+		vi.mocked(postLogin).mockRejectedValue(new Error("HTTP error! status: 500"));
+
+		await expect(
+			loginUser({ email: "cat@example.com", password: "meow123" })
 		).rejects.toThrow("Failed to connect to server. Please try again later.");
 	});
 
