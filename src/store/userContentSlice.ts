@@ -49,17 +49,17 @@ const initialState: UserContentState = {
 // -------------------------
 export const loadArticleLikeStatus = createAsyncThunk<
 	{ articleId: string; status: ArticleLikeStatus },
-	{ articleId: string; accessToken?: string | null }
->("userContent/loadLikeStatus", async ({ articleId, accessToken }) => {
-	const status = await getArticleLikeStatus(articleId, accessToken);
+	{ articleId: string }
+>("userContent/loadLikeStatus", async ({ articleId }) => {
+	const status = await getArticleLikeStatus(articleId);
 	return { articleId, status };
 });
 
 export const toggleArticleLikeThunk = createAsyncThunk<
 	{ articleId: string; status: ArticleLikeStatus },
-	{ articleId: string; accessToken: string }
->("userContent/toggleLike", async ({ articleId, accessToken }) => {
-	const status = await toggleArticleLike(articleId, accessToken);
+	{ articleId: string }
+>("userContent/toggleLike", async ({ articleId }) => {
+	const status = await toggleArticleLike(articleId);
 	return { articleId, status };
 });
 
@@ -68,23 +68,23 @@ export const toggleArticleLikeThunk = createAsyncThunk<
 // -------------------------
 export const loadArticleHistory = createAsyncThunk<
 	{ articles: ArticleHistoryItem[]; count: number },
-	{ accessToken: string; page?: number; limit?: number }
->("userContent/loadHistory", async ({ accessToken, page, limit }) => {
-	return await getArticleHistory(accessToken, page, limit);
+	{ page?: number; limit?: number }
+>("userContent/loadHistory", async ({ page, limit }) => {
+	return await getArticleHistory(page, limit);
 });
 
-export const clearArticleHistoryThunk = createAsyncThunk<void, string>(
+export const clearArticleHistoryThunk = createAsyncThunk<void, void>(
 	"userContent/clearHistory",
-	async (accessToken) => {
-		await clearArticleHistory(accessToken);
+	async () => {
+		await clearArticleHistory();
 	}
 );
 
 export const removeArticleFromHistoryThunk = createAsyncThunk<
 	string,
-	{ articleId: string; accessToken: string }
->("userContent/removeHistoryItem", async ({ articleId, accessToken }) => {
-	await removeArticleFromHistory(articleId, accessToken);
+	{ articleId: string }
+>("userContent/removeHistoryItem", async ({ articleId }) => {
+	await removeArticleFromHistory(articleId);
 	return articleId;
 });
 

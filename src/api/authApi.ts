@@ -8,9 +8,9 @@ import type {
 
 /**
  * POST /auth/user/register
- * Creates a new user account.
+ * Creates a new user account. Tokens are set as HttpOnly cookies by the server.
  * @param data - Email and password for the new account
- * @returns Auth tokens and the created user object
+ * @returns The created user object
  * @throws Error with the server's message, or a generic HTTP error
  */
 export async function postRegister(
@@ -19,6 +19,7 @@ export async function postRegister(
 	const response = await fetch(`${API_URL}/auth/user/register`, {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
+		credentials: "include",
 		body: JSON.stringify(data),
 	});
 
@@ -34,15 +35,16 @@ export async function postRegister(
 
 /**
  * POST /auth/user/login
- * Authenticates an existing user.
+ * Authenticates an existing user. Tokens are set as HttpOnly cookies by the server.
  * @param data - Email and password credentials
- * @returns Auth tokens and the authenticated user object
+ * @returns The authenticated user object
  * @throws Error with the server's message, or a generic HTTP error
  */
 export async function postLogin(data: LoginRequest): Promise<AuthResponse> {
 	const response = await fetch(`${API_URL}/auth/user/login`, {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
+		credentials: "include",
 		body: JSON.stringify(data),
 	});
 
@@ -58,19 +60,15 @@ export async function postLogin(data: LoginRequest): Promise<AuthResponse> {
 
 /**
  * POST /auth/user/refresh
- * Exchanges a refresh token for a new access token.
+ * Rotates the refresh token cookie and issues new auth cookies.
  * Called silently on app load to restore a valid session.
- * @param refreshToken - The stored refresh token
- * @returns A new access token
- * @throws Error if the token is expired or the request fails
+ * @returns The current user info
+ * @throws Error if the refresh token cookie is expired or the request fails
  */
-export async function postRefreshToken(
-	refreshToken: string
-): Promise<RefreshResponse> {
+export async function postRefreshToken(): Promise<RefreshResponse> {
 	const response = await fetch(`${API_URL}/auth/user/refresh`, {
 		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify({ refreshToken }),
+		credentials: "include",
 	});
 
 	if (!response.ok) {
@@ -82,15 +80,17 @@ export async function postRefreshToken(
 
 /**
  * POST /auth/user/google/exchange
- * Exchanges the one-time loginCode (from the Google callback redirect) for real tokens.
+ * Exchanges the one-time loginCode (from the Google callback redirect) for
+ * HttpOnly auth cookies.
  * @param loginCode - Short-lived UUID from the backend's redirect query param
- * @returns Auth tokens and the authenticated user object
+ * @returns The authenticated user object
  * @throws Error with the server's error field, or a generic HTTP error
  */
 export async function postGoogleExchange(loginCode: string): Promise<AuthResponse> {
 	const response = await fetch(`${API_URL}/auth/user/google/exchange`, {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
+		credentials: "include",
 		body: JSON.stringify({ loginCode }),
 	});
 
@@ -110,26 +110,35 @@ export async function postGoogleExchange(loginCode: string): Promise<AuthRespons
 
 /**
  * POST /auth/user/logout
- * Invalidates the user's tokens on the server.
- * Requires a valid access token in the Authorization header.
- * @param accessToken - Sent as Bearer token in the Authorization header
- * @param refreshToken - The refresh token to invalidate server-side
+ * Invalidates the auth cookies on the server.
  * @throws Error if the request fails
  */
-export async function postLogout(
-	accessToken: string,
-	refreshToken: string
-): Promise<void> {
+export async function postLogout(): Promise<void> {
 	const response = await fetch(`${API_URL}/auth/user/logout`, {
 		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${accessToken}`,
-		},
-		body: JSON.stringify({ refreshToken }),
+		credentials: "include",
 	});
 
 	if (!response.ok) {
 		throw new Error(`HTTP error! status: ${response.status}`);
 	}
+}
+
+/**
+ * GET /auth/user/me
+ * Returns the current user info from the access token cookie.
+ * @returns The current user object
+ * @throws Error if not authenticated or the request fails
+ */
+export async function fetchCurrentUser(): Promise<AuthResponse> {
+	const response = await fetch(`${API_URL}/auth/user/me`, {
+		method: "GET",
+		credentials: "include",
+	});
+
+	if (!response.ok) {
+		throw new Error(`HTTP error! status: ${response.status}`);
+	}
+
+	return await response.json();
 }

@@ -7,12 +7,10 @@ import type { ArticleLikeStatusDTO, ArticleHistoryResponseDTO } from "@/types/ar
  * Toggles the like status of an article for the authenticated user.
  */
 export async function postToggleLike(
-	articleId: string,
-	accessToken: string
+	articleId: string
 ): Promise<ArticleLikeStatusDTO> {
 	const response = await authFetch(
 		`${API_URL}/api/articles/${articleId}/like`,
-		accessToken,
 		{
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
@@ -33,12 +31,10 @@ export async function postToggleLike(
  * If authenticated, returns whether the current user liked it.
  */
 export async function fetchLikeStatus(
-	articleId: string,
-	accessToken?: string | null
+	articleId: string
 ): Promise<ArticleLikeStatusDTO> {
 	const response = await authFetch(
 		`${API_URL}/api/articles/${articleId}/like`,
-		accessToken ?? null,
 		{
 			method: "GET",
 			headers: { "Content-Type": "application/json" },
@@ -56,8 +52,8 @@ export async function fetchLikeStatus(
  * POST /api/articles/:id/read
  * Records that the authenticated user read an article. Fire-and-forget.
  */
-export function postArticleRead(articleId: string, accessToken: string) {
-	authFetch(`${API_URL}/api/articles/${articleId}/read`, accessToken, {
+export function postArticleRead(articleId: string) {
+	authFetch(`${API_URL}/api/articles/${articleId}/read`, {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
 	});
@@ -68,13 +64,11 @@ export function postArticleRead(articleId: string, accessToken: string) {
  * Fetches the authenticated user's reading history (paginated, newest first).
  */
 export async function fetchArticleHistory(
-	accessToken: string,
 	page: number = 1,
 	limit: number = 20
 ): Promise<ArticleHistoryResponseDTO> {
 	const response = await authFetch(
 		`${API_URL}/api/user/history?page=${page}&limit=${limit}`,
-		accessToken,
 		{
 			method: "GET",
 			headers: { "Content-Type": "application/json" },
@@ -92,8 +86,8 @@ export async function fetchArticleHistory(
  * DELETE /api/user/history
  * Clears all reading history for the authenticated user.
  */
-export async function deleteArticleHistory(accessToken: string): Promise<void> {
-	const response = await authFetch(`${API_URL}/api/user/history`, accessToken, {
+export async function deleteArticleHistory(): Promise<void> {
+	const response = await authFetch(`${API_URL}/api/user/history`, {
 		method: "DELETE",
 		headers: { "Content-Type": "application/json" },
 	});
@@ -108,12 +102,10 @@ export async function deleteArticleHistory(accessToken: string): Promise<void> {
  * Removes a single article from the user's reading history.
  */
 export async function deleteArticleHistoryItem(
-	articleId: string,
-	accessToken: string
+	articleId: string
 ): Promise<void> {
 	const response = await authFetch(
 		`${API_URL}/api/user/history/${articleId}`,
-		accessToken,
 		{
 			method: "DELETE",
 			headers: { "Content-Type": "application/json" },

@@ -143,11 +143,9 @@ export async function getSimilarArticles(
 	}
 }
 
-export async function getRecommendedArticles(
-	accessToken: string
-): Promise<RecommendedArticle[]> {
+export async function getRecommendedArticles(): Promise<RecommendedArticle[]> {
 	try {
-		const data = await fetchRecommendedArticles(accessToken);
+		const data = await fetchRecommendedArticles();
 		return data.articles.map(mapDTOtoRecommendedArticle);
 	} catch (error) {
 		console.error("[Error fetching recommended articles]:", error);
