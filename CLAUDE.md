@@ -238,6 +238,8 @@ npm run deploy     # build + copy index.html → 404.html + gh-pages deploy
 - Map API responses through `articleMapper` before storing in Redux
 - Keep UI preferences in `AppSettingContext`, server data in Redux
 - Follow the existing folder structure when adding new components
+- Preserve existing inline comments — only remove a comment if the code it describes has been changed or deleted and the comment no longer applies
+- Add inline comments to large or complex code blocks where the logic isn't immediately obvious; section off distinct parts of a function with a short comment when it aids readability
 
 **Don't:**
 - Add `tailwind.config.js` — this is Tailwind v4 (CSS-first)
@@ -246,3 +248,4 @@ npm run deploy     # build + copy index.html → 404.html + gh-pages deploy
 - Mutate Redux state directly (use slice actions)
 - Use relative `../../` imports — use `@/`
 - Await `incrementArticleViewed()` — it's intentionally fire-and-forget
+- Strip inline comments when editing adjacent code — leave them intact unless they are actively misleading after your change
