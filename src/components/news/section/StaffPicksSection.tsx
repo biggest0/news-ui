@@ -4,7 +4,7 @@ import { SectionHeaderExpandable } from "@/components/common/layout/SectionHeade
 import CollapsibleSection from "./CollapsibleSection";
 import { SECTIONS } from "@/constants/keys";
 import { useSectionVisible } from "@/hooks/useSectionCollapse";
-import { SELECTED_ARTICLES } from "../tempArticles";
+import { SELECTED_ARTICLES } from "@/components/news/tempArticles";
 import { incrementArticleViewed } from "@/api/articleApi";
 import { recordArticleRead } from "@/service/userArticleService";
 import { useAuth } from "@/contexts/AuthContext";

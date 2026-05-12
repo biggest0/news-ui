@@ -1,6 +1,6 @@
-import EditorsSection from "../section/EditorsSection";
-import CatFactsSection from "../section/CatFactsSection";
-import StaffPicksSection from "../section/StaffPicksSection";
+import EditorsSection from "@/components/news/section/EditorsSection";
+import CatFactsSection from "@/components/news/section/CatFactsSection";
+import StaffPicksSection from "@/components/news/section/StaffPicksSection";
 
 export default function NewsSideColumn() {
 

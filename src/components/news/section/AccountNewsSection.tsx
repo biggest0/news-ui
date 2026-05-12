@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-import NewsCard from "../cards/NewsCard";
+import NewsCard from "@/components/news/cards/NewsCard";
 import { SectionHeader } from "@/components/common/layout/SectionHeader";
 import { useAuth } from "@/contexts/AuthContext";
 import type { AppDispatch, RootState } from "@/store/store";

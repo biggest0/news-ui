@@ -1,6 +1,6 @@
 import Image from "@/assets/news_hero_image.jpg";
-import NewsHeroCard from "../cards/NewsHeroCard";
-import { SELECTED_ARTICLES } from "../tempArticles";
+import NewsHeroCard from "@/components/news/cards/NewsHeroCard";
+import { SELECTED_ARTICLES } from "@/components/news/tempArticles";
 import { useTranslation } from "react-i18next";
 
 export default function FeaturedSection() {

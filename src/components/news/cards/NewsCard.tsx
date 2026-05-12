@@ -9,8 +9,8 @@ import { loadArticleDetail } from "@/store/articlesSlice";
 import { incrementArticleViewed } from "@/api/articleApi";
 import { recordArticleRead } from "@/service/userArticleService";
 import { useAuth } from "@/contexts/AuthContext";
-import { ShareButton } from "../../common/social/ShareButton";
-import { LikeButton } from "../../common/social/LikeButton";
+import { ShareButton } from "@/components/common/social/ShareButton";
+import { LikeButton } from "@/components/common/social/LikeButton";
 import { capitalizeWord } from "@/utils/text/wordUtils";
 
 interface NewsCardProp {

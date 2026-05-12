@@ -3,34 +3,33 @@ import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-import NewsSideColumn from "../../shared/NewsSideColumn";
-import type { ArticleInfo } from "@/types/articleTypes";
-import type { ArticleInfoQueryDTO } from "@/types/articleDto";
+import NewsSideColumn from "@/components/news/shared/NewsSideColumn";
+import type { ArticleInfo, ArticleQuery } from "@/types/articleTypes";
 import type { RootState } from "@/store/store";
 import {
 	useArticleFilters,
 	useInfiniteScroll,
 } from "@/hooks/useArticleHooks";
 import { usePagination } from "@/hooks/usePagination";
-import { FilterBar } from "../../shared/FilterBar";
-import { ArticleList } from "../../shared/ArticleList";
-import { LoadingMessage } from "../../shared/LoadingMessage";
-import { PaginationControls } from "../../shared/PaginationControls";
+import { FilterBar } from "@/components/news/shared/FilterBar";
+import { ArticleList } from "@/components/news/shared/ArticleList";
+import { LoadingMessage } from "@/components/news/shared/LoadingMessage";
+import { PaginationControls } from "@/components/news/shared/PaginationControls";
 import { SectionHeaderExpandable } from "@/components/common/layout/SectionHeaderExpandable";
 import { usePagePagination } from "@/hooks/usePagePagination";
 import { SECTIONS } from "@/constants/keys";
-import CollapsibleSection from "../CollapsibleSection";
+import CollapsibleSection from "@/components/news/section/CollapsibleSection";
 import {
 	useAllSectionNotVisible,
 	useSectionVisible,
 } from "@/hooks/useSectionCollapse";
 import { useAppSettings } from "@/contexts/AppSettingContext";
-import EmptyStateSection from "../EmptyStateSection";
+import EmptyStateSection from "@/components/news/section/EmptyStateSection";
 
 interface BaseNewsSectionProps {
 	articles: ArticleInfo[];
 	totalCount: number; // Total articles available from server
-	loadMoreArticles: (request: ArticleInfoQueryDTO) => void;
+	loadMoreArticles: (request: ArticleQuery) => void;
 	resetKey?: string;
 }
 

@@ -1,11 +1,11 @@
 import { useTranslation } from "react-i18next";
 
 import { SectionHeaderExpandable } from "@/components/common/layout/SectionHeaderExpandable";
-import CollapsibleSection from "../CollapsibleSection";
+import CollapsibleSection from "@/components/news/section/CollapsibleSection";
 import { SECTIONS } from "@/constants/keys";
 import { useSectionVisible } from "@/hooks/useSectionCollapse";
-import { SELECTED_ARTICLES } from "../../tempArticles";
-import NewsHeroCard from "../../cards/NewsHeroCard";
+import { SELECTED_ARTICLES } from "@/components/news/tempArticles";
+import NewsHeroCard from "@/components/news/cards/NewsHeroCard";
 import Image from "@/assets/news_hero_image.jpg";
 
 export default function MobileStaffPicksSection() {

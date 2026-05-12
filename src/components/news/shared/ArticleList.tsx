@@ -1,5 +1,5 @@
 import type { ArticleInfo } from "@/types/articleTypes";
-import NewsCard from "../cards/NewsCard";
+import NewsCard from "@/components/news/cards/NewsCard";
 
 interface ArticleListProps {
 	articles: ArticleInfo[];

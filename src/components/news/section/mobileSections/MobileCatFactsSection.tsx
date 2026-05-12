@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 
 import { SectionHeaderExpandable } from "@/components/common/layout/SectionHeaderExpandable";
 import { CAT_FACTS } from "@/components/layout/sideColumn/constants";
-import CollapsibleSection from "../CollapsibleSection";
+import CollapsibleSection from "@/components/news/section/CollapsibleSection";
 import { SECTIONS } from "@/constants/keys";
 import { useSectionVisible } from "@/hooks/useSectionCollapse";
 import { CatFactsCard } from "@/components/layout/sideColumn/CatFactsCard";
