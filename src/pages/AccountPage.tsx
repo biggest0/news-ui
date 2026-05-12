@@ -20,7 +20,7 @@ export default function AccountPage() {
 		<>
 			<section className="py-6">
 				<div className="flex items-center justify-between">
-					<SectionHeader title="ACCOUNT" />
+					<SectionHeader title={t("PAGES.ACCOUNT.TITLE")} />
 					<button
 						onClick={handleLogout}
 						className="text-sm text-muted hover:text-primary transition-colors cursor-pointer"

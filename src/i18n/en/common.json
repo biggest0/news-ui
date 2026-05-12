@@ -1,6 +1,7 @@
 {
 	"APP": {
-		"TITLE": "Çatire Time"
+		"TITLE": "Çatire Time",
+		"NOT_FOUND": "Page not Found"
 	},
 	"CATEGORY": {
 		"ALL": "All",
