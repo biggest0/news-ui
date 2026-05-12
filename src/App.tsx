@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import "./App.css";
@@ -27,6 +28,7 @@ import { AppSettingProvider } from "./contexts/AppSettingContext";
 import { AuthProvider } from "./contexts/AuthContext";
 
 function App() {
+	const { t } = useTranslation();
 	return (
 		<BrowserRouter basename="/">
 			<AppSettingProvider>
@@ -61,7 +63,7 @@ function App() {
 							<Route path="/blog/:slug" element={<BlogPostPage />} />
 							<Route path="/disclaimer" element={<DisclaimerPage />} />
 							{/* Other routes */}
-							<Route path="*" element={<div>Page not Found</div>} />
+							<Route path="*" element={<div>{t("APP.NOT_FOUND")}</div>} />
 						</Routes>
 					</main>
 					<Footer />

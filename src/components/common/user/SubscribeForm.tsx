@@ -55,9 +55,9 @@ export default function SubscribeForm() {
 					disabled={isSubmitting}
 					className="border border-disabled rounded-lg px-4 py-2 w-full
 						bg-elevated
-						text-primary dark:text-slate-100
-						placeholder:text-gray-400 dark:placeholder:text-slate-500
-						focus:outline-none focus:ring-2 focus:ring-amber-500 dark:focus:ring-amber-400
+						text-primary
+						placeholder:text-placeholder
+						focus:outline-none focus:ring-2 focus:ring-accent
 						disabled:bg-hover-bg
 						transition-colors duration-200"
 				/>
@@ -65,9 +65,9 @@ export default function SubscribeForm() {
 					type="submit"
 					disabled={!validateEmail(email) || isSubmitting}
 					className="bg-accent-bg text-white px-4 py-2 rounded-lg
-						hover:bg-amber-700 dark:hover:bg-amber-500
+						hover:bg-accent-bg-hover
 						transition-colors duration-200
-						disabled:bg-gray-400 dark:disabled:bg-slate-600 disabled:cursor-not-allowed"
+						disabled:bg-disabled-bg disabled:cursor-not-allowed"
 				>
 					{isSubmitting ? t("SUBSCRIBE.SUBSCRIBING") : t("FOOTER.SUBSCRIBE")}
 				</button>
@@ -75,10 +75,10 @@ export default function SubscribeForm() {
 			{message && (
 				<p
 					className={`text-sm ${message === t("SUBSCRIBE.SUCCESS_MESSAGE")
-						? "text-green-600 dark:text-green-400"
+						? "text-success"
 						: message.includes("already subscribed")
-							? "text-yellow-600 dark:text-yellow-400"
-							: "text-red-600 dark:text-red-400"
+							? "text-warning"
+							: "text-error"
 						}`}
 				>
 					{message}

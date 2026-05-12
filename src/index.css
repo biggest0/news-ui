@@ -24,8 +24,17 @@
 	--color-elevated-glass: rgba(255, 255, 255, 0.5); /* translucent surface   | Sticky/glassmorphism surfaces (e.g. navbar on scroll) */
 	--color-accent: #d97706;                         /* amber-600 → amber-400  | Active category links, interactive text, icon highlights */
 	--color-accent-bg: #f59e0b;                      /* amber-500 → amber-600  | Button fills (e.g. subscribe button) */
+	--color-accent-bg-hover: #b45309;                /* amber-700 → amber-500  | Hover state for accent button fills */
 	--color-accent-subtle: #fef3c7;                  /* amber-100 → amber-900/40 | Hover tints on controls, selected state backgrounds */
 	--color-hover-bg: #f3f4f6;                       /* gray-100  → slate-700  | Neutral hover backgrounds, disabled input backgrounds */
+	--color-control-active: #ffffff;                 /* white     → slate-600  | Selected state on toggle/chip groups (visible above bg-hover-bg in dark) */
+	--color-disabled-bg: #9ca3af;                    /* gray-400  → slate-600  | Disabled fill on accent buttons */
+	--color-placeholder: #9ca3af;                    /* gray-400  → slate-500  | Input placeholder text (lighter than muted captions) */
+	--color-success: #16a34a;                        /* green-600 → green-400  | Success message text */
+	--color-error: #dc2626;                          /* red-600   → red-400    | Error message text */
+	--color-warning: #a16207;                        /* yellow-700 → yellow-400 | Warning message text */
+	--color-warning-subtle: #fef9c3;                 /* yellow-100 → yellow-900/30 | Warning surface fill (e.g. NoticeBar) */
+	--color-warning-border: #eab308;                 /* yellow-500 → yellow-600 | Warning border accent */
 }
 
 /* Dark mode: override same variable names — components need no changes */
@@ -42,8 +51,17 @@ html.dark {
 	--color-elevated-glass: rgba(30, 41, 59, 0.7);   /* slate-800/70% */
 	--color-accent: #fbbf24;                         /* amber-400  */
 	--color-accent-bg: #d97706;                      /* amber-600  */
+	--color-accent-bg-hover: #f59e0b;                /* amber-500  */
 	--color-accent-subtle: rgba(120, 53, 15, 0.4);   /* amber-900/40% */
 	--color-hover-bg: #334155;                       /* slate-700  */
+	--color-control-active: #475569;                 /* slate-600  */
+	--color-disabled-bg: #475569;                    /* slate-600  */
+	--color-placeholder: #64748b;                    /* slate-500  */
+	--color-success: #4ade80;                        /* green-400  */
+	--color-error: #f87171;                          /* red-400    */
+	--color-warning: #facc15;                        /* yellow-400 */
+	--color-warning-subtle: rgba(113, 63, 18, 0.3);  /* yellow-900/30% */
+	--color-warning-border: #ca8a04;                 /* yellow-600 */
 }
 
 /* @font-face {

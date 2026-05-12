@@ -1,8 +1,7 @@
 import { createSlice, createAsyncThunk, isAnyOf } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-import type { ArticleInfo, ArticleDetail, ArticleResponse } from "@/types/articleTypes";
-import type { ArticleInfoQueryDTO } from "@/types/articleDto";
+import type { ArticleInfo, ArticleDetail, ArticleQuery, ArticleResponse } from "@/types/articleTypes";
 import {
 	getArticleDetail,
 	getArticlesByCategory,
@@ -59,14 +58,14 @@ const initialState: ArticlesState = {
 // -------------------------
 export const loadInitialArticlesInfo = createAsyncThunk<
 	ArticleResponse,
-	ArticleInfoQueryDTO
+	ArticleQuery
 >("articles/loadInitialArticlesInfo", async (request) => {
 	return getArticlesInfo(request);
 });
 
 export const loadArticlesInfo = createAsyncThunk<
 	ArticleResponse,
-	ArticleInfoQueryDTO
+	ArticleQuery
 >("articles/getArticlesInfo", async (request) => {
 	return getArticlesInfo(request);
 });

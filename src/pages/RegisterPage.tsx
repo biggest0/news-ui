@@ -87,12 +87,12 @@ export default function RegisterPage() {
 					</p>
 
 					{resendSuccess && (
-						<p className="text-sm text-green-600 dark:text-green-400">
+						<p className="text-sm text-success">
 							{t("AUTH.VERIFY_RESEND_SUCCESS")}
 						</p>
 					)}
 					{resendError && (
-						<p className="text-sm text-red-600 dark:text-red-400">
+						<p className="text-sm text-error">
 							{resendError}
 						</p>
 					)}
@@ -101,7 +101,7 @@ export default function RegisterPage() {
 						type="button"
 						onClick={handleResend}
 						disabled={countdown > 0}
-						className="bg-accent-bg text-white py-2 rounded-lg hover:bg-amber-700 dark:hover:bg-amber-500 transition-colors disabled:bg-gray-400 dark:disabled:bg-slate-600 disabled:cursor-not-allowed"
+						className="bg-accent-bg text-white py-2 rounded-lg hover:bg-accent-bg-hover transition-colors disabled:bg-disabled-bg disabled:cursor-not-allowed"
 					>
 						{countdown > 0
 							? t("AUTH.VERIFY_RESEND_IN", { seconds: countdown })
@@ -129,7 +129,7 @@ export default function RegisterPage() {
 							onChange={(e) => setEmail(e.target.value)}
 							disabled={isSubmitting}
 							className="w-full border-b border-border-subtle bg-transparent py-2 text-secondary outline-none placeholder:text-muted focus:border-accent transition-colors"
-							// placeholder={t("AUTH.EMAIL")}
+							placeholder={t("AUTH.EMAIL")}
 						/>
 					</div>
 
@@ -147,7 +147,7 @@ export default function RegisterPage() {
 							onChange={(e) => setPassword(e.target.value)}
 							disabled={isSubmitting}
 							className="w-full border-b border-border-subtle bg-transparent py-2 text-secondary outline-none placeholder:text-muted focus:border-accent transition-colors"
-							// placeholder={t("AUTH.PASSWORD")}
+							placeholder={t("AUTH.PASSWORD")}
 						/>
 					</div>
 
@@ -165,16 +165,16 @@ export default function RegisterPage() {
 							onChange={(e) => setConfirmPassword(e.target.value)}
 							disabled={isSubmitting}
 							className="w-full border-b border-border-subtle bg-transparent py-2 text-secondary outline-none placeholder:text-muted focus:border-accent transition-colors"
-							// placeholder={t("AUTH.CONFIRM_PASSWORD")}
+							placeholder={t("AUTH.CONFIRM_PASSWORD")}
 						/>
 					</div>
 
-					{error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
+					{error && <p className="text-sm text-error">{error}</p>}
 
 					<button
 						type="submit"
 						disabled={isSubmitting}
-						className="bg-accent-bg text-white py-2 rounded-lg hover:bg-amber-700 dark:hover:bg-amber-500 transition-colors disabled:bg-gray-400 dark:disabled:bg-slate-600 disabled:cursor-not-allowed"
+						className="bg-accent-bg text-white py-2 rounded-lg hover:bg-accent-bg-hover transition-colors disabled:bg-disabled-bg disabled:cursor-not-allowed"
 					>
 						{isSubmitting ? t("AUTH.REGISTERING") : t("AUTH.REGISTER")}
 					</button>

@@ -43,15 +43,6 @@ export interface ArticleDetailDTO {
 	url: string;
 }
 
-export interface ArticleInfoQueryDTO {
-	page?: number;
-	limit?: number;
-	category?: string;
-	search?: string;
-	dateRange?: string;
-	sortBy?: string;
-}
-
 export interface ArticleInfoResponseDTO {
 	articles: ArticleInfoDTO[];
 	count: number;

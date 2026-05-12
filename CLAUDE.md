@@ -34,20 +34,24 @@ Catire Time is a satirical news frontend built with React 19, TypeScript, Redux 
 
 ```
 src/
-├── api/                  # Raw fetch calls (articleApi.ts, formApi.ts)
+├── __tests__/            # Vitest suites (components/, helpers/, mappers/, service/, utils/) + setup.ts
+├── api/                  # Raw fetch calls (articleApi, authApi, authFetch, formApi, userArticleApi)
+├── auth/                 # authStore.ts — module-level auth state (subscribed to via useAuth)
+├── blog/                 # registry.ts auto-discovers posts/*.tsx via import.meta.glob
 ├── components/
+│   ├── account/          # AccountPage building blocks (AccountInfoSection, AccountInfoForm)
 │   ├── common/           # Reusable UI: feedback, layout, navigation, social, theme, user
 │   ├── layout/           # App shell: header, footer, navBar, sideColumn
 │   ├── news/             # Domain: cards/, section/, shared/ (FilterBar, PaginationControls)
 │   └── search/           # Search-specific filters
 ├── config/               # config.ts — API_URL, BASE_URL, APP_VERSION
 ├── constants/            # routes.ts, keys.ts
-├── contexts/             # AppSettingContext — theme + layout preferences
+├── contexts/             # AppSettingContext (UI prefs), AuthContext (AuthProvider + useAuth)
 ├── hooks/                # Custom hooks (see below)
 ├── i18n/                 # Translation files + i18next config
 ├── mappers/              # DTO → domain type conversion (articleMapper.ts)
 ├── pages/                # Route-level components
-├── service/              # Business logic + error handling wrapping api/
+├── service/              # Business logic + error handling wrapping api/ (article, auth, form, localStorage, userArticle)
 ├── store/                # Redux store: articlesSlice, recommendationsSlice, userContentSlice
 ├── types/                # Domain types, DTO types, localStorage types, prop types
 └── utils/                # date, search, storage, text, validation utilities
@@ -79,9 +83,16 @@ All colors are defined as CSS custom properties in `src/index.css` and auto-swit
 | `bg-elevated` | white | slate-800 | Cards, inputs, dropdowns |
 | `bg-elevated-glass` | white/50% | slate-800/70% | Translucent surfaces |
 | `text-accent` / `hover:text-accent` | amber-600 | amber-400 | Interactive text, links |
-| `bg-accent-bg` / `hover:bg-accent-bg` | amber-500 | amber-600 | Button fills |
+| `bg-accent-bg` | amber-500 | amber-600 | Button fills |
+| `hover:bg-accent-bg-hover` | amber-700 | amber-500 | Hover state for accent button fills |
 | `bg-accent-subtle` | amber-100 | amber-900/40% | Hover tints on controls |
 | `bg-hover-bg` | gray-100 | slate-700 | Neutral hover backgrounds |
+| `bg-control-active` | white | slate-600 | Selected toggle/chip on top of `bg-hover-bg` |
+| `bg-disabled-bg` | gray-400 | slate-600 | Disabled fill on accent buttons |
+| `placeholder:text-placeholder` | gray-400 | slate-500 | Input placeholder text |
+| `text-success` | green-600 | green-400 | Success message text |
+| `text-error` | red-600 | red-400 | Error message text |
+| `text-warning` / `bg-warning-subtle` / `border-warning-border` | yellow-700 / yellow-100 / yellow-500 | yellow-400 / yellow-900/30 / yellow-600 | Warning text, surface, border (NoticeBar) |
 
 **To change a color:** edit the variable value in `src/index.css` — components update automatically.
 
@@ -117,6 +128,11 @@ The `categoryColor()` function in `NewsCard.tsx` uses raw Tailwind + `dark:` pai
 - Theme mode (`light` | `dark` | `system`), section visibility, section expansion, pagination mode
 - Persisted to `localStorage`, synced across tabs
 
+**Auth state** lives in a module-level store at `src/auth/authStore.ts` (not Redux, not Context):
+- `AuthProvider` (`src/contexts/AuthContext.tsx`) wraps the app and triggers a silent token refresh on mount
+- Components subscribe via `useAuth()` (uses `useSyncExternalStore`) to read `user`, `isAuthenticated`, `isLoading` and call `login` / `register` / `logout` / `loginWithGoogle`
+- Tokens are HttpOnly cookies; the frontend never holds them in JS
+
 **Rule:** Never put UI preferences in Redux. Never put server data in Context.
 
 ---
@@ -140,12 +156,19 @@ DTOs from the API are **always mapped** in `src/mappers/articleMapper.ts` before
 Routes are defined in `App.tsx`. Category pages are generated dynamically from `ARTICLE_ROUTES` in `src/constants/routes.ts`.
 
 ```
-/                       → HomePage
-/:category              → ArticlesPage (world, lifestyle, science, technology, business, sport, politics, other)
-/article/:id            → ArticlePage
-/subcategory/:subCategory → SubCategoryPage
-/search                 → SearchPage
+/                          → HomePage
+/:category                 → ArticlesPage (world, lifestyle, science, technology, business, sport, politics, other)
+/article/:id               → ArticlePage
+/subcategory/:subCategory  → SubCategoryPage
+/search                    → SearchPage
 /about, /contact, /account, /disclaimer → static pages
+/login, /register          → auth entry points
+/account/verification      → EmailVerificationPage (post-register email link)
+/reset-password            → ResetPasswordPage (request reset email)
+/reset-password/:token     → NewPasswordPage (set new password from email link)
+/auth/google/callback      → GoogleCallbackPage (OAuth code exchange)
+/blog                      → BlogPage (lists posts from blog/registry.ts)
+/blog/:slug                → BlogPostPage (renders matching blog/posts/<slug>.tsx)
 ```
 
 ---
@@ -174,15 +197,23 @@ Routes are defined in `App.tsx`. Category pages are generated dynamically from `
 
 ## Key Custom Hooks
 
-| Hook | Purpose |
-|---|---|
-| `useAppSettings()` | Access theme, section visibility, toggles from context |
-| `useArticleHistory()` | User reading history (localStorage, max 100, deduped) |
-| `useArticleFilters(articles)` | Client-side date range + sort filtering |
-| `useInfiniteScroll(...)` | Scroll-triggered load more (700px threshold) |
-| `usePagination(...)` | Page-based pagination with page size selector |
-| `useSectionVisible(section)` | Section visibility state |
-| `useSectionCollapse(section)` | Section expand/collapse state |
+| Hook | File | Purpose |
+|---|---|---|
+| `useAppSettings()` | `contexts/AppSettingContext.tsx` | Access theme, section visibility, toggles, pagination mode |
+| `useAuth()` | `contexts/AuthContext.tsx` | Subscribe to auth store; exposes user, isAuthenticated, login/register/logout |
+| `useArticleFilters(articles)` | `hooks/useArticleHooks.ts` | Client-side date range + sort filtering |
+| `useInfiniteScroll(...)` | `hooks/useArticleHooks.ts` | Scroll-triggered load more (700px threshold) for category/home news |
+| `usePagination(...)` | `hooks/usePagination.ts` | Page-based pagination with page size selector |
+| `usePagePagination()` | `hooks/usePagePagination.ts` | Reads pagination mode (page vs scroll) from app settings |
+| `useLocalStorage(key, init)` | `hooks/useLocalStorage.ts` | Generic localStorage-backed state |
+| `useSectionVisible(section)` | `hooks/useSectionCollapse.ts` | Section visibility state |
+| `useSectionCollapse(section)` | `hooks/useSectionCollapse.ts` | Section expand/collapse state |
+| `useAllSectionNotVisible()` | `hooks/useSectionCollapse.ts` | True when every home section is hidden (drives empty state) |
+| `useSectionDropdown(sectionKey)` | `hooks/useSectionDropdown.ts` | Builds the per-section dropdown options (collapse / remove / view mode) |
+| `useSearchPage` exports | `hooks/useSearchPage.ts` | `useSearchParams`, `useSearchArticles`, `useFilteredArticles`, `useSearchPagination`, `useInfiniteScroll` |
+| `useSubCategoryPage` exports | `hooks/useSubCategoryPage.ts` | `useSubCategoryArticles`, `useSubCategoryInfiniteScroll` |
+
+> **Note:** `useInfiniteScroll` is exported from both `useArticleHooks.ts` and `useSearchPage.ts` with different signatures — import from the file matching the page you're on (search vs. category/home).
 
 ---
 
@@ -201,9 +232,14 @@ Routes are defined in `App.tsx`. Category pages are generated dynamically from `
 ## API Layer
 
 - Base URL: `import.meta.env.VITE_API_URL` (falls back to `http://localhost:3001`)
-- All article fetches go through `src/api/articleApi.ts` → `src/service/articleService.ts`
+- Every API module pairs with a service module that handles errors + DTO mapping:
+  - `articleApi.ts` ↔ `articleService.ts` — articles, details, top-ten, similar, recommended, semantic search
+  - `authApi.ts` ↔ `authService.ts` — register, login, logout, refresh, Google OAuth exchange, email verify, password reset
+  - `userArticleApi.ts` ↔ `userArticleService.ts` — like status, reading history, `recordArticleRead`
+  - `formApi.ts` ↔ `formService.ts` — email subscriptions
+  - `localStorageService.ts` — localStorage read/write helpers (no api/ pair)
+- `authFetch.ts` wraps `fetch` with HttpOnly-cookie auth + 401 → silent refresh + retry. Use it for any authenticated endpoint.
 - `incrementArticleViewed()` is **fire-and-forget** — do not await it
-- Forms: `src/api/formApi.ts` handles email subscriptions
 
 ---
 
@@ -220,12 +256,16 @@ Routes are defined in `App.tsx`. Category pages are generated dynamically from `
 ## Build & Deploy
 
 ```bash
-npm run dev        # dev server on port 5174, LAN accessible (host: 0.0.0.0)
-npm run build      # tsc -b && vite build
-npm run preview    # local preview of prod build
-npm run lint       # eslint
-npm run deploy     # build + copy index.html → 404.html + gh-pages deploy
+npm run dev         # dev server on port 5174, LAN accessible (host: 0.0.0.0)
+npm run build       # tsc -b && vite build
+npm run preview     # local preview of prod build
+npm run lint        # eslint
+npm run test        # vitest run (CI mode)
+npm run test:watch  # vitest watch
+npm run deploy      # build + copy index.html → 404.html + gh-pages deploy
 ```
+
+Tests live in `src/__tests__/` with subfolders mirroring `src/` (`mappers/`, `service/`, `utils/`, `components/`). Shared test helpers live in `__tests__/helpers/` (e.g. `renderWithProviders.tsx`); global setup in `__tests__/setup.ts`.
 
 ---
 
@@ -238,6 +278,8 @@ npm run deploy     # build + copy index.html → 404.html + gh-pages deploy
 - Map API responses through `articleMapper` before storing in Redux
 - Keep UI preferences in `AppSettingContext`, server data in Redux
 - Follow the existing folder structure when adding new components
+- Preserve existing inline comments — only remove a comment if the code it describes has been changed or deleted and the comment no longer applies
+- Add inline comments to large or complex code blocks where the logic isn't immediately obvious; section off distinct parts of a function with a short comment when it aids readability
 
 **Don't:**
 - Add `tailwind.config.js` — this is Tailwind v4 (CSS-first)
@@ -246,3 +288,4 @@ npm run deploy     # build + copy index.html → 404.html + gh-pages deploy
 - Mutate Redux state directly (use slice actions)
 - Use relative `../../` imports — use `@/`
 - Await `incrementArticleViewed()` — it's intentionally fire-and-forget
+- Strip inline comments when editing adjacent code — leave them intact unless they are actively misleading after your change
