@@ -59,7 +59,7 @@ export default function NewPasswordPage() {
 						<p className="text-secondary">{t("AUTH.RESET_SUCCESS")}</p>
 						<Link
 							to="/login"
-							className="bg-accent-bg text-white py-2 rounded-lg hover:bg-amber-700 dark:hover:bg-amber-500 transition-colors text-center"
+							className="bg-accent-bg text-white py-2 rounded-lg hover:bg-accent-bg-hover transition-colors text-center"
 						>
 							{t("AUTH.RESET_GO_TO_LOGIN")}
 						</Link>
@@ -96,12 +96,12 @@ export default function NewPasswordPage() {
 							/>
 						</div>
 
-						{error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
+						{error && <p className="text-sm text-error">{error}</p>}
 
 						<button
 							type="submit"
 							disabled={isSubmitting}
-							className="bg-accent-bg text-white py-2 rounded-lg hover:bg-amber-700 dark:hover:bg-amber-500 transition-colors disabled:bg-gray-400 dark:disabled:bg-slate-600 disabled:cursor-not-allowed"
+							className="bg-accent-bg text-white py-2 rounded-lg hover:bg-accent-bg-hover transition-colors disabled:bg-disabled-bg disabled:cursor-not-allowed"
 						>
 							{isSubmitting ? t("AUTH.RESETTING_PASSWORD") : t("AUTH.RESET_PASSWORD")}
 						</button>
