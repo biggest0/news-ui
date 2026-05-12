@@ -1,4 +1,5 @@
-import type { ArticleInfoQueryDTO, RecommendedArticlesResponseDTO, SemanticSearchResponseDTO } from "@/types/articleDto";
+import type { RecommendedArticlesResponseDTO, SemanticSearchResponseDTO } from "@/types/articleDto";
+import type { ArticleQuery } from "@/types/articleTypes";
 import { API_URL } from "@/config/config";
 import { authFetch } from "@/api/authFetch";
 
@@ -20,7 +21,7 @@ export async function fetchArticlesInfo({
 	search,
 	dateRange,
 	sortBy,
-}: ArticleInfoQueryDTO) {
+}: ArticleQuery) {
 	const params = new URLSearchParams();
 	params.append("page", page.toString());
 	params.append("limit", limit.toString());

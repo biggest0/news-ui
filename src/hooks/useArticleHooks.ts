@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import type { ArticleInfo } from "@/types/articleTypes";
-import type { ArticleInfoQueryDTO } from "@/types/articleDto";
+import type { ArticleInfo, ArticleQuery } from "@/types/articleTypes";
 import { isWithinNDays } from "@/utils/date/dateUtils";
 
 export function useArticleFilters(articles: ArticleInfo[]) {
@@ -87,7 +86,7 @@ export function useArticleFilters(articles: ArticleInfo[]) {
 interface UseInfiniteScrollProps {
 	currentArticlesCount: number; // Number of articles currently loaded
 	totalArticlesCount: number; // Total articles available from server
-	loadMoreArticles: (request: ArticleInfoQueryDTO) => void;
+	loadMoreArticles: (request: ArticleQuery) => void;
 	selectedCategory: string;
 	resetKey?: string;
 	enabled?: boolean; // Whether infinite scroll is active

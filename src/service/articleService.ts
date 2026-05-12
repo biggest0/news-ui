@@ -8,12 +8,9 @@ import {
 	fetchSimilarArticles,
 	fetchRecommendedArticles,
 	fetchSemanticSearch,
-} from "../api/articleApi";
-import type { ArticleDetail, ArticleResponse, RecommendedArticle } from "../types/articleTypes";
-import type {
-	ArticleInfoQueryDTO,
-	ArticleInfoResponseDTO,
-} from "@/types/articleDto";
+} from "@/api/articleApi";
+import type { ArticleDetail, ArticleQuery, ArticleResponse, RecommendedArticle } from "@/types/articleTypes";
+import type { ArticleInfoResponseDTO } from "@/types/articleDto";
 import {
 	mapDTOtoArticleDetail,
 	mapDTOtoArticleInfo,
@@ -87,7 +84,7 @@ export async function getArticlesBySubCategory(
 }
 
 export async function getArticlesInfo(
-	request: ArticleInfoQueryDTO
+	request: ArticleQuery
 ): Promise<ArticleResponse> {
 	try {
 		const data: ArticleInfoResponseDTO = await fetchArticlesInfo(request);

@@ -3,6 +3,15 @@ export interface ArticleResponse {
 	count: number;
 }
 
+export interface ArticleQuery {
+	page?: number;
+	limit?: number;
+	category?: string;
+	search?: string;
+	dateRange?: string;
+	sortBy?: string;
+}
+
 export interface ArticleInfo {
 	id: string;
 	title: string;

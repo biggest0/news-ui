@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "@/store/store";
 import { loadArticlesInfo } from "@/store/articlesSlice";
 import { BaseNewsSection } from "./BaseNewsSection";
-import type { ArticleInfoQueryDTO } from "@/types/articleDto";
+import type { ArticleQuery } from "@/types/articleTypes";
 // import { useEffect, useState } from "react";
 import { LoadingOverlay } from "@/components/common/feedback/LoadingOverlay";
 
@@ -13,7 +13,7 @@ export function HomeNewsSection() {
 		(state: RootState) => state.article
 	);
 
-	const loadMoreArticles = (request: ArticleInfoQueryDTO) => {
+	const loadMoreArticles = (request: ArticleQuery) => {
 		dispatch(loadArticlesInfo(request));
 	};
 
