@@ -57,7 +57,7 @@ export default function EmailVerificationPage() {
 		return (
 			<section className="py-6">
 				<SectionHeader title={t("AUTH.VERIFY_EMAIL_TITLE")} />
-				<div className="max-w-md pt-6">
+				<div className="max-w-sm pt-6">
 					<p className="text-secondary">{t("AUTH.VERIFY_VERIFYING")}</p>
 				</div>
 			</section>
@@ -68,7 +68,7 @@ export default function EmailVerificationPage() {
 		return (
 			<section className="py-6">
 				<SectionHeader title={t("AUTH.VERIFY_SUCCESS_TITLE")} />
-				<div className="max-w-md pt-6 flex flex-col gap-4">
+				<div className="max-w-sm pt-6 flex flex-col gap-4">
 					<p className="text-secondary">{t("AUTH.VERIFY_SUCCESS")}</p>
 					<Link
 						to="/account"
@@ -84,7 +84,7 @@ export default function EmailVerificationPage() {
 	return (
 		<section className="py-6">
 			<SectionHeader title={t("AUTH.VERIFY_EMAIL_TITLE")} />
-			<div className="max-w-md pt-6 flex flex-col gap-4">
+			<div className="max-w-sm pt-6 flex flex-col gap-4">
 				<p className="text-error">
 					{error || t("AUTH.VERIFY_FAILED")}
 				</p>
