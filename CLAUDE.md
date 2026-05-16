@@ -278,8 +278,9 @@ Tests live in `src/__tests__/` with subfolders mirroring `src/` (`mappers/`, `se
 - Map API responses through `articleMapper` before storing in Redux
 - Keep UI preferences in `AppSettingContext`, server data in Redux
 - Follow the existing folder structure when adding new components
+- **Docstrings on all generated code:** every new function, hook, context, service, or utility you write must have a JSDoc comment (`/** ... */`) describing what it does, its parameters, and its return value if non-obvious
+- **Inline comments in long blocks:** for any function or code block longer than ~20 lines, add short inline comments to section off distinct logical steps (e.g. `// validate inputs`, `// build query params`, `// update store`) so the flow is easy to scan
 - Preserve existing inline comments — only remove a comment if the code it describes has been changed or deleted and the comment no longer applies
-- Add inline comments to large or complex code blocks where the logic isn't immediately obvious; section off distinct parts of a function with a short comment when it aids readability
 
 **Don't:**
 - Add `tailwind.config.js` — this is Tailwind v4 (CSS-first)
@@ -289,3 +290,4 @@ Tests live in `src/__tests__/` with subfolders mirroring `src/` (`mappers/`, `se
 - Use relative `../../` imports — use `@/`
 - Await `incrementArticleViewed()` — it's intentionally fire-and-forget
 - Strip inline comments when editing adjacent code — leave them intact unless they are actively misleading after your change
+- Skip the JSDoc or section comments on trivial one-liners or self-evident code — comment where it actually helps
