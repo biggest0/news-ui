@@ -33,7 +33,7 @@ export default function BlogPage() {
 								to={`/blog/${post.slug}`}
 								className="text-sm text-accent hover:underline"
 							>
-								{t("BLOG.READ_MORE")}
+								{t("BLOG.READ_POST")}
 							</Link>
 						</article>
 					))}

@@ -110,7 +110,7 @@
 	},
 	"BLOG": {
 		"TITLE": "Blog",
-		"READ_MORE": "Read more",
+		"READ_POST": "Read Post",
 		"BACK_TO_BLOG": "Back to blog",
 		"NOT_FOUND": "That post doesn't exist.",
 		"NO_POSTS": "No posts yet. Check back soon."
