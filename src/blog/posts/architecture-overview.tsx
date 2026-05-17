@@ -3,7 +3,7 @@ import type { BlogPostMeta } from "@/types/blogTypes";
 export const meta: BlogPostMeta = {
 	slug: "architecture-overview",
 	title: "How Catire Time Is Built",
-	date: "2026-04-29",
+	date: "4/29/2026",
 	summary:
 		"A high-level look at the stack, how state is split between Redux and context, and how auth ties the front and back end together.",
 	tags: ["architecture", "frontend"],

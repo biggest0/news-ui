@@ -3,7 +3,7 @@ import type { BlogPostMeta } from "@/types/blogTypes";
 export const meta: BlogPostMeta = {
 	slug: "welcome",
 	title: "Welcome to the Catire Time Blog",
-	date: "2026-04-30",
+	date: "4/30/2026",
 	summary:
 		"A short note on what this blog is for and what you can expect to find here.",
 	tags: ["meta"],
