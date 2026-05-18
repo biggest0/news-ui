@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import type { ArticleDetail } from "@/types/articleTypes";
 
 interface ArticleDetailProps {
@@ -23,7 +24,13 @@ export default function ArticleDetailSection({ article }: ArticleDetailProps) {
 			{/* Sub category */}
 			<div className="flex flex-wrap space-x-4 underline text-sm text-muted">
 				{article.subCategory?.map((source, index) => (
-					<span key={`${article.id}-category-${index}`}>{source}</span>
+					<Link
+						key={`${article.id}-category-${index}`}
+						to={`/subcategory/${encodeURIComponent(source)}`}
+						className="hover:text-accent transition-colors"
+					>
+						{source}
+					</Link>
 				))}
 			</div>
 		</div>
