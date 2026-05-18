@@ -74,6 +74,7 @@
 	"COMMON": {
 		"LOAD": "Chargement",
 		"LOADING": "Chargement...",
+		"BACK": "Retour",
 		"BACK_TO_TOP": "Retour en haut",
 		"COPIED": "Copié",
 		"SHARE": "Partager",
@@ -110,7 +111,7 @@
 	},
 	"BLOG": {
 		"TITLE": "Blog",
-		"READ_MORE": "Lire la suite",
+		"READ_POST": "Lire l'article",
 		"BACK_TO_BLOG": "Retour au blog",
 		"NOT_FOUND": "Cet article n'existe pas.",
 		"NO_POSTS": "Aucun article pour le moment. Revenez bientôt."

@@ -14,11 +14,10 @@ export default function BlogPage() {
 			{BLOG_POSTS.length === 0 ? (
 				<p className="pt-4 text-muted">{t("BLOG.NO_POSTS")}</p>
 			) : (
-				<div className="pt-2 divide-y divide-border-subtle">
+				<div className="pt-2">
 					{BLOG_POSTS.map((post) => (
-						<article key={post.slug} className="py-6">
-							<div className="text-xs text-muted mb-1">{post.date}</div>
-							<h2 className="text-2xl text-primary mb-2">
+						<article key={post.slug} className="border-b border-border py-4 w-full">
+							<h2 className="text-xl font-semibold text-primary">
 								<Link
 									to={`/blog/${post.slug}`}
 									className="hover:text-accent transition-colors"
@@ -26,14 +25,15 @@ export default function BlogPage() {
 									{post.title}
 								</Link>
 							</h2>
-							<p className="text-secondary leading-relaxed mb-3">
+							<div className="text-sm text-muted">{post.date}</div>
+							<p className="text-md text-secondary mt-8 mb-8">
 								{post.summary}
 							</p>
 							<Link
 								to={`/blog/${post.slug}`}
-								className="text-sm text-accent hover:underline"
+								className="text-md text-accent hover:underline"
 							>
-								{t("BLOG.READ_MORE")}
+								{t("BLOG.READ_POST")}
 							</Link>
 						</article>
 					))}

@@ -53,7 +53,7 @@ export default function NewPasswordPage() {
 		<section className="py-6">
 			<SectionHeader title={t("AUTH.NEW_PASSWORD_TITLE")} />
 
-			<div className="max-w-md pt-6">
+			<div className="max-w-sm pt-6">
 				{success ? (
 					<div className="flex flex-col gap-4">
 						<p className="text-secondary">{t("AUTH.RESET_SUCCESS")}</p>

@@ -13,7 +13,7 @@ const modules = import.meta.glob<BlogPostModule>("./posts/*.tsx", { eager: true 
 
 export const BLOG_POSTS: BlogPost[] = Object.values(modules)
 	.map((m) => ({ ...m.meta, Component: m.default })) // flattens each module into one object
-	.sort((a, b) => b.date.localeCompare(a.date)); // sorts newest post first by comparing date strings
+	.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()); // sorts newest post first
 
 export const findBlogPost = (slug: string): BlogPost | undefined =>
 	BLOG_POSTS.find((p) => p.slug === slug);

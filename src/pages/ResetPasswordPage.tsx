@@ -51,7 +51,7 @@ export default function ResetPasswordPage() {
 		<section className="py-6">
 			<SectionHeader title={t("AUTH.RESET_PASSWORD_TITLE")} />
 
-			<div className="max-w-md pt-6">
+			<div className="max-w-sm pt-6">
 				{sent ? (
 					<div className="flex flex-col gap-4">
 						<h2 className="text-lg font-semibold text-primary">{t("AUTH.RESET_EMAIL_SENT_HEADING")}</h2>
