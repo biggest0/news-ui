@@ -74,6 +74,7 @@
 	"COMMON": {
 		"LOAD": "Loading",
 		"LOADING": "Loading...",
+		"BACK": "Back",
 		"BACK_TO_TOP": "Back to top",
 		"COPIED": "Copied",
 		"SHARE": "Share",

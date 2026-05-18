@@ -74,6 +74,7 @@
 	"COMMON": {
 		"LOAD": "Chargement",
 		"LOADING": "Chargement...",
+		"BACK": "Retour",
 		"BACK_TO_TOP": "Retour en haut",
 		"COPIED": "Copié",
 		"SHARE": "Partager",

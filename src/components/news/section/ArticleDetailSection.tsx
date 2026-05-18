@@ -8,10 +8,10 @@ export default function ArticleDetailSection({ article }: ArticleDetailProps) {
 	return (
 		<div className="flex flex-col space-y-4">
 			{/* Title and date */}
-			<div>
-				<h3 className="text-lg font-semibold text-primary">{article.title}</h3>
-				<div className="text-sm text-muted">{article.datePublished}</div>
-			</div>
+			<header className="pb-6 border-b border-border-subtle">
+				<div className="text-sm text-muted mb-2">{article.datePublished}</div>
+				<h1 className="text-3xl text-primary">{article.title}</h1>
+			</header>
 
 			{/* Paragraphs */}
 			<div className="space-y-2">

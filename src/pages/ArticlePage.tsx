@@ -1,6 +1,7 @@
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import type { AppDispatch, RootState } from "@/store/store";
 import { loadArticleDetail } from "@/store/articlesSlice";
@@ -12,7 +13,9 @@ import SimilarArticlesSection from "@/components/news/section/SimilarArticlesSec
 
 export default function ArticlePage() {
 	const { id } = useParams();
+	const navigate = useNavigate();
 	const dispatch = useDispatch<AppDispatch>();
+	const { t } = useTranslation();
 	const { isAuthenticated } = useAuth();
 	const articleDetail = useSelector((state: RootState) =>
 		id ? state.article.articlesDetail[id] : undefined
@@ -31,9 +34,19 @@ export default function ArticlePage() {
 
 	return (
 		<div className="py-6">
-			{articleDetail && <ArticleDetailSection article={articleDetail} />}
-			{loading.detail && !articleDetail && <div>Loading article details!</div>}
-			{id && <SimilarArticlesSection articleId={id} />}
+			{/* Back button */}
+			<button
+				onClick={() => navigate(-1)}
+				className="text-md text-accent hover:underline mb-4"
+			>
+				← {t("COMMON.BACK")}
+			</button>
+
+			<div className="max-w-3xl mx-auto">
+				{articleDetail && <ArticleDetailSection article={articleDetail} />}
+				{loading.detail && !articleDetail && <div>{t("PAGES.ARTICLE.LOADING_DETAILS")}</div>}
+				{id && <SimilarArticlesSection articleId={id} />}
+			</div>
 		</div>
 	);
 }
