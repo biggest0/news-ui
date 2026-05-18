@@ -6,6 +6,8 @@ export interface BlogPostMeta {
 	date: string;
 	summary: string;
 	tags?: string[];
+	/** Optional banner image URL. Falls back to the default placeholder when omitted. */
+	image?: string;
 }
 
 export interface BlogPost extends BlogPostMeta {
