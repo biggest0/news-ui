@@ -26,21 +26,23 @@ export default function Footer() {
 				<SubscribeForm />
 			</div>
 
-			{/* Bottom section */}
-			<div className="text-center py-6 border-t border-border-subtle text-sm text-muted flex flex-wrap justify-center items-center gap-6">
-				<span>{t("FOOTER.COPYRIGHT")}</span>
-				<Link className="cursor-pointer hover:text-primary transition-colors" to="/disclaimer">
-					{t("FOOTER.DISCLAIMER")}
-				</Link>
-				<Link className="cursor-pointer hover:text-primary transition-colors" to="/about">
-					{t("FOOTER.ABOUT_US")}
-				</Link>
-				<Link className="cursor-pointer hover:text-primary transition-colors" to="/contact">
-					{t("FOOTER.CONTACT")}
-				</Link>
-				<Link className="cursor-pointer hover:text-primary transition-colors" to="/blog">
-					{t("FOOTER.BLOG")}
-				</Link>
+			{/* Bottom section — copyright stays on its own line on narrow screens, links wrap below */}
+			<div className="py-6 border-t border-border-subtle text-sm text-muted flex flex-col items-center gap-2 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-6">
+				<span className="shrink-0">{t("FOOTER.COPYRIGHT")}</span>
+				<div className="flex flex-wrap justify-center gap-6">
+					<Link className="cursor-pointer hover:text-primary transition-colors" to="/disclaimer">
+						{t("FOOTER.DISCLAIMER")}
+					</Link>
+					<Link className="cursor-pointer hover:text-primary transition-colors" to="/about">
+						{t("FOOTER.ABOUT_US")}
+					</Link>
+					<Link className="cursor-pointer hover:text-primary transition-colors" to="/contact">
+						{t("FOOTER.CONTACT")}
+					</Link>
+					<Link className="cursor-pointer hover:text-primary transition-colors" to="/blog">
+						{t("FOOTER.BLOG")}
+					</Link>
+				</div>
 			</div>
 		</footer>
 	);
