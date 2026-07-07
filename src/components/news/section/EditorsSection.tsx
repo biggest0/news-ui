@@ -21,9 +21,9 @@ export default function EditorsSection() {
 				{CATIRE_EDITORS.map((editor, index) => (
 					<EditorCardHorizontal
 						key={`editor-${index}`}
-						name={editor.name}
-						role={editor.role}
-						description={editor.description}
+						name={t(`EDITORS.${editor.translationKey}.NAME`)}
+						role={t(`EDITORS.${editor.translationKey}.ROLE`)}
+						description={t(`EDITORS.${editor.translationKey}.DESCRIPTION`)}
 						imageUrl={editor.imageUrl}
 					/>
 				))}
