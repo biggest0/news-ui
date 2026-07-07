@@ -9,6 +9,7 @@ import i18n from "@/i18n/config.ts";
 import { resetArticleData } from "@/store/articlesSlice";
 import { resetRecommendations } from "@/store/recommendationsSlice";
 import { clearUserContent } from "@/store/userContentSlice";
+import { resetCatFacts } from "@/store/catFactsSlice";
 
 // Keep document + article data in sync with the UI language.
 // All cached article content is language-specific, so on toggle we clear the
@@ -19,6 +20,7 @@ i18n.on("languageChanged", (lng) => {
 	store.dispatch(resetArticleData());
 	store.dispatch(resetRecommendations());
 	store.dispatch(clearUserContent());
+	store.dispatch(resetCatFacts());
 });
 // i18n init (and its initial languageChanged event) ran on import above,
 // so set the initial <html lang> explicitly
