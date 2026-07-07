@@ -159,6 +159,12 @@ const articlesSlice = createSlice({
 				detail: undefined,
 			};
 		},
+		/**
+		 * Resets all cached article data to its initial state.
+		 * Dispatched when the UI language changes: every cached article
+		 * (lists, details, top ten) is language-specific and must be refetched.
+		 */
+		resetArticleData: () => initialState,
 	},
 	extraReducers: (builder) => {
 		// load initial articles for home page
@@ -278,4 +284,5 @@ const articlesSlice = createSlice({
 	},
 });
 
+export const { resetArticleData } = articlesSlice.actions;
 export default articlesSlice.reducer;

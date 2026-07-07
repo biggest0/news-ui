@@ -1,5 +1,6 @@
 import { API_URL } from "@/config/config";
 import { authFetch } from "@/api/authFetch";
+import { getApiLang } from "@/i18n/lang";
 import type { ArticleLikeStatusDTO, ArticleHistoryResponseDTO } from "@/types/articleDto";
 
 /**
@@ -68,7 +69,7 @@ export async function fetchArticleHistory(
 	limit: number = 20
 ): Promise<ArticleHistoryResponseDTO> {
 	const response = await authFetch(
-		`${API_URL}/api/user/history?page=${page}&limit=${limit}`,
+		`${API_URL}/api/user/history?page=${page}&limit=${limit}&lang=${getApiLang()}`,
 		{
 			method: "GET",
 			headers: { "Content-Type": "application/json" },

@@ -2,6 +2,7 @@ import type { RecommendedArticlesResponseDTO, SemanticSearchResponseDTO } from "
 import type { ArticleQuery } from "@/types/articleTypes";
 import { API_URL } from "@/config/config";
 import { authFetch } from "@/api/authFetch";
+import { getApiLang } from "@/i18n/lang";
 
 /**
  * Fetches article information from the server with optional filters
@@ -29,6 +30,7 @@ export async function fetchArticlesInfo({
 	if (search) params.append("search", search);
 	if (dateRange) params.append("dateRange", dateRange);
 	if (sortBy) params.append("sortBy", sortBy);
+	params.append("lang", getApiLang());
 
 	const response = await fetch(`${API_URL}/api/articles?${params}`, {
 		method: "GET",
@@ -49,7 +51,7 @@ export async function fetchArticlesInfo({
  */
 export async function fetchArticlesByCategory(page: number, category: string) {
 	const response = await fetch(
-		`${API_URL}/api/articles?page=${page}&limit=10&category=${category}`,
+		`${API_URL}/api/articles?page=${page}&limit=10&category=${category}&lang=${getApiLang()}`,
 		{
 			method: "GET",
 			headers: { "Content-Type": "application/json" },
@@ -87,6 +89,7 @@ export async function fetchArticlesBySearch({
 	params.set("page", page.toString());
 	if (dateRange) params.set("dateRange", dateRange);
 	if (sortBy) params.set("sortBy", sortBy);
+	params.set("lang", getApiLang());
 
 	const response = await fetch(
 		`${API_URL}/api/articles/search/keyword?${params}`,
@@ -110,7 +113,7 @@ export async function fetchArticlesBySearch({
  */
 export async function fetchArticlesBySubCategory(page: number, subCategory: string) {
 	const response = await fetch(
-		`${API_URL}/api/articles?page=${page}&limit=10&subCategory=${subCategory}`,
+		`${API_URL}/api/articles?page=${page}&limit=10&subCategory=${subCategory}&lang=${getApiLang()}`,
 		{
 			method: "GET",
 			headers: { "Content-Type": "application/json" },
@@ -130,7 +133,7 @@ export async function fetchArticlesBySubCategory(page: number, subCategory: stri
  * @throws Error if the HTTP request fails
  */
 export async function fetchArticleDetail(articleId: string) {
-	const response = await fetch(`${API_URL}/api/articles/${articleId}`, {
+	const response = await fetch(`${API_URL}/api/articles/${articleId}?lang=${getApiLang()}`, {
 		method: "GET",
 		headers: { "Content-Type": "application/json" },
 	});
@@ -161,7 +164,7 @@ export function incrementArticleViewed(articleId: string) {
  * @throws Error if the HTTP request fails
  */
 export async function fetchTopTenArticles() {
-	const response = await fetch(`${API_URL}/api/articles/top`, {
+	const response = await fetch(`${API_URL}/api/articles/top?lang=${getApiLang()}`, {
 		method: "GET",
 		headers: { "Content-Type": "application/json" },
 	});
@@ -186,7 +189,7 @@ export async function fetchTopTenArticles() {
 export async function fetchSimilarArticles(
 	articleId: string
 ): Promise<RecommendedArticlesResponseDTO> {
-	const response = await fetch(`${API_URL}/api/articles/${articleId}/similar`, {
+	const response = await fetch(`${API_URL}/api/articles/${articleId}/similar?lang=${getApiLang()}`, {
 		method: "GET",
 		headers: { "Content-Type": "application/json" },
 	});
@@ -204,7 +207,7 @@ export async function fetchSimilarArticles(
  * @throws Error if the HTTP request fails
  */
 export async function fetchRecommendedArticles(): Promise<RecommendedArticlesResponseDTO> {
-	const response = await authFetch(`${API_URL}/api/recommendations`, {
+	const response = await authFetch(`${API_URL}/api/recommendations?lang=${getApiLang()}`, {
 		method: "GET",
 		headers: { "Content-Type": "application/json" },
 	});
@@ -240,6 +243,7 @@ export async function fetchSemanticSearch({
 	params.set("page", page.toString());
 	if (dateRange) params.set("dateRange", dateRange);
 	if (sortBy) params.set("sortBy", sortBy);
+	params.set("lang", getApiLang());
 
 	const response = await fetch(
 		`${API_URL}/api/articles/search/similar?${params}`,
