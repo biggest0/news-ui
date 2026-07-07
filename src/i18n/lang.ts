@@ -19,3 +19,15 @@ export function getApiLang(): Language {
 export function getDateLocale(): string {
 	return getApiLang() === "fr" ? "fr-CA" : "en-CA";
 }
+
+/**
+ * Formats an article date for display in the active language.
+ * en-CA/fr-CA both render via `toLocaleDateString` as "YYYY-MM-DD";
+ * the dashes are swapped for slashes to get "YYYY/MM/DD".
+ * @param date - a date string or Date to format
+ * @returns the date formatted as "YYYY/MM/DD"
+ */
+export function formatArticleDate(date: string | Date): string {
+	const parsed = typeof date === "string" ? new Date(date) : date;
+	return parsed.toLocaleDateString(getDateLocale()).replace(/-/g, "/");
+}

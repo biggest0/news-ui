@@ -1,6 +1,6 @@
 import type { ArticleDetail, ArticleHistoryItem, ArticleInfo, RecommendedArticle } from "@/types/articleTypes";
 import type { ArticleDetailDTO, ArticleHistoryItemDTO, ArticleInfoDTO, RecommendedArticleDTO } from "@/types/articleDto";
-import { getDateLocale } from "@/i18n/lang";
+import { formatArticleDate } from "@/i18n/lang";
 
 export function mapDTOtoArticleInfo(
 	articleInfoResponse: ArticleInfoDTO
@@ -9,9 +9,7 @@ export function mapDTOtoArticleInfo(
 		id: articleInfoResponse._id,
 		title: articleInfoResponse.title,
 		summary: articleInfoResponse.summary,
-		datePublished: new Date(
-			articleInfoResponse.date_published
-		).toLocaleDateString(getDateLocale()),
+		datePublished: formatArticleDate(articleInfoResponse.date_published),
 		mainCategory: articleInfoResponse.main_category,
 		subCategory: articleInfoResponse.sub_category || [],
 		viewed: articleInfoResponse.viewed,
@@ -26,12 +24,12 @@ export function mapDTOtoArticleHistoryItem(
 		id: dto._id,
 		title: dto.title,
 		summary: dto.summary,
-		datePublished: new Date(dto.date_published).toLocaleDateString(getDateLocale()),
+		datePublished: formatArticleDate(dto.date_published),
 		mainCategory: dto.main_category,
 		subCategory: dto.sub_category || [],
 		viewed: dto.viewed,
 		likeCount: dto.like_count ?? 0,
-		readAt: new Date(dto.read_at).toLocaleDateString(getDateLocale()),
+		readAt: formatArticleDate(dto.read_at),
 	};
 }
 
@@ -44,7 +42,7 @@ export function mapDTOtoRecommendedArticle(
 		summary: dto.summary,
 		mainCategory: dto.main_category,
 		subCategory: dto.sub_category || [],
-		datePublished: new Date(dto.date_published).toLocaleDateString(getDateLocale()),
+		datePublished: formatArticleDate(dto.date_published),
 		score: dto.score,
 	};
 }
@@ -54,9 +52,7 @@ export function mapDTOtoArticleDetail(
 ): ArticleDetail {
 	return {
 		id: articleDetailResponse._id,
-		datePublished: new Date(
-			articleDetailResponse.date_published
-		).toLocaleDateString(getDateLocale()),
+		datePublished: formatArticleDate(articleDetailResponse.date_published),
 		title: articleDetailResponse.title,
 		summary: articleDetailResponse.summary,
 		paragraphs: articleDetailResponse.paragraphs,
