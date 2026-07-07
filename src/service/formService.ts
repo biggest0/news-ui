@@ -5,7 +5,7 @@ export async function subscribeToNewsletter(email: string): Promise<void> {
 		const data = await postEmailSubscription(email);
 
 		// Check if email already exists in the system
-		if (data.message.exists) {
+		if (data.exists) {
 			throw new Error("This email is already subscribed to our newsletter.");
 		}
 	} catch (error) {

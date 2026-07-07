@@ -30,7 +30,7 @@ export async function fetchArticlesInfo({
 	if (dateRange) params.append("dateRange", dateRange);
 	if (sortBy) params.append("sortBy", sortBy);
 
-	const response = await fetch(`${API_URL}/article-info?${params}`, {
+	const response = await fetch(`${API_URL}/api/articles?${params}`, {
 		method: "GET",
 		headers: { "Content-Type": "application/json" },
 	});
@@ -49,7 +49,7 @@ export async function fetchArticlesInfo({
  */
 export async function fetchArticlesByCategory(page: number, category: string) {
 	const response = await fetch(
-		`${API_URL}/article-info?page=${page}&limit=10&category=${category}`,
+		`${API_URL}/api/articles?page=${page}&limit=10&category=${category}`,
 		{
 			method: "GET",
 			headers: { "Content-Type": "application/json" },
@@ -110,7 +110,7 @@ export async function fetchArticlesBySearch({
  */
 export async function fetchArticlesBySubCategory(page: number, subCategory: string) {
 	const response = await fetch(
-		`${API_URL}/article-info?page=${page}&limit=10&subCategory=${subCategory}`,
+		`${API_URL}/api/articles?page=${page}&limit=10&subCategory=${subCategory}`,
 		{
 			method: "GET",
 			headers: { "Content-Type": "application/json" },
@@ -123,16 +123,16 @@ export async function fetchArticlesBySubCategory(page: number, subCategory: stri
 }
 
 /**
- * Fetches detailed information for a specific article from the server
+ * Fetches detailed information for a specific article from the server.
+ * GET /api/articles/:id
  * @param articleId - The unique identifier of the article
  * @returns The response data from the server containing detailed article information
  * @throws Error if the HTTP request fails
  */
 export async function fetchArticleDetail(articleId: string) {
-	const response = await fetch(`${API_URL}/article-detail`, {
-		method: "POST",
+	const response = await fetch(`${API_URL}/api/articles/${articleId}`, {
+		method: "GET",
 		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify({ id: articleId }),
 	});
 	if (!response.ok) {
 		throw new Error(`Error: ${response.statusText}`);
@@ -141,25 +141,27 @@ export async function fetchArticleDetail(articleId: string) {
 }
 
 /**
- * Increments the view count for a specific article on the server
+ * Increments the view count for a specific article on the server.
+ * POST /api/articles/:id/view
  * @param articleId - The unique identifier of the article
  * @throws Error if the HTTP request fails
  */
 export function incrementArticleViewed(articleId: string) {
-	fetch(`${API_URL}/increment-article-view/${articleId}`, {
-		method: "PUT",
+	fetch(`${API_URL}/api/articles/${articleId}/view`, {
+		method: "POST",
 		headers: { "Content-Type": "application/json" },
 	});
 	// don't expect a repsonse, so no return/ no async because just incrementing view of article with specific ID
 }
 
 /**
- * Fetches the top ten most viewed articles from the server
+ * Fetches the top ten most viewed articles from the server.
+ * GET /api/articles/top
  * @returns The response data from the server containing the top ten articles
  * @throws Error if the HTTP request fails
  */
 export async function fetchTopTenArticles() {
-	const response = await fetch(`${API_URL}/article-top-ten`, {
+	const response = await fetch(`${API_URL}/api/articles/top`, {
 		method: "GET",
 		headers: { "Content-Type": "application/json" },
 	});

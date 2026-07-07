@@ -25,7 +25,8 @@ beforeEach(() => {
 describe("subscribeToNewsletter", () => {
 	it("resolves silently when the email is new (exists: false)", async () => {
 		vi.mocked(postEmailSubscription).mockResolvedValue({
-			message: { exists: false },
+			message: "Subscribed successfully",
+			exists: false,
 		});
 
 		await expect(subscribeToNewsletter("new@example.com")).resolves.toBeUndefined();
@@ -34,7 +35,8 @@ describe("subscribeToNewsletter", () => {
 
 	it("throws 'already subscribed' when the email exists", async () => {
 		vi.mocked(postEmailSubscription).mockResolvedValue({
-			message: { exists: true },
+			message: "Email already subscribed",
+			exists: true,
 		});
 
 		await expect(subscribeToNewsletter("old@example.com")).rejects.toThrow(
