@@ -182,6 +182,15 @@ Routes are defined in `App.tsx`. Category pages are generated dynamically from `
 - Detection order: `localStorage` → browser navigator
 - Key namespaces: `APP`, `CATEGORY`, `SECTION`, `ARTICLE_CARD`, `FILTER`, `PAGINATION`, `PAGES.*`, `COMMON`, `NAVIGATION`, `FOOTER`, `SUBSCRIBE`
 
+### Localized article content (server-side)
+
+Article *content* (title, summary, paragraphs, sub_category) is translated by the API, not the client:
+
+- Every article-returning endpoint takes `?lang=en|fr`; the api/ layer appends it automatically via `getApiLang()` from `src/i18n/lang.ts` — **any new article endpoint call must do the same**
+- `main_category` stays a language-independent key (translated client-side via `CATEGORY.*`); untranslated articles fall back to English content under `lang=fr` (never 404)
+- **Re-fetch on toggle:** `main.tsx` listens for i18next `languageChanged` → sets `<html lang>` and resets the article/recommendations/userContent slices; `<main key={i18n.resolvedLanguage}>` in `App.tsx` remounts all pages so their mount-effects refetch. Exception: `CategoryBar` lives in the Header (outside the keyed subtree) and instead has `i18n.resolvedLanguage` in its fetch-effect deps
+- Article dates are formatted at map time in `articleMapper.ts` with `getDateLocale()` (`en-CA` / `fr-CA`)
+
 ---
 
 ## Component Conventions
