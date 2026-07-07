@@ -1,4 +1,8 @@
-import type { RecommendedArticlesResponseDTO, SemanticSearchResponseDTO } from "@/types/articleDto";
+import type {
+	FeaturedArticlesResponseDTO,
+	RecommendedArticlesResponseDTO,
+	SemanticSearchResponseDTO,
+} from "@/types/articleDto";
 import type { ArticleQuery } from "@/types/articleTypes";
 import { API_URL } from "@/config/config";
 import { authFetch } from "@/api/authFetch";
@@ -168,6 +172,27 @@ export async function fetchTopTenArticles() {
 		method: "GET",
 		headers: { "Content-Type": "application/json" },
 	});
+	if (!response.ok) {
+		throw new Error(`Error: ${response.statusText}`);
+	}
+	return response.json();
+}
+
+/**
+ * Fetches the editor-curated featured articles (staff picks / featured section).
+ * The server owns the selection — the UI just renders whatever comes back.
+ * GET /api/articles/featured
+ * @returns The response containing the curated featured articles
+ * @throws Error if the HTTP request fails
+ */
+export async function fetchFeaturedArticles(): Promise<FeaturedArticlesResponseDTO> {
+	const response = await fetch(
+		`${API_URL}/api/articles/featured?lang=${getApiLang()}`,
+		{
+			method: "GET",
+			headers: { "Content-Type": "application/json" },
+		}
+	);
 	if (!response.ok) {
 		throw new Error(`Error: ${response.statusText}`);
 	}

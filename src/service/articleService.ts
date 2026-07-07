@@ -4,12 +4,13 @@ import {
 	fetchArticlesBySearch,
 	fetchArticlesBySubCategory,
 	fetchArticlesInfo,
+	fetchFeaturedArticles,
 	fetchTopTenArticles,
 	fetchSimilarArticles,
 	fetchRecommendedArticles,
 	fetchSemanticSearch,
 } from "@/api/articleApi";
-import type { ArticleDetail, ArticleQuery, ArticleResponse, RecommendedArticle } from "@/types/articleTypes";
+import type { ArticleDetail, ArticleInfo, ArticleQuery, ArticleResponse, RecommendedArticle } from "@/types/articleTypes";
 import type { ArticleInfoResponseDTO } from "@/types/articleDto";
 import {
 	mapDTOtoArticleDetail,
@@ -116,6 +117,20 @@ export async function getArticleDetail(articleId: string) {
 			source: "",
 			url: "",
 		} as ArticleDetail;
+	}
+}
+
+/**
+ * Fetches the editor-curated featured articles and maps them to domain types.
+ * @returns The featured articles, or an empty array on failure
+ */
+export async function getFeaturedArticles(): Promise<ArticleInfo[]> {
+	try {
+		const data = await fetchFeaturedArticles();
+		return data.articles.map(mapDTOtoArticleInfo);
+	} catch (error) {
+		console.error("[Error fetching featured articles]:", error);
+		return [];
 	}
 }
 

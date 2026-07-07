@@ -2,17 +2,20 @@ import { createSlice, createAsyncThunk, isAnyOf } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 import type { ArticleInfo, ArticleDetail, ArticleQuery, ArticleResponse } from "@/types/articleTypes";
+import type { RootState } from "@/store/store";
 import {
 	getArticleDetail,
 	getArticlesByCategory,
 	getArticlesBySearch,
 	getArticlesBySubCategory,
 	getArticlesInfo,
+	getFeaturedArticles,
 	getTopTenArticles,
 } from "@/service/articleService";
 
 interface ArticlesState {
 	topTenArticles: ArticleInfo[];
+	featuredArticles: ArticleInfo[];
 	homeArticles: ArticleInfo[];
 	homeArticlesCount: number;
 	articles: ArticleInfo[];
@@ -21,12 +24,14 @@ interface ArticlesState {
 	loading: {
 		homePage: boolean;
 		topTen: boolean;
+		featured: boolean;
 		articles: boolean;
 		detail: boolean;
 	};
 	error: {
 		homePage: string | undefined;
 		topTen: string | undefined;
+		featured: string | undefined;
 		articles: string | undefined;
 		detail: string | undefined;
 	};
@@ -34,6 +39,7 @@ interface ArticlesState {
 
 const initialState: ArticlesState = {
 	topTenArticles: [],
+	featuredArticles: [],
 	homeArticles: [],
 	homeArticlesCount: 0,
 	articles: [],
@@ -42,12 +48,14 @@ const initialState: ArticlesState = {
 	loading: {
 		homePage: false,
 		topTen: false,
+		featured: false,
 		articles: false,
 		detail: false,
 	},
 	error: {
 		homePage: undefined,
 		topTen: undefined,
+		featured: undefined,
 		articles: undefined,
 		detail: undefined,
 	},
@@ -105,6 +113,24 @@ export const loadTopTenArticles = createAsyncThunk<ArticleInfo[]>(
 	}
 );
 
+/**
+ * Loads the editor-curated featured articles (staff picks / featured section).
+ * Several sections dispatch this on mount (desktop + mobile variants), so the
+ * `condition` skips the call when the data is already loaded or in flight.
+ */
+export const loadFeaturedArticles = createAsyncThunk<ArticleInfo[]>(
+	"articles/getFeaturedArticles",
+	async () => {
+		return getFeaturedArticles();
+	},
+	{
+		condition: (_, { getState }) => {
+			const { featuredArticles, loading } = (getState() as RootState).article;
+			return featuredArticles.length === 0 && !loading.featured;
+		},
+	}
+);
+
 // -------------------------
 // Helper functions
 // -------------------------
@@ -155,6 +181,7 @@ const articlesSlice = createSlice({
 			state.error = {
 				homePage: undefined,
 				topTen: undefined,
+				featured: undefined,
 				articles: undefined,
 				detail: undefined,
 			};
@@ -211,6 +238,21 @@ const articlesSlice = createSlice({
 			.addCase(loadTopTenArticles.rejected, (state, action) => {
 				state.loading.topTen = false;
 				state.error.topTen = action.error.message;
+			});
+
+		// load featured (staff picks) articles
+		builder
+			.addCase(loadFeaturedArticles.pending, (state) => {
+				state.loading.featured = true;
+				state.error.featured = undefined;
+			})
+			.addCase(loadFeaturedArticles.fulfilled, (state, action) => {
+				state.loading.featured = false;
+				state.featuredArticles = action.payload;
+			})
+			.addCase(loadFeaturedArticles.rejected, (state, action) => {
+				state.loading.featured = false;
+				state.error.featured = action.error.message;
 			});
 
 		// paginate articles for home page
