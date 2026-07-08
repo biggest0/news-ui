@@ -1,27 +1,36 @@
-import Image from "@/assets/news_hero_image.jpg";
-import NewsHeroCard from "@/components/news/cards/NewsHeroCard";
-import { SELECTED_ARTICLES } from "@/components/news/tempArticles";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
+import Image from "@/assets/news_hero_image.jpg";
+import NewsHeroCard from "@/components/news/cards/NewsHeroCard";
+import type { AppDispatch, RootState } from "@/store/store";
+import { loadFeaturedArticles } from "@/store/articlesSlice";
+
 export default function FeaturedSection() {
-	const selectedArticles = SELECTED_ARTICLES;
 	const { t } = useTranslation();
+	const dispatch = useDispatch<AppDispatch>();
+	const featuredArticles = useSelector(
+		(state: RootState) => state.article.featuredArticles
+	);
+
+	// server-curated selection; thunk dedupes if another section already loaded it
+	useEffect(() => {
+		dispatch(loadFeaturedArticles());
+	}, [dispatch]);
 
 	return (
 		<section className="border-b border-gray-400 py-6 hidden md:grid grid-cols-4 grid-rows-2 gap-4 min-h-112">
 			{/* Desktop Layout */}
 			{/* Left column - 2 articles */}
 			<div className="col-span-1 row-span-2 flex flex-col gap-8">
-				{selectedArticles &&
-					selectedArticles
-						.slice(0, 2)
-						.map((article) => (
-							<NewsHeroCard
-								key={`top-${article.id}`}
-								articleInfo={article}
-								small={false}
-							/>
-						))}
+				{featuredArticles.slice(0, 2).map((article) => (
+					<NewsHeroCard
+						key={`top-${article.id}`}
+						articleInfo={article}
+						small={false}
+					/>
+				))}
 			</div>
 
 			{/* Image - spans 2x2 */}
@@ -38,16 +47,13 @@ export default function FeaturedSection() {
 
 			{/* Right column - multiple articles with scroll */}
 			<div className="col-span-1 row-span-2 flex flex-col gap-4">
-				{selectedArticles &&
-					selectedArticles
-						.slice(2, 6)
-						.map((article) => (
-							<NewsHeroCard
-								key={`top-${article.id}`}
-								articleInfo={article}
-								small={true}
-							/>
-						))}
+				{featuredArticles.slice(2, 6).map((article) => (
+					<NewsHeroCard
+						key={`top-${article.id}`}
+						articleInfo={article}
+						small={true}
+					/>
+				))}
 			</div>
 		</section>
 	);

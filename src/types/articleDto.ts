@@ -48,6 +48,10 @@ export interface ArticleInfoResponseDTO {
 	count: number;
 }
 
+export interface FeaturedArticlesResponseDTO {
+	articles: ArticleInfoDTO[];
+}
+
 export interface RecommendedArticleDTO {
 	_id: string;
 	title: string;

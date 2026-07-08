@@ -1,16 +1,28 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 import { SectionHeaderExpandable } from "@/components/common/layout/SectionHeaderExpandable";
 import CollapsibleSection from "@/components/news/section/CollapsibleSection";
 import { SECTIONS } from "@/constants/keys";
 import { useSectionVisible } from "@/hooks/useSectionCollapse";
-import { SELECTED_ARTICLES } from "@/components/news/tempArticles";
 import NewsHeroCard from "@/components/news/cards/NewsHeroCard";
 import Image from "@/assets/news_hero_image.jpg";
+import type { AppDispatch, RootState } from "@/store/store";
+import { loadFeaturedArticles } from "@/store/articlesSlice";
 
 export default function MobileStaffPicksSection() {
 	const isVisible = useSectionVisible(SECTIONS.STAFF_PICKS);
 	const { t } = useTranslation();
+	const dispatch = useDispatch<AppDispatch>();
+	const featuredArticles = useSelector(
+		(state: RootState) => state.article.featuredArticles
+	);
+
+	// server-curated selection; thunk dedupes if another section already loaded it
+	useEffect(() => {
+		dispatch(loadFeaturedArticles());
+	}, [dispatch]);
 
 	return (
 		<div className="flex flex-col md:hidden">
@@ -38,7 +50,7 @@ export default function MobileStaffPicksSection() {
 				<CollapsibleSection section={SECTIONS.STAFF_PICKS}>
 					<div className="w-full overflow-x-auto overflow-y-hidden pt-4 hide-scrollbar">
 						<div className="flex gap-x-4">
-							{SELECTED_ARTICLES.slice(0, 6).map((article) => (
+							{featuredArticles.slice(0, 6).map((article) => (
 								<div
 									key={`mobile-staff-picks-${article.id}`}
 									className="flex-shrink-0 w-64"

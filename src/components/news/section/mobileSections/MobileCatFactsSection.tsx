@@ -1,16 +1,25 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 import { SectionHeaderExpandable } from "@/components/common/layout/SectionHeaderExpandable";
-import { CAT_FACTS } from "@/components/layout/sideColumn/constants";
 import CollapsibleSection from "@/components/news/section/CollapsibleSection";
 import { SECTIONS } from "@/constants/keys";
 import { useSectionVisible } from "@/hooks/useSectionCollapse";
 import { CatFactsCard } from "@/components/layout/sideColumn/CatFactsCard";
-import type { CatFactsProps } from "@/types/props/sideColumnTypes";
+import type { AppDispatch, RootState } from "@/store/store";
+import { loadCatFacts } from "@/store/catFactsSlice";
 
 export default function MobileCatFactsSection() {
 	const isVisible = useSectionVisible(SECTIONS.CAT_FACTS);
 	const { t } = useTranslation();
+	const dispatch = useDispatch<AppDispatch>();
+	const catFacts = useSelector((state: RootState) => state.catFacts.facts);
+
+	// server-decided facts; thunk dedupes if another section already loaded them
+	useEffect(() => {
+		dispatch(loadCatFacts());
+	}, [dispatch]);
 
 	return (
 		<section
@@ -25,16 +34,14 @@ export default function MobileCatFactsSection() {
 			/>
 			<CollapsibleSection section={SECTIONS.CAT_FACTS}>
 				<div className="flex w-full gap-4 pt-4 hide-scrollbar overflow-y-hidden">
-					{CAT_FACTS.map(
-						(catFact: Omit<CatFactsProps, "small">, index: number) => (
-							<CatFactsCard
-								key={`cat-fact-${index}`}
-								title={catFact.title}
-								fact={catFact.fact}
-								small={true}
-							/>
-						)
-					)}
+					{catFacts.map((catFact) => (
+						<CatFactsCard
+							key={`cat-fact-${catFact.id}`}
+							title={catFact.title}
+							fact={catFact.fact}
+							small={true}
+						/>
+					))}
 				</div>
 			</CollapsibleSection>
 		</section>

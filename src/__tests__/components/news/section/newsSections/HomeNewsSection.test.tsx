@@ -94,8 +94,9 @@ function buildState(overrides: Partial<RootState["article"]> = {}): Partial<Root
 			articles: [],
 			articlesCount: 0,
 			articlesDetail: {},
-			loading: { homePage: false, topTen: false, articles: false, detail: false },
-			error: { homePage: undefined, topTen: undefined, articles: undefined, detail: undefined },
+			featuredArticles: [],
+			loading: { homePage: false, topTen: false, featured: false, articles: false, detail: false },
+			error: { homePage: undefined, topTen: undefined, featured: undefined, articles: undefined, detail: undefined },
 			...overrides,
 		},
 	};
@@ -142,7 +143,7 @@ describe("HomeNewsSection", () => {
 	it("shows LoadingOverlay when homePage is loading", () => {
 		renderWithProviders(<HomeNewsSection />, {
 			preloadedState: buildState({
-				loading: { homePage: true, topTen: false, articles: false, detail: false },
+				loading: { homePage: true, topTen: false, featured: false, articles: false, detail: false },
 			}),
 		});
 
@@ -153,7 +154,7 @@ describe("HomeNewsSection", () => {
 	it("hides LoadingOverlay when homePage is not loading", () => {
 		renderWithProviders(<HomeNewsSection />, {
 			preloadedState: buildState({
-				loading: { homePage: false, topTen: false, articles: false, detail: false },
+				loading: { homePage: false, topTen: false, featured: false, articles: false, detail: false },
 			}),
 		});
 

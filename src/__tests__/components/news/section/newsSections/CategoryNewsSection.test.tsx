@@ -97,8 +97,9 @@ function buildState(overrides: Partial<RootState["article"]> = {}): Partial<Root
 			articles: [],
 			articlesCount: 0,
 			articlesDetail: {},
-			loading: { homePage: false, topTen: false, articles: false, detail: false },
-			error: { homePage: undefined, topTen: undefined, articles: undefined, detail: undefined },
+			featuredArticles: [],
+			loading: { homePage: false, topTen: false, featured: false, articles: false, detail: false },
+			error: { homePage: undefined, topTen: undefined, featured: undefined, articles: undefined, detail: undefined },
 			...overrides,
 		},
 	};

@@ -1,7 +1,12 @@
-import type { RecommendedArticlesResponseDTO, SemanticSearchResponseDTO } from "@/types/articleDto";
+import type {
+	FeaturedArticlesResponseDTO,
+	RecommendedArticlesResponseDTO,
+	SemanticSearchResponseDTO,
+} from "@/types/articleDto";
 import type { ArticleQuery } from "@/types/articleTypes";
 import { API_URL } from "@/config/config";
 import { authFetch } from "@/api/authFetch";
+import { getApiLang } from "@/i18n/lang";
 
 /**
  * Fetches article information from the server with optional filters
@@ -29,8 +34,9 @@ export async function fetchArticlesInfo({
 	if (search) params.append("search", search);
 	if (dateRange) params.append("dateRange", dateRange);
 	if (sortBy) params.append("sortBy", sortBy);
+	params.append("lang", getApiLang());
 
-	const response = await fetch(`${API_URL}/article-info?${params}`, {
+	const response = await fetch(`${API_URL}/api/articles?${params}`, {
 		method: "GET",
 		headers: { "Content-Type": "application/json" },
 	});
@@ -49,7 +55,7 @@ export async function fetchArticlesInfo({
  */
 export async function fetchArticlesByCategory(page: number, category: string) {
 	const response = await fetch(
-		`${API_URL}/article-info?page=${page}&limit=10&category=${category}`,
+		`${API_URL}/api/articles?page=${page}&limit=10&category=${category}&lang=${getApiLang()}`,
 		{
 			method: "GET",
 			headers: { "Content-Type": "application/json" },
@@ -87,6 +93,7 @@ export async function fetchArticlesBySearch({
 	params.set("page", page.toString());
 	if (dateRange) params.set("dateRange", dateRange);
 	if (sortBy) params.set("sortBy", sortBy);
+	params.set("lang", getApiLang());
 
 	const response = await fetch(
 		`${API_URL}/api/articles/search/keyword?${params}`,
@@ -110,7 +117,7 @@ export async function fetchArticlesBySearch({
  */
 export async function fetchArticlesBySubCategory(page: number, subCategory: string) {
 	const response = await fetch(
-		`${API_URL}/article-info?page=${page}&limit=10&subCategory=${subCategory}`,
+		`${API_URL}/api/articles?page=${page}&limit=10&subCategory=${subCategory}&lang=${getApiLang()}`,
 		{
 			method: "GET",
 			headers: { "Content-Type": "application/json" },
@@ -123,16 +130,16 @@ export async function fetchArticlesBySubCategory(page: number, subCategory: stri
 }
 
 /**
- * Fetches detailed information for a specific article from the server
+ * Fetches detailed information for a specific article from the server.
+ * GET /api/articles/:id
  * @param articleId - The unique identifier of the article
  * @returns The response data from the server containing detailed article information
  * @throws Error if the HTTP request fails
  */
 export async function fetchArticleDetail(articleId: string) {
-	const response = await fetch(`${API_URL}/article-detail`, {
-		method: "POST",
+	const response = await fetch(`${API_URL}/api/articles/${articleId}?lang=${getApiLang()}`, {
+		method: "GET",
 		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify({ id: articleId }),
 	});
 	if (!response.ok) {
 		throw new Error(`Error: ${response.statusText}`);
@@ -141,28 +148,51 @@ export async function fetchArticleDetail(articleId: string) {
 }
 
 /**
- * Increments the view count for a specific article on the server
+ * Increments the view count for a specific article on the server.
+ * POST /api/articles/:id/view
  * @param articleId - The unique identifier of the article
  * @throws Error if the HTTP request fails
  */
 export function incrementArticleViewed(articleId: string) {
-	fetch(`${API_URL}/increment-article-view/${articleId}`, {
-		method: "PUT",
+	fetch(`${API_URL}/api/articles/${articleId}/view`, {
+		method: "POST",
 		headers: { "Content-Type": "application/json" },
 	});
 	// don't expect a repsonse, so no return/ no async because just incrementing view of article with specific ID
 }
 
 /**
- * Fetches the top ten most viewed articles from the server
+ * Fetches the top ten most viewed articles from the server.
+ * GET /api/articles/top
  * @returns The response data from the server containing the top ten articles
  * @throws Error if the HTTP request fails
  */
 export async function fetchTopTenArticles() {
-	const response = await fetch(`${API_URL}/article-top-ten`, {
+	const response = await fetch(`${API_URL}/api/articles/top?lang=${getApiLang()}`, {
 		method: "GET",
 		headers: { "Content-Type": "application/json" },
 	});
+	if (!response.ok) {
+		throw new Error(`Error: ${response.statusText}`);
+	}
+	return response.json();
+}
+
+/**
+ * Fetches the editor-curated featured articles (staff picks / featured section).
+ * The server owns the selection — the UI just renders whatever comes back.
+ * GET /api/articles/featured
+ * @returns The response containing the curated featured articles
+ * @throws Error if the HTTP request fails
+ */
+export async function fetchFeaturedArticles(): Promise<FeaturedArticlesResponseDTO> {
+	const response = await fetch(
+		`${API_URL}/api/articles/featured?lang=${getApiLang()}`,
+		{
+			method: "GET",
+			headers: { "Content-Type": "application/json" },
+		}
+	);
 	if (!response.ok) {
 		throw new Error(`Error: ${response.statusText}`);
 	}
@@ -184,7 +214,7 @@ export async function fetchTopTenArticles() {
 export async function fetchSimilarArticles(
 	articleId: string
 ): Promise<RecommendedArticlesResponseDTO> {
-	const response = await fetch(`${API_URL}/api/articles/${articleId}/similar`, {
+	const response = await fetch(`${API_URL}/api/articles/${articleId}/similar?lang=${getApiLang()}`, {
 		method: "GET",
 		headers: { "Content-Type": "application/json" },
 	});
@@ -202,7 +232,7 @@ export async function fetchSimilarArticles(
  * @throws Error if the HTTP request fails
  */
 export async function fetchRecommendedArticles(): Promise<RecommendedArticlesResponseDTO> {
-	const response = await authFetch(`${API_URL}/api/recommendations`, {
+	const response = await authFetch(`${API_URL}/api/recommendations?lang=${getApiLang()}`, {
 		method: "GET",
 		headers: { "Content-Type": "application/json" },
 	});
@@ -238,6 +268,7 @@ export async function fetchSemanticSearch({
 	params.set("page", page.toString());
 	if (dateRange) params.set("dateRange", dateRange);
 	if (sortBy) params.set("sortBy", sortBy);
+	params.set("lang", getApiLang());
 
 	const response = await fetch(
 		`${API_URL}/api/articles/search/similar?${params}`,

@@ -15,7 +15,7 @@ import {
 export default function CategoryBar() {
 	// get url/{category}
 	const location = useLocation();
-	const { t } = useTranslation();
+	const { t, i18n } = useTranslation();
 	const currentCategory = location.pathname.split("/")[1]; // grabs part after "/"
 	const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -25,6 +25,9 @@ export default function CategoryBar() {
 	const dispatch = useDispatch<AppDispatch>();
 	// instead of setting the category, you link it
 	// and then in sections just grab the param again and filter
+// language is a dep because CategoryBar lives in the Header, outside the
+// language-keyed <main> in App.tsx, so it doesn't remount on toggle —
+// the initial article load must refire itself when the language changes
 useEffect(() => {
 	if (currentCategory === "") {
 		// defaults to grabbing all articles
@@ -34,7 +37,7 @@ useEffect(() => {
 			loadArticlesInfoByCategory({ page: 1, category: currentCategory as ArticleCategory })
 		);
 	}
-}, [currentCategory, dispatch]);
+}, [currentCategory, dispatch, i18n.resolvedLanguage]);
 
 	// Set up scroll listeners
 	useEffect(() => {

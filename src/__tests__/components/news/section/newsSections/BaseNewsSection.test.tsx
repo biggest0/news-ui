@@ -240,9 +240,10 @@ describe("BaseNewsSection", () => {
 						homeArticlesCount: 0,
 						articles: [],
 						articlesCount: 0,
+						featuredArticles: [],
 						articlesDetail: {},
-						loading: { homePage: false, topTen: false, articles: true, detail: false },
-						error: { homePage: undefined, topTen: undefined, articles: undefined, detail: undefined },
+						loading: { homePage: false, topTen: false, featured: false, articles: true, detail: false },
+						error: { homePage: undefined, topTen: undefined, featured: undefined, articles: undefined, detail: undefined },
 					},
 				},
 			}

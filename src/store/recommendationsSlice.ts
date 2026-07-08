@@ -95,6 +95,12 @@ const recommendationsSlice = createSlice({
 		clearSemanticSearch: (state) => {
 			state.semanticSearch = { articles: [], count: 0 };
 		},
+		/**
+		 * Resets similar/recommended/semantic-search caches to their initial state.
+		 * Dispatched when the UI language changes so results are refetched
+		 * in the new language (the `similar` cache is keyed by articleId only).
+		 */
+		resetRecommendations: () => initialState,
 	},
 	extraReducers: (builder) => {
 		builder
@@ -146,5 +152,6 @@ const recommendationsSlice = createSlice({
 	},
 });
 
-export const { clearRecommendedArticles, clearSemanticSearch } = recommendationsSlice.actions;
+export const { clearRecommendedArticles, clearSemanticSearch, resetRecommendations } =
+	recommendationsSlice.actions;
 export default recommendationsSlice.reducer;

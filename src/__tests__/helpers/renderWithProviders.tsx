@@ -19,6 +19,7 @@ import type { RootState } from "@/store/store";
 import articlesReducer from "@/store/articlesSlice";
 import recommendationsReducer from "@/store/recommendationsSlice";
 import userContentReducer from "@/store/userContentSlice";
+import catFactsReducer from "@/store/catFactsSlice";
 
 // ── Minimal i18n instance for tests ──────────────────────────────────
 
@@ -132,6 +133,7 @@ export function renderWithProviders(
 			article: articlesReducer,
 			recommendations: recommendationsReducer,
 			userContent: userContentReducer,
+			catFacts: catFactsReducer,
 		},
 		preloadedState: preloadedState as RootState,
 	});
