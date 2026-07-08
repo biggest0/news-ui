@@ -35,7 +35,7 @@ Catire Time is a satirical news frontend built with React 19, TypeScript, Redux 
 ```
 src/
 ├── __tests__/            # Vitest suites (components/, helpers/, mappers/, service/, utils/) + setup.ts
-├── api/                  # Raw fetch calls (articleApi, authApi, authFetch, formApi, userArticleApi)
+├── api/                  # Raw fetch calls (articleApi, authApi, authFetch, catFactApi, formApi, userArticleApi)
 ├── auth/                 # authStore.ts — module-level auth state (subscribed to via useAuth)
 ├── blog/                 # registry.ts auto-discovers posts/*.tsx via import.meta.glob
 ├── components/
@@ -49,10 +49,10 @@ src/
 ├── contexts/             # AppSettingContext (UI prefs), AuthContext (AuthProvider + useAuth)
 ├── hooks/                # Custom hooks (see below)
 ├── i18n/                 # Translation files + i18next config
-├── mappers/              # DTO → domain type conversion (articleMapper.ts)
+├── mappers/              # DTO → domain type conversion (articleMapper.ts, catFactMapper.ts)
 ├── pages/                # Route-level components
-├── service/              # Business logic + error handling wrapping api/ (article, auth, form, localStorage, userArticle)
-├── store/                # Redux store: articlesSlice, recommendationsSlice, userContentSlice
+├── service/              # Business logic + error handling wrapping api/ (article, auth, catFact, form, localStorage, userArticle)
+├── store/                # Redux store: articlesSlice, recommendationsSlice, userContentSlice, catFactsSlice
 ├── types/                # Domain types, DTO types, localStorage types, prop types
 └── utils/                # date, search, storage, text, validation utilities
 ```
@@ -121,7 +121,9 @@ The `categoryColor()` function in `NewsCard.tsx` uses raw Tailwind + `dark:` pai
 - `articlesSlice` (`state.article`) — home/category/search articles, article details, topTen, loading flags, errors
 - `recommendationsSlice` (`state.recommendations`) — similar articles (cached by articleId) and personalised recommendations
 - `userContentSlice` (`state.userContent`) — per-article like status and user reading history
+- `catFactsSlice` (`state.catFacts`) — server-decided cat facts (localized)
 - Article details are cached in `state.article.articlesDetail` (keyed by ID)
+- `loadFeaturedArticles` / `loadCatFacts` use a thunk `condition` to dedupe — multiple co-mounted sections (desktop + mobile variants) can dispatch them safely
 - Use `AppDispatch` and `RootState` from `src/store/store.ts` for typed hooks
 
 **React Context** (`AppSettingContext`) handles all **local UI preferences**:
@@ -188,7 +190,7 @@ Article *content* (title, summary, paragraphs, sub_category) is translated by th
 
 - Every article-returning endpoint takes `?lang=en|fr`; the api/ layer appends it automatically via `getApiLang()` from `src/i18n/lang.ts` — **any new article endpoint call must do the same**
 - `main_category` stays a language-independent key (translated client-side via `CATEGORY.*`); untranslated articles fall back to English content under `lang=fr` (never 404)
-- **Re-fetch on toggle:** `main.tsx` listens for i18next `languageChanged` → sets `<html lang>` and resets the article/recommendations/userContent slices; `<main key={i18n.resolvedLanguage}>` in `App.tsx` remounts all pages so their mount-effects refetch. Exception: `CategoryBar` lives in the Header (outside the keyed subtree) and instead has `i18n.resolvedLanguage` in its fetch-effect deps
+- **Re-fetch on toggle:** `main.tsx` listens for i18next `languageChanged` → sets `<html lang>` and resets the article/recommendations/userContent/catFacts slices; `<main key={i18n.resolvedLanguage}>` in `App.tsx` remounts all pages so their mount-effects refetch. Exception: `CategoryBar` lives in the Header (outside the keyed subtree) and instead has `i18n.resolvedLanguage` in its fetch-effect deps
 - Article dates are formatted at map time in `articleMapper.ts` with `getDateLocale()` (`en-CA` / `fr-CA`)
 
 ---
@@ -242,9 +244,10 @@ Article *content* (title, summary, paragraphs, sub_category) is translated by th
 
 - Base URL: `import.meta.env.VITE_API_URL` (falls back to `http://localhost:3001`)
 - Every API module pairs with a service module that handles errors + DTO mapping:
-  - `articleApi.ts` ↔ `articleService.ts` — articles, details, top-ten, similar, recommended, semantic search
+  - `articleApi.ts` ↔ `articleService.ts` — articles, details, top-ten, featured (staff picks), similar, recommended, semantic search
   - `authApi.ts` ↔ `authService.ts` — register, login, logout, refresh, Google OAuth exchange, email verify, password reset
   - `userArticleApi.ts` ↔ `userArticleService.ts` — like status, reading history, `recordArticleRead`
+  - `catFactApi.ts` ↔ `catFactService.ts` — server-decided, localized cat facts
   - `formApi.ts` ↔ `formService.ts` — email subscriptions
   - `localStorageService.ts` — localStorage read/write helpers (no api/ pair)
 - `authFetch.ts` wraps `fetch` with HttpOnly-cookie auth + 401 → silent refresh + retry. Use it for any authenticated endpoint.
