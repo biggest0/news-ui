@@ -7,7 +7,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/ui/DropdownMenu";
 import { useSectionDropdown } from "@/hooks/useSectionDropdown";
 import type { SectionToggleState } from "@/types/localStorageTypes";
 
