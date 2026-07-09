@@ -148,6 +148,21 @@ Proposed tally: **~33 seed findings** — P0 ×2, P1 ×10, P2 ×13, P3 ×6, plus
 
 ---
 
+## M1 results (2026-07-09 — done pending owner commit, branch `audit/m1-shadcn-wiring`)
+
+| ID | Resolution | Verified how |
+|----|-----------|--------------|
+| F004 | **Done** — `@/lib/utils.ts` → `src/lib/utils.ts`, `@/components/ui/button.tsx` → `src/components/ui/button.tsx`, literal `@` folder deleted | files exist in `src/`; `@` gone; build green |
+| F005 | **Done** — root cause: shadcn CLI needs `baseUrl`+`paths` in the **root** `tsconfig.json` (this repo's solution-style root had none). Added per official shadcn Vite docs (context7: shadcn installation/vite — "Add the `baseUrl` and `paths` … to `tsconfig.json` **and** `tsconfig.app.json`") | throwaway `npx shadcn add badge` landed in `src/components/ui/` (then removed) |
+| F035 | **Done** — `shadcn` → devDependencies | package.json diff |
+| F036 | **Done** — `gh-pages` → devDependencies | package.json diff |
+| F037 | **Done** — `@types/i18next`, `@types/react-redux`, `@types/react-router-dom` removed | build + tests green without them |
+| F040 | **Done** — lint 0 errors (was 3): chai `.to.equal(null)`, scoped `no-namespace` disable with justification, dropped empty `setupNodeEvents`. 6 remaining warnings = F026 (M6) | `npm run lint` |
+| F041 | **Done** — `npm audit` **21 → 0** vulns (vite 7.3.6 + transitive dev-tooling bumps, all semver-compatible). Caveat: first `npm audit fix` failed on Cypress's binary postinstall (sandbox EACCES) and rolled back — reran with `CYPRESS_INSTALL_BINARY=0`; Cypress stays 15.13.0 | `npm audit`; gates green; dev-server smoke test on vite 7.3.6 |
+| F006 | **Partially resolved** — `clsx`/`tailwind-merge` (used by `cn`) and `cva`/`@base-ui/react` (used by button.tsx) now have in-src consumers; `lucide-react` + `tw-animate-css` still unused → re-check at end of M3 | grep |
+
+M1 exit criteria met (see COMMIT_PLAN.md for the pending commits + merge).
+
 ## M0 baseline findings (added 2026-07-09 — verified live, not proposals)
 
 Full evidence in [`baseline/report.md`](./baseline/report.md), [`baseline/gates.md`](./baseline/gates.md), [`baseline/lighthouse.md`](./baseline/lighthouse.md).
