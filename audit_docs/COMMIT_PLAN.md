@@ -6,47 +6,85 @@
 
 ---
 
-## Pending commits — M2 (branch: `audit/m2-tokens`)
+## Pending commits — M3 (branch: `audit/m3-components`)
 
-> ⚠️ Commits 1 and 2 are one atomic unit — `index.css` and the component renames depend on each other; splitting them leaves a broken intermediate commit. Commit 3 is independent.
+> Commits 1–3 build on each other (primitive → consumers → consolidation) but each leaves the tree green, so they can land as three reviewable commits in this order.
 
-### 1. refactor: unify design tokens into single brand-themed system
+### 1. feat: add accessible dropdown-menu primitive adapted from shadcn base
 
 **Files:**
-- `src/index.css` (rewritten: one token source — brand values in `:root`/`.dark`, `@theme inline` mapping, extensions; legacy `@theme` + `html.dark` deleted; shadcn `--radius` remap + `chart/sidebar` vars dropped; dead commented CSS removed; Cormorant Garamond import dropped)
-- all 51 modified files under `src/` **except** `src/index.css` handled above — the ~300 utility renames (`text-primary`→`text-foreground`, `text-secondary`→`text-foreground-secondary`, `text-muted`→`text-muted-foreground`, `text/bg-accent`→`text/bg-brand`, `bg-accent-bg`→`bg-primary`, `bg-accent-subtle`→`bg-accent`, `bg-hover-bg`→`bg-muted`, `text-error`→`text-destructive`, `bg-surface`→`bg-background`, `bg-elevated`→`bg-card`, …)
-- `audit_docs/token-mapping.md` (the full mapping + deliberate decisions)
+- `src/components/ui/DropdownMenu.tsx` (new — @base-ui Menu base, adapted: react-icons, app tokens, normal-case items)
+- `src/components/common/layout/SectionDropDown.tsx` (rebufeat: add accessible dropdown-menu primitive and compose section headersilt on the primitive; trigger is a real button with aria-haspopup/expanded)
+- `src/components/common/layout/SectionHeaderExpandable.tsx` (now composes SectionDropDown; inlined duplicate + duplicate type deleted)
+- `src/components/news/section/ExpandableSection.tsx` (chevron → real button with aria-expanded)
+- `src/i18n/en/common.json`, `src/i18n/fr/common.json` (DROPDOWN.SECTION_OPTIONS)
 
 **Message:**
 ```
-refactor: unify design tokens into single brand-themed system
+
 ```
 
-**Rationale (F001/F002/F003/F034 — the P0):** ends the token collision. Verified: computed utilities match the production reference exactly in both modes (amber-600/amber-400 brand, gray/slate ramps); 12-shot screenshot grid in `audit_docs/m2-after/` matches the pre-shadcn baseline; 223/223 tests, lint 0 errors.
+**Rationale (F008/F009/F013/F016/F023):** kills the byte-identical dropdown duplication AND the keyboard/ARIA gaps in one move; fixes the dark-mode white-panel bug. Keyboard cycle verified in-browser.
 
-### 2. chore: remove noto sans and playfair display after typography decision
+### 2. refactor: extract SectionShell and consolidate section pairs
 
 **Files:**
-- `package.json`
-- `package-lock.json`
+- `src/components/common/layout/SectionShell.tsx` (new)
+- `src/components/news/section/EditorsSection.tsx`, `CatFactsSection.tsx` (variant prop; consolidated)
+- `src/components/news/section/mobileSections/MobileEditorsSection.tsx`, `MobileCatFactsSection.tsx` (**deleted**)
+- `src/components/news/section/StaffPicksSection.tsx`, `mobileSections/MobileStaffPicksSection.tsx` (share useFeaturedArticles; kept split by design — different presentation)
+- `src/components/news/section/PopularSection.tsx`, `RecommendedSection.tsx`, `EmptyStateSection.tsx`, `newsSections/BaseNewsSection.tsx` (SectionShell migration)
+- `src/hooks/useArticleHooks.ts` (new useFeaturedArticles hook)
+- `src/pages/HomePage.tsx` (call sites → variant props)
 
 **Message:**
 ```
-chore: remove noto sans and playfair display after typography decision
+refactor: extract section shell and consolidate mobile/desktop section pairs
 ```
 
-**Rationale (O1 resolved → Tinos + Cardo; F042):** `@fontsource-variable/noto-sans` + `playfair-display` uninstalled — all 13 woff2 subsets (~530 kB) leave the bundle. Side-by-side renders kept in `audit_docs/m2-after/fonts-*.png` as the decision record.
+**Rationale (F010/F011):** ~90%-duplicate pairs → one component each; the copy-pasted wrapper pattern → SectionShell. Mobile layout verified against baseline.
 
-### 3. docs: record m2 results in audit findings and commit plan
+### 3. refactor: rename infinite-scroll hooks and drop lucide-react
 
 **Files:**
-- `audit_docs/AUDIT_FINDINGS.md`
+- `src/hooks/useArticleHooks.ts`, `src/hooks/useSearchPage.ts` (useListInfiniteScroll / useSearchInfiniteScroll)
+- `src/components/news/section/newsSections/BaseNewsSection.tsx`, `src/pages/SearchPage.tsx` (call sites)
+- `src/__tests__/components/news/section/newsSections/BaseNewsSection.test.tsx` (mock rename)
+- `package.json`, `package-lock.json` (lucide-react removed — O2: react-icons is the standard)
+
+**Message:**
+```
+refactor: rename infinite-scroll hooks and standardize on react-icons
+```
+
+**Rationale (F012, O2):** kills the same-name/different-signature import footgun; one icon library.
+
+### 3.5 refactor: rename ui primitives to app naming convention
+
+**Files:**
+- `src/components/ui/button.tsx` → `src/components/ui/Button.tsx` (git mv, case-only)
+- `src/components/ui/DropdownMenu.tsx` (created directly with the final name; listed in commit 1)
+- `src/components/common/layout/SectionDropDown.tsx` (import path)
+
+**Message:**
+```
+refactor: rename ui primitives to pascal case per naming convention
+```
+
+**Rationale (owner decision):** file naming stays app-standard — PascalCase components, camelCase .ts; shadcn-generated kebab-case files get renamed during adaptation. (Fold into commit 1 if you prefer; kept separate so the case-only `git mv` of Button.tsx is visible.)
+
+### 4. docs: record m3 results, base-ui scope rule, naming convention, milestone m5.5
+
+**Files:**
+- `audit_docs/AUDIT_PLAN.md` (M5.5 milestone + base-ui scope rule)
+- `audit_docs/AUDIT_FINDINGS.md` (M3 results, O2/D1-scope resolutions, F046 bundle note)
 - `audit_docs/COMMIT_PLAN.md`
-- ~~`audit_docs/m2-after/`~~ — owner decision: verification screenshots stay **local-only** (regenerable; text evidence in the findings log is what gets committed)
+- `CLAUDE.md` (naming conventions expanded; base-ui/shadcn scope section added)
+- `.gitignore` (audit_docs/m3-after/ local-only)
 
 **Message:**
 ```
-docs: record m2 results in audit findings and commit plan
+docs: record m3 results, base-ui scope, naming convention, milestone m5.5
 ```
 
 ---
@@ -55,11 +93,11 @@ docs: record m2 results in audit findings and commit plan
 
 ```bash
 git checkout refactor/ui-audit
-git merge --no-ff audit/m2-tokens -m "merge audit/m2-tokens: design-token unification (P0 fix)"
+git merge --no-ff audit/m3-components -m "merge audit/m3-components: accessible dropdowns + section consolidation"
 git push origin refactor/ui-audit
 ```
 
-M2 exit criteria (all met, pending your review): one token source ✅ · utility probe = brand amber both modes ✅ · screenshot grid matches intended baseline ✅ · O1 resolved (Tinos/Cardo) ✅ · F042 fonts removed ✅ · console: nothing new ✅ · gates green (build / 223 tests / lint 0 errors) ✅
+M3 exit criteria (all met, pending your review): no byte-identical component bodies ✅ · dropdowns keyboard-operable with correct ARIA (verified: Enter/arrows/Escape/focus-return) ✅ · dark-mode panel bug fixed ✅ · one icon library ✅ · mobile/desktop layout matches baseline ✅ · gates green (build / 223 tests / lint 0 errors) ✅ · noted: bundle +54 kB gzip from @base-ui core → F046 routed to perf milestone
 
 ---
 

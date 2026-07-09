@@ -197,12 +197,19 @@ Article *content* (title, summary, paragraphs, sub_category) is translated by th
 
 ## Component Conventions
 
-- **File names:** PascalCase (`NewsCard.tsx`, `ThemeToggle.tsx`)
+- **File names:** PascalCase for component files (`NewsCard.tsx`, `ThemeToggle.tsx`, `DropdownMenu.tsx`); camelCase for non-component `.ts` files (`articleMapper.ts`, `useSectionDropdown.ts`). **No kebab-case** — shadcn-generated files (which arrive as e.g. `dropdown-menu.tsx`) must be renamed to PascalCase during adaptation, with imports updated
 - **Exports:** `export default function ComponentName()` for components; named exports for utilities/types/hooks
 - **Props:** Define inline `interface ComponentNameProps` above the component; use `src/types/props/` only when props are shared across multiple components
 - **Prop callbacks:** Type explicitly — `onRead?: (article: ArticleInfo) => void`
 - **Hooks first:** Extract logic into custom hooks in `src/hooks/` rather than bloating components
-- **Mobile vs Desktop:** Many sections have separate mobile components (e.g. `MobileEditorsSection`, `MobileMenu`); check before adding responsive logic inline
+- **Mobile vs Desktop:** Some sections have separate mobile components (e.g. `MobileMenu`, `MobileStaffPicksSection`); near-identical pairs are consolidated behind a `variant="sidebar" | "mobile"` prop instead (`EditorsSection`, `CatFactsSection`) — check before adding responsive logic inline
+
+### UI primitives: base-ui / shadcn scope (decided 2026-07-09)
+
+- **base-ui (`@base-ui/react`) is used ONLY where the web platform lacks a native primitive:** menus/dropdowns, dialogs/drawers, tooltips, comboboxes, toggle groups. These live in `src/components/ui/` as *adapted* shadcn registry components — pulled for their accessible behavior, then made ours: app tokens, react-icons (never lucide), app styling, PascalCase filename, JSDoc.
+- **Native elements stay native:** `<button>`, `<input>`, `<select>`, links. shadcn *styling recipes* may be borrowed for visual consistency (pure CSS), but no base-ui runtime for these.
+- **Domain components never import `@base-ui/react` directly** — they compose the primitives in `src/components/ui/`.
+- shadcn is a code source, not a design authority: registry components are a base/standard to build on, never verbatim copies.
 
 ---
 

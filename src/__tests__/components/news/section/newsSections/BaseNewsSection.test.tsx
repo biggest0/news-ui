@@ -4,7 +4,7 @@
  * BaseNewsSection is the core article listing component shared by
  * HomeNewsSection and CategoryNewsSection. It orchestrates:
  * - Article filtering and sorting (useArticleFilters)
- * - Infinite scroll loading (useInfiniteScroll)
+ * - Infinite scroll loading (useListInfiniteScroll)
  * - Server-side pagination (usePagination)
  * - Section visibility and collapse (useSectionVisible, CollapsibleSection)
  * - Empty state with a "Bring It Back" reset button
@@ -19,7 +19,7 @@
  * - Renders NewsSideColumn
  *
  * Dependencies mocked:
- * - @/hooks/useArticleHooks       — useArticleFilters, useInfiniteScroll
+ * - @/hooks/useArticleHooks       — useArticleFilters, useListInfiniteScroll
  * - @/hooks/usePagination          — usePagination
  * - @/hooks/usePagePagination      — usePagePagination
  * - @/hooks/useSectionCollapse     — useSectionVisible, useAllSectionNotVisible, useSectionCollapse
@@ -67,7 +67,7 @@ vi.mock("@/hooks/useArticleHooks", () => ({
 		sortBy: "newest",
 		setSortBy: mockSetSortBy,
 	})),
-	useInfiniteScroll: vi.fn(),
+	useListInfiniteScroll: vi.fn(),
 }));
 
 vi.mock("@/hooks/usePagination", () => ({

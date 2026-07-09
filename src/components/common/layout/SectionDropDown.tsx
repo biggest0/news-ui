@@ -1,83 +1,55 @@
-import { useSectionDropdown, type DropDownOption } from "@/hooks/useSectionDropdown";
+import { FaChevronDown } from "react-icons/fa6";
+import { useTranslation } from "react-i18next";
+
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "@/components/ui/DropdownMenu";
+import { useSectionDropdown } from "@/hooks/useSectionDropdown";
 import type { SectionToggleState } from "@/types/localStorageTypes";
-import { useEffect, useRef, useState } from "react";
-import { FaChevronUp, FaChevronDown } from "react-icons/fa6";
 
 export interface SectionDropDownProps {
 	section: keyof SectionToggleState;
 }
 
+/**
+ * Per-section options menu (collapse/expand, remove, view mode) rendered as a
+ * chevron trigger next to the section header. Built on the accessible
+ * DropdownMenu primitive: the trigger is a real button with aria-haspopup /
+ * aria-expanded, the menu handles arrow-key navigation, Escape, and focus
+ * return for free. Options come from `useSectionDropdown(section)`.
+ */
 export const SectionDropDown = ({ section }: SectionDropDownProps) => {
-	const [isExpanded, setIsExpanded] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  const dropDownOptions = useSectionDropdown(section);
-
-	// Close dropdown when clicking outside dropdown
-	useEffect(() => {
-		const handleClickOutside = (event: MouseEvent) => {
-			if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-				setIsExpanded(false);
-			}
-		};
-
-		if (isExpanded) {
-			document.addEventListener("mousedown", handleClickOutside);
-		}
-
-		return () => {
-			document.removeEventListener("mousedown", handleClickOutside);
-		};
-	}, [isExpanded]);
-
-	const handleOptionClick = (option: DropDownOption) => {
-		option.onClick();
-		setIsExpanded(false);
-	};
+	const { t } = useTranslation();
+	const dropDownOptions = useSectionDropdown(section);
 
 	return (
-		<div className="relative" ref={dropdownRef}>
-			{isExpanded ? (
-				<FaChevronUp
-					className="w-4 h-4 mb-4 fill-current text-gray-500 cursor-pointer"
-					onClick={() => setIsExpanded(false)}
-				/>
-			) : (
-				<FaChevronDown
-					className="w-4 h-4 mb-4 fill-current text-gray-500 cursor-pointer"
-					onClick={() => setIsExpanded(true)}
-				/>
-			)}
-			{isExpanded && (
-				<div
-					className={`absolute top-6 left-0 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50`}
-				>
-					<div className="py-1">
-						{dropDownOptions.map((option, index) =>
-							option.isDivider ? (
-								<div
-									key={`divider-${index}`}
-									className="border-t border-gray-200 my-1"
-								/>
-							) : (
-								<button
-									key={`${option.label}-${index}`}
-									onClick={() => handleOptionClick(option)}
-									className={
-										option.className ||
-										"w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
-									}
-								>
-									{option.icon && (
-										<span className="w-4 h-4">{option.icon}</span>
-									)}
-									{option.label}
-								</button>
-							)
-						)}
-					</div>
-				</div>
-			)}
-		</div>
+		<DropdownMenu>
+			<DropdownMenuTrigger
+				aria-label={t("DROPDOWN.SECTION_OPTIONS")}
+				className="group mb-4 cursor-pointer rounded text-muted-foreground outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/50"
+			>
+				<FaChevronDown className="h-4 w-4 fill-current transition-transform duration-200 group-data-popup-open:rotate-180" />
+			</DropdownMenuTrigger>
+			<DropdownMenuContent align="start">
+				{dropDownOptions.map((option, index) =>
+					option.isDivider ? (
+						<DropdownMenuSeparator key={`divider-${index}`} />
+					) : (
+						<DropdownMenuItem
+							key={`${option.label}-${index}`}
+							className={option.className}
+							onClick={option.onClick}
+						>
+							{option.icon && <span className="h-4 w-4">{option.icon}</span>}
+							{option.label}
+						</DropdownMenuItem>
+					)
+				)}
+			</DropdownMenuContent>
+		</DropdownMenu>
 	);
 };
