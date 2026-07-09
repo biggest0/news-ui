@@ -111,6 +111,9 @@ Cypress.Commands.add("waitForApp", () => {
 export {};
 
 declare global {
+	// Cypress custom-command typing requires merging into the global Cypress
+	// namespace — there is no module-augmentation alternative for this API.
+	// eslint-disable-next-line @typescript-eslint/no-namespace
 	namespace Cypress {
 		interface Chainable {
 			stubApi(): Chainable;
