@@ -42,7 +42,7 @@ chore: remove noto sans and playfair display after typography decision
 **Files:**
 - `audit_docs/AUDIT_FINDINGS.md`
 - `audit_docs/COMMIT_PLAN.md`
-- `audit_docs/m2-after/` (verification screenshots, JPEG)
+- ~~`audit_docs/m2-after/`~~ — owner decision: verification screenshots stay **local-only** (regenerable; text evidence in the findings log is what gets committed)
 
 **Message:**
 ```
