@@ -210,7 +210,20 @@ Later `@theme` blocks win for duplicate keys, and `@theme inline` bypasses the a
 
 ---
 
-### M6 — Consistency, a11y & i18n sweep · **M** · fixes F017–F022, F026, F033 · _after M3+M5 so it sweeps final code_
+### M5.5 — Interactive component sweep · **L** · _owner-added 2026-07-09_ · extends D1
+
+**Objective:** migrate the remaining hand-rolled interactive components onto accessible primitive bases, following the pattern established in M3: **pull the shadcn/base-ui component as the accessible base, then adapt it into our own** (our tokens, react-icons, our styling) — never a verbatim registry copy. Owner explicitly scoped this out of M3 ("it is a big job, it should get a milestone of its own").
+
+- [ ] Inventory every remaining hand-rolled interactive: FilterBar/search-filter `<select>`s, pagination controls, theme/language switchers, mobile menu, auth/subscribe form inputs, LikeButton, BackToTopButton, any dialog/toast patterns.
+- [ ] For each: pull the registry equivalent (shadcn MCP), compare a11y structure, decide adopt-and-adapt vs keep-with-fixes (native `<select>` is already accessible — replace only if the design-consistency win is real; record the verdict per component).
+- [ ] Adapt per the M3 pattern: swap lucide → react-icons, registry styling → app tokens, JSDoc.
+- [ ] Verify each swap with screenshots (both themes) + keyboard walkthrough; gates green after each component group.
+
+**Exit criteria:** every interactive component either sits on an accessible base or has a recorded keep-verdict with its a11y gaps fixed by hand; one visual language across controls; gates green.
+
+---
+
+### M6 — Consistency, a11y & i18n sweep · **M** · fixes F017–F022, F026, F033 · _after M3+M5+M5.5 so it sweeps final code_
 
 **Objective:** the surviving code obeys `CLAUDE.md` + the new token system uniformly, meets WCAG 2.1 AA basics, and EN/FR are structurally complete.
 

@@ -6,7 +6,7 @@
 > | ID | Milestone | Sev | Verdict | Location (file:line) | Finding | Standard it fails (source) | Fix applied | Status | Verified how |
 > ```
 >
-> `Status` ∈ `Todo | In-progress | Done | Deferred(reason) | Rejected(reason) | Needs-decision`. Next free ID: **F046**.
+> `Status` ∈ `Todo | In-progress | Done | Deferred(reason) | Rejected(reason) | Needs-decision`. Next free ID: **F047**.
 >
 > **2026-07-09 verification pass:** the key premises below were spot-checked against the repo and held (token collision, literal `@/` dir, F014 `undefined` return, counts of hooks/slices/pages/tests/specs). Decisions D1–D4 are now resolved — see the plan's Decision Log — and the affected rows below carry a `[D#]` note. Findings F034–F039 were added by that pass.
 
@@ -162,6 +162,25 @@ Proposed tally: **~33 seed findings** — P0 ×2, P1 ×10, P2 ×13, P3 ×6, plus
 | F006 | **Partially resolved** — `clsx`/`tailwind-merge` (used by `cn`) and `cva`/`@base-ui/react` (used by button.tsx) now have in-src consumers; `lucide-react` + `tw-animate-css` still unused → re-check at end of M3 | grep |
 
 M1 exit criteria met (see COMMIT_PLAN.md for the pending commits + merge).
+
+## M3 results (2026-07-09 — done pending owner commit, branch `audit/m3-components`)
+
+**D1 scope clarified by owner:** shadcn is the *base/standard* — registry components are pulled for their accessible structure, then **adapted into our own** (react-icons, app tokens, app styling), never verbatim copies. **O2 resolved: react-icons stays the icon standard**; `lucide-react` removed (named react-icons imports are tree-shaken to ~0.5–2 kB/icon — efficiency-equivalent to inline SVG at this scale).
+
+| ID | Resolution | Verified how |
+|----|-----------|--------------|
+| F008 | **Done** — `SectionDropDown` rebuilt on `@base-ui/react` Menu (via adapted shadcn `dropdown-menu`); `SectionHeaderExpandable` now composes it (the verbatim inlined copy is deleted). | keyboard walkthrough (below); gates |
+| F009 | **Done** — duplicate `DropDownOption` interface removed; single source in `useSectionDropdown.ts`. | grep |
+| F010 | **Done** — `EditorsSection` + `CatFactsSection` consolidated with `variant="sidebar"|"mobile"` prop; `MobileEditorsSection`/`MobileCatFactsSection` deleted. **StaffPicks kept split by design** (mobile bundles a hero + card carousel vs. desktop text links — ~60% different) but now shares data loading via new `useFeaturedArticles()` hook. | mobile screenshot matches baseline structure; gates |
+| F011 | **Done** — `SectionShell` extracted (visible/bordered/mobileOnly/className); migrated Popular, Recommended, EmptyState, BaseNewsSection + the consolidated sections. | build; screenshots |
+| F012 | **Done** — renamed `useListInfiniteScroll` (article lists) / `useSearchInfiniteScroll` (search); all call sites + test mocks updated. | grep; 223/223 tests |
+| F013 | **Done** — `ExpandableSection` chevron is now a real `<button aria-expanded aria-label>`; its dropdown-lookalike markup replaced. | code + keyboard |
+| F016/F023 (dropdown portion) | **Done** — triggers are real buttons with `aria-haspopup="menu"`/`aria-expanded`/localized `aria-label`; menu has `role="menu"`, items `role="menuitem"`. **Verified in-browser:** Enter opens + focuses first item → ArrowDown navigates → Escape closes + focus returns to trigger. Remaining a11y items (imgs, form labels) stay with M6. | chrome-devtools scripted walkthrough |
+| — | **Bonus fix:** the old dropdown panel was hardcoded `bg-white text-gray-700` — unreadable in dark mode. New panel uses popover tokens: verified dark = slate-800 bg / slate-100 text. | computed styles |
+| F046 | **New (M8/M9 perf)** — `@base-ui/react` menu machinery grew the bundle 456→615 kB raw (142→197 kB gzip). One-time base shared by all future primitives (M5.5), but must be revisited in the perf milestone (code-splitting / manualChunks). | build output |
+| — | New i18n key `DROPDOWN.SECTION_OPTIONS` added to en+fr. Files touched during M3 were tokenized in passing (`border-gray-400`→`border-border`, `hover:text-amber-600`→`hover:text-brand`, `text-gray-800`→`text-foreground`). Three "instead pass in an enum maybe" TODOs resolved by the consolidation (F020 partial). | lint i18n rule; grep |
+
+Console after M3: only the known F043 401. Gates: build ✅ · 223/223 ✅ · lint 0 errors ✅.
 
 ## M2 results (2026-07-09 — done pending owner commit, branch `audit/m2-tokens`)
 
