@@ -39,3 +39,4 @@ screenshots/
 *.sw?
 # audit working screenshots (local-only; baseline/ stays committed)
 audit_docs/m2-after/
+audit_docs/m3-after/

@@ -8,7 +8,7 @@ import type { ArticleInfo, ArticleQuery } from "@/types/articleTypes";
 import type { RootState } from "@/store/store";
 import {
 	useArticleFilters,
-	useInfiniteScroll,
+	useListInfiniteScroll,
 } from "@/hooks/useArticleHooks";
 import { usePagination } from "@/hooks/usePagination";
 import { FilterBar } from "@/components/news/shared/FilterBar";
@@ -16,6 +16,7 @@ import { ArticleList } from "@/components/news/shared/ArticleList";
 import { LoadingMessage } from "@/components/news/shared/LoadingMessage";
 import { PaginationControls } from "@/components/news/shared/PaginationControls";
 import { SectionHeaderExpandable } from "@/components/common/layout/SectionHeaderExpandable";
+import { SectionShell } from "@/components/common/layout/SectionShell";
 import { usePagePagination } from "@/hooks/usePagePagination";
 import { SECTIONS } from "@/constants/keys";
 import CollapsibleSection from "@/components/news/section/CollapsibleSection";
@@ -74,7 +75,7 @@ export function BaseNewsSection({
 	}, [dateRange, sortBy, selectedCategory]);
 
 	// Infinite scroll logic - only enabled when pagination is disabled
-	useInfiniteScroll({
+	useListInfiniteScroll({
 		currentArticlesCount: articles.length,
 		totalArticlesCount: totalCount,
 		loadMoreArticles,
@@ -119,7 +120,7 @@ export function BaseNewsSection({
 	return (
 		<div className="flex flex-col md:grid md:grid-cols-3 md:items-start gap-x-4 gap-y-6 pt-6">
 			{/* Articles, main col */}
-			<section className={`md:col-span-2 ${isVisible ? "" : "hidden"}`}>
+			<SectionShell visible={isVisible} className="md:col-span-2">
 				{/* Header and filters */}
 				<div className="flex flex-row justify-between w-full items-center">
 					<SectionHeaderExpandable
@@ -159,7 +160,7 @@ export function BaseNewsSection({
 						/>
 					)}
 				</CollapsibleSection>
-			</section>
+			</SectionShell>
 
 			{/* Hidden state with reset option */}
 			<div

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import type { RootState, AppDispatch } from "@/store/store";
 import { loadRecommendedArticles } from "@/store/recommendationsSlice";
 import { SectionHeaderExpandable } from "@/components/common/layout/SectionHeaderExpandable";
+import { SectionShell } from "@/components/common/layout/SectionShell";
 import CollapsibleSection from "@/components/news/section/CollapsibleSection";
 import { SECTIONS } from "@/constants/keys";
 import { useSectionVisible } from "@/hooks/useSectionCollapse";
@@ -40,9 +41,7 @@ export default function RecommendedSection() {
 	};
 
 	return (
-		<section
-			className={`border-b border-gray-400 py-6 ${isVisible ? "" : "hidden"}`}
-		>
+		<SectionShell visible={isVisible} bordered>
 			<SectionHeaderExpandable
 				title={t("SECTION.RECOMMENDED")}
 				section={SECTIONS.RECOMMENDED}
@@ -67,6 +66,6 @@ export default function RecommendedSection() {
 					</div>
 				)}
 			</CollapsibleSection>
-		</section>
+		</SectionShell>
 	);
 }
