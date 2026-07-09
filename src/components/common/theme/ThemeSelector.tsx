@@ -17,7 +17,7 @@ export default function ThemeSelector({ className = "" }: ThemeSelectorProps) {
 	const currentMode = appSetting.themeMode ?? "light";
 
 	return (
-		<div className={`flex items-center gap-1 p-1 rounded-lg bg-hover-bg ${className}`}>
+		<div className={`flex items-center gap-1 p-1 rounded-lg bg-muted ${className}`}>
 			{themes.map(({ mode, icon: Icon, label }) => (
 				<button
 					key={mode}
@@ -25,10 +25,10 @@ export default function ThemeSelector({ className = "" }: ThemeSelectorProps) {
 					className={`
 						flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium
 						transition-all duration-200 ease-in-out
-						focus:outline-none focus:ring-2 focus:ring-accent
+						focus:outline-none focus:ring-2 focus:ring-brand
 						${currentMode === mode
-							? "bg-control-active text-primary shadow-sm"
-							: "text-muted hover:text-primary"
+							? "bg-control-active text-foreground shadow-sm"
+							: "text-muted-foreground hover:text-foreground"
 						}
 					`}
 					aria-label={`Switch to ${label} mode`}

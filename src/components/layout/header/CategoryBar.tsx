@@ -72,10 +72,10 @@ useEffect(() => {
 				{canScrollLeft && (
 					<button
 						onClick={() => scrollBy(-100)}
-						className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-r from-surface via-surface/90 to-transparent pr-4"
+						className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-r from-background via-background/90 to-transparent pr-4"
 					>
 						<GoChevronLeft
-							className="w-4 h-4 text-muted transition-opacity duration-200"
+							className="w-4 h-4 text-muted-foreground transition-opacity duration-200"
 						/>
 					</button>
 				)}
@@ -91,8 +91,8 @@ useEffect(() => {
 								to={`/${category}`}
 								className={`cursor-pointer lg:pt-1 text-base md:text-lg font-medium whitespace-nowrap transition-colors ${
 									currentCategory === category
-										? "text-accent underline"
-										: "text-secondary hover:text-primary"
+										? "text-brand underline"
+										: "text-foreground-secondary hover:text-foreground"
 								} ${index !== 0 ? "ml-6" : ""}`}
 							>
 								{t(`CATEGORY.${category.toUpperCase() as CategoryKey}`).toUpperCase()}
@@ -104,10 +104,10 @@ useEffect(() => {
 				{canScrollRight && (
 					<button
 						onClick={() => scrollBy(100)}
-						className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-l from-surface via-surface/90 to-transparent pl-4"
+						className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-l from-background via-background/90 to-transparent pl-4"
 					>
 						<GoChevronRight
-							className="w-4 h-4 text-muted transition-opacity duration-200"
+							className="w-4 h-4 text-muted-foreground transition-opacity duration-200"
 						/>
 					</button>
 				)}

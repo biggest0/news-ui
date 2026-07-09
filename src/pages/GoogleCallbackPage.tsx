@@ -65,9 +65,9 @@ export default function GoogleCallbackPage() {
 	return (
 		<section className="py-6 flex items-center justify-center min-h-40">
 			{error ? (
-				<p className="text-sm text-error">{error}</p>
+				<p className="text-sm text-destructive">{error}</p>
 			) : (
-				<p className="text-sm text-muted">{t("AUTH.GOOGLE_SIGNING_IN")}</p>
+				<p className="text-sm text-muted-foreground">{t("AUTH.GOOGLE_SIGNING_IN")}</p>
 			)}
 		</section>
 	);

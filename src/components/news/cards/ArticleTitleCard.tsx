@@ -30,7 +30,7 @@ export const ArticleTitleCard = ({
 	return (
 		<Link
 			to={`/article/${articleId}`}
-			className="font-medium text-primary hover:text-accent transition-colors duration-200 cursor-pointer"
+			className="font-medium text-foreground hover:text-brand transition-colors duration-200 cursor-pointer"
 			onClick={handleClick}
 		>
 			{index + 1 + ". " + articleTitle}

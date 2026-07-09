@@ -25,7 +25,7 @@ export default function NewsHeroCard({ articleInfo, small }: NewsCardProp) {
 			<h3
 				className={`${
 					small ? "text-lg" : "text-xl"
-				} font-semibold text-primary hover:text-accent transition-colors duration-200 cursor-pointer`}
+				} font-semibold text-foreground hover:text-brand transition-colors duration-200 cursor-pointer`}
 			>
 				<Link
 					to={`/article/${articleInfo.id}`}
@@ -35,9 +35,9 @@ export default function NewsHeroCard({ articleInfo, small }: NewsCardProp) {
 				</Link>
 			</h3>
 			{!small && articleInfo.summary && (
-				<div className="text-sm lg:text-base text-secondary">{articleInfo.summary}</div>
+				<div className="text-sm lg:text-base text-foreground-secondary">{articleInfo.summary}</div>
 			)}
-			{small && <div className="text-sm text-muted">{articleInfo.datePublished}</div>}
+			{small && <div className="text-sm text-muted-foreground">{articleInfo.datePublished}</div>}
 		</div>
 	);
 }

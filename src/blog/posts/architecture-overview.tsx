@@ -30,8 +30,8 @@ export default function ArchitectureOverviewPost() {
 
 			<h2>Styling</h2>
 			<p>
-				Colors are semantic CSS tokens (<code>text-primary</code>,{" "}
-				<code>bg-elevated</code>, etc.) defined in <code>src/index.css</code>{" "}
+				Colors are semantic CSS tokens (<code>text-foreground</code>,{" "}
+				<code>bg-card</code>, etc.) defined in <code>src/index.css</code>{" "}
 				and switched in dark mode via a single <code>html.dark</code> class.
 				Components don't hardcode <code>dark:</code> variants except for the
 				rare exception that doesn't fit the system.
