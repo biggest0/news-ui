@@ -1,4 +1,8 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { loadFeaturedArticles } from "@/store/articlesSlice";
+import type { AppDispatch, RootState } from "@/store/store";
 import type { ArticleInfo, ArticleQuery } from "@/types/articleTypes";
 import { isWithinNDays } from "@/utils/date/dateUtils";
 
@@ -94,7 +98,7 @@ interface UseInfiniteScrollProps {
 	sortBy?: string;
 }
 
-export function useInfiniteScroll({
+export function useListInfiniteScroll({
 	currentArticlesCount,
 	totalArticlesCount,
 	loadMoreArticles,
@@ -150,4 +154,22 @@ export function useInfiniteScroll({
 	}, [fetching, hasMore, page, loadMoreArticles, selectedCategory, enabled, dateRange, sortBy]);
 
 	return { hasMore, page };
+}
+
+/**
+ * Loads the server-curated featured articles ("staff picks") on mount and
+ * returns them from the store. The thunk's `condition` dedupes the fetch when
+ * multiple co-mounted sections (desktop + mobile variants) call this hook.
+ */
+export function useFeaturedArticles() {
+	const dispatch = useDispatch<AppDispatch>();
+	const featuredArticles = useSelector(
+		(state: RootState) => state.article.featuredArticles
+	);
+
+	useEffect(() => {
+		dispatch(loadFeaturedArticles());
+	}, [dispatch]);
+
+	return featuredArticles;
 }

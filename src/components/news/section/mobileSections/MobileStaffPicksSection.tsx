@@ -1,33 +1,29 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 import { SectionHeaderExpandable } from "@/components/common/layout/SectionHeaderExpandable";
+import { SectionShell } from "@/components/common/layout/SectionShell";
 import CollapsibleSection from "@/components/news/section/CollapsibleSection";
 import { SECTIONS } from "@/constants/keys";
 import { useSectionVisible } from "@/hooks/useSectionCollapse";
+import { useFeaturedArticles } from "@/hooks/useArticleHooks";
 import NewsHeroCard from "@/components/news/cards/NewsHeroCard";
 import Image from "@/assets/news_hero_image.jpg";
-import type { AppDispatch, RootState } from "@/store/store";
-import { loadFeaturedArticles } from "@/store/articlesSlice";
 
+/**
+ * Mobile-only hero image + "Staff Picks" carousel. Intentionally separate
+ * from the desktop StaffPicksSection (different presentation: hero banner +
+ * horizontal card scroll vs. text links); the data loading is shared via
+ * useFeaturedArticles.
+ */
 export default function MobileStaffPicksSection() {
 	const isVisible = useSectionVisible(SECTIONS.STAFF_PICKS);
 	const { t } = useTranslation();
-	const dispatch = useDispatch<AppDispatch>();
-	const featuredArticles = useSelector(
-		(state: RootState) => state.article.featuredArticles
-	);
-
-	// server-curated selection; thunk dedupes if another section already loaded it
-	useEffect(() => {
-		dispatch(loadFeaturedArticles());
-	}, [dispatch]);
+	const featuredArticles = useFeaturedArticles();
 
 	return (
 		<div className="flex flex-col md:hidden">
 			{/* Home Main Picture */}
-			<section className="border-b border-gray-400 py-6">
+			<section className="border-b border-border py-6">
 				<div className="relative w-full h-64 overflow-hidden">
 					<img
 						src={Image}
@@ -39,10 +35,7 @@ export default function MobileStaffPicksSection() {
 			</section>
 
 			{/* Staff Picks Section */}
-			<section
-				className={`py-6 border-b border-gray-400 ${isVisible ? "" : "hidden"}`}
-			>
-				{/* instead pass in an enum maybe, this enum will give the title, and enum will map to correct options being created */}
+			<SectionShell visible={isVisible} bordered>
 				<SectionHeaderExpandable
 					title={t("SECTION.STAFF_PICKS")}
 					section={SECTIONS.STAFF_PICKS}
@@ -55,16 +48,13 @@ export default function MobileStaffPicksSection() {
 									key={`mobile-staff-picks-${article.id}`}
 									className="flex-shrink-0 w-64"
 								>
-									<NewsHeroCard
-										articleInfo={article}
-										small={true}
-									/>
+									<NewsHeroCard articleInfo={article} small={true} />
 								</div>
 							))}
 						</div>
 					</div>
 				</CollapsibleSection>
-			</section>
+			</SectionShell>
 		</div>
 	);
 }
