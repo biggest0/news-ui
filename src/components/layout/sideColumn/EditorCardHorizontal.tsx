@@ -19,10 +19,10 @@ export const EditorCardHorizontal = ({
 				{/* Text */}
 				<div className="flex flex-col justify-between max-w-sm">
 					<div className="flex flex-col">
-						<div className="text-primary">{name}</div>
-						<div className="text-secondary">{role}</div>
+						<div className="text-foreground">{name}</div>
+						<div className="text-foreground-secondary">{role}</div>
 					</div>
-					<div className="text-sm text-muted whitespace-normal break-words">
+					<div className="text-sm text-muted-foreground whitespace-normal break-words">
 						{description}
 					</div>
 				</div>

@@ -46,12 +46,12 @@ export const AccountInfoForm = ({
 						value={inputValue}
 						onChange={(e) => setInputValue(e.target.value)}
 						placeholder={placeHolderText}
-						className="flex-grow pt-2 pb-1 outline-none bg-transparent text-secondary placeholder:text-muted"
+						className="flex-grow pt-2 pb-1 outline-none bg-transparent text-foreground-secondary placeholder:text-muted-foreground"
 					/>
 					<button
 						type="submit"
 						className={`px-4 pt-2 pb-1 transition cursor-pointer ${
-							saved ? "text-green-600" : "text-muted hover:text-primary"
+							saved ? "text-green-600" : "text-muted-foreground hover:text-foreground"
 						}`}
 					>
 						{saved ? t("ACCOUNT.FIELD_SAVED") : t("ACCOUNT.SAVE")}

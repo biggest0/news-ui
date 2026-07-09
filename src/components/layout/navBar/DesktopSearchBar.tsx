@@ -17,7 +17,7 @@ export const DesktopSearchBar = ({
 			{/* Search form trigger icon */}
 			{!searchClicked && (
 				<LuSearch
-					className="w-6 h-6 cursor-pointer transition-colors hover:text-primary"
+					className="w-6 h-6 cursor-pointer transition-colors hover:text-foreground"
 					onClick={() => onSearchToggle(true)}
 				/>
 			)}
@@ -25,23 +25,23 @@ export const DesktopSearchBar = ({
 			{/* Expanded search form */}
 			<form
 				onSubmit={onSubmit}
-				className={`flex items-center overflow-hidden bg-elevated border border-border-subtle rounded-md transition-all duration-300 ease-in-out ${
+				className={`flex items-center overflow-hidden bg-card border border-border-subtle rounded-md transition-all duration-300 ease-in-out ${
 					searchClicked ? "w-64 px-2 opacity-100" : "w-0 px-0 opacity-0 border-transparent"
 				}`}
 			>
 				<button type="submit">
-					<LuSearch className="w-4 h-4 text-muted cursor-pointer hover:text-primary flex-shrink-0" />
+					<LuSearch className="w-4 h-4 text-muted-foreground cursor-pointer hover:text-foreground flex-shrink-0" />
 				</button>
 				<input
 					type="text"
 					value={query}
 					onChange={(e) => onQueryChange(e.target.value)}
 					placeholder={t("NAVIGATION.SEARCH_PLACEHOLDER")}
-					className="min-w-0 flex-1 px-2 py-1 outline-none bg-transparent text-secondary placeholder:text-muted"
+					className="min-w-0 flex-1 px-2 py-1 outline-none bg-transparent text-foreground-secondary placeholder:text-muted-foreground"
 					autoFocus={searchClicked}
 				/>
 				<LuX
-					className="w-4 h-4 text-muted cursor-pointer hover:text-primary flex-shrink-0"
+					className="w-4 h-4 text-muted-foreground cursor-pointer hover:text-foreground flex-shrink-0"
 					onClick={() => {
 						onSearchToggle(false);
 						onQueryChange("");

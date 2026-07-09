@@ -38,7 +38,7 @@ function App() {
 					    effects refetch article data with the new `lang` param */}
 					<main
 						key={i18n.resolvedLanguage}
-						className="w-full max-w-[1280px] min-h-screen mx-auto px-4 bg-surface transition-colors duration-200"
+						className="w-full max-w-[1280px] min-h-screen mx-auto px-4 bg-background transition-colors duration-200"
 					>
 						<ScrollToTop />
 						<Routes>

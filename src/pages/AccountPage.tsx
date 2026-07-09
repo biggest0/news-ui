@@ -23,7 +23,7 @@ export default function AccountPage() {
 					<SectionHeader title={t("PAGES.ACCOUNT.TITLE")} />
 					<button
 						onClick={handleLogout}
-						className="text-sm text-muted hover:text-primary transition-colors cursor-pointer"
+						className="text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
 					>
 						{t("AUTH.LOGOUT")}
 					</button>
@@ -32,7 +32,7 @@ export default function AccountPage() {
 				<div className="pt-4 pb-6 border-b border-border">
 					<AccountInfoSection />
 					{user && (
-						<p className="text-sm text-muted">{user.email}</p>
+						<p className="text-sm text-muted-foreground">{user.email}</p>
 					)}
 				</div>
 

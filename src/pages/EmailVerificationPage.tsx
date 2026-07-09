@@ -58,7 +58,7 @@ export default function EmailVerificationPage() {
 			<section className="py-6">
 				<SectionHeader title={t("AUTH.VERIFY_EMAIL_TITLE")} />
 				<div className="max-w-sm pt-6">
-					<p className="text-secondary">{t("AUTH.VERIFY_VERIFYING")}</p>
+					<p className="text-foreground-secondary">{t("AUTH.VERIFY_VERIFYING")}</p>
 				</div>
 			</section>
 		);
@@ -69,10 +69,10 @@ export default function EmailVerificationPage() {
 			<section className="py-6">
 				<SectionHeader title={t("AUTH.VERIFY_SUCCESS_TITLE")} />
 				<div className="max-w-sm pt-6 flex flex-col gap-4">
-					<p className="text-secondary">{t("AUTH.VERIFY_SUCCESS")}</p>
+					<p className="text-foreground-secondary">{t("AUTH.VERIFY_SUCCESS")}</p>
 					<Link
 						to="/account"
-						className="bg-accent-bg text-white py-2 rounded-lg hover:bg-accent-bg-hover transition-colors text-center"
+						className="bg-primary text-white py-2 rounded-lg hover:bg-primary-hover transition-colors text-center"
 					>
 						{t("AUTH.VERIFY_GO_TO_ACCOUNT")}
 					</Link>
@@ -85,7 +85,7 @@ export default function EmailVerificationPage() {
 		<section className="py-6">
 			<SectionHeader title={t("AUTH.VERIFY_EMAIL_TITLE")} />
 			<div className="max-w-sm pt-6 flex flex-col gap-4">
-				<p className="text-error">
+				<p className="text-destructive">
 					{error || t("AUTH.VERIFY_FAILED")}
 				</p>
 
@@ -95,7 +95,7 @@ export default function EmailVerificationPage() {
 					</p>
 				)}
 				{resendError && (
-					<p className="text-sm text-error">
+					<p className="text-sm text-destructive">
 						{resendError}
 					</p>
 				)}
@@ -104,7 +104,7 @@ export default function EmailVerificationPage() {
 					type="button"
 					onClick={handleResend}
 					disabled={countdown > 0}
-					className="bg-accent-bg text-white py-2 rounded-lg hover:bg-accent-bg-hover transition-colors disabled:bg-disabled-bg disabled:cursor-not-allowed"
+					className="bg-primary text-white py-2 rounded-lg hover:bg-primary-hover transition-colors disabled:bg-disabled-bg disabled:cursor-not-allowed"
 				>
 					{countdown > 0
 						? t("AUTH.VERIFY_RESEND_IN", { seconds: countdown })
@@ -113,7 +113,7 @@ export default function EmailVerificationPage() {
 
 				<Link
 					to="/login"
-					className="text-accent hover:underline transition-colors text-sm"
+					className="text-brand hover:underline transition-colors text-sm"
 				>
 					{t("AUTH.BACK_TO_LOGIN")}
 				</Link>

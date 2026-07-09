@@ -16,7 +16,7 @@ export const DesktopNavigation = (props: SearchProps) => {
 			<AppTitle variant="desktop" />
 
 			{/* Right - Search and User */}
-			<div className="flex gap-4 items-center text-muted">
+			<div className="flex gap-4 items-center text-muted-foreground">
 				<DesktopSearchBar {...props} />
 				<LanguageSwitcherDesktop />
 				<ThemeToggle />
