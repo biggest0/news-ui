@@ -13,7 +13,7 @@
 ### 1. feat: add accessible dropdown-menu primitive adapted from shadcn base
 
 **Files:**
-- `src/components/ui/dropdown-menu.tsx` (new — @base-ui Menu base, adapted: react-icons, app tokens, normal-case items)
+- `src/components/ui/DropdownMenu.tsx` (new — @base-ui Menu base, adapted: react-icons, app tokens, normal-case items)
 - `src/components/common/layout/SectionDropDown.tsx` (rebufeat: add accessible dropdown-menu primitive and compose section headersilt on the primitive; trigger is a real button with aria-haspopup/expanded)
 - `src/components/common/layout/SectionHeaderExpandable.tsx` (now composes SectionDropDown; inlined duplicate + duplicate type deleted)
 - `src/components/news/section/ExpandableSection.tsx` (chevron → real button with aria-expanded)
@@ -59,17 +59,32 @@ refactor: rename infinite-scroll hooks and standardize on react-icons
 
 **Rationale (F012, O2):** kills the same-name/different-signature import footgun; one icon library.
 
-### 4. docs: record m3 results, add interactive-sweep milestone m5.5
+### 3.5 refactor: rename ui primitives to app naming convention
 
 **Files:**
-- `audit_docs/AUDIT_PLAN.md` (M5.5 milestone inserted)
+- `src/components/ui/button.tsx` → `src/components/ui/Button.tsx` (git mv, case-only)
+- `src/components/ui/DropdownMenu.tsx` (created directly with the final name; listed in commit 1)
+- `src/components/common/layout/SectionDropDown.tsx` (import path)
+
+**Message:**
+```
+refactor: rename ui primitives to pascal case per naming convention
+```
+
+**Rationale (owner decision):** file naming stays app-standard — PascalCase components, camelCase .ts; shadcn-generated kebab-case files get renamed during adaptation. (Fold into commit 1 if you prefer; kept separate so the case-only `git mv` of Button.tsx is visible.)
+
+### 4. docs: record m3 results, base-ui scope rule, naming convention, milestone m5.5
+
+**Files:**
+- `audit_docs/AUDIT_PLAN.md` (M5.5 milestone + base-ui scope rule)
 - `audit_docs/AUDIT_FINDINGS.md` (M3 results, O2/D1-scope resolutions, F046 bundle note)
 - `audit_docs/COMMIT_PLAN.md`
+- `CLAUDE.md` (naming conventions expanded; base-ui/shadcn scope section added)
 - `.gitignore` (audit_docs/m3-after/ local-only)
 
 **Message:**
 ```
-docs: record m3 results and add interactive-sweep milestone
+docs: record m3 results, base-ui scope, naming convention, milestone m5.5
 ```
 
 ---
