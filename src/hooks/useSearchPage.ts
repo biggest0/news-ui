@@ -114,7 +114,7 @@ export function useSearchPagination(
 /**
  * Hook to handle infinite scroll loading of articles
  */
-export function useInfiniteScroll(
+export function useSearchInfiniteScroll(
 	query: string,
 	searchType: SearchType,
 	dateRange: string,
