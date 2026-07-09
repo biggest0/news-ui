@@ -262,6 +262,17 @@ Article *content* (title, summary, paragraphs, sub_category) is translated by th
 - Merge `development` → `main` for releases
 - Versioning: `APP_VERSION` in `src/config/config.ts`, git tags on main (e.g. `v1.3.0`)
 - Commit messages: lowercase imperative ("implement darkmode toggle", "fix filter bar styling")
+- `origin` pushes to **both** GitHub and Azure DevOps (dual push URLs); fetch comes from Azure. Azure DevOps is where PRs live.
+
+### Claude: never commit or push automatically
+
+**Claude must not run `git commit`, `git push`, `git merge`, or `git tag` on its own initiative** — only when explicitly asked in the current conversation. When a chunk of work is ready, instead **update the commit-plan doc** (`audit_docs/COMMIT_PLAN.md` during the audit program) with one entry per proposed commit:
+
+- the files to stage together,
+- the proposed commit message (lowercase imperative),
+- a one-line rationale for the grouping.
+
+The owner reviews, splits/reorders as they see fit, and executes the commits and pushes themselves — especially for code changes.
 
 ---
 
