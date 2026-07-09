@@ -10,7 +10,7 @@ import {
 	useSearchArticles,
 	useFilteredArticles,
 	useSearchPagination,
-	useInfiniteScroll,
+	useSearchInfiniteScroll,
 } from "@/hooks/useSearchPage";
 import type { SearchFilters } from "@/utils/search/searchUtils";
 
@@ -58,7 +58,7 @@ export default function SearchPage() {
 		filters
 	);
 
-	useInfiniteScroll(
+	useSearchInfiniteScroll(
 		searchParams.query,
 		searchParams.searchType,
 		searchParams.dateRange,
