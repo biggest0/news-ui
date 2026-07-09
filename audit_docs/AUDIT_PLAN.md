@@ -35,8 +35,8 @@ Resolved with the owner on 2026-07-09. These are settled — do not re-litigate 
 
 **Workflow**
 
-1. Work on a dedicated branch off `development`: one branch per milestone (`audit/m1-shadcn-wiring`, `audit/m2-tokens`, …). Merge back to `development` when the milestone's exit criteria pass. Never commit straight to `development` or `main`.
-2. **One milestone = one focused set of commits.** Small, reviewable, imperative-lowercase messages (per `CLAUDE.md`).
+1. **Branch model (owner decision, 2026-07-09):** `refactor/ui-audit` is the **integration branch** for the whole program. Each milestone gets its own branch off `refactor/ui-audit` (`audit/m1-shadcn-wiring`, `audit/m2-tokens`, …) and merges back into `refactor/ui-audit` when its exit criteria pass (owner executes the merge). **`development` is not touched until every milestone is complete and verified** — only then is `refactor/ui-audit` → `development` considered. Never commit straight to `development` or `main`.
+2. **One milestone = one focused set of commits — but Claude never commits.** Claude maintains [`COMMIT_PLAN.md`](./COMMIT_PLAN.md) (files to stage together + proposed lowercase-imperative message + rationale, per commit); **the owner reviews, commits, and pushes manually.** Claude runs git write operations only when explicitly asked.
 3. **Keep the tree green.** After every work session, and always before merging a milestone:
    ```bash
    npm run lint && npm run build && npm run test
