@@ -142,8 +142,8 @@ describe("Authentication", () => {
 
 			// Should be redirected or session cleared
 			cy.window().then((win) => {
-				expect(win.localStorage.getItem("auth_tokens")).to.be.null;
-				expect(win.localStorage.getItem("auth_user")).to.be.null;
+				expect(win.localStorage.getItem("auth_tokens")).to.equal(null);
+				expect(win.localStorage.getItem("auth_user")).to.equal(null);
 			});
 		});
 	});
