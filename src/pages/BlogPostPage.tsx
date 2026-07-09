@@ -12,10 +12,10 @@ export default function BlogPostPage() {
 	if (!post) {
 		return (
 			<section className="py-6">
-				<Link to="/blog" className="text-md text-accent hover:underline">
+				<Link to="/blog" className="text-md text-brand hover:underline">
 					← {t("BLOG.BACK_TO_BLOG")}
 				</Link>
-				<p className="pt-6 text-muted text-center">{t("BLOG.NOT_FOUND")}</p>
+				<p className="pt-6 text-muted-foreground text-center">{t("BLOG.NOT_FOUND")}</p>
 			</section>
 		);
 	}
@@ -24,7 +24,7 @@ export default function BlogPostPage() {
 
 	return (
 		<section className="py-6">
-			<Link to="/blog" className="text-md text-accent hover:underline">
+			<Link to="/blog" className="text-md text-brand hover:underline">
 				← {t("BLOG.BACK_TO_BLOG")}
 			</Link>
 
@@ -37,14 +37,14 @@ export default function BlogPostPage() {
 				/>
 
 				<header className="pt-4 pb-6 border-b border-border-subtle">
-					<div className="text-sm text-muted mb-2">{date}</div>
-					<h1 className="text-3xl text-primary mb-2">{title}</h1>
+					<div className="text-sm text-muted-foreground mb-2">{date}</div>
+					<h1 className="text-3xl text-foreground mb-2">{title}</h1>
 					{tags && tags.length > 0 && (
 						<div className="flex flex-wrap gap-2 pt-2">
 							{tags.map((tag) => (
 								<span
 									key={tag}
-									className="text-sm text-muted px-2 py-0.5 rounded bg-elevated border border-border-subtle"
+									className="text-sm text-muted-foreground px-2 py-0.5 rounded bg-card border border-border-subtle"
 								>
 									{tag}
 								</span>

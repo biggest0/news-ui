@@ -6,7 +6,7 @@
 > | ID | Milestone | Sev | Verdict | Location (file:line) | Finding | Standard it fails (source) | Fix applied | Status | Verified how |
 > ```
 >
-> `Status` ∈ `Todo | In-progress | Done | Deferred(reason) | Rejected(reason) | Needs-decision`. Next free ID: **F045**.
+> `Status` ∈ `Todo | In-progress | Done | Deferred(reason) | Rejected(reason) | Needs-decision`. Next free ID: **F046**.
 >
 > **2026-07-09 verification pass:** the key premises below were spot-checked against the repo and held (token collision, literal `@/` dir, F014 `undefined` return, counts of hooks/slices/pages/tests/specs). Decisions D1–D4 are now resolved — see the plan's Decision Log — and the affected rows below carry a `[D#]` note. Findings F034–F039 were added by that pass.
 
@@ -162,6 +162,19 @@ Proposed tally: **~33 seed findings** — P0 ×2, P1 ×10, P2 ×13, P3 ×6, plus
 | F006 | **Partially resolved** — `clsx`/`tailwind-merge` (used by `cn`) and `cva`/`@base-ui/react` (used by button.tsx) now have in-src consumers; `lucide-react` + `tw-animate-css` still unused → re-check at end of M3 | grep |
 
 M1 exit criteria met (see COMMIT_PLAN.md for the pending commits + merge).
+
+## M2 results (2026-07-09 — done pending owner commit, branch `audit/m2-tokens`)
+
+| ID | Resolution | Verified how |
+|----|-----------|--------------|
+| F001 | **Done** — the P0. One unified token system: brand values in `:root`/`.dark`, `@theme inline` mapping (the documented Tailwind v4 pattern, context7 → tailwindcss.com colors.mdx). Legacy app `@theme` + `html.dark` block deleted; shadcn taupe values replaced with brand palette. ~300 utility usages renamed across 51 files per [`token-mapping.md`](./token-mapping.md). | utility probe: light `text-brand`=#d97706 amber-600, ramp gray-800/600/500; dark amber-400 + slate ramp — **identical to production reference**; screenshot grid in `m2-after/` matches `baseline/intended-local`; gates green (223/223, lint 0 errors) |
+| F002 | **Done** — `@layer base` reconciled: body keeps brand font/colors/transition via tokens; `* { border-border }` kept (shadcn-canonical) with `--border` = brand gray-400; shadcn `--radius` remap **dropped** (it had silently inflated all existing `rounded-*`); `html { font-sans }` gone. | screenshots; gates |
+| F003 | **Done** — **O1 resolved: Tinos + Cardo** (owner choice from side-by-side renders `m2-after/fonts-*.png`). Noto Sans + Playfair Display removed; Cormorant Garamond dropped from the Google Fonts import. | build output; screenshots |
+| F034 | **Done (Keep)** — `@import "shadcn/tailwind.css"` audited: only data-state variants + scroll-fade/shimmer utilities, **zero color tokens**. Kept; shadcn components need it. | read `node_modules/shadcn/dist/tailwind.css` |
+| F042 | **Done** — `@fontsource-variable/noto-sans` + `playfair-display` uninstalled; all 13 woff2 subsets (~530 kB) gone from the build; CSS 51→47.5 kB. Remaining: Google Fonts `@import` is still render-blocking → self-host Tinos/Cardo in M8. | build output has no woff2 entries |
+| F045 | **New (documented, deferred)** — pre-existing drift: app files used both `bg-accent` (amber-600) and `bg-accent-bg` (amber-500) for fills — two amber fill shades in production. M2 preserved both exactly (`bg-brand` vs `bg-primary`); consolidation is a deliberate one-line palette decision for the owner, flagged in `token-mapping.md`. | grep + mapping table |
+
+Notes: `NewsCard` categoryColor and `AppTitle` `dark:invert` exceptions untouched. F017's raw-gray hardcoded colors (e.g. `border-gray-400`) remain — that sweep is M6, now against a trustworthy token system. Console after M2: only the known F043 401 — nothing new.
 
 ## M0 baseline findings (added 2026-07-09 — verified live, not proposals)
 

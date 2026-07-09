@@ -46,7 +46,7 @@ export default function SimilarArticlesSection({ articleId }: SimilarArticlesSec
 		<section className="pt-8 border-t border-border mt-8">
 			<SectionHeader title={t("SECTION.MORE_LIKE_THIS")} />
 			{loading && !similarArticles ? (
-				<div className="py-4 text-muted">{t("COMMON.LOADING")}</div>
+				<div className="py-4 text-muted-foreground">{t("COMMON.LOADING")}</div>
 			) : (
 				<div className="w-full overflow-x-auto hide-scrollbar pb-4">
 					<div className="flex gap-4">
@@ -57,14 +57,14 @@ export default function SimilarArticlesSection({ articleId }: SimilarArticlesSec
 							>
 								<Link
 									to={`/article/${article.id}`}
-									className="font-medium text-primary hover:text-accent transition-colors duration-200 cursor-pointer text-sm"
+									className="font-medium text-foreground hover:text-brand transition-colors duration-200 cursor-pointer text-sm"
 									onClick={() => handleClick(article.id)}
 								>
 									{article.title}
 								</Link>
-								<div className="text-xs text-muted">{article.datePublished}</div>
+								<div className="text-xs text-muted-foreground">{article.datePublished}</div>
 								{article.summary && (
-									<div className="text-xs text-secondary line-clamp-2">
+									<div className="text-xs text-foreground-secondary line-clamp-2">
 										{article.summary}
 									</div>
 								)}

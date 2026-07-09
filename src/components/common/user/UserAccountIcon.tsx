@@ -23,7 +23,7 @@ export const UserAccountIcon = ({
 		return (
 			<Link to={linkTo}>
 				<LuUserRound
-					className="w-6 h-6 hover:text-primary cursor-pointer transition-colors"
+					className="w-6 h-6 hover:text-foreground cursor-pointer transition-colors"
 					onClick={onLinkClick}
 				/>
 			</Link>

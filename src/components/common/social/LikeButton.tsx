@@ -79,7 +79,7 @@ export const LikeButton = ({
 				{likeCount > 0 && <span className="text-sm">{likeCount}</span>}
 			</button>
 			{showLoginMessage && (
-				<div className="absolute bottom-full right-1/2 mb-2 whitespace-nowrap text-sm bg-elevated text-secondary border border-border rounded px-2 py-1 shadow-sm">
+				<div className="absolute bottom-full right-1/2 mb-2 whitespace-nowrap text-sm bg-card text-foreground-secondary border border-border rounded px-2 py-1 shadow-sm">
 					{t("ARTICLE_CARD.LOGIN_TO_LIKE")}
 				</div>
 			)}

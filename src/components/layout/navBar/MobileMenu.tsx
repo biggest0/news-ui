@@ -89,7 +89,7 @@ export const MobileMenu = ({
 		<>
 			{/* Menu Panel */}
 			<div
-				className={`fixed top-0 right-0 h-full w-full bg-surface shadow-xl z-40 transform md:hidden transition-colors duration-200 ${
+				className={`fixed top-0 right-0 h-full w-full bg-background shadow-xl z-40 transform md:hidden transition-colors duration-200 ${
 					isDragging ? "" : "transition-transform duration-300 ease-in-out"
 				} ${menuOpen ? "translate-x-0" : "translate-x-full"}`}
 				style={{
@@ -107,9 +107,9 @@ export const MobileMenu = ({
 							<ThemeToggle />
 							<button
 								onClick={onMenuClose}
-								className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-hover-bg transition-colors"
+								className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-muted transition-colors"
 							>
-								<LuX className="w-5 h-5 text-muted" />
+								<LuX className="w-5 h-5 text-muted-foreground" />
 							</button>
 						</div>
 
@@ -135,7 +135,7 @@ export const MobileMenu = ({
 					</div>
 
 					{/* App version */}
-					<div className="flex justify-end text-xs text-muted">
+					<div className="flex justify-end text-xs text-muted-foreground">
 						{APP_VERSION}
 					</div>
 				</div>

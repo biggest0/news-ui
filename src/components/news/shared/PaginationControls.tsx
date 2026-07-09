@@ -65,13 +65,13 @@ export function PaginationControls({
 	const buttonBaseClass =
 		"p-1.5 rounded-md transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-1";
 	const buttonEnabledClass =
-		"text-secondary hover:bg-accent-subtle hover:text-accent";
+		"text-foreground-secondary hover:bg-accent hover:text-brand";
 	const buttonDisabledClass = "text-disabled cursor-not-allowed";
 
 	return (
 		<div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-4 border-t border-border-subtle">
 			{/* Page size selector */}
-			<div className="flex items-center gap-2 text-sm text-muted">
+			<div className="flex items-center gap-2 text-sm text-muted-foreground">
 				<span className="font-medium">{t("PAGINATION.SHOW")}</span>
 				<div className="relative">
 					<select
@@ -79,7 +79,7 @@ export function PaginationControls({
 						onChange={(e) =>
 							onPageSizeChange(parseInt(e.target.value, 10) as PageSize)
 						}
-						className="appearance-none bg-elevated border border-border rounded-md px-3 py-1.5 pr-8 font-medium text-secondary focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 cursor-pointer"
+						className="appearance-none bg-card border border-border rounded-md px-3 py-1.5 pr-8 font-medium text-foreground-secondary focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 cursor-pointer"
 					>
 						{PAGE_SIZE_OPTIONS.map((size) => (
 							<option key={size} value={size}>
@@ -88,7 +88,7 @@ export function PaginationControls({
 						))}
 					</select>
 					<div className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
-						<BsChevronDown className="w-3 h-3 text-muted" />
+						<BsChevronDown className="w-3 h-3 text-muted-foreground" />
 					</div>
 				</div>
 				<span className="font-medium">{t("PAGINATION.PER_PAGE")}</span>
@@ -124,17 +124,17 @@ export function PaginationControls({
 
 				{/* Page input */}
 				<div className="flex items-center gap-2 mx-2 text-sm">
-					<span className="text-muted font-medium">{t("PAGINATION.PAGE")}</span>
+					<span className="text-muted-foreground font-medium">{t("PAGINATION.PAGE")}</span>
 					<input
 						type="text"
 						value={pageInput}
 						onChange={handlePageInputChange}
 						onBlur={handlePageInputBlur}
 						onKeyDown={handlePageInputKeyDown}
-						className="w-12 text-center border border-border rounded-md py-1 font-medium text-secondary bg-elevated focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+						className="w-12 text-center border border-border rounded-md py-1 font-medium text-foreground-secondary bg-card focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
 						aria-label="Page number"
 					/>
-					<span className="text-muted font-medium">
+					<span className="text-muted-foreground font-medium">
 						{t("PAGINATION.OF")} {totalPages}
 					</span>
 				</div>

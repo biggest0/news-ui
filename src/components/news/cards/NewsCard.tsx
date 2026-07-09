@@ -79,17 +79,17 @@ export default function NewsCard({ articleInfo }: NewsCardProp) {
 				return "text-[rgba(107,114,128,0.7)] dark:text-slate-400";
 
 			default:
-				return "text-secondary";
+				return "text-foreground-secondary";
 		}
 	}
 
 	return (
 		<div className="flex flex-col justify-between min-h-48 max-h-full border-b border-border py-4 w-full space-y-8 transition-colors duration-200">
 			<div>
-				<h3 className="text-xl font-semibold text-primary">
+				<h3 className="text-xl font-semibold text-foreground">
 					{articleInfo.title}
 				</h3>
-				<div className="text-sm text-muted">{articleInfo.datePublished}</div>
+				<div className="text-sm text-muted-foreground">{articleInfo.datePublished}</div>
 				<div
 					className={`text-sm ${categoryColor(articleInfo.mainCategory ?? "")}`}
 				>
@@ -98,7 +98,7 @@ export default function NewsCard({ articleInfo }: NewsCardProp) {
 			</div>
 
 			{/* Article Summary/ Paragraphs */}
-			<div className="text-secondary">
+			<div className="text-foreground-secondary">
 				{/* Grid transition for article's paragraphs on expand */}
 				<div
 					className={`grid transition-all duration-500 ease-in-out ${
@@ -113,7 +113,7 @@ export default function NewsCard({ articleInfo }: NewsCardProp) {
 					>
 						{/* Display loading if waiting for data*/}
 						{isLoadingDetail && !articleDetail && (
-							<div className="py-4 text-muted">{t("ARTICLE_CARD.LOADING_DETAILS")}</div>
+							<div className="py-4 text-muted-foreground">{t("ARTICLE_CARD.LOADING_DETAILS")}</div>
 						)}
 						{articleDetail && (
 							<div className="flex flex-col space-y-4">
@@ -129,7 +129,7 @@ export default function NewsCard({ articleInfo }: NewsCardProp) {
 										<Link
 											key={`${articleDetail.id}-category-${index}}`}
 											to={`/subcategory/${encodeURIComponent(subCat)}`}
-											className="hover:text-accent transition-colors"
+											className="hover:text-brand transition-colors"
 										>
 											{subCat}
 										</Link>
@@ -159,7 +159,7 @@ export default function NewsCard({ articleInfo }: NewsCardProp) {
 
 			<div className="flex flex-row justify-between items-center">
 				<div
-					className="cursor-pointer hover:text-accent self-start transition-colors"
+					className="cursor-pointer hover:text-brand self-start transition-colors"
 					onClick={handleExpand}
 				>
 					{!expanded ? t("ARTICLE_CARD.READ_MORE") : t("ARTICLE_CARD.HIDE")}

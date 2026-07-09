@@ -38,7 +38,7 @@ export default function ArticlePage() {
 			{/* Back button */}
 			<button
 				onClick={() => navigate(-1)}
-				className="text-md text-accent hover:underline mb-4"
+				className="text-md text-brand hover:underline mb-4"
 			>
 				← {t("COMMON.BACK")}
 			</button>
