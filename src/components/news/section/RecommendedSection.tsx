@@ -49,19 +49,19 @@ export default function RecommendedSection() {
 			/>
 			<CollapsibleSection section={SECTIONS.RECOMMENDED}>
 				{loading.recommended ? (
-					<div className="py-4 text-muted">{t("COMMON.LOADING")}</div>
+					<div className="py-4 text-muted-foreground">{t("COMMON.LOADING")}</div>
 				) : (
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 py-4">
 						{recommendedArticles.map((article) => (
 							<div key={`recommended-${article.id}`} className="space-y-1">
 								<Link
 									to={`/article/${article.id}`}
-									className="font-medium text-primary hover:text-accent transition-colors duration-200 cursor-pointer"
+									className="font-medium text-foreground hover:text-brand transition-colors duration-200 cursor-pointer"
 									onClick={() => handleClick(article.id)}
 								>
 									{article.title}
 								</Link>
-								<div className="text-sm text-muted">{article.datePublished}</div>
+								<div className="text-sm text-muted-foreground">{article.datePublished}</div>
 							</div>
 						))}
 					</div>

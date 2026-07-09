@@ -14,7 +14,7 @@ export const AppLogo = ({ size = "md" }: LogoProps) => {
 	return (
 		<Link to="/">
 			<LuHouse
-				className={`${sizeClasses[size]} hover:text-primary cursor-pointer transition-colors`}
+				className={`${sizeClasses[size]} hover:text-foreground cursor-pointer transition-colors`}
 			/>
 		</Link>
 		// To DO: Replace with actual logo image (maybe)

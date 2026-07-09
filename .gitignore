@@ -37,3 +37,5 @@ screenshots/
 *.njsproj
 *.sln
 *.sw?
+# audit working screenshots (local-only; baseline/ stays committed)
+audit_docs/m2-after/

@@ -72,24 +72,24 @@ export default function LanguageSwitcherDesktop() {
 				aria-expanded={isOpen}
 				aria-haspopup="true"
 			>
-				<HiMiniLanguage className="w-6 h-6 cursor-pointer transition-colors hover:text-primary" />
+				<HiMiniLanguage className="w-6 h-6 cursor-pointer transition-colors hover:text-foreground" />
 			</button>
 
 			{isOpen && (
-				<div className="absolute top-6 right-0 w-48 bg-elevated rounded-lg shadow-lg z-50">
+				<div className="absolute top-6 right-0 w-48 bg-card rounded-lg shadow-lg z-50">
 					<div className="py-1">
 						{languages.map(({ code, label }) => (
 							<button
 								key={code}
 								onClick={() => changeLanguage(code)}
-								className={`w-full text-left px-4 py-2 hover:bg-hover-bg transition-colors flex items-center gap-3 ${
-									currentLanguage === code ? "text-accent" : "text-secondary"
+								className={`w-full text-left px-4 py-2 hover:bg-muted transition-colors flex items-center gap-3 ${
+									currentLanguage === code ? "text-brand" : "text-foreground-secondary"
 								}`}
 							>
 								<span>{code.toUpperCase()}</span>
 								<span className="font-medium flex-1">{label}</span>
 								{currentLanguage === code && (
-									<IoCheckmark size={18} className="text-accent" />
+									<IoCheckmark size={18} className="text-brand" />
 								)}
 							</button>
 						))}

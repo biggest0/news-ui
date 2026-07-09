@@ -30,14 +30,14 @@ export const MobileSearchBar = ({
 				className="flex items-center border border-border-subtle rounded-md px-3 py-2"
 			>
 				<button type="submit">
-					<LuSearch className="w-4 h-4 text-muted mr-2 cursor-pointer" />
+					<LuSearch className="w-4 h-4 text-muted-foreground mr-2 cursor-pointer" />
 				</button>
 				<input
 					type="text"
 					value={query}
 					onChange={(e) => onQueryChange(e.target.value)}
 					placeholder={t("NAVIGATION.SEARCH_PLACEHOLDER")}
-					className="flex-1 outline-none bg-transparent text-secondary placeholder:text-muted"
+					className="flex-1 outline-none bg-transparent text-foreground-secondary placeholder:text-muted-foreground"
 				/>
 			</form>
 		</div>

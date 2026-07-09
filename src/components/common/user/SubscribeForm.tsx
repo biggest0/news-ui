@@ -40,10 +40,10 @@ export default function SubscribeForm() {
 
 	return (
 		<div className="flex flex-col space-y-2">
-			<h4 className="text-lg font-semibold text-primary">
+			<h4 className="text-lg font-semibold text-foreground">
 				{t("FOOTER.SUBSCRIBE_MESSAGE_TITLE")}
 			</h4>
-			<p className="text-sm text-secondary">
+			<p className="text-sm text-foreground-secondary">
 				{t("FOOTER.SUBSCRIBE_MESSAGE")}
 			</p>
 			<form className="flex gap-2" onSubmit={handleSubmit}>
@@ -54,18 +54,18 @@ export default function SubscribeForm() {
 					onChange={(e) => setEmail(e.target.value)}
 					disabled={isSubmitting}
 					className="border border-disabled rounded-lg px-4 py-2 w-full
-						bg-elevated
-						text-primary
+						bg-card
+						text-foreground
 						placeholder:text-placeholder
-						focus:outline-none focus:ring-2 focus:ring-accent
-						disabled:bg-hover-bg
+						focus:outline-none focus:ring-2 focus:ring-brand
+						disabled:bg-muted
 						transition-colors duration-200"
 				/>
 				<button
 					type="submit"
 					disabled={!validateEmail(email) || isSubmitting}
-					className="bg-accent-bg text-white px-4 py-2 rounded-lg
-						hover:bg-accent-bg-hover
+					className="bg-primary text-white px-4 py-2 rounded-lg
+						hover:bg-primary-hover
 						transition-colors duration-200
 						disabled:bg-disabled-bg disabled:cursor-not-allowed"
 				>
@@ -78,7 +78,7 @@ export default function SubscribeForm() {
 						? "text-success"
 						: message.includes("already subscribed")
 							? "text-warning"
-							: "text-error"
+							: "text-destructive"
 						}`}
 				>
 					{message}

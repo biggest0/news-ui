@@ -13,7 +13,7 @@ export default function ThemeToggle({ showLabel = false, className = "" }: Theme
 		return (
 			<button
 				onClick={toggleDarkMode}
-				className={`flex items-center gap-2 p-2 rounded-lg transition-colors hover:bg-hover-bg text-secondary ${className}`}
+				className={`flex items-center gap-2 p-2 rounded-lg transition-colors hover:bg-muted text-foreground-secondary ${className}`}
 				aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
 				title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
 			>
@@ -32,7 +32,7 @@ export default function ThemeToggle({ showLabel = false, className = "" }: Theme
 	return (
 		<button
 			onClick={toggleDarkMode}
-			className={`cursor-pointer transition-colors hover:text-primary ${className}`}
+			className={`cursor-pointer transition-colors hover:text-foreground ${className}`}
 			aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
 			title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
 		>

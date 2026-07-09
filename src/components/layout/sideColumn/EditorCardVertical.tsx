@@ -18,11 +18,11 @@ export const EditorCardVertical = ({
 
 			{/* Text */}
 			<div>
-				<div className="font-semibold text-primary">{name}</div>
-				<div className="text-secondary">{role}</div>
+				<div className="font-semibold text-foreground">{name}</div>
+				<div className="text-foreground-secondary">{role}</div>
 			</div>
       {/* Text */}
-			<div className="text-sm text-muted max-w-sm break-words">
+			<div className="text-sm text-muted-foreground max-w-sm break-words">
 				{description}
 			</div>
 		</div>

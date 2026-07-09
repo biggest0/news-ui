@@ -5,8 +5,8 @@ interface AppTitleProps {
 export const AppTitle = ({ variant = "desktop" }: AppTitleProps) => {
 	const tailwindClasses =
 		variant === "desktop"
-			? "absolute left-1/2 transform -translate-x-1/2 text-3xl lg:text-5xl font-semibold text-primary tracking-wide"
-			: "text-xl font-semibold text-primary tracking-wide";
+			? "absolute left-1/2 transform -translate-x-1/2 text-3xl lg:text-5xl font-semibold text-foreground tracking-wide"
+			: "text-xl font-semibold text-foreground tracking-wide";
 
 	return (
 		<div className={tailwindClasses}>
