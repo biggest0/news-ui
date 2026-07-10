@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
@@ -50,14 +50,13 @@ export function useFilteredArticles(
 	articles: ArticleInfo[],
 	filters: SearchFilters
 ): ArticleInfo[] {
-	const [filteredArticles, setFilteredArticles] = useState<ArticleInfo[]>([]);
-
-	useEffect(() => {
-		const result = filterAndSortArticles(articles, filters);
-		setFilteredArticles(result);
-	}, [articles, filters.query, filters.dateRange, filters.sortBy]);
-
-	return filteredArticles;
+	// Derived data — computed during render with useMemo instead of the previous
+	// setState-in-useEffect pattern, which double-rendered and briefly showed
+	// stale results ("You Might Not Need an Effect", M4/F033).
+	return useMemo(
+		() => filterAndSortArticles(articles, filters),
+		[articles, filters]
+	);
 }
 
 /**
