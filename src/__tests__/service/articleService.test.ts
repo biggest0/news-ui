@@ -211,15 +211,16 @@ describe("getTopTenArticles", () => {
 		const result = await getTopTenArticles();
 
 		expect(result).toHaveLength(2);
-		expect(result![0].id).toBe("t1");
-		expect(result![0].viewed).toBe(5000);
+		expect(result[0].id).toBe("t1");
+		expect(result[0].viewed).toBe(5000);
 	});
 
-	it("returns undefined on API failure", async () => {
+	/** Regression (F014): used to return undefined, crashing .map in callers. */
+	it("returns a typed empty array on API failure", async () => {
 		vi.mocked(fetchTopTenArticles).mockRejectedValue(new Error("down"));
 
 		const result = await getTopTenArticles();
 
-		expect(result).toBeUndefined();
+		expect(result).toEqual([]);
 	});
 });

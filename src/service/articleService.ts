@@ -134,12 +134,14 @@ export async function getFeaturedArticles(): Promise<ArticleInfo[]> {
 	}
 }
 
-export async function getTopTenArticles() {
+export async function getTopTenArticles(): Promise<ArticleInfo[]> {
 	try {
 		const data = await fetchTopTenArticles();
 		return data.map(mapDTOtoArticleInfo);
 	} catch (error) {
 		console.error("[Error fetching top 10 articles]:", error);
+		// safe default — callers .map over the result (uniform service error contract)
+		return [];
 	}
 }
 
