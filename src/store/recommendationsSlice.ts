@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { RecommendedArticle } from "@/types/articleTypes";
-import type { RootState } from "@/store/store";
 import {
 	getSimilarArticles,
 	getRecommendedArticles,
@@ -59,7 +58,7 @@ export const loadSimilarArticles = createAsyncThunk<
 	{ articleId: string; articles: RecommendedArticle[] },
 	string
 >("recommendations/loadSimilar", async (articleId, { getState }) => {
-	const state = getState() as RootState;
+	const state = getState() as { recommendations: RecommendationsState };
 	if (state.recommendations.similar[articleId]) {
 		return { articleId, articles: state.recommendations.similar[articleId] };
 	}
