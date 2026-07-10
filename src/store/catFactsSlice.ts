@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import type { CatFact } from "@/types/catFactTypes";
-import type { RootState } from "@/store/store";
 import { getCatFacts } from "@/service/catFactService";
 
 interface CatFactsState {
@@ -31,7 +30,7 @@ export const loadCatFacts = createAsyncThunk<CatFact[]>(
 	},
 	{
 		condition: (_, { getState }) => {
-			const { facts, loading } = (getState() as RootState).catFacts;
+			const { facts, loading } = (getState() as { catFacts: CatFactsState }).catFacts;
 			return facts.length === 0 && !loading;
 		},
 	}

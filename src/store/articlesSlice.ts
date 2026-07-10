@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk, isAnyOf } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 import type { ArticleInfo, ArticleDetail, ArticleQuery, ArticleResponse } from "@/types/articleTypes";
-import type { RootState } from "@/store/store";
 import {
 	getArticleDetail,
 	getArticlesByCategory,
@@ -125,7 +124,7 @@ export const loadFeaturedArticles = createAsyncThunk<ArticleInfo[]>(
 	},
 	{
 		condition: (_, { getState }) => {
-			const { featuredArticles, loading } = (getState() as RootState).article;
+			const { featuredArticles, loading } = (getState() as { article: ArticlesState }).article;
 			return featuredArticles.length === 0 && !loading.featured;
 		},
 	}
