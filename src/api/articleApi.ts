@@ -54,13 +54,17 @@ export async function fetchArticlesInfo({
  * @throws Error if the HTTP request fails
  */
 export async function fetchArticlesByCategory(page: number, category: string) {
-	const response = await fetch(
-		`${API_URL}/api/articles?page=${page}&limit=10&category=${category}&lang=${getApiLang()}`,
-		{
-			method: "GET",
-			headers: { "Content-Type": "application/json" },
-		}
-	);
+	// URLSearchParams encodes special characters (spaces, &) in category values
+	const params = new URLSearchParams({
+		page: page.toString(),
+		limit: "10",
+		category,
+		lang: getApiLang(),
+	});
+	const response = await fetch(`${API_URL}/api/articles?${params}`, {
+		method: "GET",
+		headers: { "Content-Type": "application/json" },
+	});
 	if (!response.ok) {
 		throw new Error(`Error: ${response.statusText}`);
 	}
@@ -116,13 +120,18 @@ export async function fetchArticlesBySearch({
  * @throws Error if the HTTP request fails
  */
 export async function fetchArticlesBySubCategory(page: number, subCategory: string) {
-	const response = await fetch(
-		`${API_URL}/api/articles?page=${page}&limit=10&subCategory=${subCategory}&lang=${getApiLang()}`,
-		{
-			method: "GET",
-			headers: { "Content-Type": "application/json" },
-		}
-	);
+	// URLSearchParams encodes special characters — sub-categories contain spaces
+	// and ampersands (e.g. "Food & drink industry")
+	const params = new URLSearchParams({
+		page: page.toString(),
+		limit: "10",
+		subCategory,
+		lang: getApiLang(),
+	});
+	const response = await fetch(`${API_URL}/api/articles?${params}`, {
+		method: "GET",
+		headers: { "Content-Type": "application/json" },
+	});
 	if (!response.ok) {
 		throw new Error(`Error: ${response.statusText}`);
 	}
