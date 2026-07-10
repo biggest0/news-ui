@@ -6,86 +6,90 @@
 
 ---
 
-## Pending commits — M3 (branch: `audit/m3-components`)
+## Pending commits — M4 (branch: `audit/m4-correctness`)
 
-> Commits 1–3 build on each other (primitive → consumers → consolidation) but each leaves the tree green, so they can land as three reviewable commits in this order.
-
-### 1. feat: add accessible dropdown-menu primitive adapted from shadcn base
+### 1. fix: return typed safe default from getTopTenArticles
 
 **Files:**
-- `src/components/ui/DropdownMenu.tsx` (new — @base-ui Menu base, adapted: react-icons, app tokens, normal-case items)
-- `src/components/common/layout/SectionDropDown.tsx` (rebufeat: add accessible dropdown-menu primitive and compose section headersilt on the primitive; trigger is a real button with aria-haspopup/expanded)
-- `src/components/common/layout/SectionHeaderExpandable.tsx` (now composes SectionDropDown; inlined duplicate + duplicate type deleted)
-- `src/components/news/section/ExpandableSection.tsx` (chevron → real button with aria-expanded)
-- `src/i18n/en/common.json`, `src/i18n/fr/common.json` (DROPDOWN.SECTION_OPTIONS)
+- `src/service/articleService.ts` (explicit `Promise<ArticleInfo[]>` + `return []` in catch)
+- `src/__tests__/service/articleService.test.ts` (the old test asserted the bug — now asserts `[]`)
 
 **Message:**
 ```
-
+fix: return typed safe default from getTopTenArticles on failure
 ```
 
-**Rationale (F008/F009/F013/F016/F023):** kills the byte-identical dropdown duplication AND the keyboard/ARIA gaps in one move; fixes the dark-mode white-panel bug. Keyboard cycle verified in-browser.
+**Rationale (F014):** the only service violating the uniform error contract — callers `.map` the result and crashed on `undefined`.
 
-### 2. refactor: extract SectionShell and consolidate section pairs
+### 2. fix: encode category and subcategory query params
 
 **Files:**
-- `src/components/common/layout/SectionShell.tsx` (new)
-- `src/components/news/section/EditorsSection.tsx`, `CatFactsSection.tsx` (variant prop; consolidated)
-- `src/components/news/section/mobileSections/MobileEditorsSection.tsx`, `MobileCatFactsSection.tsx` (**deleted**)
-- `src/components/news/section/StaffPicksSection.tsx`, `mobileSections/MobileStaffPicksSection.tsx` (share useFeaturedArticles; kept split by design — different presentation)
-- `src/components/news/section/PopularSection.tsx`, `RecommendedSection.tsx`, `EmptyStateSection.tsx`, `newsSections/BaseNewsSection.tsx` (SectionShell migration)
-- `src/hooks/useArticleHooks.ts` (new useFeaturedArticles hook)
-- `src/pages/HomePage.tsx` (call sites → variant props)
+- `src/api/articleApi.ts` (both fetchers → URLSearchParams)
+- `src/__tests__/api/articleApi.test.ts` (new — proves "Food & drink industry" survives intact)
 
 **Message:**
 ```
-refactor: extract section shell and consolidate mobile/desktop section pairs
+fix: encode category and subcategory query params via urlsearchparams
 ```
 
-**Rationale (F010/F011):** ~90%-duplicate pairs → one component each; the copy-pasted wrapper pattern → SectionShell. Mobile layout verified against baseline.
+**Rationale (F015):** live bug — real sub-categories contain `&`/spaces and truncated the query string at the ampersand.
 
-### 3. refactor: rename infinite-scroll hooks and drop lucide-react
+### 3. fix: record reading history after silent auth refresh resolves
 
 **Files:**
-- `src/hooks/useArticleHooks.ts`, `src/hooks/useSearchPage.ts` (useListInfiniteScroll / useSearchInfiniteScroll)
-- `src/components/news/section/newsSections/BaseNewsSection.tsx`, `src/pages/SearchPage.tsx` (call sites)
-- `src/__tests__/components/news/section/newsSections/BaseNewsSection.test.tsx` (mock rename)
-- `package.json`, `package-lock.json` (lucide-react removed — O2: react-icons is the standard)
+- `src/pages/ArticlePage.tsx` (effect split: view-count once per id; history keyed on [id, isAuthenticated])
 
 **Message:**
 ```
-refactor: rename infinite-scroll hooks and standardize on react-icons
+fix: record reading history after silent auth refresh resolves
 ```
 
-**Rationale (F012, O2):** kills the same-name/different-signature import footgun; one icon library.
+**Rationale (F047, user-visible):** logged-in users landing directly on an article never got a history entry — the effect ran before the token refresh flipped isAuthenticated. View counting deliberately stays un-keyed on auth to avoid double-counting.
 
-### 3.5 refactor: rename ui primitives to app naming convention
+### 4. fix: enable react-hooks lint rules and resolve dependency warnings
 
 **Files:**
-- `src/components/ui/button.tsx` → `src/components/ui/Button.tsx` (git mv, case-only)
-- `src/components/ui/DropdownMenu.tsx` (created directly with the final name; listed in commit 1)
-- `src/components/common/layout/SectionDropDown.tsx` (import path)
+- `eslint.config.js` (rules-of-hooks: error, exhaustive-deps: warn — plugin was registered but rules never enabled)
+- `src/hooks/useSearchPage.ts` (useFilteredArticles → useMemo, derived-data fix)
+- `src/hooks/useLocalStorage.ts`, `src/hooks/useSectionDropdown.ts` (dep additions)
+- `src/components/news/section/PopularSection.tsx`, `src/components/layout/navBar/MobileSearchBar.tsx` (dep additions)
+- `src/components/layout/navBar/MobileMenu.tsx` (justified eslint-disable with why-comment)
 
 **Message:**
 ```
-refactor: rename ui primitives to pascal case per naming convention
+fix: enable react-hooks lint rules and resolve dependency warnings
 ```
 
-**Rationale (owner decision):** file naming stays app-standard — PascalCase components, camelCase .ts; shadcn-generated kebab-case files get renamed during adaptation. (Fold into commit 1 if you prefer; kept separate so the case-only `git mv` of Button.tsx is visible.)
+**Rationale (F048 + F033-partial):** the hooks safety net was silently off; enabling surfaced 7 warnings, each triaged — no blanket disables.
 
-### 4. docs: record m3 results, base-ui scope rule, naming convention, milestone m5.5
+### 4.5 fix: break store type-import cycle that collapsed rootstate in the ide
 
 **Files:**
-- `audit_docs/AUDIT_PLAN.md` (M5.5 milestone + base-ui scope rule)
-- `audit_docs/AUDIT_FINDINGS.md` (M3 results, O2/D1-scope resolutions, F046 bundle note)
+- `src/store/articlesSlice.ts`, `src/store/catFactsSlice.ts`, `src/store/recommendationsSlice.ts` (drop `RootState` imports; thunk conditions type `getState()` structurally against their own slice state)
+
+**Message:**
+```
+fix: break store type-import cycle that collapsed rootstate in the ide
+```
+
+**Rationale (F049, owner-reported):** store↔slice circular type imports made the IDE's tsserver infer `state.article` as `unknown` (tsc passed only by inference-order luck). Structural getState typing breaks the cycle; type-only, zero runtime change.
+
+### 5. docs: record m4 results in audit findings and commit plan
+
+**Files:**
+- `audit_docs/AUDIT_FINDINGS.md`
 - `audit_docs/COMMIT_PLAN.md`
-- `CLAUDE.md` (naming conventions expanded; base-ui/shadcn scope section added)
-- `.gitignore` (audit_docs/m3-after/ local-only)
 
 **Message:**
 ```
-docs: record m3 results, base-ui scope, naming convention, milestone m5.5
+docs: record m4 results in audit findings and commit plan
 ```
+
+---
+
+## Backend ticket recommendation (outside this repo — from F044)
+
+Keyword search (`/api/articles/search/keyword`) matches **substrings**, so `q=cat` matches "vacation"/"cattle"/"communication". Stated contract is *word* matching (title/category/paragraph). Recommend word-boundary matching server-side. Also: `audit_docs/schemas/README.md` route names (`/article-info`, `/article-top-ten`) have drifted from the live routes (`/api/articles`, `/api/articles/top`).
 
 ---
 
@@ -93,11 +97,11 @@ docs: record m3 results, base-ui scope, naming convention, milestone m5.5
 
 ```bash
 git checkout refactor/ui-audit
-git merge --no-ff audit/m3-components -m "merge audit/m3-components: accessible dropdowns + section consolidation"
+git merge --no-ff audit/m4-correctness -m "merge audit/m4-correctness: correctness hotfixes and hooks lint"
 git push origin refactor/ui-audit
 ```
 
-M3 exit criteria (all met, pending your review): no byte-identical component bodies ✅ · dropdowns keyboard-operable with correct ARIA (verified: Enter/arrows/Escape/focus-return) ✅ · dark-mode panel bug fixed ✅ · one icon library ✅ · mobile/desktop layout matches baseline ✅ · gates green (build / 223 tests / lint 0 errors) ✅ · noted: bundle +54 kB gzip from @base-ui core → F046 routed to perf milestone
+M4 exit criteria (all met, pending your review): F014/F015 fixed **with regression tests** ✅ · F047 history bug fixed ✅ · hooks lint enabled, 0 errors ✅ · error contract uniform + documented ✅ · F044 characterized (backend ticket) ✅ · gates green (build / **225** tests / lint 0 errors) ✅
 
 ---
 
