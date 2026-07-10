@@ -44,9 +44,12 @@ export const MobileMenu = ({
 		};
 	}, [menuOpen]);
 
-	// Close menu on browser back/forward navigation
+	// Close menu on browser back/forward navigation. Deliberately keyed on
+	// location ONLY: this is a "navigation happened" event — adding menuOpen
+	// to the deps would re-fire when the menu opens and close it immediately.
 	useEffect(() => {
 		if (menuOpen) onMenuClose();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [location]);
 
 	const handleTouchStart = (e: React.TouchEvent) => {

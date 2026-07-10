@@ -61,7 +61,7 @@ export function useSectionDropdown(sectionKey: SectionKey): DropDownOption[] {
 		}
 
 		return options;
-	}, [appSetting, t]);
+	}, [appSetting, t, sectionKey, togglePagination, updateSectionExpansion, updateSectionVisibility]);
 
 	return dropdownOptions;
 }
