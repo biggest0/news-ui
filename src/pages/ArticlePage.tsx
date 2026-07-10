@@ -23,15 +23,24 @@ export default function ArticlePage() {
 	);
 	const { loading } = useSelector((state: RootState) => state.article);
 
+	// Load the article + count the view exactly once per article id.
+	// Deliberately NOT keyed on auth state — re-running would double-count views.
 	useEffect(() => {
 		if (id) {
 			dispatch(loadArticleDetail(id));
 			incrementArticleViewed(id);
-			if (isAuthenticated) {
-				recordArticleRead(id);
-			}
 		}
-	}, [id]);
+	}, [id, dispatch]);
+
+	// Record reading history separately: on direct navigation the silent token
+	// refresh resolves *after* mount, so this must re-run when auth flips to
+	// true — previously (single effect keyed on [id] only) logged-in users
+	// landing directly on an article never got a history entry (M4 fix).
+	useEffect(() => {
+		if (id && isAuthenticated) {
+			recordArticleRead(id);
+		}
+	}, [id, isAuthenticated]);
 
 	return (
 		<div className="py-6">

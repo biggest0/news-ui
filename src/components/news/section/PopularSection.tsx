@@ -19,7 +19,7 @@ export default function PopularSection() {
 
 	useEffect(() => {
 		dispatch(loadTopTenArticles());
-	}, []);
+	}, [dispatch]);
 
 	return (
 		<SectionShell visible={isVisible} bordered>

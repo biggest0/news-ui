@@ -21,7 +21,7 @@ export const MobileSearchBar = ({
 
 	useEffect(() => {
 		onQueryChange(urlQuery);
-	}, [urlQuery]);
+	}, [urlQuery, onQueryChange]);
 
 	return (
 		<div className="mb-6">

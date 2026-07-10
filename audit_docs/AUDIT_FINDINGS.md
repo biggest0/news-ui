@@ -6,7 +6,7 @@
 > | ID | Milestone | Sev | Verdict | Location (file:line) | Finding | Standard it fails (source) | Fix applied | Status | Verified how |
 > ```
 >
-> `Status` ∈ `Todo | In-progress | Done | Deferred(reason) | Rejected(reason) | Needs-decision`. Next free ID: **F047**.
+> `Status` ∈ `Todo | In-progress | Done | Deferred(reason) | Rejected(reason) | Needs-decision`. Next free ID: **F050**.
 >
 > **2026-07-09 verification pass:** the key premises below were spot-checked against the repo and held (token collision, literal `@/` dir, F014 `undefined` return, counts of hooks/slices/pages/tests/specs). Decisions D1–D4 are now resolved — see the plan's Decision Log — and the affected rows below carry a `[D#]` note. Findings F034–F039 were added by that pass.
 
@@ -162,6 +162,25 @@ Proposed tally: **~33 seed findings** — P0 ×2, P1 ×10, P2 ×13, P3 ×6, plus
 | F006 | **Partially resolved** — `clsx`/`tailwind-merge` (used by `cn`) and `cva`/`@base-ui/react` (used by button.tsx) now have in-src consumers; `lucide-react` + `tw-animate-css` still unused → re-check at end of M3 | grep |
 
 M1 exit criteria met (see COMMIT_PLAN.md for the pending commits + merge).
+
+## M4 results (2026-07-09 — done pending owner commit, branch `audit/m4-correctness`)
+
+| ID | Resolution | Verified how |
+|----|-----------|--------------|
+| F014 | **Done** — `getTopTenArticles(): Promise<ArticleInfo[]>` returns `[]` in catch. Note: a test literally asserted the buggy undefined return — updated to assert the safe contract. | regression test |
+| F015 | **Done** — `fetchArticlesByCategory`/`BySubCategory` → `URLSearchParams`. This was live-broken: real sub-categories like "Food & drink industry" truncated at the `&`. | new `__tests__/api/articleApi.test.ts` proves encoding + no bogus params |
+| F044 | **Resolved — not a frontend bug.** Frontend params correct. Probed the API: every "unrelated" result matches the query as a **substring** ("va**cat**ion", "**cat**tle", "communi**cat**ion"). Owner's stated contract is *word* matching → **backend ticket recommended**: switch keyword search to word-boundary matching. | curl probe of `/api/articles/search/keyword?q=cat` |
+| F048 | **New + Fixed** — `eslint-plugin-react-hooks` was registered but its **rules were never enabled**; the hooks safety net was silently off. Enabled `rules-of-hooks` (error) + `exhaustive-deps` (warn). Result: 0 rules-of-hooks errors, 7 exhaustive-deps warnings — all triaged and resolved (below). | lint |
+| F047 | **New + Fixed (user-visible)** — `ArticlePage`'s single effect keyed on `[id]` ran before the silent token refresh resolved, so **logged-in users landing directly on an article never got a reading-history entry**. Split into two effects: view-count once per id (deliberately not auth-keyed — would double-count), history-record keyed on `[id, isAuthenticated]`. | code + runtime network check |
+| F033 (partial) | `useFilteredArticles` converted from setState-in-effect to `useMemo` (derived data; double-render + momentary stale results eliminated). Remaining effect-audit items stay with M6. | code; tests |
+| — | Mechanical dep fixes: `PopularSection` (+dispatch), `useLocalStorage` (+key), `useSectionDropdown` (+sectionKey/context fns — latent stale-memo), `MobileSearchBar` (+onQueryChange). `MobileMenu` got a **justified** disable (location-only is intentional: adding `menuOpen` would close the menu the moment it opens). | lint clean |
+| — | **Error-contract sweep verdict (Keep, documented):** reads → typed safe default + console.error (silent-empty; error UX deferred to M5 per owner); actions (auth/subscribe/like/record) → throw user-friendly messages that forms display. Uniform after F014. | read all service catches |
+| — | **Deferred to M5 (structural, per owner):** in-flight old-language thunk landing after slice reset (RTKQ request keying/abort solves); silent-empty error surfaces (RTKQ `isError`); deep pagination-edge audit (RTKQ reworks pagination fetching). | — |
+| — | **Documented, not bugs:** StrictMode double-fires effects in dev → dev view-counts inflate 2× (prod fires once; verified via network tab). `audit_docs/schemas/README.md` route names (`/article-info`, `/article-top-ten`) don't match the live routes the frontend uses (`/api/articles`, `/api/articles/top`) — backend docs drift, informational. | network tab; curl |
+
+| F049 | **New + Fixed (owner-reported)** — IDE showed `state.article: unknown` in selectors: **circular type dependency** (store.ts imports slice reducers; 3 slices imported `RootState` back from store.ts; `RootState = ReturnType<typeof store.getState>` closes the cycle). `tsc -b` resolved the cycle by luck of ordering, but the IDE's tsserver collapsed to `unknown` — killing editor type safety/autocomplete. Fix: slices no longer import RootState; thunk `condition`s type `getState()` structurally against only the slice they read (e.g. `getState() as { catFacts: CatFactsState }`). Type-only change, zero runtime impact. | tsc clean; 225/225; IDE diagnostics clear after TS-server restart |
+
+Gates: build ✅ · **225/225** tests (2 new) ✅ · lint 0 errors (6 known i18n warnings) ✅.
 
 ## M3 results (2026-07-09 — done pending owner commit, branch `audit/m3-components`)
 
