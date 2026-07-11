@@ -1,6 +1,12 @@
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 
+/**
+ * Inline language expander used inside the mobile menu. Kept hand-rolled by
+ * design (M5.5 keep-native verdict): it's an in-flow disclosure, not a
+ * popup — but the trigger is now a real button (was a clickable div) with
+ * aria-expanded.
+ */
 export default function LanguageSwitcher() {
 	const { i18n, t } = useTranslation();
 	const [isExpanded, setIsExpanded] = useState(false);
@@ -17,11 +23,15 @@ export default function LanguageSwitcher() {
 	};
 
 	return (
-		<div
-			className="flex items-center px-4 text-foreground-secondary hover:bg-muted rounded-md transition-colors"
-			onClick={() => setIsExpanded(!isExpanded)}
-		>
-			<div className="cursor-pointer mr-4">{t("COMMON.LANGUAGE")}</div>
+		<div className="flex items-center px-4 text-foreground-secondary hover:bg-muted rounded-md transition-colors">
+			<button
+				type="button"
+				aria-expanded={isExpanded}
+				onClick={() => setIsExpanded(!isExpanded)}
+				className="cursor-pointer mr-4 py-2"
+			>
+				{t("COMMON.LANGUAGE")}
+			</button>
 
 			{/* Expandable Language List */}
 			<div

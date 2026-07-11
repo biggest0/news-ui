@@ -80,7 +80,8 @@
     "SHARE": "Share",
     "LANGUAGE": "Language",
     "LOAD_ERROR": "Couldn't load this section.",
-    "RETRY": "Try again"
+    "RETRY": "Try again",
+    "CLOSE": "Close"
   },
   "MAINTENANCE": {
     "IMAGE_ALT": "Cats at work",
@@ -109,7 +110,8 @@
     "ABOUT": "About",
     "CONTACT": "Contact",
     "SEARCH": "Search",
-    "BLOG": "Blog"
+    "BLOG": "Blog",
+    "MENU_LABEL": "Navigation menu"
   },
   "BLOG": {
     "TITLE": "Blog",
@@ -281,5 +283,11 @@
     "SCROLL_VIEW": "Scroll View",
     "PAGE_VIEW": "Page View",
     "SECTION_OPTIONS": "Section options"
+  },
+  "THEME": {
+    "LIGHT": "Light",
+    "DARK": "Dark",
+    "SYSTEM": "System",
+    "SWITCH_TO": "Switch to {{mode}} mode"
   }
 }
