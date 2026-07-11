@@ -117,13 +117,13 @@ The `categoryColor()` function in `NewsCard.tsx` uses raw Tailwind + `dark:` pai
 
 ## State Management
 
-**Redux** (`src/store/`) handles all **async server data**:
-- `articlesSlice` (`state.article`) — home/category/search articles, article details, topTen, loading flags, errors
-- `recommendationsSlice` (`state.recommendations`) — similar articles (cached by articleId) and personalised recommendations
-- `userContentSlice` (`state.userContent`) — per-article like status and user reading history
-- `catFactsSlice` (`state.catFacts`) — server-decided cat facts (localized)
-- Article details are cached in `state.article.articlesDetail` (keyed by ID)
-- `loadFeaturedArticles` / `loadCatFacts` use a thunk `condition` to dedupe — multiple co-mounted sections (desktop + mobile variants) can dispatch them safely
+**RTK Query** (`src/store/api/`) handles all **async server data** (migrated from hand-rolled slices/thunks in M5, 2026-07-10):
+- `apiSlice.ts` — single `createApi` + `baseQueryWithReauth` (cookie auth, 401 → one refresh via `authStore.refresh()` → retry; refresh is skipped when no session is known)
+- Domain endpoints are injected per file: `articleEndpoints.ts` (lists as **infinite queries**, page-mode query, detail, top-ten, featured, keyword + semantic search), `recommendationEndpoints.ts` (similar, recommended), `userContentEndpoints.ts` (like status/toggle, history + tag invalidation), `catFactEndpoints.ts`
+- **`lang` is part of every article-ish query arg** (use `useApiLang()`), so EN↔FR toggles refetch automatically via cache-key change — no manual resets, no page remount
+- `transformResponse` calls `mappers/` — components still never see DTOs
+- Co-mounted sections (desktop + mobile variants) share cache entries automatically
+- Failed loads render `<SectionErrorMessage onRetry={refetch} />` (inline, localized) instead of silent-empty
 - Use `AppDispatch` and `RootState` from `src/store/store.ts` for typed hooks
 
 **React Context** (`AppSettingContext`) handles all **local UI preferences**:
@@ -143,13 +143,13 @@ The `categoryColor()` function in `NewsCard.tsx` uses raw Tailwind + `dark:` pai
 
 ```
 Component
-  → Redux thunk (articlesSlice / recommendationsSlice / userContentSlice)
-    → service/ (error handling + mapping)
-      → api/ (fetch calls)
-        → backend REST API
+  → RTK Query hook (src/store/api/*Endpoints.ts)
+    → baseQueryWithReauth (cookie auth, 401 → refresh → retry)
+      → backend REST API
+    ← transformResponse → mappers/ (DTO → domain)
 ```
 
-DTOs from the API are **always mapped** in `src/mappers/articleMapper.ts` before entering the Redux store. Components never see raw DTOs.
+DTOs from the API are **always mapped** in `src/mappers/` via each endpoint's `transformResponse` before entering the cache. Components never see raw DTOs. Fire-and-forget calls (never awaited): `incrementArticleViewed` (`api/articleApi.ts`, bypasses RTK Query) and the `recordArticleRead` **mutation** (triggered without awaiting; it invalidates the `History` tag so the account page refetches). Auth flows still use `authService`/`authApi` + `authFetch`; the subscribe form uses `formService`.
 
 ---
 
