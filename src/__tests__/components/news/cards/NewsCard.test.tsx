@@ -16,7 +16,7 @@
  * Dependencies mocked:
  * - @/contexts/AuthContext         — controls accessToken per test
  * - @/api/articleApi               — spies on incrementArticleViewed
- * - @/service/userArticleService   — spies on recordArticleRead; stubs getArticleLikeStatus
+ * - @/store/api/userContentEndpoints — mocks like hooks + recordArticleRead mutation
  * - @/store/articlesSlice          — spies on loadArticleDetail thunk
  */
 import { describe, it, expect, vi, beforeEach } from "vitest";
@@ -47,20 +47,18 @@ vi.mock("@/store/api/articleEndpoints", () => ({
 	) => mockDetailQuery(arg, opts),
 }));
 
-vi.mock("@/service/userArticleService", () => ({
-	recordArticleRead: vi.fn(),
-}));
+const mockRecordArticleRead = vi.fn();
 
 // LikeButton reads like status via RTK Query hooks (M5) — mock the endpoint
 // module so cards render without a live API or preloaded RTKQ cache.
 vi.mock("@/store/api/userContentEndpoints", () => ({
 	useGetLikeStatusQuery: vi.fn(() => ({ data: undefined })),
 	useToggleLikeMutation: vi.fn(() => [vi.fn(), { isLoading: false }]),
+	useRecordArticleReadMutation: vi.fn(() => [mockRecordArticleRead]),
 }));
 
 import { useAuth } from "@/contexts/AuthContext";
 import { incrementArticleViewed } from "@/api/articleApi";
-import { recordArticleRead } from "@/service/userArticleService";
 
 // ── Setup ────────────────────────────────────────────────────────────
 
@@ -236,7 +234,7 @@ describe("NewsCard", () => {
 		await userEvent.click(screen.getByText("Read More"));
 
 		await waitFor(() => {
-			expect(recordArticleRead).toHaveBeenCalledWith("card-1");
+			expect(mockRecordArticleRead).toHaveBeenCalledWith("card-1");
 		});
 	});
 
@@ -250,7 +248,7 @@ describe("NewsCard", () => {
 		await waitFor(() => {
 			expect(incrementArticleViewed).toHaveBeenCalled();
 		});
-		expect(recordArticleRead).not.toHaveBeenCalled();
+		expect(mockRecordArticleRead).not.toHaveBeenCalled();
 	});
 
 	/** Expanding a second time does NOT re-trigger view increment or read recording. */
@@ -269,7 +267,7 @@ describe("NewsCard", () => {
 		await userEvent.click(screen.getByText("Read More"));
 
 		expect(incrementArticleViewed).toHaveBeenCalledTimes(1);
-		expect(recordArticleRead).toHaveBeenCalledTimes(1);
+		expect(mockRecordArticleRead).toHaveBeenCalledTimes(1);
 	});
 
 	// ── Edge cases ───────────────────────────────────────────────────
