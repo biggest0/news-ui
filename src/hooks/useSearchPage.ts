@@ -1,12 +1,13 @@
-import { useEffect, useMemo, useState, useRef } from "react";
+import { useEffect, useMemo } from "react";
 import { useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
-import type { AppDispatch } from "@/store/store";
 import type { ArticleInfo } from "@/types/articleTypes";
-import { loadArticlesInfoBySearch } from "@/store/articlesSlice";
-import { loadSemanticSearchResults } from "@/store/recommendationsSlice";
-import { parseSearchParams, type SearchParams, type SearchType } from "@/utils/search/searchUrlUtils";
+import { useApiLang } from "@/hooks/useApiLang";
+import {
+	useSearchKeywordInfiniteQuery,
+	useSearchSemanticInfiniteQuery,
+} from "@/store/api/articleEndpoints";
+import { parseSearchParams, type SearchParams } from "@/utils/search/searchUrlUtils";
 import { filterAndSortArticles, type SearchFilters } from "@/utils/search/searchUtils";
 
 /**
@@ -19,25 +20,61 @@ export function useSearchParams(): SearchParams {
 }
 
 /**
- * Hook to load articles when search query or search type changes.
- * Dispatches keyword or semantic search thunk based on searchType.
+ * Runs the active search (keyword or semantic) as an RTK Query infinite
+ * query. The inactive mode is skipped entirely; pages accumulate per
+ * {q, filters, lang} cache entry, and changing any of those (including the
+ * language) starts a fresh entry — no manual resets.
+ *
+ * @returns Flattened results + scroll driver state for the active mode.
  */
-export function useSearchArticles(
-	query: string,
-	searchType: SearchType,
-	dateRange: string,
-	sortBy: string
-) {
-	const dispatch = useDispatch<AppDispatch>();
+export function useSearchResults(params: SearchParams) {
+	const lang = useApiLang();
+	const isSemantic = params.searchType === "semantic";
+	const arg = {
+		q: params.query,
+		dateRange: params.dateRange,
+		sortBy: params.sortBy,
+		lang,
+	};
 
-	useEffect(() => {
-		if (!query) return;
-		if (searchType === "semantic") {
-			dispatch(loadSemanticSearchResults({ q: query, page: 1, dateRange, sortBy }));
-		} else {
-			dispatch(loadArticlesInfoBySearch({ page: 1, search: query, dateRange, sortBy }));
+	const keyword = useSearchKeywordInfiniteQuery(arg, {
+		skip: !params.query || isSemantic,
+	});
+	const semantic = useSearchSemanticInfiniteQuery(arg, {
+		skip: !params.query || !isSemantic,
+	});
+
+	const active = isSemantic ? semantic : keyword;
+
+	// Semantic results are RecommendedArticle — normalize for NewsCard
+	const articles: ArticleInfo[] = useMemo(() => {
+		if (isSemantic) {
+			return (
+				semantic.data?.pages.flatMap((p) =>
+					p.articles.map((a) => ({
+						id: a.id,
+						title: a.title,
+						summary: a.summary,
+						datePublished: a.datePublished,
+						mainCategory: a.mainCategory,
+						subCategory: a.subCategory,
+						viewed: 0,
+						likeCount: 0,
+					}))
+				) ?? []
+			);
 		}
-	}, [query, searchType, dateRange, sortBy, dispatch]);
+		return keyword.data?.pages.flatMap((p) => p.articles) ?? [];
+	}, [isSemantic, semantic.data, keyword.data]);
+
+	return {
+		articles,
+		isError: active.isError,
+		isFetching: active.isFetching,
+		refetch: active.refetch,
+		hasNextPage: !!active.hasNextPage,
+		fetchNextPage: active.fetchNextPage,
+	};
 }
 
 /**
@@ -60,104 +97,35 @@ export function useFilteredArticles(
 }
 
 /**
- * Hook to track pagination state and determine if more articles can be loaded
- * @param filteredArticles - Filtered articles to display
- * @param filters - Current search filters (used to detect filter changes)
- * @returns Object with pagination state (showMore, fetching, page)
+ * Window-scroll driver for the search infinite queries — near the bottom
+ * (100px threshold, matching the old behavior) pulls the next page of the
+ * active search mode.
  */
-export function useSearchPagination(
-	filteredArticles: ArticleInfo[],
-	filters: SearchFilters
-) {
-	const prevFilteredArticlesLength = useRef(0);
-	const prevFiltersRef = useRef<SearchFilters>(filters);
-	const [page, setPage] = useState(1);
-	const [showMore, setShowMore] = useState(true);
-	const [fetching, setFetching] = useState(false);
-
-	// Reset pagination when filters change
+export function useSearchInfiniteScroll({
+	enabled,
+	hasNextPage,
+	isFetching,
+	fetchNextPage,
+}: {
+	enabled: boolean;
+	hasNextPage: boolean;
+	isFetching: boolean;
+	fetchNextPage: () => void;
+}) {
 	useEffect(() => {
-		const filtersChanged =
-			prevFiltersRef.current.query !== filters.query ||
-			prevFiltersRef.current.dateRange !== filters.dateRange ||
-			prevFiltersRef.current.sortBy !== filters.sortBy;
+		if (!enabled) return;
 
-		if (filtersChanged) {
-			prevFilteredArticlesLength.current = 0;
-			setShowMore(true);
-			setFetching(false);
-			prevFiltersRef.current = filters;
-		}
-	}, [filters]);
-
-	// Check if more filtered articles can be loaded
-	useEffect(() => {
-		if (filteredArticles.length === prevFilteredArticlesLength.current) {
-			setShowMore(false);
-		} else {
-			setShowMore(true);
-			setFetching(false);
-			prevFilteredArticlesLength.current = filteredArticles.length;
-		}
-	}, [filteredArticles]);
-
-	return {
-		page,
-		setPage,
-		showMore,
-		fetching,
-		setFetching,
-	};
-}
-
-/**
- * Hook to handle infinite scroll loading of articles
- */
-export function useSearchInfiniteScroll(
-	query: string,
-	searchType: SearchType,
-	dateRange: string,
-	sortBy: string,
-	showMore: boolean,
-	fetching: boolean,
-	page: number,
-	setPage: (updater: (prev: number) => number) => void,
-	setFetching: (value: boolean) => void
-) {
-	const dispatch = useDispatch<AppDispatch>();
-
-	useEffect(() => {
 		const handleScroll = () => {
 			if (
-				!fetching &&
-				showMore &&
+				!isFetching &&
+				hasNextPage &&
 				window.innerHeight + window.scrollY >= document.body.scrollHeight - 100
 			) {
-				setFetching(true);
-				setPage((prev) => prev + 1);
-				if (searchType === "semantic") {
-					dispatch(
-						loadSemanticSearchResults({
-							q: query,
-							page: page + 1,
-							dateRange,
-							sortBy,
-						})
-					);
-				} else {
-					dispatch(
-						loadArticlesInfoBySearch({
-							page: page + 1,
-							search: query,
-							dateRange,
-							sortBy,
-						})
-					);
-				}
+				fetchNextPage();
 			}
 		};
 
 		window.addEventListener("scroll", handleScroll);
 		return () => window.removeEventListener("scroll", handleScroll);
-	}, [fetching, showMore, query, searchType, dateRange, sortBy, page, dispatch, setPage, setFetching]);
+	}, [enabled, hasNextPage, isFetching, fetchNextPage]);
 }
