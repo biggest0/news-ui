@@ -36,35 +36,42 @@ vi.mock("@/api/articleApi", () => ({
 	incrementArticleViewed: vi.fn(),
 }));
 
-vi.mock("@/service/articleService", () => ({
-	getArticleDetail: vi.fn(),
-	getArticlesByCategory: vi.fn(),
-	getArticlesBySearch: vi.fn(),
-	getArticlesBySubCategory: vi.fn(),
-	getArticlesInfo: vi.fn(),
-	getTopTenArticles: vi.fn(),
+// NewsCard fetches the expanded detail via RTK Query (M5) — mock the hook.
+// The mock returns detail only after the component enables the query
+// (skip flips false on first expand), mimicking the lazy fetch.
+const mockDetailQuery = vi.fn();
+vi.mock("@/store/api/articleEndpoints", () => ({
+	useGetArticleDetailQuery: (
+		arg: { id: string },
+		opts?: { skip?: boolean }
+	) => mockDetailQuery(arg, opts),
 }));
 
 vi.mock("@/service/userArticleService", () => ({
 	recordArticleRead: vi.fn(),
-	toggleArticleLike: vi.fn(),
-	getArticleLikeStatus: vi.fn().mockResolvedValue({ liked: false, likeCount: 0 }),
+}));
+
+// LikeButton reads like status via RTK Query hooks (M5) — mock the endpoint
+// module so cards render without a live API or preloaded RTKQ cache.
+vi.mock("@/store/api/userContentEndpoints", () => ({
+	useGetLikeStatusQuery: vi.fn(() => ({ data: undefined })),
+	useToggleLikeMutation: vi.fn(() => [vi.fn(), { isLoading: false }]),
 }));
 
 import { useAuth } from "@/contexts/AuthContext";
 import { incrementArticleViewed } from "@/api/articleApi";
-import {
-	recordArticleRead,
-	getArticleLikeStatus,
-} from "@/service/userArticleService";
-import { getArticleDetail } from "@/service/articleService";
+import { recordArticleRead } from "@/service/userArticleService";
 
 // ── Setup ────────────────────────────────────────────────────────────
 
 beforeEach(() => {
-	vi.resetAllMocks();
-	// Re-stub after reset since getArticleLikeStatus is called on mount by LikeButton
-	vi.mocked(getArticleLikeStatus).mockResolvedValue({ liked: false, likeCount: 0 });
+	vi.clearAllMocks();
+	// default: detail available once the query is enabled (skip: false)
+	mockDetailQuery.mockImplementation((_arg, opts) =>
+		opts?.skip
+			? { data: undefined, isFetching: false }
+			: { data: sampleDetail, isFetching: false }
+	);
 });
 
 function setAuth(isAuthenticated: boolean) {
@@ -164,22 +171,7 @@ describe("NewsCard", () => {
 	/** Clicking "Read More" toggles the label to "Hide". */
 	it("toggles to 'Hide' label when expanded", async () => {
 		setAuth(false);
-		vi.mocked(getArticleDetail).mockResolvedValue(sampleDetail);
-		renderWithProviders(<NewsCard articleInfo={sampleArticle} />, {
-			preloadedState: {
-				article: {
-					topTenArticles: [],
-					homeArticles: [],
-					homeArticlesCount: 0,
-					articles: [],
-					articlesCount: 0,
-					featuredArticles: [],
-					articlesDetail: { "card-1": sampleDetail },
-					loading: { homePage: false, topTen: false, featured: false, articles: false, detail: false },
-					error: { homePage: undefined, topTen: undefined, featured: undefined, articles: undefined, detail: undefined },
-				},
-			},
-		});
+		renderWithProviders(<NewsCard articleInfo={sampleArticle} />);
 
 		await userEvent.click(screen.getByText("Read More"));
 
@@ -189,22 +181,7 @@ describe("NewsCard", () => {
 	/** When expanded with preloaded detail, the article paragraphs are rendered. */
 	it("displays article paragraphs when expanded with cached detail", async () => {
 		setAuth(false);
-		vi.mocked(getArticleDetail).mockResolvedValue(sampleDetail);
-		renderWithProviders(<NewsCard articleInfo={sampleArticle} />, {
-			preloadedState: {
-				article: {
-					topTenArticles: [],
-					homeArticles: [],
-					homeArticlesCount: 0,
-					articles: [],
-					articlesCount: 0,
-					featuredArticles: [],
-					articlesDetail: { "card-1": sampleDetail },
-					loading: { homePage: false, topTen: false, featured: false, articles: false, detail: false },
-					error: { homePage: undefined, topTen: undefined, featured: undefined, articles: undefined, detail: undefined },
-				},
-			},
-		});
+		renderWithProviders(<NewsCard articleInfo={sampleArticle} />);
 
 		await userEvent.click(screen.getByText("Read More"));
 
@@ -215,22 +192,7 @@ describe("NewsCard", () => {
 	/** When expanded with cached detail, subcategory links are rendered. */
 	it("displays subcategory links when expanded", async () => {
 		setAuth(false);
-		vi.mocked(getArticleDetail).mockResolvedValue(sampleDetail);
-		renderWithProviders(<NewsCard articleInfo={sampleArticle} />, {
-			preloadedState: {
-				article: {
-					topTenArticles: [],
-					homeArticles: [],
-					homeArticlesCount: 0,
-					articles: [],
-					articlesCount: 0,
-					featuredArticles: [],
-					articlesDetail: { "card-1": sampleDetail },
-					loading: { homePage: false, topTen: false, featured: false, articles: false, detail: false },
-					error: { homePage: undefined, topTen: undefined, featured: undefined, articles: undefined, detail: undefined },
-				},
-			},
-		});
+		renderWithProviders(<NewsCard articleInfo={sampleArticle} />);
 
 		await userEvent.click(screen.getByText("Read More"));
 
@@ -244,22 +206,7 @@ describe("NewsCard", () => {
 	/** Clicking "Hide" after expanding collapses back and shows "Read More". */
 	it("collapses back to 'Read More' on second click", async () => {
 		setAuth(false);
-		vi.mocked(getArticleDetail).mockResolvedValue(sampleDetail);
-		renderWithProviders(<NewsCard articleInfo={sampleArticle} />, {
-			preloadedState: {
-				article: {
-					topTenArticles: [],
-					homeArticles: [],
-					homeArticlesCount: 0,
-					articles: [],
-					articlesCount: 0,
-					featuredArticles: [],
-					articlesDetail: { "card-1": sampleDetail },
-					loading: { homePage: false, topTen: false, featured: false, articles: false, detail: false },
-					error: { homePage: undefined, topTen: undefined, featured: undefined, articles: undefined, detail: undefined },
-				},
-			},
-		});
+		renderWithProviders(<NewsCard articleInfo={sampleArticle} />);
 
 		await userEvent.click(screen.getByText("Read More"));
 		await userEvent.click(screen.getByText("Hide"));
@@ -309,22 +256,7 @@ describe("NewsCard", () => {
 	/** Expanding a second time does NOT re-trigger view increment or read recording. */
 	it("does not re-fetch or re-record on subsequent expand/collapse cycles", async () => {
 		setAuth(true);
-		vi.mocked(getArticleDetail).mockResolvedValue(sampleDetail);
-		renderWithProviders(<NewsCard articleInfo={sampleArticle} />, {
-			preloadedState: {
-				article: {
-					topTenArticles: [],
-					homeArticles: [],
-					homeArticlesCount: 0,
-					articles: [],
-					articlesCount: 0,
-					featuredArticles: [],
-					articlesDetail: { "card-1": sampleDetail },
-					loading: { homePage: false, topTen: false, featured: false, articles: false, detail: false },
-					error: { homePage: undefined, topTen: undefined, featured: undefined, articles: undefined, detail: undefined },
-				},
-			},
-		});
+		renderWithProviders(<NewsCard articleInfo={sampleArticle} />);
 
 		// First expand — triggers side effects
 		await userEvent.click(screen.getByText("Read More"));

@@ -1,36 +1,38 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 import NewsCard from "@/components/news/cards/NewsCard";
 import { SectionHeader } from "@/components/common/layout/SectionHeader";
+import { SectionErrorMessage } from "@/components/common/feedback/SectionErrorMessage";
 import { useAuth } from "@/contexts/AuthContext";
-import type { AppDispatch, RootState } from "@/store/store";
+import { useApiLang } from "@/hooks/useApiLang";
 import {
-	loadArticleHistory,
-	clearArticleHistoryThunk,
-} from "@/store/userContentSlice";
+	useClearHistoryMutation,
+	useGetHistoryQuery,
+} from "@/store/api/userContentEndpoints";
 
+/**
+ * Reading history on the account page — RTK Query consumer. Clearing history
+ * invalidates the History tag, which refetches the (now empty) list.
+ */
 export const AccountNewsSection = () => {
 	const { t } = useTranslation();
-	const dispatch = useDispatch<AppDispatch>();
 	const { isAuthenticated, isLoading: isAuthLoading } = useAuth();
-	const { articles } = useSelector(
-		(state: RootState) => state.userContent.history
-	);
-	const isLoading = useSelector(
-		(state: RootState) => state.userContent.loading.history
-	);
+	const lang = useApiLang();
 
-	useEffect(() => {
-		if (isAuthLoading || !isAuthenticated) return;
-		dispatch(loadArticleHistory({}));
-	}, [isAuthLoading, isAuthenticated, dispatch]);
+	const {
+		data: history,
+		isLoading,
+		isError,
+		refetch,
+	} = useGetHistoryQuery({ lang }, { skip: isAuthLoading || !isAuthenticated });
+	const [clearHistory] = useClearHistoryMutation();
+
+	const articles = history?.articles ?? [];
 
 	const handleClear = async () => {
 		if (!isAuthenticated) return;
 		try {
-			await dispatch(clearArticleHistoryThunk()).unwrap();
+			await clearHistory().unwrap();
 		} catch (error) {
 			console.error("Failed to clear history:", error);
 		}
@@ -38,6 +40,10 @@ export const AccountNewsSection = () => {
 
 	if (isLoading) {
 		return <p>{t("COMMON.LOADING")}</p>;
+	}
+
+	if (isError) {
+		return <SectionErrorMessage onRetry={refetch} />;
 	}
 
 	return (
