@@ -6,7 +6,7 @@
 > | ID | Milestone | Sev | Verdict | Location (file:line) | Finding | Standard it fails (source) | Fix applied | Status | Verified how |
 > ```
 >
-> `Status` ∈ `Todo | In-progress | Done | Deferred(reason) | Rejected(reason) | Needs-decision`. Next free ID: **F051**.
+> `Status` ∈ `Todo | In-progress | Done | Deferred(reason) | Rejected(reason) | Needs-decision`. Next free ID: **F052**.
 >
 > **2026-07-09 verification pass:** the key premises below were spot-checked against the repo and held (token collision, literal `@/` dir, F014 `undefined` return, counts of hooks/slices/pages/tests/specs). Decisions D1–D4 are now resolved — see the plan's Decision Log — and the affected rows below carry a `[D#]` note. Findings F034–F039 were added by that pass.
 
@@ -181,6 +181,22 @@ M1 exit criteria met (see COMMIT_PLAN.md for the pending commits + merge).
 | CLAUDE.md | State Management + Data Flow sections updated to the RTKQ reality (full docs pass remains M8). | — |
 
 Console after M5: only the form-field naming issue (M6). Gates: build ✅ · 182/182 ✅ · lint 0 errors, 4 warnings (was 6 — SubCategoryPage strings now use new `PAGES.SUBCATEGORY.*` keys, en+fr).
+
+## M5.5 results (2026-07-11 — done pending owner commit, branch `audit/m5.5-interactive-sweep`)
+
+Interactive component sweep per the locked scope rule (base-ui only where the platform lacks a primitive; native stays native). Per-component verdicts:
+
+| Component | Verdict | What changed | Verified how |
+|---|---|---|---|
+| `MobileMenu` (drawer) | **Adopt** — new `ui/Sheet.tsx` (shadcn registry base on @base-ui Dialog; adapted: react-icons, PascalCase, i18n close label, fixed lowercase Button import that would break Linux CI) | Gets focus trap, Escape close, `role="dialog"`, scroll lock, backdrop, and **focus return to the hamburger** (finalFocus ref plumbed NavBar → MobileMenu, React 19 ref-as-prop on HamburgerButton — no forwardRef). Swipe-right-to-close + live drag offset preserved on top. Manual body-scroll-lock effect deleted. | browser: full-width dialog, Escape closes, focus lands back on hamburger; 181/181 |
+| `LanguageSwitcherDesktop` | **Adopt** — rebuilt on `ui/DropdownMenu` | Hand-rolled click-outside/escape listeners deleted; arrow keys + aria-haspopup/expanded free; checkmark on active language kept. | browser: aria attrs + focused menuitem on open |
+| `LanguageSwitcherMobile` | **Keep-with-fix** — in-flow disclosure, not a popup | Trigger div → real `<button aria-expanded>`. | code |
+| `ThemeSelector` | **Keep** — segmented control of real buttons with aria-pressed is already accessible | Labels + aria-labels localized (new `THEME.*` keys en/fr; typed-i18n `as const satisfies` pattern). | code; gates |
+| `ThemeToggle` | **Keep** | Labels localized. | code |
+| `HamburgerButton` | **Keep-with-fix** | ref-as-prop added; "Toggle menu" localized (`NAVIGATION.TOGGLE_MENU`). | browser |
+| FilterBar + search `<select>`s, pagination controls, all form inputs, buttons | **Keep-native (recorded)** — native elements are the battle-tested primitive; replace only if a real design need emerges. | none | — |
+
+Also: `COMMON.CLOSE`, `NAVIGATION.MENU_LABEL` keys added (en/fr). Console clean. Gates: build ✅ · 181/181 ✅ · lint 0 errors (4 known M6 warnings).
 
 ## M5 addendum — F050 (2026-07-10, owner-reported during M5 review)
 
