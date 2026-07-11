@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DesktopNavigation } from "./DesktopNavigation";
 import { MobileNavigation } from "./MobileNavigation";
@@ -10,6 +10,8 @@ export default function NavBar() {
 	const [searchClicked, setSearchClicked] = useState(false);
 	const [query, setQuery] = useState("");
 	const [menuOpen, setMenuOpen] = useState(false);
+	// drawer returns focus here on close (finalFocus)
+	const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   // Handle search submit
 	const handleSubmit = (e: React.FormEvent) => {
@@ -35,6 +37,7 @@ export default function NavBar() {
 
 	const mobileMenuProps = {
 		menuOpen,
+		returnFocusRef: menuButtonRef,
 		onMenuToggle: () => setMenuOpen(!menuOpen),
 		onMenuClose: () => setMenuOpen(false),
 		query,
@@ -48,6 +51,7 @@ export default function NavBar() {
 			<MobileNavigation
 				menuOpen={menuOpen}
 				onMenuToggle={() => setMenuOpen(!menuOpen)}
+				menuButtonRef={menuButtonRef}
 			/>
 			<MobileMenu {...mobileMenuProps} />
 		</nav>
