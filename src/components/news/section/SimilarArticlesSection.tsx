@@ -1,35 +1,34 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import type { RootState, AppDispatch } from "@/store/store";
-import { loadSimilarArticles } from "@/store/recommendationsSlice";
 import { SectionHeader } from "@/components/common/layout/SectionHeader";
+import { SectionErrorMessage } from "@/components/common/feedback/SectionErrorMessage";
 import { incrementArticleViewed } from "@/api/articleApi";
 import { recordArticleRead } from "@/service/userArticleService";
 import { useAuth } from "@/contexts/AuthContext";
+import { useApiLang } from "@/hooks/useApiLang";
+import { useGetSimilarArticlesQuery } from "@/store/api/recommendationEndpoints";
 
 interface SimilarArticlesSectionProps {
 	articleId: string;
 }
 
-export default function SimilarArticlesSection({ articleId }: SimilarArticlesSectionProps) {
-	const dispatch = useDispatch<AppDispatch>();
+/**
+ * "More like this" strip under an article — RTK Query consumer, cached per
+ * {articleId, lang} (replaces the slice's hand-rolled similar[articleId] map).
+ */
+export default function SimilarArticlesSection({
+	articleId,
+}: SimilarArticlesSectionProps) {
 	const { t } = useTranslation();
 	const { isAuthenticated } = useAuth();
-	const similarArticles = useSelector(
-		(state: RootState) => state.recommendations.similar[articleId]
-	);
-	const loading = useSelector(
-		(state: RootState) => state.recommendations.loading.similar
-	);
-
-	useEffect(() => {
-		if (articleId) {
-			dispatch(loadSimilarArticles(articleId));
-		}
-	}, [articleId, dispatch]);
+	const lang = useApiLang();
+	const {
+		data: similarArticles,
+		isLoading,
+		isError,
+		refetch,
+	} = useGetSimilarArticlesQuery({ articleId, lang });
 
 	const handleClick = (clickedArticleId: string) => {
 		incrementArticleViewed(clickedArticleId);
@@ -38,14 +37,17 @@ export default function SimilarArticlesSection({ articleId }: SimilarArticlesSec
 		}
 	};
 
-	if (!loading && (!similarArticles || similarArticles.length === 0)) {
+	// nothing similar → render nothing (matches previous behavior)
+	if (!isLoading && !isError && (similarArticles?.length ?? 0) === 0) {
 		return null;
 	}
 
 	return (
 		<section className="pt-8 border-t border-border mt-8">
 			<SectionHeader title={t("SECTION.MORE_LIKE_THIS")} />
-			{loading && !similarArticles ? (
+			{isError ? (
+				<SectionErrorMessage onRetry={refetch} />
+			) : isLoading ? (
 				<div className="py-4 text-muted-foreground">{t("COMMON.LOADING")}</div>
 			) : (
 				<div className="w-full overflow-x-auto hide-scrollbar pb-4">
