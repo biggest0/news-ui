@@ -1,18 +1,27 @@
 import { useTranslation } from "react-i18next";
-import { useState, useRef, useEffect } from "react";
 import { IoCheckmark } from "react-icons/io5";
 import { HiMiniLanguage } from "react-icons/hi2";
+
 import type { Language } from "@/i18n/types";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "@/components/ui/DropdownMenu";
 
 interface LanguageOption {
 	code: Language;
 	label: string;
 }
 
+/**
+ * Header language menu — built on the DropdownMenu primitive since M5.5
+ * (arrow-key navigation, Escape, focus return, aria-haspopup/expanded for
+ * free; the hand-rolled click-outside/escape listeners are gone).
+ */
 export default function LanguageSwitcherDesktop() {
 	const { i18n, t } = useTranslation();
-	const [isOpen, setIsOpen] = useState(false);
-	const dropdownRef = useRef<HTMLDivElement>(null);
 
 	const languages: LanguageOption[] = [
 		{ code: "en", label: t("LANGUAGE.EN") },
@@ -21,81 +30,29 @@ export default function LanguageSwitcherDesktop() {
 
 	const currentLanguage = i18n.language as Language;
 
-	const changeLanguage = (language: Language) => {
-		i18n.changeLanguage(language);
-		setIsOpen(false);
-	};
-
-	// Close dropdown when clicking outside
-	useEffect(() => {
-		const handleClickOutside = (event: MouseEvent) => {
-			if (
-				dropdownRef.current &&
-				!dropdownRef.current.contains(event.target as Node)
-			) {
-				setIsOpen(false);
-			}
-		};
-
-		if (isOpen) {
-			document.addEventListener("mousedown", handleClickOutside);
-		}
-
-		return () => {
-			document.removeEventListener("mousedown", handleClickOutside);
-		};
-	}, [isOpen]);
-
-	// Close on escape key
-	useEffect(() => {
-		const handleEscape = (event: KeyboardEvent) => {
-			if (event.key === "Escape") {
-				setIsOpen(false);
-			}
-		};
-
-		if (isOpen) {
-			document.addEventListener("keydown", handleEscape);
-		}
-
-		return () => {
-			document.removeEventListener("keydown", handleEscape);
-		};
-	}, [isOpen]);
-
 	return (
-		<div className="relative" ref={dropdownRef}>
-			<button
-				onClick={() => setIsOpen(!isOpen)}
-				className="flex items-center justify-center"
-				aria-label="Change language"
-				aria-expanded={isOpen}
-				aria-haspopup="true"
+		<DropdownMenu>
+			<DropdownMenuTrigger
+				aria-label={t("COMMON.LANGUAGE")}
+				className="flex cursor-pointer items-center justify-center rounded outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/50"
 			>
-				<HiMiniLanguage className="w-6 h-6 cursor-pointer transition-colors hover:text-foreground" />
-			</button>
-
-			{isOpen && (
-				<div className="absolute top-6 right-0 w-48 bg-card rounded-lg shadow-lg z-50">
-					<div className="py-1">
-						{languages.map(({ code, label }) => (
-							<button
-								key={code}
-								onClick={() => changeLanguage(code)}
-								className={`w-full text-left px-4 py-2 hover:bg-muted transition-colors flex items-center gap-3 ${
-									currentLanguage === code ? "text-brand" : "text-foreground-secondary"
-								}`}
-							>
-								<span>{code.toUpperCase()}</span>
-								<span className="font-medium flex-1">{label}</span>
-								{currentLanguage === code && (
-									<IoCheckmark size={18} className="text-brand" />
-								)}
-							</button>
-						))}
-					</div>
-				</div>
-			)}
-		</div>
+				<HiMiniLanguage className="w-6 h-6 transition-colors" />
+			</DropdownMenuTrigger>
+			<DropdownMenuContent align="end">
+				{languages.map(({ code, label }) => (
+					<DropdownMenuItem
+						key={code}
+						onClick={() => i18n.changeLanguage(code)}
+						className={currentLanguage === code ? "text-brand" : undefined}
+					>
+						<span>{code.toUpperCase()}</span>
+						<span className="font-medium flex-1">{label}</span>
+						{currentLanguage === code && (
+							<IoCheckmark size={18} className="text-brand" />
+						)}
+					</DropdownMenuItem>
+				))}
+			</DropdownMenuContent>
+		</DropdownMenu>
 	);
 }
