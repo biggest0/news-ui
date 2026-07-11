@@ -4,10 +4,10 @@ import { useTranslation } from "react-i18next";
 
 import placeholderBanner from "@/assets/news_banner_placeholder.jpg";
 import { incrementArticleViewed } from "@/api/articleApi";
-import { recordArticleRead } from "@/service/userArticleService";
 import { useAuth } from "@/contexts/AuthContext";
 import { useApiLang } from "@/hooks/useApiLang";
 import { useGetArticleDetailQuery } from "@/store/api/articleEndpoints";
+import { useRecordArticleReadMutation } from "@/store/api/userContentEndpoints";
 import ArticleDetailSection from "@/components/news/section/ArticleDetailSection";
 import SimilarArticlesSection from "@/components/news/section/SimilarArticlesSection";
 
@@ -17,6 +17,8 @@ export default function ArticlePage() {
 	const { t } = useTranslation();
 	const { isAuthenticated } = useAuth();
 	const lang = useApiLang();
+	// fire-and-forget: triggered without await (invalidates History)
+	const [recordArticleRead] = useRecordArticleReadMutation();
 
 	// Detail is cached per {id, lang} — a language toggle refetches in place.
 	const { data: articleDetail, isFetching: isDetailLoading } =

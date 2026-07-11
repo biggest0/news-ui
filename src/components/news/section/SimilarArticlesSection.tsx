@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 import { SectionHeader } from "@/components/common/layout/SectionHeader";
 import { SectionErrorMessage } from "@/components/common/feedback/SectionErrorMessage";
 import { incrementArticleViewed } from "@/api/articleApi";
-import { recordArticleRead } from "@/service/userArticleService";
 import { useAuth } from "@/contexts/AuthContext";
 import { useApiLang } from "@/hooks/useApiLang";
 import { useGetSimilarArticlesQuery } from "@/store/api/recommendationEndpoints";
+import { useRecordArticleReadMutation } from "@/store/api/userContentEndpoints";
 
 interface SimilarArticlesSectionProps {
 	articleId: string;
@@ -23,6 +23,8 @@ export default function SimilarArticlesSection({
 	const { t } = useTranslation();
 	const { isAuthenticated } = useAuth();
 	const lang = useApiLang();
+	// fire-and-forget: triggered without await (invalidates History)
+	const [recordArticleRead] = useRecordArticleReadMutation();
 	const {
 		data: similarArticles,
 		isLoading,

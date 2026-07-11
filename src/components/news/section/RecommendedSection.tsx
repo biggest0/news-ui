@@ -10,8 +10,8 @@ import { useSectionVisible } from "@/hooks/useSectionCollapse";
 import { useAuth } from "@/contexts/AuthContext";
 import { useApiLang } from "@/hooks/useApiLang";
 import { incrementArticleViewed } from "@/api/articleApi";
-import { recordArticleRead } from "@/service/userArticleService";
 import { useGetRecommendedArticlesQuery } from "@/store/api/recommendationEndpoints";
+import { useRecordArticleReadMutation } from "@/store/api/userContentEndpoints";
 
 /**
  * Personalized recommendations (authenticated) — RTK Query consumer. The
@@ -23,6 +23,8 @@ export default function RecommendedSection() {
 	const { isAuthenticated, isLoading: authLoading } = useAuth();
 	const isVisible = useSectionVisible(SECTIONS.RECOMMENDED);
 	const lang = useApiLang();
+	// fire-and-forget: triggered without await (invalidates History)
+	const [recordArticleRead] = useRecordArticleReadMutation();
 	const {
 		data: recommendedArticles = [],
 		isLoading,

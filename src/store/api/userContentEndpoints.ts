@@ -66,6 +66,27 @@ export const userContentEndpoints = apiSlice.injectEndpoints({
 				count: response.count,
 			}),
 			providesTags: ["History"],
+			// Per-user data must not outlive its subscriber: retaining it for the
+			// default 60s (a) served stale history when the user read an article
+			// and returned to the account page quickly, and (b) kept an
+			// error-poisoned entry around across a fast logout→login, which RTKQ
+			// does not auto-retry on resubscribe.
+			// Lose cache, re-fetch on every account page visit
+			keepUnusedDataFor: 0,
+		}),
+
+		/**
+		 * Fire-and-forget read recording. A mutation (not a bare fetch) so it
+		 * invalidates the History tag — the account page refetches instead of
+		 * serving a stale cache entry. Callers trigger it WITHOUT awaiting,
+		 * preserving the fire-and-forget contract.
+		 */
+		recordArticleRead: build.mutation<void, string>({
+			query: (articleId) => ({
+				url: `/api/articles/${articleId}/read`,
+				method: "POST",
+			}),
+			invalidatesTags: ["History"],
 		}),
 
 		clearHistory: build.mutation<void, void>({
@@ -89,4 +110,5 @@ export const {
 	useGetHistoryQuery,
 	useClearHistoryMutation,
 	useRemoveFromHistoryMutation,
+	useRecordArticleReadMutation,
 } = userContentEndpoints;

@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import type { ArticleInfo } from "@/types/articleTypes";
 import { useApiLang } from "@/hooks/useApiLang";
 import { useGetArticleDetailQuery } from "@/store/api/articleEndpoints";
+import { useRecordArticleReadMutation } from "@/store/api/userContentEndpoints";
 import { incrementArticleViewed } from "@/api/articleApi";
-import { recordArticleRead } from "@/service/userArticleService";
 import { useAuth } from "@/contexts/AuthContext";
 import { ShareButton } from "@/components/common/social/ShareButton";
 import { LikeButton } from "@/components/common/social/LikeButton";
@@ -20,6 +20,8 @@ export default function NewsCard({ articleInfo }: NewsCardProp) {
 	const { t } = useTranslation();
 	const { isAuthenticated } = useAuth();
 	const lang = useApiLang();
+	// fire-and-forget: triggered without await (invalidates History)
+	const [recordArticleRead] = useRecordArticleReadMutation();
 
 	const [expanded, setExpanded] = useState(false);
 	const [hasExpandedOnce, setHasExpandedOnce] = useState(false);
