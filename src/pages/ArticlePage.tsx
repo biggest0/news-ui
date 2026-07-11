@@ -1,36 +1,36 @@
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-import type { AppDispatch, RootState } from "@/store/store";
 import placeholderBanner from "@/assets/news_banner_placeholder.jpg";
-import { loadArticleDetail } from "@/store/articlesSlice";
 import { incrementArticleViewed } from "@/api/articleApi";
 import { recordArticleRead } from "@/service/userArticleService";
 import { useAuth } from "@/contexts/AuthContext";
+import { useApiLang } from "@/hooks/useApiLang";
+import { useGetArticleDetailQuery } from "@/store/api/articleEndpoints";
 import ArticleDetailSection from "@/components/news/section/ArticleDetailSection";
 import SimilarArticlesSection from "@/components/news/section/SimilarArticlesSection";
 
 export default function ArticlePage() {
 	const { id } = useParams();
 	const navigate = useNavigate();
-	const dispatch = useDispatch<AppDispatch>();
 	const { t } = useTranslation();
 	const { isAuthenticated } = useAuth();
-	const articleDetail = useSelector((state: RootState) =>
-		id ? state.article.articlesDetail[id] : undefined
-	);
-	const { loading } = useSelector((state: RootState) => state.article);
+	const lang = useApiLang();
 
-	// Load the article + count the view exactly once per article id.
+	// Detail is cached per {id, lang} — a language toggle refetches in place.
+	const { data: articleDetail, isFetching: isDetailLoading } =
+		useGetArticleDetailQuery(id ? { id, lang } : { id: "", lang }, {
+			skip: !id,
+		});
+
+	// Count the view exactly once per article id.
 	// Deliberately NOT keyed on auth state — re-running would double-count views.
 	useEffect(() => {
 		if (id) {
-			dispatch(loadArticleDetail(id));
 			incrementArticleViewed(id);
 		}
-	}, [id, dispatch]);
+	}, [id]);
 
 	// Record reading history separately: on direct navigation the silent token
 	// refresh resolves *after* mount, so this must re-run when auth flips to
@@ -61,7 +61,7 @@ export default function ArticlePage() {
 				/>
 
 				{articleDetail && <ArticleDetailSection article={articleDetail} />}
-				{loading.detail && !articleDetail && <div>{t("PAGES.ARTICLE.LOADING_DETAILS")}</div>}
+				{isDetailLoading && !articleDetail && <div>{t("PAGES.ARTICLE.LOADING_DETAILS")}</div>}
 				{id && <SimilarArticlesSection articleId={id} />}
 			</div>
 		</div>

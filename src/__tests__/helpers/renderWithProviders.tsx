@@ -16,10 +16,7 @@ import { I18nextProvider } from "react-i18next";
 import i18n from "i18next";
 import { type ReactNode } from "react";
 import type { RootState } from "@/store/store";
-import articlesReducer from "@/store/articlesSlice";
-import recommendationsReducer from "@/store/recommendationsSlice";
-import userContentReducer from "@/store/userContentSlice";
-import catFactsReducer from "@/store/catFactsSlice";
+import { apiSlice } from "@/store/api/apiSlice";
 
 // ── Minimal i18n instance for tests ──────────────────────────────────
 
@@ -41,6 +38,8 @@ testI18n.init({
 					SHARE: "Share",
 					LOAD: "Loading",
 					LOADING: "Loading...",
+					LOAD_ERROR: "Couldn't load this section.",
+					RETRY: "Try again",
 				},
 				SECTION: {
 					MEWS: "Mews",
@@ -130,11 +129,10 @@ export function renderWithProviders(
 ) {
 	const store = configureStore({
 		reducer: {
-			article: articlesReducer,
-			recommendations: recommendationsReducer,
-			userContent: userContentReducer,
-			catFacts: catFactsReducer,
+			[apiSlice.reducerPath]: apiSlice.reducer,
 		},
+		middleware: (getDefaultMiddleware) =>
+			getDefaultMiddleware().concat(apiSlice.middleware),
 		preloadedState: preloadedState as RootState,
 	});
 

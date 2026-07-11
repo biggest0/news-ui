@@ -1,43 +1,25 @@
 import { Link, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { GoChevronLeft, GoChevronRight } from "react-icons/go";
 
-import { ARTICLE_ROUTES, type ArticleCategory } from "@/constants/routes";
+import { ARTICLE_ROUTES } from "@/constants/routes";
 import type { CategoryKey } from "@/i18n/types";
-import type { AppDispatch } from "@/store/store";
-import {
-	loadArticlesInfoByCategory,
-	loadInitialArticlesInfo,
-} from "@/store/articlesSlice";
 
+/**
+ * Horizontal category navigation in the header. Pure navigation since M5 —
+ * the pages own their data fetching via RTK Query hooks (this component used
+ * to dispatch the initial article loads and refire them on language change).
+ */
 export default function CategoryBar() {
 	// get url/{category}
 	const location = useLocation();
-	const { t, i18n } = useTranslation();
+	const { t } = useTranslation();
 	const currentCategory = location.pathname.split("/")[1]; // grabs part after "/"
 	const scrollRef = useRef<HTMLDivElement>(null);
 
 	const [canScrollLeft, setCanScrollLeft] = useState(false);
 	const [canScrollRight, setCanScrollRight] = useState(false);
-
-	const dispatch = useDispatch<AppDispatch>();
-	// instead of setting the category, you link it
-	// and then in sections just grab the param again and filter
-// language is a dep because CategoryBar lives in the Header, outside the
-// language-keyed <main> in App.tsx, so it doesn't remount on toggle —
-// the initial article load must refire itself when the language changes
-useEffect(() => {
-	if (currentCategory === "") {
-		// defaults to grabbing all articles
-		dispatch(loadInitialArticlesInfo({ page: 1 }));
-	} else if (ARTICLE_ROUTES.includes(currentCategory as ArticleCategory)) {
-		dispatch(
-			loadArticlesInfoByCategory({ page: 1, category: currentCategory as ArticleCategory })
-		);
-	}
-}, [currentCategory, dispatch, i18n.resolvedLanguage]);
 
 	// Set up scroll listeners
 	useEffect(() => {
