@@ -1,42 +1,40 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { GoHeart, GoHeartFill } from "react-icons/go";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
-import { unwrapResult } from "@reduxjs/toolkit";
 
 import { useAuth } from "@/contexts/AuthContext";
-import type { AppDispatch, RootState } from "@/store/store";
 import {
-	loadArticleLikeStatus,
-	toggleArticleLikeThunk,
-} from "@/store/userContentSlice";
+	useGetLikeStatusQuery,
+	useToggleLikeMutation,
+} from "@/store/api/userContentEndpoints";
 
 interface LikeButtonProps {
 	articleId: string;
 	initialLikeCount: number;
 }
 
+/**
+ * Heart toggle on article cards — RTK Query consumer. The like-status query
+ * is skipped for anonymous users (card shows the count baked into the
+ * article data); the toggle mutation writes its response straight into the
+ * status cache, so no follow-up fetch happens.
+ */
 export const LikeButton = ({
 	articleId,
 	initialLikeCount,
 }: LikeButtonProps) => {
 	const { t } = useTranslation();
-	const dispatch = useDispatch<AppDispatch>();
 	const { isAuthenticated, isLoading: isAuthLoading } = useAuth();
-	const likeStatus = useSelector(
-		(state: RootState) => state.userContent.likes[articleId]
+
+	const { data: likeStatus } = useGetLikeStatusQuery(
+		{ articleId },
+		{ skip: isAuthLoading || !isAuthenticated }
 	);
+	const [toggleLike, { isLoading: isToggling }] = useToggleLikeMutation();
+
 	const liked = likeStatus?.liked ?? false;
 	const likeCount = likeStatus?.likeCount ?? initialLikeCount;
 
-	// When the user is authenticated, fetch the real like status from the server
-	// (whether they've liked this article, and the current like count).
-	useEffect(() => {
-		if (isAuthLoading || !isAuthenticated) return;
-		dispatch(loadArticleLikeStatus({ articleId }));
-	}, [articleId, isAuthenticated, isAuthLoading, dispatch]);
-
-	const [isToggling, setIsToggling] = useState(false);
 	const [showLoginMessage, setShowLoginMessage] = useState(false);
 
 	const handleToggleLike = async () => {
@@ -48,16 +46,10 @@ export const LikeButton = ({
 
 		if (isToggling) return;
 
-		setIsToggling(true);
 		try {
-			unwrapResult(
-				await dispatch(toggleArticleLikeThunk({ articleId }))
-			);
+			await toggleLike({ articleId }).unwrap();
 		} catch {
-			// Thunk reducer captures the error; state is derived from Redux
-			// so there's no local state to revert.
-		} finally {
-			setIsToggling(false);
+			// cache keeps the previous status; nothing local to revert
 		}
 	};
 

@@ -8,8 +8,8 @@ import { SECTIONS } from "@/constants/keys";
 import { useSectionVisible } from "@/hooks/useSectionCollapse";
 import { useFeaturedArticles } from "@/hooks/useArticleHooks";
 import { incrementArticleViewed } from "@/api/articleApi";
-import { recordArticleRead } from "@/service/userArticleService";
 import { useAuth } from "@/contexts/AuthContext";
+import { useRecordArticleReadMutation } from "@/store/api/userContentEndpoints";
 
 /**
  * Desktop side-column "Staff Picks": title links to the top featured
@@ -22,6 +22,8 @@ export default function StaffPicksSection() {
 	const { isAuthenticated } = useAuth();
 	const { t } = useTranslation();
 	const featuredArticles = useFeaturedArticles();
+	// fire-and-forget: triggered without await (invalidates History)
+	const [recordArticleRead] = useRecordArticleReadMutation();
 
 	const handleClick = (articleId: string) => {
 		incrementArticleViewed(articleId);

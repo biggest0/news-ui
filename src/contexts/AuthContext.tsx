@@ -18,6 +18,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 		if (bootstrappedRef.current) return;
 		bootstrappedRef.current = true;
 
+		// Session hint (F043): the persisted AUTH_USER entry only exists after a
+		// successful login/refresh, so anonymous visitors skip the silent refresh
+		// entirely — no guaranteed-401 console error / wasted request per load.
+		if (!authStore.getState().isAuthenticated) {
+			authStore.setLoading(false);
+			return;
+		}
+
 		authStore
 			.refresh()
 			.then((success) => {
