@@ -80,7 +80,8 @@
     "SHARE": "Partager",
     "LANGUAGE": "Langue",
     "LOAD_ERROR": "Impossible de charger cette section.",
-    "RETRY": "Réessayer"
+    "RETRY": "Réessayer",
+    "CLOSE": "Fermer"
   },
   "MAINTENANCE": {
     "IMAGE_ALT": "Chats au travail",
@@ -102,14 +103,15 @@
   },
   "NAVIGATION": {
     "SEARCH_PLACEHOLDER": "Rechercher...",
-    "TOGGLE_MENU": "Basculer le menu",
+    "TOGGLE_MENU": "Ouvrir le menu",
     "CHANGE_LANGUAGE": "Changer de langue",
     "NEWS": "Nouvelles",
     "HOME": "Accueil",
     "ABOUT": "À propos",
     "CONTACT": "Contact",
     "SEARCH": "Rechercher",
-    "BLOG": "Blog"
+    "BLOG": "Blog",
+    "MENU_LABEL": "Menu de navigation"
   },
   "BLOG": {
     "TITLE": "Blog",
@@ -281,5 +283,11 @@
     "SCROLL_VIEW": "Vue défilement",
     "PAGE_VIEW": "Vue pagination",
     "SECTION_OPTIONS": "Options de la section"
+  },
+  "THEME": {
+    "LIGHT": "Clair",
+    "DARK": "Sombre",
+    "SYSTEM": "Système",
+    "SWITCH_TO": "Passer en mode {{mode}}"
   }
 }

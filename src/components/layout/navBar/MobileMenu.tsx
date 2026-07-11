@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { LuX } from "react-icons/lu";
 
 import type { MobileMenuProps } from "@/types/navBarTypes";
+import { Sheet, SheetContent } from "@/components/ui/Sheet";
 import { MobileSearchBar } from "./MobileSearchBar";
 import { NavigationLinks } from "./NavigationLinks";
 import { UserAccountIcon } from "@/components/common/user/UserAccountIcon";
@@ -12,13 +14,21 @@ import { APP_VERSION } from "@/config/config";
 import LanguageSwitcher from "./LanguageSwitcherMobile";
 import ThemeToggle from "@/components/common/theme/ThemeToggle";
 
+/**
+ * Full-screen mobile navigation drawer. Built on the Sheet primitive
+ * (base-ui Dialog) since M5.5 — focus trap, Escape close, aria-modal, body
+ * scroll lock, and focus return come from the primitive. The swipe-right-to-
+ * close gesture (with live drag offset) is preserved on top of it.
+ */
 export const MobileMenu = ({
 	menuOpen,
+	returnFocusRef,
 	onMenuClose,
 	query,
 	onQueryChange,
 	onSubmit,
 }: MobileMenuProps) => {
+	const { t } = useTranslation();
 	const location = useLocation();
 	const [touchStart, setTouchStart] = useState(0);
 	const [touchEnd, setTouchEnd] = useState(0);
@@ -29,20 +39,6 @@ export const MobileMenu = ({
 	const minSwipeDistance = 100;
 	// Left edge zone for browser back navigation (in px)
 	const leftEdgeZone = 20;
-
-	// Prevent body scroll when menu is open
-	useEffect(() => {
-		if (menuOpen) {
-			document.body.style.overflow = "hidden";
-		} else {
-			document.body.style.overflow = "unset";
-		}
-
-		// Cleanup on unmount
-		return () => {
-			document.body.style.overflow = "unset";
-		};
-	}, [menuOpen]);
 
 	// Close menu on browser back/forward navigation. Deliberately keyed on
 	// location ONLY: this is a "navigation happened" event — adding menuOpen
@@ -88,13 +84,17 @@ export const MobileMenu = ({
 		// Reset drag offset
 		setDragOffset(0);
 	};
+
 	return (
-		<>
-			{/* Menu Panel */}
-			<div
-				className={`fixed top-0 right-0 h-full w-full bg-background shadow-xl z-40 transform md:hidden transition-colors duration-200 ${
-					isDragging ? "" : "transition-transform duration-300 ease-in-out"
-				} ${menuOpen ? "translate-x-0" : "translate-x-full"}`}
+		<Sheet open={menuOpen} onOpenChange={(open) => !open && onMenuClose()}>
+			<SheetContent
+				side="right"
+				showCloseButton={false}
+				finalFocus={returnFocusRef}
+				aria-label={t("NAVIGATION.MENU_LABEL")}
+				className={`data-[side=right]:w-full data-[side=right]:sm:max-w-none border-l-0 bg-background text-foreground-secondary md:hidden ${
+					isDragging ? "transition-none" : ""
+				}`}
 				style={{
 					transform:
 						isDragging && menuOpen ? `translateX(${dragOffset}px)` : undefined,
@@ -103,13 +103,14 @@ export const MobileMenu = ({
 				onTouchMove={handleTouchMove}
 				onTouchEnd={handleTouchEnd}
 			>
-				<div className="p-4 h-full flex flex-col justify-between">
+				<div className="p-4 h-full flex flex-col justify-between overflow-y-auto">
 					<div>
 						{/* Top bar: theme toggle left, close button right */}
 						<div className="flex justify-between items-center mb-6">
 							<ThemeToggle />
 							<button
 								onClick={onMenuClose}
+								aria-label={t("COMMON.CLOSE")}
 								className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-muted transition-colors"
 							>
 								<LuX className="w-5 h-5 text-muted-foreground" />
@@ -142,7 +143,7 @@ export const MobileMenu = ({
 						{APP_VERSION}
 					</div>
 				</div>
-			</div>
-		</>
+			</SheetContent>
+		</Sheet>
 	);
 };
