@@ -78,7 +78,9 @@
     "BACK_TO_TOP": "Retour en haut",
     "COPIED": "Copié",
     "SHARE": "Partager",
-    "LANGUAGE": "Langue"
+    "LANGUAGE": "Langue",
+    "LOAD_ERROR": "Impossible de charger cette section.",
+    "RETRY": "Réessayer"
   },
   "MAINTENANCE": {
     "IMAGE_ALT": "Chats au travail",
@@ -201,6 +203,11 @@
     },
     "ARTICLE": {
       "LOADING_DETAILS": "Chargement des détails de l'article !"
+    },
+    "SUBCATEGORY": {
+      "NO_ARTICLES": "Aucun article trouvé pour cette sous-catégorie.",
+      "LOADING_MORE": "Chargement...",
+      "NO_MORE_ARTICLES": "Plus d'articles pour cette sous-catégorie."
     }
   },
   "AUTH": {

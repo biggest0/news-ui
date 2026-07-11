@@ -78,7 +78,9 @@
     "BACK_TO_TOP": "Back to top",
     "COPIED": "Copied",
     "SHARE": "Share",
-    "LANGUAGE": "Language"
+    "LANGUAGE": "Language",
+    "LOAD_ERROR": "Couldn't load this section.",
+    "RETRY": "Try again"
   },
   "MAINTENANCE": {
     "IMAGE_ALT": "Cats at work",
@@ -201,6 +203,11 @@
     },
     "ARTICLE": {
       "LOADING_DETAILS": "Loading article details!"
+    },
+    "SUBCATEGORY": {
+      "NO_ARTICLES": "No articles found for this subcategory.",
+      "LOADING_MORE": "Loading more...",
+      "NO_MORE_ARTICLES": "No more articles found for this subcategory."
     }
   },
   "AUTH": {

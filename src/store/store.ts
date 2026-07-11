@@ -1,16 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
-import articlesReducer from "./articlesSlice";
-import recommendationsReducer from "./recommendationsSlice";
-import userContentReducer from "./userContentSlice";
-import catFactsReducer from "./catFactsSlice";
+
+import { apiSlice } from "./api/apiSlice";
 
 export const store = configureStore({
 	reducer: {
-		article: articlesReducer,
-		recommendations: recommendationsReducer,
-		userContent: userContentReducer,
-		catFacts: catFactsReducer,
+		[apiSlice.reducerPath]: apiSlice.reducer,
 	},
+	// RTK Query needs its middleware for caching, invalidation, and polling
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware().concat(apiSlice.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
