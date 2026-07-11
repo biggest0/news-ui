@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 import { incrementArticleViewed } from "@/api/articleApi";
-import { recordArticleRead } from "@/service/userArticleService";
+import { useRecordArticleReadMutation } from "@/store/api/userContentEndpoints";
 import { useAuth } from "@/contexts/AuthContext";
 
 interface ArticleTitleCardProps {
@@ -16,6 +16,8 @@ export const ArticleTitleCard = ({
 	index,
 }: ArticleTitleCardProps) => {
 	const { isAuthenticated } = useAuth();
+	// fire-and-forget: triggered without await (invalidates History)
+	const [recordArticleRead] = useRecordArticleReadMutation();
 
 
 	const handleClick = () => {

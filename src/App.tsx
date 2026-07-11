@@ -28,18 +28,16 @@ import { AppSettingProvider } from "./contexts/AppSettingContext";
 import { AuthProvider } from "./contexts/AuthContext";
 
 function App() {
-	const { t, i18n } = useTranslation();
+	const { t } = useTranslation();
 	return (
 		<BrowserRouter basename="/">
 			<AppSettingProvider>
 				<AuthProvider>
 					<Header />
-					{/* key remounts every page on language toggle so their mount
-					    effects refetch article data with the new `lang` param */}
-					<main
-						key={i18n.resolvedLanguage}
-						className="w-full max-w-[1280px] min-h-screen mx-auto px-4 bg-background transition-colors duration-200"
-					>
+					{/* Language toggles update content in place (M5): RTK Query args
+					    carry `lang`, so hooks refetch automatically — no page remount,
+					    scroll position preserved */}
+					<main className="w-full max-w-[1280px] min-h-screen mx-auto px-4 bg-background transition-colors duration-200">
 						<ScrollToTop />
 						<Routes>
 							<Route path="/" element={<HomePage />} />

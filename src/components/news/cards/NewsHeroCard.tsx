@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 import type { ArticleInfo } from "@/types/articleTypes";
 import { incrementArticleViewed } from "@/api/articleApi";
-import { recordArticleRead } from "@/service/userArticleService";
+import { useRecordArticleReadMutation } from "@/store/api/userContentEndpoints";
 import { useAuth } from "@/contexts/AuthContext";
 
 interface NewsCardProp {
@@ -12,6 +12,8 @@ interface NewsCardProp {
 
 export default function NewsHeroCard({ articleInfo, small }: NewsCardProp) {
 	const { isAuthenticated } = useAuth();
+	// fire-and-forget: triggered without await (invalidates History)
+	const [recordArticleRead] = useRecordArticleReadMutation();
 
 	const handleClick = () => {
 		incrementArticleViewed(articleInfo.id);

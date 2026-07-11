@@ -8,7 +8,7 @@
  * Dependencies mocked:
  * - @/contexts/AuthContext  — controls accessToken per test
  * - @/api/articleApi        — spies on incrementArticleViewed
- * - @/service/userArticleService — spies on recordArticleRead
+ * - @/store/api/userContentEndpoints — mocks the recordArticleRead mutation
  */
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { screen } from "@testing-library/react";
@@ -26,13 +26,13 @@ vi.mock("@/api/articleApi", () => ({
 	incrementArticleViewed: vi.fn(),
 }));
 
-vi.mock("@/service/userArticleService", () => ({
-	recordArticleRead: vi.fn(),
+const mockRecordArticleRead = vi.fn();
+vi.mock("@/store/api/userContentEndpoints", () => ({
+	useRecordArticleReadMutation: vi.fn(() => [mockRecordArticleRead]),
 }));
 
 import { useAuth } from "@/contexts/AuthContext";
 import { incrementArticleViewed } from "@/api/articleApi";
-import { recordArticleRead } from "@/service/userArticleService";
 
 // ── Setup ────────────────────────────────────────────────────────────
 
@@ -103,7 +103,7 @@ describe("ArticleTitleCard", () => {
 
 		await userEvent.click(screen.getByRole("link", { name: /Cat Takes Over Parliament/ }));
 
-		expect(recordArticleRead).not.toHaveBeenCalled();
+		expect(mockRecordArticleRead).not.toHaveBeenCalled();
 	});
 
 	/** Verifies both incrementArticleViewed and recordArticleRead are called when authenticated. */
@@ -114,6 +114,6 @@ describe("ArticleTitleCard", () => {
 		await userEvent.click(screen.getByRole("link", { name: /Cat Takes Over Parliament/ }));
 
 		expect(incrementArticleViewed).toHaveBeenCalledWith("art-1");
-		expect(recordArticleRead).toHaveBeenCalledWith("art-1");
+		expect(mockRecordArticleRead).toHaveBeenCalledWith("art-1");
 	});
 });

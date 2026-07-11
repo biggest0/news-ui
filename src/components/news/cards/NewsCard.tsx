@@ -1,13 +1,12 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import type { ArticleInfo, ArticleDetail } from "@/types/articleTypes";
-import type { RootState, AppDispatch } from "@/store/store";
-import { loadArticleDetail } from "@/store/articlesSlice";
+import type { ArticleInfo } from "@/types/articleTypes";
+import { useApiLang } from "@/hooks/useApiLang";
+import { useGetArticleDetailQuery } from "@/store/api/articleEndpoints";
+import { useRecordArticleReadMutation } from "@/store/api/userContentEndpoints";
 import { incrementArticleViewed } from "@/api/articleApi";
-import { recordArticleRead } from "@/service/userArticleService";
 import { useAuth } from "@/contexts/AuthContext";
 import { ShareButton } from "@/components/common/social/ShareButton";
 import { LikeButton } from "@/components/common/social/LikeButton";
@@ -19,32 +18,28 @@ interface NewsCardProp {
 
 export default function NewsCard({ articleInfo }: NewsCardProp) {
 	const { t } = useTranslation();
-	const dispatch = useDispatch<AppDispatch>();
 	const { isAuthenticated } = useAuth();
-	const articleDetail: ArticleDetail = useSelector(
-		(state: RootState) => state.article.articlesDetail[articleInfo.id]
-	);
+	const lang = useApiLang();
+	// fire-and-forget: triggered without await (invalidates History)
+	const [recordArticleRead] = useRecordArticleReadMutation();
 
 	const [expanded, setExpanded] = useState(false);
-	const [articleDetailfetched, setArticleDetailfetched] = useState(false);
-	const [isLoadingDetail, setIsLoadingDetail] = useState(false);
+	const [hasExpandedOnce, setHasExpandedOnce] = useState(false);
 
-	async function handleExpand() {
+	// Detail loads lazily on first expand and is cached per {id, lang} —
+	// collapsing and re-expanding (or another card/page for the same article)
+	// reuses the cache entry.
+	const { data: articleDetail, isFetching: isLoadingDetail } =
+		useGetArticleDetailQuery(
+			{ id: articleInfo.id, lang },
+			{ skip: !hasExpandedOnce }
+		);
+
+	function handleExpand() {
 		setExpanded((prev) => !prev);
-		if (!articleDetailfetched && !isLoadingDetail) {
-			setIsLoadingDetail(true);
-			await dispatch(loadArticleDetail(articleInfo.id))
-				.then(() => {
-					setArticleDetailfetched(true);
-				})
-				.catch((error) => {
-					console.error("Failed to fetch article detail:", error);
-					// Reset states on error so user can retry
-					setArticleDetailfetched(false);
-				})
-				.finally(() => {
-					setIsLoadingDetail(false);
-				});
+		if (!hasExpandedOnce) {
+			setHasExpandedOnce(true);
+			// count the view + record history once per card expansion session
 			incrementArticleViewed(articleInfo.id);
 			if (isAuthenticated) {
 				recordArticleRead(articleInfo.id);

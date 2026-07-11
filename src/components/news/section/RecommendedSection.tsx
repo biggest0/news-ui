@@ -1,35 +1,41 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import type { RootState, AppDispatch } from "@/store/store";
-import { loadRecommendedArticles } from "@/store/recommendationsSlice";
 import { SectionHeaderExpandable } from "@/components/common/layout/SectionHeaderExpandable";
 import { SectionShell } from "@/components/common/layout/SectionShell";
+import { SectionErrorMessage } from "@/components/common/feedback/SectionErrorMessage";
 import CollapsibleSection from "@/components/news/section/CollapsibleSection";
 import { SECTIONS } from "@/constants/keys";
 import { useSectionVisible } from "@/hooks/useSectionCollapse";
 import { useAuth } from "@/contexts/AuthContext";
+import { useApiLang } from "@/hooks/useApiLang";
 import { incrementArticleViewed } from "@/api/articleApi";
-import { recordArticleRead } from "@/service/userArticleService";
+import { useGetRecommendedArticlesQuery } from "@/store/api/recommendationEndpoints";
+import { useRecordArticleReadMutation } from "@/store/api/userContentEndpoints";
 
+/**
+ * Personalized recommendations (authenticated) — RTK Query consumer. The
+ * query is skipped until the session is known and authenticated, so anonymous
+ * visitors never fire the authed call.
+ */
 export default function RecommendedSection() {
-	const dispatch = useDispatch<AppDispatch>();
 	const { t } = useTranslation();
-	const { isAuthenticated, isLoading } = useAuth();
+	const { isAuthenticated, isLoading: authLoading } = useAuth();
 	const isVisible = useSectionVisible(SECTIONS.RECOMMENDED);
-	const { recommended: recommendedArticles, loading } = useSelector(
-		(state: RootState) => state.recommendations
+	const lang = useApiLang();
+	// fire-and-forget: triggered without await (invalidates History)
+	const [recordArticleRead] = useRecordArticleReadMutation();
+	const {
+		data: recommendedArticles = [],
+		isLoading,
+		isError,
+		refetch,
+	} = useGetRecommendedArticlesQuery(
+		{ lang },
+		{ skip: authLoading || !isAuthenticated }
 	);
 
-	useEffect(() => {
-		if (!isLoading && isAuthenticated) {
-			dispatch(loadRecommendedArticles());
-		}
-	}, [isLoading, isAuthenticated, dispatch]);
-
-	if (!isAuthenticated || (!loading.recommended && recommendedArticles.length === 0)) {
+	if (!isAuthenticated || (!isLoading && !isError && recommendedArticles.length === 0)) {
 		return null;
 	}
 
@@ -47,7 +53,9 @@ export default function RecommendedSection() {
 				section={SECTIONS.RECOMMENDED}
 			/>
 			<CollapsibleSection section={SECTIONS.RECOMMENDED}>
-				{loading.recommended ? (
+				{isError ? (
+					<SectionErrorMessage onRetry={refetch} />
+				) : isLoading ? (
 					<div className="py-4 text-muted-foreground">{t("COMMON.LOADING")}</div>
 				) : (
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 py-4">

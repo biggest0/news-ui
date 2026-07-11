@@ -6,7 +6,7 @@
 > | ID | Milestone | Sev | Verdict | Location (file:line) | Finding | Standard it fails (source) | Fix applied | Status | Verified how |
 > ```
 >
-> `Status` ∈ `Todo | In-progress | Done | Deferred(reason) | Rejected(reason) | Needs-decision`. Next free ID: **F050**.
+> `Status` ∈ `Todo | In-progress | Done | Deferred(reason) | Rejected(reason) | Needs-decision`. Next free ID: **F051**.
 >
 > **2026-07-09 verification pass:** the key premises below were spot-checked against the repo and held (token collision, literal `@/` dir, F014 `undefined` return, counts of hooks/slices/pages/tests/specs). Decisions D1–D4 are now resolved — see the plan's Decision Log — and the affected rows below carry a `[D#]` note. Findings F034–F039 were added by that pass.
 
@@ -162,6 +162,34 @@ Proposed tally: **~33 seed findings** — P0 ×2, P1 ×10, P2 ×13, P3 ×6, plus
 | F006 | **Partially resolved** — `clsx`/`tailwind-merge` (used by `cn`) and `cva`/`@base-ui/react` (used by button.tsx) now have in-src consumers; `lucide-react` + `tw-animate-css` still unused → re-check at end of M3 | grep |
 
 M1 exit criteria met (see COMMIT_PLAN.md for the pending commits + merge).
+
+## M5 results (2026-07-10 — done pending owner commit, branch `audit/m5-rtk-query`)
+
+**D2 executed: the hand-rolled api/service/thunk data layer is replaced by RTK Query** (design doc: [`rtkq-design.md`](./rtkq-design.md); patterns verified via context7 → redux-toolkit customizing-queries + infinite-queries).
+
+| Item | Resolution | Verified how |
+|------|-----------|--------------|
+| Architecture | One `createApi` (`store/api/apiSlice.ts`) + `baseQueryWithReauth` (401 → `authStore.refresh()` → retry; reuses authStore's single-flight dedupe instead of adding async-mutex). Endpoints injected per domain: articles (native **infinite queries** for lists/search — RTK ≥2.6), recommendations, userContent (tag invalidation; like-toggle writes its response into the status cache, no refetch round-trip), catFacts. `transformResponse` → mappers; DTOs never reach components. Types acyclic (F049 lesson applied). | tsc; 182/182; boundary grep: components import no data services/apis except sanctioned fire-and-forget + auth/forms |
+| **Remount hack retired** (owner decision) | `<main key={lang}>` + `languageChanged` slice resets deleted. `lang` lives in every query arg via new `useApiLang()`. | **browser-verified:** `<main>` DOM node survives EN↔FR toggle (marker property intact), `<html lang>` flips, exactly 4 refetches all `?lang=fr` |
+| **F043 fixed** (owner decision: session hint) | Silent refresh gated on the persisted `AUTH_USER` entry (already a natural session hint — no new flag needed). Anonymous loads fire **zero** `/auth/refresh`. | network tab: no refresh request, no 401 console error |
+| **Error UX** (owner decision: inline) | `<SectionErrorMessage onRetry>` (localized EN/FR) replaces silent-empty on every migrated surface. | component tests + code |
+| Dedupe upgrade | Co-mounted sections share cache entries: ONE `/api/articles/featured` for three consumers; RTKQ also absorbed the StrictMode double-fetch (M4 had 2× detail GETs; now 1×). | network tab |
+| Deletions | `articlesSlice`, `recommendationsSlice`, `userContentSlice`, `catFactsSlice`, `articleService`, `catFactService`/`catFactApi`, `useSubCategoryPage`, dead `useArticleFilters`; `articleApi`/`userArticleApi`/`userArticleService` trimmed to fire-and-forget calls; `CategoryBar` is pure navigation now; `NavBar` no longer pre-dispatches search. | grep; gates |
+| Hooks reworked | `useListInfiniteScroll`/`useSearchInfiniteScroll` are now thin scroll drivers calling `fetchNextPage`; `usePagination` runs on the page-mode query (adds isError/refetchPage). | tests; browser scroll |
+| Tests | Suites tied to deleted thunk internals removed/rewritten (BaseNewsSection, NewsCard mock RTKQ hooks; wrapper tests pin prop contracts). Count 225→182; endpoint-level coverage is M7's mandate. F015's URL-encoding regression coverage note: RTKQ `params` uses URLSearchParams internally — the failure mode can't recur; M7 adds an endpoint URL test anyway. | 182/182 green |
+| Bundle | +35 kB raw / +13 kB gzip (RTKQ runtime) → 650 kB/210 kB total. Perf milestone owns splitting/deferral (F046). | build output |
+| CLAUDE.md | State Management + Data Flow sections updated to the RTKQ reality (full docs pass remains M8). | — |
+
+Console after M5: only the form-field naming issue (M6). Gates: build ✅ · 182/182 ✅ · lint 0 errors, 4 warnings (was 6 — SubCategoryPage strings now use new `PAGES.SUBCATEGORY.*` keys, en+fr).
+
+## M5 addendum — F050 (2026-07-10, owner-reported during M5 review)
+
+**Two related getHistory bugs, both fixed on `audit/m5-rtk-query`:**
+
+1. **Stale history within 60s:** `recordArticleRead` was a bare fetch outside RTK Query, so reading an article never invalidated the `History` tag — returning to the account page within `keepUnusedDataFor` (60s) served the cached, stale list. **Fix:** `recordArticleRead` is now a mutation with `invalidatesTags: ["History"]` (still triggered without awaiting — the fire-and-forget contract holds). The empty `userArticleService`/`userArticleApi` files are deleted; all 7 call sites use the hook.
+2. **Fast logout→login left history empty:** a race — the `main.tsx` logout listener subscribes to authStore *before* React, so its `invalidateTags` triggered a refetch while the account hook was still subscribed for one tick → the request ran as anonymous → 401 → the cache entry was error-poisoned and retained 60s → RTKQ does not auto-retry errored entries on resubscribe. **Fix:** `getHistory` now has `keepUnusedDataFor: 0` — per-user data never outlives its subscriber, so a poisoned entry dies on unsubscribe and re-login always fetches fresh.
+
+Residual (documented): like-status entries can theoretically hit the same logout race, but LikeButton degrades gracefully (falls back to the card's baked-in count) and self-heals in ≤60s — left as-is; revisit if observed. Verification: gates green (181/181); anonymous flows browser-verified; **the two authed repros need owner re-testing** (no test credentials available to Claude).
 
 ## M4 results (2026-07-09 — done pending owner commit, branch `audit/m4-correctness`)
 
