@@ -8,6 +8,8 @@ export interface SearchProps {
 
 export interface MobileMenuProps {
 	menuOpen: boolean;
+	/** Element to return focus to when the drawer closes (the hamburger). */
+	returnFocusRef?: React.RefObject<HTMLElement | null>;
 	onMenuToggle: () => void;
 	onMenuClose: () => void;
 	query: string;
