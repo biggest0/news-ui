@@ -42,7 +42,7 @@ export default function ArticlePage() {
 		if (id && isAuthenticated) {
 			recordArticleRead(id);
 		}
-	}, [id, isAuthenticated]);
+	}, [id, isAuthenticated, recordArticleRead]);
 
 	return (
 		<div className="py-6">
