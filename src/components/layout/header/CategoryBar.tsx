@@ -66,7 +66,7 @@ export default function CategoryBar() {
 					ref={scrollRef}
 					className="w-full overflow-x-auto hide-scrollbar scroll-smooth"
 				>
-					<div className="flex border-gray-500 min-w-max md:justify-center">
+					<div className="flex border-border min-w-max md:justify-center">
 						{ARTICLE_ROUTES.map((category, index) => (
 							<Link
 								key={category}

@@ -51,7 +51,7 @@ export const AccountInfoForm = ({
 					<button
 						type="submit"
 						className={`px-4 pt-2 pb-1 transition cursor-pointer ${
-							saved ? "text-green-600" : "text-muted-foreground hover:text-foreground"
+							saved ? "text-success" : "text-muted-foreground hover:text-foreground"
 						}`}
 					>
 						{saved ? t("ACCOUNT.FIELD_SAVED") : t("ACCOUNT.SAVE")}
