@@ -6,32 +6,50 @@
 
 ---
 
-## Pending commits — M5.5 (branch: `audit/m5.5-interactive-sweep`)
+## Pending commits — M6 (branch: `audit/m6-consistency`)
 
-### 1. feat: add sheet primitive and rebuild mobile menu as accessible drawer
+### 1. refactor: convert remaining hardcoded colors to semantic tokens
 
-**Files:** `src/components/ui/Sheet.tsx` (new, adapted from registry), `src/components/layout/navBar/MobileMenu.tsx`, `NavBar.tsx` + `MobileNavigation.tsx` + `HamburgerButton.tsx` (finalFocus ref plumbing, ref-as-prop), `src/types/navBarTypes.ts`, i18n keys `COMMON.CLOSE`/`NAVIGATION.MENU_LABEL`/`NAVIGATION.TOGGLE_MENU` (en/fr)
+**Files:** `CatFactsCard`, `CategoryBar`, `UnderMaintenance`, `ShareButton`, `LoadingOverlay` (dark-mode white-flash bug), `FeaturedSection`, `LoadingMessage`, `NewsSideColumn`, `PaginationControls`, `AccountInfoForm`, `BackToTopButton`, `LikeButton` (exception comment)
 
-**Message:** `feat: add sheet primitive and rebuild mobile menu as accessible drawer`
-**Rationale:** focus trap/Escape/dialog semantics/focus return for the highest-risk hand-rolled interactive; swipe-to-close preserved. Browser-verified keyboard cycle.
+**Message:** `refactor: convert remaining hardcoded colors to semantic tokens`
 
-### 2. refactor: rebuild desktop language switcher on dropdown menu primitive
+### 2. refactor: convert same-directory imports to path alias
 
-**Files:** `src/components/layout/navBar/LanguageSwitcherDesktop.tsx`
+**Files:** 51 mechanical import rewrites across src (script-driven)
 
-**Message:** `refactor: rebuild desktop language switcher on dropdown menu primitive`
+**Message:** `refactor: convert same-directory imports to path alias`
 
-### 3. fix: accessibility and i18n touches on kept-native controls
+### 3. fix: localize remaining strings and document untranslatable brand text
 
-**Files:** `LanguageSwitcherMobile.tsx` (button trigger + aria-expanded), `ThemeSelector.tsx` + `ThemeToggle.tsx` (THEME.* i18n, en/fr keys)
+**Files:** `UnderMaintenance` (+ `PAGES.MAINTENANCE.*` keys en/fr), `AppTitle` + `ContactPage` (literal expressions with why-comments)
 
-**Message:** `fix: accessibility and i18n touches on kept-native controls`
+**Message:** `fix: localize remaining strings and document untranslatable brand text`
 
-### 4. docs: record m5.5 verdicts in audit findings and commit plan
+### 4. fix: name and label every form control and icon-only interactive
 
-**Files:** `audit_docs/AUDIT_FINDINGS.md`, `audit_docs/COMMIT_PLAN.md`, `.gitignore`
+**Files:** search bars ×3, `DateRangeFilter`/`SortByFilter`/`SearchTypeFilter`/`FilterBar`/`PaginationControls` (id/name/aria-label), `SubscribeForm` (id/name/aria-label/autocomplete), `LikeButton` (aria-label + aria-pressed), `ShareButton` (label + useTranslation fix), `SocialMediaLinks`, `UserAccountIcon`, `AppLogo` (labels), `ARTICLE_CARD.LIKE` keys en/fr
 
-**Message:** `docs: record m5.5 verdicts in audit findings and commit plan`
+**Message:** `fix: name and label every form control and icon-only interactive`
+
+### 5. fix: correct heading hierarchy across sections and footer
+
+**Files:** `SectionHeader` (h3→h2), `SubscribeForm` (h4→h2), `CatFactsCard` (h4→h3) — zero visual change under Tailwind preflight
+
+**Message:** `fix: correct heading hierarchy across sections and footer`
+
+### 6. fix: meet wcag aa contrast for brand text and category colors
+
+**Files:** `src/index.css` (light `--brand` amber-600→amber-700), `NewsCard.tsx` (category rgba → solid 700-shades, same hues)
+
+**Message:** `fix: meet wcag aa contrast for brand text and category colors`
+**⚠️ Owner-visible change (F051):** light-mode links/active text one step darker; category labels more saturated. Sanctioned by D1 ("colors can be refactored") — easy revert if disliked.
+
+### 7. docs: add jsdoc to remaining exported functions; record m6 results
+
+**Files:** 18 JSDoc additions (hooks/services/utils/context), `audit_docs/AUDIT_FINDINGS.md`, `audit_docs/COMMIT_PLAN.md`, `.gitignore`
+
+**Message:** `docs: add jsdoc to remaining exports and record m6 results`
 
 ---
 
@@ -39,11 +57,11 @@
 
 ```bash
 git checkout refactor/ui-audit
-git merge --no-ff audit/m5.5-interactive-sweep -m "merge audit/m5.5-interactive-sweep: accessible drawer + language menu"
+git merge --no-ff audit/m6-consistency -m "merge audit/m6-consistency: a11y 100s, tokens, i18n parity"
 git push origin refactor/ui-audit
 ```
 
-M5.5 exit criteria (all met, pending your review): every interactive sits on an accessible base or has a recorded keep-verdict ✅ · drawer keyboard cycle browser-verified (dialog role, Escape, focus return to hamburger) ✅ · language menu aria/keyboard verified ✅ · keep-native verdicts recorded ✅ · gates green (build / 181 tests / lint 0 errors) ✅
+M6 exit criteria (all met, pending your review): hardcoded-color grep ≈ 0 (2 documented exceptions) ✅ · imports 100% `@/` ✅ · **lint 0 errors 0 warnings** ✅ · i18n parity 220/220 zero asymmetry ✅ · every img has alt, every control named ✅ · **Lighthouse a11y 100/100/100** (baseline 93/82/79) ✅ · JSDoc on all exports ✅ · gates green (build / 181 tests) ✅
 
 ---
 
