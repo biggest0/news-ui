@@ -2,8 +2,8 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 
-import enCommon from "./en/common.json";
-import frCommon from "./fr/common.json";
+import enCommon from "@/i18n/en/common.json";
+import frCommon from "@/i18n/fr/common.json";
 
 // Define the resources for each language and namespace
 const resources = {
