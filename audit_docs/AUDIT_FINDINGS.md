@@ -182,6 +182,27 @@ M1 exit criteria met (see COMMIT_PLAN.md for the pending commits + merge).
 
 Console after M5: only the form-field naming issue (M6). Gates: build ✅ · 182/182 ✅ · lint 0 errors, 4 warnings (was 6 — SubCategoryPage strings now use new `PAGES.SUBCATEGORY.*` keys, en+fr).
 
+## M6 results (2026-07-11 — done pending owner commit, branch `audit/m6-consistency`)
+
+**Headline: Lighthouse accessibility 100/100/100** on home/article/search with real data (M0 baseline: 93/82/79); Best Practices 100. **Lint fully clean: 0 errors, 0 warnings** (first time). Remaining Lighthouse failures are only M8 SEO items (meta-description, robots-txt, llms-txt).
+
+| ID | Resolution | Verified how |
+|----|-----------|--------------|
+| F017 | **Done** — remaining 19 hardcoded colors → tokens (was 37 pre-M3/M5 deletions). Includes a real bug: `LoadingOverlay` was hardcoded `bg-white` → white flash in dark mode. Two deliberate exceptions documented in-code: LikeButton's red-300 heart; NewsCard categories (see below). | grep ≈ 0; gates |
+| F018 | **Done** — 51 same-dir `./` imports → `@/` (cross-directory ones were already 0). | grep = 0; tsc |
+| F020 | **Done** — TODO catalogue: only `AppLogo` "replace logo" survives → recorded as **owner backlog: real logo asset wanted** (F051). "enum" TODOs died with M3/M5 rewrites. | grep |
+| F021 (O3) | **Resolved: Keep `console.error`** — surviving uses are legit catch-logging; RTKQ middleware can centralize later if ever needed. | — |
+| F022 | **Done** — every `<img>` has an alt (most fixed en route in M2–M5.5; `EditorCardHorizontal` aligned with its Vertical twin; maintenance image localized). | script scan = 0 missing |
+| F023 (remainder) | **Done** — 11 inputs/selects got `id`/`name`/localized `aria-label` (search bars ×3, filters ×5, subscribe email + autocomplete, pagination controls); icon-only controls labelled (LikeButton + aria-pressed, ShareButton, social links, account icon, search submits, home logo link). DevTools "form field without id/name" issue (×7) gone. | Lighthouse 100s; console clean |
+| F026 | **Closed** — structural key-path parity **perfect: 220/220, zero asymmetry**; all 14 identical EN/FR values are legitimately identical (proper nouns / same-word French). Last 4 hardcoded-string warnings fixed: `UnderMaintenance` translated (purr-pun preserved: "purr-oduction"/"d'arrache-patte"); AppTitle + Contact handles converted to literal expressions with why-comments (brand wordmark / proper nouns — not translatable copy). | parity script; lint 0 warnings |
+| F033 | **Closed** — zero `forwardRef` anywhere; remaining setState-in-effect uses are legitimate (localStorage sync, page-reset). | grep |
+| Heading order | `SectionHeader` h3→h2, `SubscribeForm` h4→h2, `CatFactsCard` h4→h3 — Tailwind preflight makes these zero-visual-change. | Lighthouse heading-order passes |
+| JSDoc | 18 undocumented exported functions across hooks/services/utils/context documented — coverage now 100% of exports. | script scan |
+| **F051 (new, owner decisions)** | **Two deliberate color changes for WCAG AA** (per D1 "colors can be refactored"): (1) light-mode `--brand` amber-600 → **amber-700** (3.3:1 → 4.9:1) — light-mode links/active states one step darker, dark mode untouched; (2) NewsCard light-mode category colors: semi-transparent rgba → solid 700-shades, same hues (e.g. technology cyan now readable). **Easy to revert if the look bothers you** — say so and I'll restore + document as known AA failures. Plus: owner backlog item — replace placeholder house-icon logo. | Lighthouse color-contrast passes; screenshot `m6-after/home-light-final.png` (local) |
+| Verification note | First Lighthouse round accidentally ran against CORS-blocked pages (preview port not allowed by backend) — which incidentally proved the inline error UX renders everywhere. Final scores are from the dev server with real data. | — |
+
+Gates: build ✅ · 181/181 ✅ · **lint 0 errors 0 warnings** ✅.
+
 ## M5.5 results (2026-07-11 — done pending owner commit, branch `audit/m5.5-interactive-sweep`)
 
 Interactive component sweep per the locked scope rule (base-ui only where the platform lacks a primitive; native stays native). Per-component verdicts:

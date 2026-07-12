@@ -21,6 +21,9 @@ export function FilterBar({
 			{/* Date Range */}
 			<div className="relative">
 				<select
+					id="filter-date-range"
+					name="dateRange"
+					aria-label={t("FILTER.DATE_RANGE")}
 					value={dateRange}
 					className="py-1 font-medium text-foreground-secondary bg-transparent appearance-none pr-4"
 					onChange={(e) => onDateRangeChange(e.target.value)}
@@ -41,6 +44,9 @@ export function FilterBar({
 			{/* Sort By */}
 			<div className="relative">
 				<select
+					id="filter-sort-by"
+					name="sortBy"
+					aria-label={t("FILTER.SORT_BY")}
 					value={sortBy}
 					className="py-1 font-medium text-foreground-secondary bg-transparent appearance-none pr-4"
 					onChange={(e) => onSortByChange(e.target.value)}

@@ -63,7 +63,7 @@ export function PaginationControls({
 	};
 
 	const buttonBaseClass =
-		"p-1.5 rounded-md transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-1";
+		"p-1.5 rounded-md transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-1";
 	const buttonEnabledClass =
 		"text-foreground-secondary hover:bg-accent hover:text-brand";
 	const buttonDisabledClass = "text-disabled cursor-not-allowed";
@@ -75,11 +75,14 @@ export function PaginationControls({
 				<span className="font-medium">{t("PAGINATION.SHOW")}</span>
 				<div className="relative">
 					<select
+						id="page-size"
+						name="pageSize"
+						aria-label={t("PAGINATION.PER_PAGE")}
 						value={pageSize}
 						onChange={(e) =>
 							onPageSizeChange(parseInt(e.target.value, 10) as PageSize)
 						}
-						className="appearance-none bg-card border border-border rounded-md px-3 py-1.5 pr-8 font-medium text-foreground-secondary focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 cursor-pointer"
+						className="appearance-none bg-card border border-border rounded-md px-3 py-1.5 pr-8 font-medium text-foreground-secondary focus:outline-none focus:ring-2 focus:ring-ring focus:border-brand cursor-pointer"
 					>
 						{PAGE_SIZE_OPTIONS.map((size) => (
 							<option key={size} value={size}>
@@ -126,12 +129,14 @@ export function PaginationControls({
 				<div className="flex items-center gap-2 mx-2 text-sm">
 					<span className="text-muted-foreground font-medium">{t("PAGINATION.PAGE")}</span>
 					<input
+						id="page-number"
+						name="page"
 						type="text"
 						value={pageInput}
 						onChange={handlePageInputChange}
 						onBlur={handlePageInputBlur}
 						onKeyDown={handlePageInputKeyDown}
-						className="w-12 text-center border border-border rounded-md py-1 font-medium text-foreground-secondary bg-card focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+						className="w-12 text-center border border-border rounded-md py-1 font-medium text-foreground-secondary bg-card focus:outline-none focus:ring-2 focus:ring-ring focus:border-brand"
 						aria-label="Page number"
 					/>
 					<span className="text-muted-foreground font-medium">

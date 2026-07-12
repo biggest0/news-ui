@@ -9,6 +9,7 @@ export default function SocialMediaLinks() {
                 href="https://www.instagram.com/catiretime"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Instagram"
             >
                 <CgInstagram className="w-5 h-5 text-muted-foreground hover:text-foreground cursor-pointer" />
             </a>
@@ -17,6 +18,7 @@ export default function SocialMediaLinks() {
                 href="https://x.com/catiretime"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="X"
             >
                 <RiTwitterXFill className="w-5 h-5 text-muted-foreground hover:text-foreground cursor-pointer" />
             </a>
@@ -25,6 +27,7 @@ export default function SocialMediaLinks() {
                 href="https://www.youtube.com/@catiretime"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="YouTube"
             >
                 <TfiYoutube className="w-5 h-5 text-muted-foreground hover:text-foreground cursor-pointer" />
             </a>

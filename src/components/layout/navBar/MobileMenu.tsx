@@ -6,12 +6,12 @@ import { LuX } from "react-icons/lu";
 
 import type { MobileMenuProps } from "@/types/navBarTypes";
 import { Sheet, SheetContent } from "@/components/ui/Sheet";
-import { MobileSearchBar } from "./MobileSearchBar";
-import { NavigationLinks } from "./NavigationLinks";
+import { MobileSearchBar } from "@/components/layout/navBar/MobileSearchBar";
+import { NavigationLinks } from "@/components/layout/navBar/NavigationLinks";
 import { UserAccountIcon } from "@/components/common/user/UserAccountIcon";
 import SocialMediaLinks from "@/components/common/social/SocialMediaLinks";
 import { APP_VERSION } from "@/config/config";
-import LanguageSwitcher from "./LanguageSwitcherMobile";
+import LanguageSwitcher from "@/components/layout/navBar/LanguageSwitcherMobile";
 import ThemeToggle from "@/components/common/theme/ThemeToggle";
 
 /**

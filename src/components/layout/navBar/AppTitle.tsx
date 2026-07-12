@@ -18,7 +18,7 @@ export const AppTitle = ({ variant = "desktop" }: AppTitleProps) => {
 					className="absolute top-[52%] md:top-[54%] lg:top-[57%] left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 w-4 h-4 md:w-6 md:h-6 lg:w-9 lg:h-9 dark:invert dark:opacity-80"
 				/>
 			</span>
-			ATIRE TIME
+			{"ATIRE TIME" /* brand wordmark — intentionally untranslated */}
 		</div>
 	);
 };

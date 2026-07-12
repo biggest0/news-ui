@@ -14,6 +14,9 @@ export default function SearchTypeFilter({ value, onChange }: SearchTypeFilterPr
 		<div className="flex flex-col gap-1">
 			<div className="relative">
 				<select
+					id="search-type"
+					name="searchType"
+					aria-label={t("FILTER.SEARCH_TYPE")}
 					value={value}
 					className="py-1 font-medium text-foreground-secondary bg-transparent appearance-none pr-6"
 					onChange={(e) => onChange(e.target.value as SearchType)}

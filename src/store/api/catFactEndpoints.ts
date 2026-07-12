@@ -1,4 +1,4 @@
-import { apiSlice } from "./apiSlice";
+import { apiSlice } from "@/store/api/apiSlice";
 import { mapDTOtoCatFact } from "@/mappers/catFactMapper";
 import type { CatFact } from "@/types/catFactTypes";
 import type { CatFactsResponseDTO } from "@/types/catFactDto";

@@ -30,7 +30,8 @@
     "HIDE": "Masquer",
     "SHARE": "Partager",
     "LOADING_DETAILS": "Chargement des détails...",
-    "LOGIN_TO_LIKE": "Connectez-vous pour aimer cet article"
+    "LOGIN_TO_LIKE": "Connectez-vous pour aimer cet article",
+    "LIKE": "Aimer"
   },
   "FILTER": {
     "DATE_RANGE": "Période",
@@ -210,6 +211,11 @@
       "NO_ARTICLES": "Aucun article trouvé pour cette sous-catégorie.",
       "LOADING_MORE": "Chargement...",
       "NO_MORE_ARTICLES": "Plus d'articles pour cette sous-catégorie."
+    },
+    "MAINTENANCE": {
+      "TITLE": "Cette page est encore en purr-oduction 🐱🔧",
+      "BODY": "Notre équipe travaille d'arrache-patte !",
+      "IMAGE_ALT": "Des chats au travail"
     }
   },
   "AUTH": {
