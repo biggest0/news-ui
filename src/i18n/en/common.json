@@ -30,7 +30,8 @@
     "HIDE": "Hide",
     "SHARE": "Share",
     "LOADING_DETAILS": "Loading details...",
-    "LOGIN_TO_LIKE": "Log in to like this article"
+    "LOGIN_TO_LIKE": "Log in to like this article",
+    "LIKE": "Like"
   },
   "FILTER": {
     "DATE_RANGE": "Date Range",
@@ -210,6 +211,11 @@
       "NO_ARTICLES": "No articles found for this subcategory.",
       "LOADING_MORE": "Loading more...",
       "NO_MORE_ARTICLES": "No more articles found for this subcategory."
+    },
+    "MAINTENANCE": {
+      "TITLE": "This page is still in purr-duction 🐱🔧",
+      "BODY": "Our team is hard at work!",
+      "IMAGE_ALT": "Cats at work"
     }
   },
   "AUTH": {
