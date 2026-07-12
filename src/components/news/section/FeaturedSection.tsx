@@ -10,7 +10,7 @@ export default function FeaturedSection() {
 	const featuredArticles = useFeaturedArticles();
 
 	return (
-		<section className="border-b border-gray-400 py-6 hidden md:grid grid-cols-4 grid-rows-2 gap-4 min-h-112">
+		<section className="border-b border-border py-6 hidden md:grid grid-cols-4 grid-rows-2 gap-4 min-h-112">
 			{/* Desktop Layout */}
 			{/* Left column - 2 articles */}
 			<div className="col-span-1 row-span-2 flex flex-col gap-8">
