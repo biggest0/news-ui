@@ -15,6 +15,9 @@ export default function DateRangeFilter({
 	return (
 		<div className="relative">
 			<select
+				id="search-date-range"
+				name="dateRange"
+				aria-label={t("FILTER.TIME_PERIOD")}
 				value={value}
 				className="py-1 font-medium text-foreground-secondary bg-transparent appearance-none pr-6"
 				onChange={(e) => onChange(e.target.value)}
