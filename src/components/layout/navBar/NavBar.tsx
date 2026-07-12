@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { DesktopNavigation } from "./DesktopNavigation";
-import { MobileNavigation } from "./MobileNavigation";
-import { MobileMenu } from "./MobileMenu";
+import { DesktopNavigation } from "@/components/layout/navBar/DesktopNavigation";
+import { MobileNavigation } from "@/components/layout/navBar/MobileNavigation";
+import { MobileMenu } from "@/components/layout/navBar/MobileMenu";
 
 export default function NavBar() {
 	const navigate = useNavigate();

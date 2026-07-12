@@ -1,6 +1,6 @@
 import { AppLogo } from "@/components/common/brand/AppLogo";
-import { AppTitle } from "./AppTitle";
-import { HamburgerButton } from "./HamburgerButton";
+import { AppTitle } from "@/components/layout/navBar/AppTitle";
+import { HamburgerButton } from "@/components/layout/navBar/HamburgerButton";
 
 interface MobileNavigationProps {
 	menuOpen: boolean;
