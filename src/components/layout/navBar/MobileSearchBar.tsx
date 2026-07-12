@@ -29,10 +29,13 @@ export const MobileSearchBar = ({
 				onSubmit={onSubmit}
 				className="flex items-center border border-border-subtle rounded-md px-3 py-2"
 			>
-				<button type="submit">
+				<button type="submit" aria-label={t("NAVIGATION.SEARCH_PLACEHOLDER")}>
 					<LuSearch className="w-4 h-4 text-muted-foreground mr-2 cursor-pointer" />
 				</button>
 				<input
+					id="mobile-search"
+					name="q"
+					aria-label={t("NAVIGATION.SEARCH_PLACEHOLDER")}
 					type="text"
 					value={query}
 					onChange={(e) => onQueryChange(e.target.value)}

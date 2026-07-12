@@ -57,12 +57,15 @@ export const LikeButton = ({
 		<div className="relative">
 			<button
 				onClick={handleToggleLike}
+				aria-label={t("ARTICLE_CARD.LIKE")}
+				aria-pressed={liked}
 				className={`flex items-center gap-1.5 transition-colors duration-200 cursor-pointer ${
 					liked
 						? "text-red-300"
 						: "hover:text-red-300"
 				}`}
 			>
+				{/* red-300 heart is a deliberate one-off (soft pink in both themes) — not tokenized */}
 				{liked ? (
 					<GoHeartFill className="w-4 h-4" />
 				) : (
