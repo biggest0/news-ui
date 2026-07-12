@@ -4,9 +4,9 @@ import { useTranslation } from "react-i18next";
 import { LuSearch } from "react-icons/lu";
 
 import { buildSearchUrl, type SearchType } from "@/utils/search/searchUrlUtils";
-import DateRangeFilter from "./DateRangeFilter";
-import SortByFilter from "./SortByFilter";
-import SearchTypeFilter from "./SearchTypeFilter";
+import DateRangeFilter from "@/components/search/DateRangeFilter";
+import SortByFilter from "@/components/search/SortByFilter";
+import SearchTypeFilter from "@/components/search/SearchTypeFilter";
 
 interface SearchSectionProps {
 	query: string;
@@ -56,6 +56,9 @@ export default function SearchSection({
 				className="flex items-center w-full max-w-md border-b border-border overflow-hidden mb-4"
 			>
 				<input
+					id="search-page-query"
+					name="q"
+					aria-label={t("FILTER.SEARCH_ARTICLES_PLACEHOLDER")}
 					type="text"
 					value={input}
 					onChange={(e) => setInput(e.target.value)}
@@ -64,6 +67,7 @@ export default function SearchSection({
 				/>
 				<button
 					type="submit"
+					aria-label={t("FILTER.SEARCH_ARTICLES_PLACEHOLDER")}
 					className="text-muted-foreground px-4 py-2 hover:text-foreground transition cursor-pointer"
 				>
 					<LuSearch />

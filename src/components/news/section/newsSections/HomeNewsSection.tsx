@@ -1,4 +1,4 @@
-import { BaseNewsSection } from "./BaseNewsSection";
+import { BaseNewsSection } from "@/components/news/section/newsSections/BaseNewsSection";
 
 /**
  * Home feed (all categories) — BaseNewsSection owns data fetching via RTK

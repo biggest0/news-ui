@@ -2,7 +2,7 @@ import { useState } from "react";
 import { LuChevronDown } from "react-icons/lu";
 
 import type { NavCategory } from "@/types/navBarTypes";
-import { MobileNavLink } from "./MobileNavLink";
+import { MobileNavLink } from "@/components/layout/navBar/MobileNavLink";
 
 interface ExpandableNavItemProps {
 	NavLinks: NavCategory;

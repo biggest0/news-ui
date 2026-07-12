@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
 
-import { MobileNavLink } from "./MobileNavLink";
+import { MobileNavLink } from "@/components/layout/navBar/MobileNavLink";
 import type { NavCategory, NavLink } from "@/types/navBarTypes";
-import { ExpandableNavItem } from "./ExpandableNavItem";
+import { ExpandableNavItem } from "@/components/layout/navBar/ExpandableNavItem";
 
 interface NavigationLinksProps {
 	onLinkClick?: () => void;

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { ArticleTitleCard } from "@/components/news/cards/ArticleTitleCard";
 import { SectionHeaderExpandable } from "@/components/common/layout/SectionHeaderExpandable";
 import { SectionShell } from "@/components/common/layout/SectionShell";
-import CollapsibleSection from "./CollapsibleSection";
+import CollapsibleSection from "@/components/news/section/CollapsibleSection";
 import { SECTIONS } from "@/constants/keys";
 import { useSectionVisible } from "@/hooks/useSectionCollapse";
 import { useApiLang } from "@/hooks/useApiLang";

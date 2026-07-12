@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 
-import { BaseNewsSection } from "./BaseNewsSection";
+import { BaseNewsSection } from "@/components/news/section/newsSections/BaseNewsSection";
 
 /**
  * Category feed — the category comes from the route and keys its own RTK

@@ -1,9 +1,9 @@
 import { AppLogo } from "@/components/common/brand/AppLogo";
-import { AppTitle } from "./AppTitle";
-import { DesktopSearchBar } from "./DesktopSearchBar";
+import { AppTitle } from "@/components/layout/navBar/AppTitle";
+import { DesktopSearchBar } from "@/components/layout/navBar/DesktopSearchBar";
 import { UserAccountIcon } from "@/components/common/user/UserAccountIcon";
 import type { SearchProps } from "@/types/navBarTypes";
-import LanguageSwitcherDesktop from "./LanguageSwitcherDesktop";
+import LanguageSwitcherDesktop from "@/components/layout/navBar/LanguageSwitcherDesktop";
 import ThemeToggle from "@/components/common/theme/ThemeToggle";
 
 export const DesktopNavigation = (props: SearchProps) => {

@@ -1,4 +1,4 @@
-import { apiSlice } from "./apiSlice";
+import { apiSlice } from "@/store/api/apiSlice";
 import {
 	mapDTOtoArticleDetail,
 	mapDTOtoArticleInfo,
