@@ -12,6 +12,9 @@ export default function SortByFilter({ value, onChange }: SortByFilterProps) {
 	return (
 		<div className="relative">
 			<select
+				id="search-sort-by"
+				name="sortBy"
+				aria-label={t("FILTER.SORT_BY")}
 				value={value}
 				className="py-1 font-medium text-foreground-secondary bg-transparent appearance-none pr-6"
 				onChange={(e) => onChange(e.target.value)}

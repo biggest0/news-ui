@@ -30,7 +30,7 @@ export const EditorCardHorizontal = ({
 				{/* Image */}
 				<img
 					src={`${BASE_URL}images/${imageUrl}`}
-					alt=""
+					alt={name}
 					className="w-28 h-28 object-cover rounded-xl flex-shrink-0"
 				/>
 			</div>

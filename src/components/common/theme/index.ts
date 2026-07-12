@@ -1,4 +1,4 @@
-export { default as ThemeToggle } from "./ThemeToggle";
-export { default as ThemeSelector } from "./ThemeSelector";
+export { default as ThemeToggle } from "@/components/common/theme/ThemeToggle";
+export { default as ThemeSelector } from "@/components/common/theme/ThemeSelector";
 
 

@@ -9,8 +9,8 @@ export const CatFactsCard = ({ title, fact, small }: CatFactsProps) => {
 					<div className="text-sm">{fact}</div>
 				</div>
 			) : (
-				<div className="flex flex-col justify-between border-b border-gray-400 py-4">
-					<h4>{title}</h4>
+				<div className="flex flex-col justify-between border-b border-border py-4">
+					<h3>{title}</h3>
 					<div>{fact}</div>
 				</div>
 			)}

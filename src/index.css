@@ -35,7 +35,7 @@
 	--placeholder: #9ca3af;                       /* gray-400 | input placeholder text */
 
 	/* brand amber */
-	--brand: #d97706;                             /* amber-600 | interactive text, links, active states */
+	--brand: #b45309;                             /* amber-700 | interactive text/links — was amber-600, darkened one step in M6 for WCAG AA contrast (4.9:1 on white); dark mode unchanged */
 	--primary: #f59e0b;                           /* amber-500 | button fills (subscribe etc.) */
 	--primary-hover: #b45309;                     /* amber-700 | hover on button fills */
 	--primary-foreground: #ffffff;                /* text on amber fills */

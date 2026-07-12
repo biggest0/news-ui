@@ -1,5 +1,5 @@
-import { SectionHeader } from "./SectionHeader";
-import { SectionDropDown } from "./SectionDropDown";
+import { SectionHeader } from "@/components/common/layout/SectionHeader";
+import { SectionDropDown } from "@/components/common/layout/SectionDropDown";
 import type { SectionToggleState } from "@/types/localStorageTypes";
 
 interface SectionHeaderExpandableProps {

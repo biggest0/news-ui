@@ -24,7 +24,7 @@ export default function Contact() {
 							rel="noopener noreferrer"
 							className="text-foreground-secondary hover:text-brand"
 						>
-							Instagram: catiretime
+							{"Instagram: catiretime" /* platform + handle — proper noun, untranslated */}
 						</a>
 						<a
 							href="https://www.youtube.com/@catiretime"
@@ -32,7 +32,7 @@ export default function Contact() {
 							rel="noopener noreferrer"
 							className="text-foreground-secondary hover:text-brand"
 						>
-							YouTube: catiretime
+							{"YouTube: catiretime" /* platform + handle — proper noun, untranslated */}
 						</a>
 						<a
 							href="https://x.com/catiretime"
@@ -40,7 +40,7 @@ export default function Contact() {
 							rel="noopener noreferrer"
 							className="text-foreground-secondary hover:text-brand"
 						>
-							X: catiretime
+							{"X: catiretime" /* platform + handle — proper noun, untranslated */}
 						</a>
 					</div>
 				</div>

@@ -40,14 +40,18 @@ export default function SubscribeForm() {
 
 	return (
 		<div className="flex flex-col space-y-2">
-			<h4 className="text-lg font-semibold text-foreground">
+			<h2 className="text-lg font-semibold text-foreground">
 				{t("FOOTER.SUBSCRIBE_MESSAGE_TITLE")}
-			</h4>
+			</h2>
 			<p className="text-sm text-foreground-secondary">
 				{t("FOOTER.SUBSCRIBE_MESSAGE")}
 			</p>
 			<form className="flex gap-2" onSubmit={handleSubmit}>
 				<input
+					id="subscribe-email"
+					name="email"
+					autoComplete="email"
+					aria-label={t("FOOTER.SUBSCRIBE_INPUT_PLACEHOLDER")}
 					type="email"
 					placeholder={t("FOOTER.SUBSCRIBE_INPUT_PLACEHOLDER")}
 					value={email}

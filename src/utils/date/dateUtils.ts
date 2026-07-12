@@ -1,3 +1,4 @@
+/** True when the given date string falls within the last `days` days. */
 export function isWithinNDays(dateString: string, days: number): boolean {
 	const todayDate = new Date();
 	const inputDate = new Date(dateString);

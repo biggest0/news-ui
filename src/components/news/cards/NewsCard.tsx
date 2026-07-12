@@ -47,31 +47,36 @@ export default function NewsCard({ articleInfo }: NewsCardProp) {
 		}
 	}
 
+	/**
+	 * Per-category colors — documented exception to the token system.
+	 * Light-mode values were semi-transparent rgba() and failed WCAG AA;
+	 * M6 replaced them with solid 700-shade equivalents (same hues, AA-safe).
+	 */
 	function categoryColor(category: string): string {
 		switch (category) {
 			case "world":
-				return "text-[rgba(209,45,22,0.7)] dark:text-red-400";
+				return "text-red-700 dark:text-red-400";
 
 			case "business":
-				return "text-[rgba(37,99,235,0.8)] dark:text-blue-400";
+				return "text-blue-700 dark:text-blue-400";
 
 			case "lifestyle":
-				return "text-[rgba(168,55,207,0.7)] dark:text-purple-400";
+				return "text-purple-700 dark:text-purple-400";
 
 			case "science":
-				return "text-[rgba(20,124,166,0.8)] dark:text-teal-400";
+				return "text-teal-700 dark:text-teal-400";
 
 			case "technology":
-				return "text-[rgba(6,152,212,0.7)] dark:text-cyan-400";
+				return "text-cyan-700 dark:text-cyan-400";
 
 			case "sport":
-				return "text-[rgba(21,128,61,0.7)] dark:text-green-400";
+				return "text-green-700 dark:text-green-400";
 
 			case "politics":
-				return "text-[rgba(37,51,80,0.8)] dark:text-slate-300";
+				return "text-slate-800 dark:text-slate-300";
 
 			case "other":
-				return "text-[rgba(107,114,128,0.7)] dark:text-slate-400";
+				return "text-gray-600 dark:text-slate-400";
 
 			default:
 				return "text-foreground-secondary";
