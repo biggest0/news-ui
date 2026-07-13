@@ -182,6 +182,20 @@ M1 exit criteria met (see COMMIT_PLAN.md for the pending commits + merge).
 
 Console after M5: only the form-field naming issue (M6). Gates: build ✅ · 182/182 ✅ · lint 0 errors, 4 warnings (was 6 — SubCategoryPage strings now use new `PAGES.SUBCATEGORY.*` keys, en+fr).
 
+## M7 results (2026-07-12 — done pending owner commit, branch `audit/m7-testing`)
+
+Implements D4 (Playwright e2e, Cypress removed) + F038 (CI stood up). Owner decisions: **GitHub Actions** (advisory to Azure PRs), **chromium-only**, **stubbed API** via `page.route`.
+
+| ID | Resolution | Verified how |
+|----|-----------|--------------|
+| F025 | **Done** — all 8 Cypress flows ported to Playwright (`e2e/*.spec.ts`), plus **2 new flows** the Cypress suite never covered: language switch (EN↔FR in-place, verifies no page remount via a `<main>` DOM marker + `lang=fr` refetch) and news-list view-mode toggle (pagination↔scroll, collapse). Cypress fully removed: `cypress/`, `cypress.config.ts`, `tsconfig.cypress.json`, `cy:*` scripts, and the `cypress` devDependency all gone. | **42/42 e2e pass** (~10s) against the prod build with stubbed API |
+| F024 | **Done (rescoped by M5)** — the slices/thunks the seed wanted tested were deleted in M5; coverage now targets the RTKQ layer + surviving hooks. Added: `store/apiEndpoints.test.ts` (URL construction incl. **F015 special-char regression**, DTO→domain mapping, `isError` surface), `hooks/useListInfiniteScroll.test.ts`, `hooks/useSectionDropdown.test.ts`, `hooks/usePagination.test.ts`. **Unit suite 181 → 201.** Page-level rendering is covered end-to-end by the Playwright suite (stronger than vitest smoke tests: real build, real routing, stubbed network). | 201/201 unit pass |
+| F038 | **Done** — `.github/workflows/ci.yml`: two jobs (**unit**: lint→build→vitest; **e2e**: build→Playwright w/ chromium), on every PR + push to `main`/`development`/`refactor/ui-audit`. Concurrency-cancels superseded runs; uploads the Playwright report artifact. No secrets needed (API is stubbed). Advisory to Azure PR merges (documented in `CLAUDE.md`). | workflow validates locally; jobs mirror the local gate sequence |
+| — | **Regression coverage confirmed:** F015 (URL encoding) has both an endpoint unit test and lives through RTKQ's `URLSearchParams`; F014 (getTopTen safe default) retained; F047/F050 (history/auth) exercised by the auth e2e flow. | tests green |
+| — | **New `.gitignore`:** Playwright artifacts (`test-results/`, `playwright-report/`, `blob-report/`, `playwright/.cache/`). `CLAUDE.md` Build & Deploy + new CI section updated to the Playwright/CI reality. | — |
+
+Gates: build ✅ · **201/201** unit ✅ · **42/42** e2e ✅ · lint 0 errors 0 warnings ✅.
+
 ## M6 results (2026-07-11 — done pending owner commit, branch `audit/m6-consistency`)
 
 **Headline: Lighthouse accessibility 100/100/100** on home/article/search with real data (M0 baseline: 93/82/79); Best Practices 100. **Lint fully clean: 0 errors, 0 warnings** (first time). Remaining Lighthouse failures are only M8 SEO items (meta-description, robots-txt, llms-txt).
