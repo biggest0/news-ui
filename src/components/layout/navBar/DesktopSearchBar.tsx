@@ -14,12 +14,17 @@ export const DesktopSearchBar = ({
 
 	return (
 		<div className="relative flex items-center">
-			{/* Search form trigger icon */}
+			{/* Search form trigger — a real button (keyboard-operable) */}
 			{!searchClicked && (
-				<LuSearch
-					className="w-6 h-6 cursor-pointer transition-colors hover:text-foreground"
+				<button
+					type="button"
+					aria-label={t("NAVIGATION.SEARCH_PLACEHOLDER")}
+					aria-expanded={false}
 					onClick={() => onSearchToggle(true)}
-				/>
+					className="cursor-pointer rounded outline-none transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/50"
+				>
+					<LuSearch className="w-6 h-6" />
+				</button>
 			)}
 
 			{/* Expanded search form */}
