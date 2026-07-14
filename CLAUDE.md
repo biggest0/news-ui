@@ -286,16 +286,24 @@ The owner reviews, splits/reorders as they see fit, and executes the commits and
 ## Build & Deploy
 
 ```bash
-npm run dev         # dev server on port 5174, LAN accessible (host: 0.0.0.0)
+npm run dev         # dev server on port 5174
 npm run build       # tsc -b && vite build
 npm run preview     # local preview of prod build
 npm run lint        # eslint
-npm run test        # vitest run (CI mode)
+npm run test        # vitest run (unit/component, CI mode)
 npm run test:watch  # vitest watch
+npm run test:e2e    # build + playwright test (chromium, stubbed API)
+npm run test:e2e:ui # playwright test --ui (interactive)
 npm run deploy      # build + copy index.html → 404.html + gh-pages deploy
 ```
 
-Tests live in `src/__tests__/` with subfolders mirroring `src/` (`mappers/`, `service/`, `utils/`, `components/`). Shared test helpers live in `__tests__/helpers/` (e.g. `renderWithProviders.tsx`); global setup in `__tests__/setup.ts`.
+**Unit/component tests** (Vitest) live in `src/__tests__/` with subfolders mirroring `src/` (`mappers/`, `service/`, `utils/`, `components/`, `hooks/`, `store/`). Shared helpers in `__tests__/helpers/` (`renderWithProviders.tsx`); global setup in `__tests__/setup.ts`.
+
+**E2E tests** (Playwright, chromium-only) live in `e2e/*.spec.ts`. The backend is fully stubbed per-test via `page.route` (fixtures + helpers in `e2e/support/stubApi.ts`), so no live API is needed — locally or in CI. Tests run against the production build served by `vite preview` (port 4173). Auth is exercised with a fake session hint (`e2e/support/stubApi.ts` → `loginSession`) since tokens are HttpOnly cookies. **Cypress was removed in M7 — Playwright is the sole e2e framework.**
+
+## CI
+
+GitHub Actions (`.github/workflows/ci.yml`) runs on every PR and on pushes to `main`/`development`/`refactor/ui-audit`: two jobs — **unit** (lint → build → vitest) and **e2e** (build → Playwright). Note: PRs are reviewed/merged on Azure DevOps, so GitHub checks are advisory — confirm the green checkmark before merging in Azure.
 
 ---
 

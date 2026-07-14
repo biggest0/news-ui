@@ -1,7 +1,0 @@
-{
-	"accessToken": "test-access-token",
-	"refreshToken": "test-refresh-token",
-	"user": {
-		"email": "testcat@catire.com"
-	}
-}
