@@ -40,7 +40,26 @@ If your independent pass and this file disagree, **trust your pass** and note th
 
 ---
 
-## Executive summary (proposed — confirm independently)
+## Executive summary — AUDIT COMPLETE (2026-07-14)
+
+**All eight milestones (M0–M8, plus owner-added M5.5) are done.** What began as a half-finished shadcn install actively breaking the site's palette became a full modernization:
+
+- **The P0 fixed:** one unified, brand-themed design-token system (M2); the site renders its amber/gray/serif identity deterministically in both themes.
+- **Modern data layer:** RTK Query replaced all hand-rolled slices/thunks (M5) — language switches update in place, co-mounted sections share caches, every surface has retryable error UI, anonymous visitors no longer fire doomed auth calls.
+- **Accessible components:** hand-rolled dropdowns/drawer rebuilt on adapted base-ui primitives with full keyboard/ARIA behavior (M3, M5.5); every control named and labelled (M6).
+- **Scoreboard:** Lighthouse **100/100/100 across Accessibility, Best Practices, and SEO** on all three key pages (from 93/82/79 a11y at baseline). Lint 0/0. i18n parity 220/220.
+- **Safety net:** 201 unit tests + 42 Playwright e2e tests + GitHub Actions CI (the repo previously had zero CI) (M7).
+- **Ship-ready:** v1.12.0 single-sourced, fonts self-hosted, code-split bundles, security review clean (M8).
+
+**Fixed along the way:** 5 user-visible bugs (dark-mode white overlay, dark-mode dropdown panels, missing reading-history on direct loads, stale/failing history cache, "Food & drink industry" URL truncation), 2 crash paths, a silently-disabled hooks lint, and an IDE-breaking type cycle.
+
+**Remaining for the owner:** replace the placeholder logo; optionally revisit the two WCAG-driven color darkenings (F051); backend ticket for substring→word keyword search (F044); post-ship: React 19 form Actions (D3, deferred by decision).
+
+**Release path:** commit the M8 plan → merge `audit/m8-release` → `refactor/ui-audit` → merge to `development` → `main`, tag `v1.12.0`, `npm run deploy`.
+
+---
+
+## Original executive summary (pre-audit static pass — historical)
 
 A recent, **half-finished shadcn/ui install** is the dominant theme. It introduced a second design-token system that appears to collide with the app's existing semantic tokens (potential site-wide visual regression), wrote components to a wrong literal `@/` path, and added six dependencies that nothing in `src/` imports. Separately, the older application code shows the usual drift: duplicated mobile/desktop sections and an inlined dropdown, ~37 hardcoded colors and ~52 relative imports that violate `CLAUDE.md`, one inconsistent service error contract, and thin test coverage on hooks/slices/pages. Layering (api→service→mapper→store) and i18n key counts looked healthy. Biggest open judgment call: **is shadcn being adopted or reverted** — it gates Phases 1–2. Confirm all of this yourself.
 
@@ -181,6 +200,26 @@ M1 exit criteria met (see COMMIT_PLAN.md for the pending commits + merge).
 | CLAUDE.md | State Management + Data Flow sections updated to the RTKQ reality (full docs pass remains M8). | — |
 
 Console after M5: only the form-field naming issue (M6). Gates: build ✅ · 182/182 ✅ · lint 0 errors, 4 warnings (was 6 — SubCategoryPage strings now use new `PAGES.SUBCATEGORY.*` keys, en+fr).
+
+## M8 results (2026-07-14 — FINAL MILESTONE, done pending owner commit, branch `audit/m8-release`)
+
+Owner decisions at kickoff: **v1.12.0** (package.json canonical), approved meta-description copy, allow-all robots.txt.
+
+| ID | Resolution | Verified how |
+|----|-----------|--------------|
+| Perf: code-splitting | **Done** — all routes except HomePage are `React.lazy` (16 route chunks) + `manualChunks` vendor split (react / redux / i18n / baseui). Main chunk **620 → 351 kB**; vendor chunks cache independently across deploys; Vite's chunk-size warning gone. | build output; 42/42 e2e green through Suspense transitions |
+| F042 (closed) | **Done** — Tinos/Cardo self-hosted via `@fontsource` (400/400-italic/700 + 400/700). **Zero Google Fonts requests**; only 3 latin woff2 files (~50 kB) actually fetched thanks to unicode-range. No render-blocking cross-origin CSS. | browser: `document.fonts.check` all true, resource timeline clean |
+| F046 (closed, documented) | base-ui isolated into its own cacheable `baseui` chunk (136 kB / 47 kB gzip). Interaction-lazy loading of menus evaluated and **not implemented**: the complexity/jank risk (plain-button swap on first open) outweighs ~47 kB that now caches across deploys. Recorded as a future option if real-user metrics ever demand it. | bundle analysis |
+| SEO | **Done** — meta description (approved copy) + Open Graph basics in `index.html`; allow-all `public/robots.txt`. **Lighthouse SEO 83 → 100.** Optional llms.txt logged, not implemented. | Lighthouse |
+| F027 (closed) | **Done** — `package.json` = **1.12.0**, injected via Vite `define` → `APP_VERSION` derives from it (test-safe fallback). Drift is structurally impossible now. | `v1.12.0` in bundle + shown in the mobile drawer |
+| F030 (closed) | **Security review passed on all counts:** 0 `dangerouslySetInnerHTML`; no tracked `.env*`; no secret-shaped strings; all 6 `target="_blank"` have `rel="noopener"`; `npm audit` 0 vulns; `authFetch` = single refresh, no loop; OAuth callback validates CSRF state, uses replace-navigation, and the raw OAuth code never reaches the frontend (backend exchange → short-lived loginCode); reset token URL→POST only, never logged/stored. | greps + flow reads + audit |
+| F028 (closed) | `.env.example` documents all four `VITE_` vars with comments. | file |
+| F029/F039 (closed) | Final `CLAUDE.md` reconciliation: tech-stack table, structure tree (e2e/, ui/, lib/, store/api/), **token table rewritten to the M2 vocabulary**, fonts, i18n refetch-on-toggle, hooks table, API-layer section, versioning rule, Do/Don't — all match reality. | read-through |
+| F020/F051 (owner backlog) | Remaining open items handed to the owner: replace the placeholder house-icon logo (`AppLogo`); optionally revisit the two M6 AA color darkenings if the look bothers you; llms.txt; backend ticket — keyword search substring→word matching (F044). | — |
+
+**Final scoreboard (Lighthouse, dev server, real data):** Accessibility **100/100/100**, Best Practices **100/100/100**, SEO **100/100/100** on home/article/search. (M0 baseline: a11y 93/82/79, SEO 82/83/83.) Perf trace on the dev server: LCP 679 ms / CLS 0.01 — not comparable to M0's prod-build 252 ms trace (dev serves unbundled modules); the concrete perf wins are the bundle/caching/font numbers above.
+
+Gates: build ✅ · **201/201** unit ✅ · **42/42** e2e ✅ · lint 0/0 ✅.
 
 ## M7 results (2026-07-12 — done pending owner commit, branch `audit/m7-testing`)
 
