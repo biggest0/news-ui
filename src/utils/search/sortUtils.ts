@@ -1,5 +1,6 @@
 import type { ArticleInfo } from "@/types/articleTypes";
 
+/** Sorts articles by how many times the query matches title+summary (desc). */
 export function sortArticlesByMatchCount(
 	articles: ArticleInfo[],
 	query: string

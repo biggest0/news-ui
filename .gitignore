@@ -24,6 +24,7 @@ lerna-debug.log*
 data/
 docs/
 screenshots/
+schemas/
 
 # Editor directories and files
 .vscode/*
@@ -37,3 +38,16 @@ screenshots/
 *.njsproj
 *.sln
 *.sw?
+# audit working screenshots (local-only; baseline/ stays committed)
+audit_docs/m2-after/
+audit_docs/m3-after/
+audit_docs/m5-after/
+audit_docs/m55-after/
+audit_docs/m6-after/
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+audit_docs/m8-after/

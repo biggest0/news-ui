@@ -56,10 +56,10 @@ export default function NewPasswordPage() {
 			<div className="max-w-sm pt-6">
 				{success ? (
 					<div className="flex flex-col gap-4">
-						<p className="text-secondary">{t("AUTH.RESET_SUCCESS")}</p>
+						<p className="text-foreground-secondary">{t("AUTH.RESET_SUCCESS")}</p>
 						<Link
 							to="/login"
-							className="bg-accent-bg text-white py-2 rounded-lg hover:bg-accent-bg-hover transition-colors text-center"
+							className="bg-primary text-white py-2 rounded-lg hover:bg-primary-hover transition-colors text-center"
 						>
 							{t("AUTH.RESET_GO_TO_LOGIN")}
 						</Link>
@@ -67,7 +67,7 @@ export default function NewPasswordPage() {
 				) : (
 					<form className="flex flex-col gap-4" onSubmit={handleSubmit}>
 						<div>
-							<label htmlFor="password" className="block text-sm text-muted mb-1">
+							<label htmlFor="password" className="block text-sm text-muted-foreground mb-1">
 								{t("AUTH.NEW_PASSWORD")}
 							</label>
 							<input
@@ -76,13 +76,13 @@ export default function NewPasswordPage() {
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
 								disabled={isSubmitting}
-								className="w-full border-b border-border-subtle bg-transparent py-2 text-secondary outline-none placeholder:text-muted focus:border-accent transition-colors"
+								className="w-full border-b border-border-subtle bg-transparent py-2 text-foreground-secondary outline-none placeholder:text-muted-foreground focus:border-brand transition-colors"
 								placeholder={t("AUTH.NEW_PASSWORD")}
 							/>
 						</div>
 
 						<div>
-							<label htmlFor="confirmPassword" className="block text-sm text-muted mb-1">
+							<label htmlFor="confirmPassword" className="block text-sm text-muted-foreground mb-1">
 								{t("AUTH.CONFIRM_NEW_PASSWORD")}
 							</label>
 							<input
@@ -91,25 +91,25 @@ export default function NewPasswordPage() {
 								value={confirmPassword}
 								onChange={(e) => setConfirmPassword(e.target.value)}
 								disabled={isSubmitting}
-								className="w-full border-b border-border-subtle bg-transparent py-2 text-secondary outline-none placeholder:text-muted focus:border-accent transition-colors"
+								className="w-full border-b border-border-subtle bg-transparent py-2 text-foreground-secondary outline-none placeholder:text-muted-foreground focus:border-brand transition-colors"
 								placeholder={t("AUTH.CONFIRM_NEW_PASSWORD")}
 							/>
 						</div>
 
-						{error && <p className="text-sm text-error">{error}</p>}
+						{error && <p className="text-sm text-destructive">{error}</p>}
 
 						<button
 							type="submit"
 							disabled={isSubmitting}
-							className="bg-accent-bg text-white py-2 rounded-lg hover:bg-accent-bg-hover transition-colors disabled:bg-disabled-bg disabled:cursor-not-allowed"
+							className="bg-primary text-white py-2 rounded-lg hover:bg-primary-hover transition-colors disabled:bg-disabled-bg disabled:cursor-not-allowed"
 						>
 							{isSubmitting ? t("AUTH.RESETTING_PASSWORD") : t("AUTH.RESET_PASSWORD")}
 						</button>
 
-						<p className="mt-2 text-sm text-muted">
+						<p className="mt-2 text-sm text-muted-foreground">
 							<Link
 								to="/login"
-								className="text-accent hover:underline transition-colors"
+								className="text-brand hover:underline transition-colors"
 							>
 								{t("AUTH.BACK_TO_LOGIN")}
 							</Link>

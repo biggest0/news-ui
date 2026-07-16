@@ -22,6 +22,10 @@ export default tseslint.config(
       '@typescript-eslint/no-unused-vars': 'warn',
       '@typescript-eslint/no-explicit-any': 'warn', // or 'off'
       '@typescript-eslint/ban-ts-comment': 'warn',  // or 'off'
+      // the plugin was registered but its rules were never enabled (found in M4) —
+      // rules-of-hooks violations are real bugs, exhaustive-deps flags stale closures
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn',
     }
   },
 

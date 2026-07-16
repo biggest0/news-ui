@@ -1,21 +1,18 @@
-import { useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import NewsSideColumn from "@/components/news/shared/NewsSideColumn";
-import type { ArticleInfo, ArticleQuery } from "@/types/articleTypes";
-import type { RootState } from "@/store/store";
-import {
-	useArticleFilters,
-	useInfiniteScroll,
-} from "@/hooks/useArticleHooks";
+import { useListInfiniteScroll } from "@/hooks/useArticleHooks";
 import { usePagination } from "@/hooks/usePagination";
+import { useApiLang } from "@/hooks/useApiLang";
 import { FilterBar } from "@/components/news/shared/FilterBar";
 import { ArticleList } from "@/components/news/shared/ArticleList";
 import { LoadingMessage } from "@/components/news/shared/LoadingMessage";
+import { LoadingOverlay } from "@/components/common/feedback/LoadingOverlay";
 import { PaginationControls } from "@/components/news/shared/PaginationControls";
 import { SectionHeaderExpandable } from "@/components/common/layout/SectionHeaderExpandable";
+import { SectionShell } from "@/components/common/layout/SectionShell";
+import { SectionErrorMessage } from "@/components/common/feedback/SectionErrorMessage";
 import { usePagePagination } from "@/hooks/usePagePagination";
 import { SECTIONS } from "@/constants/keys";
 import CollapsibleSection from "@/components/news/section/CollapsibleSection";
@@ -24,68 +21,65 @@ import {
 	useSectionVisible,
 } from "@/hooks/useSectionCollapse";
 import { useAppSettings } from "@/contexts/AppSettingContext";
+import { useGetArticlesInfiniteQuery } from "@/store/api/articleEndpoints";
 import EmptyStateSection from "@/components/news/section/EmptyStateSection";
 
 interface BaseNewsSectionProps {
-	articles: ArticleInfo[];
-	totalCount: number; // Total articles available from server
-	loadMoreArticles: (request: ArticleQuery) => void;
-	resetKey?: string;
+	/** Main category to load; omit for the home feed (all categories). */
+	category?: string;
+	/** Show the full-page overlay during the initial load (home page). */
+	overlayOnInitialLoad?: boolean;
 }
 
+/**
+ * The main article list (home + category pages) — RTK Query consumer.
+ *
+ * Scroll mode uses a native infinite query: pages accumulate in one cache
+ * entry per {category, filters, lang} and `fetchNextPage` pulls the next
+ * page. Page mode delegates to usePagination (a per-page query). A language
+ * or filter change alters the query arg, which refetches automatically —
+ * the old manual "refetch on filter change" effect and `resetKey` are gone.
+ */
 export function BaseNewsSection({
-	articles,
-	totalCount,
-	loadMoreArticles,
-	resetKey,
+	category,
+	overlayOnInitialLoad = false,
 }: BaseNewsSectionProps) {
-	const location = useLocation();
-	const selectedCategory = location.pathname.split("/")[1];
-	const { loading } = useSelector((state: RootState) => state.article);
+	const { t } = useTranslation();
+	const lang = useApiLang();
 
 	const isVisible = useSectionVisible(SECTIONS.NEWS);
 	const isAllSectionNotVisible = useAllSectionNotVisible();
 	const isPaginationEnabled = usePagePagination();
-
 	const { updateSectionVisibility } = useAppSettings();
 
-	const { articlesToDisplay, dateRange, setDateRange, sortBy, setSortBy } =
-		useArticleFilters(articles);
+	// Filter state — the server applies dateRange/sortBy (they're part of the
+	// query arg), so changing either swaps to a fresh cache entry and refetches.
+	const [dateRange, setDateRange] = useState("all");
+	const [sortBy, setSortBy] = useState("newest");
 
-	// Track if this is the initial mount to avoid fetching on first render
-	const isInitialMount = useRef(true);
-	// Store loadMoreArticles in ref to avoid effect re-running when function reference changes
-	const loadMoreArticlesRef = useRef(loadMoreArticles);
-	loadMoreArticlesRef.current = loadMoreArticles;
+	// Infinite-scroll mode
+	const {
+		data,
+		isLoading,
+		isFetching,
+		isError,
+		refetch,
+		hasNextPage,
+		fetchNextPage,
+	} = useGetArticlesInfiniteQuery(
+		{ category, dateRange, sortBy, lang },
+		{ skip: isPaginationEnabled }
+	);
+	const scrollArticles = data?.pages.flatMap((p) => p.articles) ?? [];
 
-	// Fetch fresh data when filters change to get updated count from server
-	useEffect(() => {
-		if (isInitialMount.current) {
-			isInitialMount.current = false;
-			return;
-		}
-		// Request page 1 with new filters to get fresh count
-		loadMoreArticlesRef.current({
-			page: 1,
-			category: selectedCategory,
-			dateRange,
-			sortBy,
-		});
-	}, [dateRange, sortBy, selectedCategory]);
-
-	// Infinite scroll logic - only enabled when pagination is disabled
-	useInfiniteScroll({
-		currentArticlesCount: articles.length,
-		totalArticlesCount: totalCount,
-		loadMoreArticles,
-		selectedCategory,
-		resetKey,
+	useListInfiniteScroll({
 		enabled: !isPaginationEnabled,
-		dateRange,
-		sortBy,
+		hasNextPage: !!hasNextPage,
+		isFetching,
+		fetchNextPage,
 	});
 
-	// Pagination logic - fetches pages directly from API
+	// Page mode
 	const {
 		paginatedArticles,
 		currentPage,
@@ -93,33 +87,27 @@ export function BaseNewsSection({
 		pageSize,
 		setPageSize,
 		goToPage,
-		hasNextPage,
+		hasNextPage: hasNextPaginationPage,
 		hasPrevPage,
 		isLoading: isPaginationLoading,
+		isError: isPageError,
+		refetchPage,
 	} = usePagination({
-		selectedCategory,
+		selectedCategory: category ?? "",
 		dateRange,
 		sortBy,
+		enabled: isPaginationEnabled,
 	});
 
-	const handleDateRangeChange = (value: string) => {
-		setDateRange(value);
-	};
-
-	const handleSortByChange = (value: string) => {
-		setSortBy(value);
-	};
-	const { t } = useTranslation();
-
-	// Determine which articles to show based on mode
 	const displayedArticles = isPaginationEnabled
 		? paginatedArticles
-		: articlesToDisplay;
+		: scrollArticles;
+	const showError = isPaginationEnabled ? isPageError : isError;
 
 	return (
 		<div className="flex flex-col md:grid md:grid-cols-3 md:items-start gap-x-4 gap-y-6 pt-6">
 			{/* Articles, main col */}
-			<section className={`md:col-span-2 ${isVisible ? "" : "hidden"}`}>
+			<SectionShell visible={isVisible} className="md:col-span-2">
 				{/* Header and filters */}
 				<div className="flex flex-row justify-between w-full items-center">
 					<SectionHeaderExpandable
@@ -129,37 +117,42 @@ export function BaseNewsSection({
 					<FilterBar
 						dateRange={dateRange}
 						sortBy={sortBy}
-						onDateRangeChange={handleDateRangeChange}
-						onSortByChange={handleSortByChange}
+						onDateRangeChange={setDateRange}
+						onSortByChange={setSortBy}
 					/>
 				</div>
 
 				{/* Article list */}
 				<CollapsibleSection section={SECTIONS.NEWS}>
-					<ArticleList
-						articles={displayedArticles}
-					/>
-					{/* Show loading message for infinite scroll or pagination */}
-					{!isPaginationEnabled && (
-						<LoadingMessage isLoading={loading.articles} />
-					)}
-					{isPaginationEnabled && !hasNextPage && (
-						<LoadingMessage isLoading={isPaginationLoading} />
-					)}
-					{/* Show pagination controls only in pagination mode */}
-					{isPaginationEnabled && (
-						<PaginationControls
-							currentPage={currentPage}
-							totalPages={totalPages}
-							pageSize={pageSize}
-							onPageChange={goToPage}
-							onPageSizeChange={setPageSize}
-							hasNextPage={hasNextPage}
-							hasPrevPage={hasPrevPage}
+					{showError ? (
+						<SectionErrorMessage
+							onRetry={isPaginationEnabled ? refetchPage : refetch}
 						/>
+					) : (
+						<>
+							<ArticleList articles={displayedArticles} />
+							{/* Loading feedback per mode */}
+							{!isPaginationEnabled && (
+								<LoadingMessage isLoading={isFetching} />
+							)}
+							{isPaginationEnabled && !hasNextPaginationPage && (
+								<LoadingMessage isLoading={isPaginationLoading} />
+							)}
+							{isPaginationEnabled && (
+								<PaginationControls
+									currentPage={currentPage}
+									totalPages={totalPages}
+									pageSize={pageSize}
+									onPageChange={goToPage}
+									onPageSizeChange={setPageSize}
+									hasNextPage={hasNextPaginationPage}
+									hasPrevPage={hasPrevPage}
+								/>
+							)}
+						</>
 					)}
 				</CollapsibleSection>
-			</section>
+			</SectionShell>
 
 			{/* Hidden state with reset option */}
 			<div
@@ -180,6 +173,8 @@ export function BaseNewsSection({
 
 			{/* Side col for md screen and larger */}
 			<NewsSideColumn />
+
+			{overlayOnInitialLoad && <LoadingOverlay loading={isLoading} />}
 		</div>
 	);
 }

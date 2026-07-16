@@ -1,38 +1,9 @@
-import { useDispatch, useSelector } from "react-redux";
+import { BaseNewsSection } from "@/components/news/section/newsSections/BaseNewsSection";
 
-import type { RootState, AppDispatch } from "@/store/store";
-import { loadArticlesInfo } from "@/store/articlesSlice";
-import { BaseNewsSection } from "./BaseNewsSection";
-import type { ArticleQuery } from "@/types/articleTypes";
-// import { useEffect, useState } from "react";
-import { LoadingOverlay } from "@/components/common/feedback/LoadingOverlay";
-
+/**
+ * Home feed (all categories) — BaseNewsSection owns data fetching via RTK
+ * Query; the overlay covers the initial home load.
+ */
 export function HomeNewsSection() {
-	const dispatch = useDispatch<AppDispatch>();
-	const { homeArticles, homeArticlesCount, loading } = useSelector(
-		(state: RootState) => state.article
-	);
-
-	const loadMoreArticles = (request: ArticleQuery) => {
-		dispatch(loadArticlesInfo(request));
-	};
-
-	// const [_loadingPage, setLoading] = useState(true);
-
-	// useEffect(() => {
-	// 	const timer = setTimeout(() => setLoading(false), 2000); // simulate loading
-	// 	return () => clearTimeout(timer);
-	// }, []);
-
-	return (
-		<>
-			<BaseNewsSection
-				articles={homeArticles}
-				totalCount={homeArticlesCount}
-				loadMoreArticles={loadMoreArticles}
-				resetKey={"home"}
-			/>
-			{<LoadingOverlay loading={loading.homePage} />}
-		</>
-	);
+	return <BaseNewsSection overlayOnInitialLoad />;
 }

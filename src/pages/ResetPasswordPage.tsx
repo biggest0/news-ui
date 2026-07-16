@@ -54,13 +54,13 @@ export default function ResetPasswordPage() {
 			<div className="max-w-sm pt-6">
 				{sent ? (
 					<div className="flex flex-col gap-4">
-						<h2 className="text-lg font-semibold text-primary">{t("AUTH.RESET_EMAIL_SENT_HEADING")}</h2>
-						<p className="text-secondary">{t("AUTH.RESET_EMAIL_SENT_BODY")}</p>
+						<h2 className="text-lg font-semibold text-foreground">{t("AUTH.RESET_EMAIL_SENT_HEADING")}</h2>
+						<p className="text-foreground-secondary">{t("AUTH.RESET_EMAIL_SENT_BODY")}</p>
 						<button
 							type="button"
 							onClick={sendResetEmail}
 							disabled={countdown > 0}
-							className="bg-accent-bg text-white py-2 rounded-lg hover:bg-accent-bg-hover transition-colors disabled:bg-disabled-bg disabled:cursor-not-allowed"
+							className="bg-primary text-white py-2 rounded-lg hover:bg-primary-hover transition-colors disabled:bg-disabled-bg disabled:cursor-not-allowed"
 						>
 							{countdown > 0
 								? t("AUTH.RESEND_IN", { seconds: countdown })
@@ -68,7 +68,7 @@ export default function ResetPasswordPage() {
 						</button>
 						<Link
 							to="/login"
-							className="text-accent hover:underline transition-colors text-sm"
+							className="text-brand hover:underline transition-colors text-sm"
 						>
 							{t("AUTH.BACK_TO_LOGIN")}
 						</Link>
@@ -79,7 +79,7 @@ export default function ResetPasswordPage() {
 							<div>
 								<label
 									htmlFor="email"
-									className="block text-sm text-muted mb-1"
+									className="block text-sm text-muted-foreground mb-1"
 								>
 									{t("AUTH.EMAIL")}
 								</label>
@@ -89,23 +89,23 @@ export default function ResetPasswordPage() {
 									value={email}
 									onChange={(e) => setEmail(e.target.value)}
 									disabled={isSubmitting}
-									className="w-full border-b border-border-subtle bg-transparent py-2 text-secondary outline-none placeholder:text-muted focus:border-accent transition-colors"
+									className="w-full border-b border-border-subtle bg-transparent py-2 text-foreground-secondary outline-none placeholder:text-muted-foreground focus:border-brand transition-colors"
 									placeholder={t("AUTH.EMAIL")}
 								/>
 							</div>
 
 							{error && (
-								<p className="text-sm text-error">
+								<p className="text-sm text-destructive">
 									{error}
 								</p>
 							)}
-							<p className="text-secondary text-sm">
+							<p className="text-foreground-secondary text-sm">
 								{t("AUTH.RESET_PASSWORD_SUBTITLE")}
 							</p>
 							<button
 								type="submit"
 								disabled={isSubmitting}
-								className="bg-accent-bg text-white py-2 rounded-lg hover:bg-accent-bg-hover transition-colors disabled:bg-disabled-bg disabled:cursor-not-allowed"
+								className="bg-primary text-white py-2 rounded-lg hover:bg-primary-hover transition-colors disabled:bg-disabled-bg disabled:cursor-not-allowed"
 							>
 								{isSubmitting
 									? t("AUTH.SENDING_RESET_LINK")
@@ -113,10 +113,10 @@ export default function ResetPasswordPage() {
 							</button>
 						</form>
 
-						<p className="mt-6 text-sm text-muted">
+						<p className="mt-6 text-sm text-muted-foreground">
 							<Link
 								to="/login"
-								className="text-accent hover:underline transition-colors"
+								className="text-brand hover:underline transition-colors"
 							>
 								{t("AUTH.BACK_TO_LOGIN")}
 							</Link>

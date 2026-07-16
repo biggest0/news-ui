@@ -1,43 +1,25 @@
 import { Link, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { GoChevronLeft, GoChevronRight } from "react-icons/go";
 
-import { ARTICLE_ROUTES, type ArticleCategory } from "@/constants/routes";
+import { ARTICLE_ROUTES } from "@/constants/routes";
 import type { CategoryKey } from "@/i18n/types";
-import type { AppDispatch } from "@/store/store";
-import {
-	loadArticlesInfoByCategory,
-	loadInitialArticlesInfo,
-} from "@/store/articlesSlice";
 
+/**
+ * Horizontal category navigation in the header. Pure navigation since M5 —
+ * the pages own their data fetching via RTK Query hooks (this component used
+ * to dispatch the initial article loads and refire them on language change).
+ */
 export default function CategoryBar() {
 	// get url/{category}
 	const location = useLocation();
-	const { t, i18n } = useTranslation();
+	const { t } = useTranslation();
 	const currentCategory = location.pathname.split("/")[1]; // grabs part after "/"
 	const scrollRef = useRef<HTMLDivElement>(null);
 
 	const [canScrollLeft, setCanScrollLeft] = useState(false);
 	const [canScrollRight, setCanScrollRight] = useState(false);
-
-	const dispatch = useDispatch<AppDispatch>();
-	// instead of setting the category, you link it
-	// and then in sections just grab the param again and filter
-// language is a dep because CategoryBar lives in the Header, outside the
-// language-keyed <main> in App.tsx, so it doesn't remount on toggle —
-// the initial article load must refire itself when the language changes
-useEffect(() => {
-	if (currentCategory === "") {
-		// defaults to grabbing all articles
-		dispatch(loadInitialArticlesInfo({ page: 1 }));
-	} else if (ARTICLE_ROUTES.includes(currentCategory as ArticleCategory)) {
-		dispatch(
-			loadArticlesInfoByCategory({ page: 1, category: currentCategory as ArticleCategory })
-		);
-	}
-}, [currentCategory, dispatch, i18n.resolvedLanguage]);
 
 	// Set up scroll listeners
 	useEffect(() => {
@@ -72,10 +54,10 @@ useEffect(() => {
 				{canScrollLeft && (
 					<button
 						onClick={() => scrollBy(-100)}
-						className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-r from-surface via-surface/90 to-transparent pr-4"
+						className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-r from-background via-background/90 to-transparent pr-4"
 					>
 						<GoChevronLeft
-							className="w-4 h-4 text-muted transition-opacity duration-200"
+							className="w-4 h-4 text-muted-foreground transition-opacity duration-200"
 						/>
 					</button>
 				)}
@@ -84,15 +66,15 @@ useEffect(() => {
 					ref={scrollRef}
 					className="w-full overflow-x-auto hide-scrollbar scroll-smooth"
 				>
-					<div className="flex border-gray-500 min-w-max md:justify-center">
+					<div className="flex border-border min-w-max md:justify-center">
 						{ARTICLE_ROUTES.map((category, index) => (
 							<Link
 								key={category}
 								to={`/${category}`}
 								className={`cursor-pointer lg:pt-1 text-base md:text-lg font-medium whitespace-nowrap transition-colors ${
 									currentCategory === category
-										? "text-accent underline"
-										: "text-secondary hover:text-primary"
+										? "text-brand underline"
+										: "text-foreground-secondary hover:text-foreground"
 								} ${index !== 0 ? "ml-6" : ""}`}
 							>
 								{t(`CATEGORY.${category.toUpperCase() as CategoryKey}`).toUpperCase()}
@@ -104,10 +86,10 @@ useEffect(() => {
 				{canScrollRight && (
 					<button
 						onClick={() => scrollBy(100)}
-						className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-l from-surface via-surface/90 to-transparent pl-4"
+						className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-l from-background via-background/90 to-transparent pl-4"
 					>
 						<GoChevronRight
-							className="w-4 h-4 text-muted transition-opacity duration-200"
+							className="w-4 h-4 text-muted-foreground transition-opacity duration-200"
 						/>
 					</button>
 				)}

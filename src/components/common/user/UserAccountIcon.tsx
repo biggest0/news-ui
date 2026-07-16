@@ -21,9 +21,12 @@ export const UserAccountIcon = ({
 
 	if (variant === "icon") {
 		return (
-			<Link to={linkTo}>
+			<Link
+				to={linkTo}
+				aria-label={isAuthenticated ? t("ACCOUNT.ACCOUNT_LABEL") : t("AUTH.LOGIN")}
+			>
 				<LuUserRound
-					className="w-6 h-6 hover:text-primary cursor-pointer transition-colors"
+					className="w-6 h-6 hover:text-foreground cursor-pointer transition-colors"
 					onClick={onLinkClick}
 				/>
 			</Link>

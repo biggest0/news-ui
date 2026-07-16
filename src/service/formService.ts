@@ -1,5 +1,9 @@
 import { postEmailSubscription } from "@/api/formApi";
 
+/**
+ * Subscribes an email to the newsletter.
+ * @throws Error with a user-friendly message on failure or duplicate email
+ */
 export async function subscribeToNewsletter(email: string): Promise<void> {
 	try {
 		const data = await postEmailSubscription(email);

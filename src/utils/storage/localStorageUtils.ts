@@ -24,6 +24,7 @@ const DEFAULT_APP_SETTING: AppSetting = {
 	},
 };
 
+/** Reads the persisted app settings, falling back to defaults on bad data. */
 export function getAppSetting(): AppSetting {
 	const appSetting = localStorage.getItem("appSetting");
 	if (!appSetting) return DEFAULT_APP_SETTING;
@@ -48,6 +49,7 @@ export function getAppSetting(): AppSetting {
 	};
 }
 
+/** Writes the app settings object to localStorage. */
 export function setAppSetting(setting: AppSetting) {
 	localStorage.setItem("appSetting", JSON.stringify(setting));
 }

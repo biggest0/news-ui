@@ -1,153 +1,56 @@
-import { useEffect, useState } from "react";
-import type { ArticleInfo, ArticleQuery } from "@/types/articleTypes";
-import { isWithinNDays } from "@/utils/date/dateUtils";
+import { useEffect } from "react";
 
-export function useArticleFilters(articles: ArticleInfo[]) {
-	const [articlesToDisplay, setArticlesToDisplay] = useState(articles);
-	const [dateRange, setDateRange] = useState("all");
-	const [sortBy, setSortBy] = useState("newest");
-
-	// Filter articles when dateRange or sortBy changes
-	useEffect(() => {
-		let tempArticles = [...articles];
-
-		if (dateRange) {
-			switch (dateRange) {
-				case "24h":
-					tempArticles = tempArticles.filter((article) => {
-						if (article.datePublished) {
-							return isWithinNDays(article.datePublished, 1);
-						}
-					});
-					break;
-				case "7d":
-					tempArticles = tempArticles.filter((article) => {
-						if (article.datePublished) {
-							return isWithinNDays(article.datePublished, 7);
-						}
-					});
-					break;
-				case "30d":
-					tempArticles = tempArticles.filter((article) => {
-						if (article.datePublished) {
-							return isWithinNDays(article.datePublished, 30);
-						}
-					});
-			}
-		}
-
-		if (sortBy) {
-			switch (sortBy) {
-				case "newest":
-					tempArticles = tempArticles.sort((a, b) => {
-						if (b.datePublished && a.datePublished) {
-							return (
-								new Date(b.datePublished).getTime() -
-								new Date(a.datePublished).getTime()
-							);
-						}
-						return 0;
-					});
-					break;
-				case "mostViewed":
-					tempArticles = tempArticles.sort((a, b) => {
-						return (b.viewed || 0) - (a.viewed || 0);
-					});
-					break;
-			}
-		}
-
-		// Compare tempArticles with articlesToDisplay before setting state
-		setArticlesToDisplay((prevArticles) => {
-			const currentIds = prevArticles.map((a) => a.id);
-			const newIds = tempArticles.map((a) => a.id);
-
-			let articlesAreDifferent = false;
-			if (currentIds.length !== newIds.length) {
-				articlesAreDifferent = true;
-			} else {
-				articlesAreDifferent = currentIds.some(
-					(id, index) => id !== newIds[index]
-				);
-			}
-			return articlesAreDifferent ? tempArticles : prevArticles;
-		});
-	}, [dateRange, sortBy, articles]);
-
-	return {
-		articlesToDisplay,
-		dateRange,
-		setDateRange,
-		sortBy,
-		setSortBy,
-	};
-}
+import { useApiLang } from "@/hooks/useApiLang";
+import { useGetFeaturedQuery } from "@/store/api/articleEndpoints";
 
 interface UseInfiniteScrollProps {
-	currentArticlesCount: number; // Number of articles currently loaded
-	totalArticlesCount: number; // Total articles available from server
-	loadMoreArticles: (request: ArticleQuery) => void;
-	selectedCategory: string;
-	resetKey?: string;
-	enabled?: boolean; // Whether infinite scroll is active
-	dateRange?: string;
-	sortBy?: string;
+	/** Whether infinite scroll is active (false in page-pagination mode). */
+	enabled: boolean;
+	/** From the infinite query: whether another page exists. */
+	hasNextPage: boolean;
+	/** From the infinite query: a request is already in flight. */
+	isFetching: boolean;
+	/** From the infinite query: pulls the next page into the cache entry. */
+	fetchNextPage: () => void;
 }
 
-export function useInfiniteScroll({
-	currentArticlesCount,
-	totalArticlesCount,
-	loadMoreArticles,
-	selectedCategory,
-	resetKey,
-	enabled = true,
-	dateRange,
-	sortBy,
+/**
+ * Window-scroll driver for RTK Query infinite queries (M5): near the bottom
+ * (700px threshold) it calls `fetchNextPage`. Page bookkeeping, dedupe, and
+ * reset-on-filter-change all live in the query cache now — RTKQ ignores
+ * fetchNextPage while a page request is in flight.
+ */
+export function useListInfiniteScroll({
+	enabled,
+	hasNextPage,
+	isFetching,
+	fetchNextPage,
 }: UseInfiniteScrollProps) {
-	const [page, setPage] = useState(1);
-	const [fetching, setFetching] = useState(false);
-
-	// Check if there are more articles to load
-	const hasMore = currentArticlesCount < totalArticlesCount;
-
-	// Reset page when resetKey changes
-	useEffect(() => {
-		setPage(1);
-		setFetching(false);
-	}, [resetKey]);
-
-	// Update page count based on current articles loaded
-	useEffect(() => {
-		if (currentArticlesCount > 0) {
-			setPage(Math.ceil(currentArticlesCount / 10));
-		}
-	}, [currentArticlesCount]);
-
-	// Reset fetching state when new articles are loaded
-	useEffect(() => {
-		setFetching(false);
-	}, [currentArticlesCount]);
-
-	// Lazy loading more articles on scroll
 	useEffect(() => {
 		if (!enabled) return;
 
 		const handleScroll = () => {
 			if (
-				!fetching &&
-				hasMore &&
+				!isFetching &&
+				hasNextPage &&
 				window.innerHeight + window.scrollY >= document.body.scrollHeight - 700
 			) {
-				setFetching(true);
-				const nextPage = page + 1;
-				setPage(nextPage);
-				loadMoreArticles({ page: nextPage, category: selectedCategory, dateRange, sortBy });
+				fetchNextPage();
 			}
 		};
 
 		window.addEventListener("scroll", handleScroll);
 		return () => window.removeEventListener("scroll", handleScroll);
-	}, [fetching, hasMore, page, loadMoreArticles, selectedCategory, enabled, dateRange, sortBy]);
+	}, [enabled, hasNextPage, isFetching, fetchNextPage]);
+}
 
-	return { hasMore, page };
+/**
+ * Returns the server-curated featured articles ("staff picks") via RTK Query.
+ * Co-mounted sections (desktop + mobile variants) share one cache entry, and
+ * a language switch refetches automatically (lang is part of the cache key).
+ */
+export function useFeaturedArticles() {
+	const lang = useApiLang();
+	const { data: featuredArticles = [] } = useGetFeaturedQuery({ lang });
+	return featuredArticles;
 }

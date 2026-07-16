@@ -75,10 +75,10 @@ export default function RegisterPage() {
 				<SectionHeader title={t("AUTH.VERIFY_EMAIL_TITLE")} />
 
 				<div className="max-w-sm pt-6 flex flex-col gap-4">
-					<h2 className="text-lg font-semibold text-primary">
+					<h2 className="text-lg font-semibold text-foreground">
 						{t("AUTH.VERIFY_EMAIL_HEADING")}
 					</h2>
-					<p className="text-secondary">
+					<p className="text-foreground-secondary">
 						<Trans
 							i18nKey="AUTH.VERIFY_EMAIL_BODY"
 							values={{ email }}
@@ -92,7 +92,7 @@ export default function RegisterPage() {
 						</p>
 					)}
 					{resendError && (
-						<p className="text-sm text-error">
+						<p className="text-sm text-destructive">
 							{resendError}
 						</p>
 					)}
@@ -101,7 +101,7 @@ export default function RegisterPage() {
 						type="button"
 						onClick={handleResend}
 						disabled={countdown > 0}
-						className="bg-accent-bg text-white py-2 rounded-lg hover:bg-accent-bg-hover transition-colors disabled:bg-disabled-bg disabled:cursor-not-allowed"
+						className="bg-primary text-white py-2 rounded-lg hover:bg-primary-hover transition-colors disabled:bg-disabled-bg disabled:cursor-not-allowed"
 					>
 						{countdown > 0
 							? t("AUTH.VERIFY_RESEND_IN", { seconds: countdown })
@@ -119,7 +119,7 @@ export default function RegisterPage() {
 			<div className="max-w-sm pt-6">
 				<form className="flex flex-col gap-4" onSubmit={handleSubmit}>
 					<div>
-						<label htmlFor="email" className="block text-sm text-muted mb-1">
+						<label htmlFor="email" className="block text-sm text-muted-foreground mb-1">
 							{t("AUTH.EMAIL")}
 						</label>
 						<input
@@ -128,7 +128,7 @@ export default function RegisterPage() {
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 							disabled={isSubmitting}
-							className="w-full border-b border-border-subtle bg-transparent py-2 text-secondary outline-none placeholder:text-muted focus:border-accent transition-colors"
+							className="w-full border-b border-border-subtle bg-transparent py-2 text-foreground-secondary outline-none placeholder:text-muted-foreground focus:border-brand transition-colors"
 							placeholder={t("AUTH.EMAIL")}
 						/>
 					</div>
@@ -136,7 +136,7 @@ export default function RegisterPage() {
 					<div>
 						<label
 							htmlFor="password"
-							className="block text-sm text-muted mb-1"
+							className="block text-sm text-muted-foreground mb-1"
 						>
 							{t("AUTH.PASSWORD")}
 						</label>
@@ -146,7 +146,7 @@ export default function RegisterPage() {
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
 							disabled={isSubmitting}
-							className="w-full border-b border-border-subtle bg-transparent py-2 text-secondary outline-none placeholder:text-muted focus:border-accent transition-colors"
+							className="w-full border-b border-border-subtle bg-transparent py-2 text-foreground-secondary outline-none placeholder:text-muted-foreground focus:border-brand transition-colors"
 							placeholder={t("AUTH.PASSWORD")}
 						/>
 					</div>
@@ -154,7 +154,7 @@ export default function RegisterPage() {
 					<div>
 						<label
 							htmlFor="confirmPassword"
-							className="block text-sm text-muted mb-1"
+							className="block text-sm text-muted-foreground mb-1"
 						>
 							{t("AUTH.CONFIRM_PASSWORD")}
 						</label>
@@ -164,27 +164,27 @@ export default function RegisterPage() {
 							value={confirmPassword}
 							onChange={(e) => setConfirmPassword(e.target.value)}
 							disabled={isSubmitting}
-							className="w-full border-b border-border-subtle bg-transparent py-2 text-secondary outline-none placeholder:text-muted focus:border-accent transition-colors"
+							className="w-full border-b border-border-subtle bg-transparent py-2 text-foreground-secondary outline-none placeholder:text-muted-foreground focus:border-brand transition-colors"
 							placeholder={t("AUTH.CONFIRM_PASSWORD")}
 						/>
 					</div>
 
-					{error && <p className="text-sm text-error">{error}</p>}
+					{error && <p className="text-sm text-destructive">{error}</p>}
 
 					<button
 						type="submit"
 						disabled={isSubmitting}
-						className="bg-accent-bg text-white py-2 rounded-lg hover:bg-accent-bg-hover transition-colors disabled:bg-disabled-bg disabled:cursor-not-allowed"
+						className="bg-primary text-white py-2 rounded-lg hover:bg-primary-hover transition-colors disabled:bg-disabled-bg disabled:cursor-not-allowed"
 					>
 						{isSubmitting ? t("AUTH.REGISTERING") : t("AUTH.REGISTER")}
 					</button>
 				</form>
 
-				<p className="mt-6 text-sm text-muted">
+				<p className="mt-6 text-sm text-muted-foreground">
 					{t("AUTH.HAS_ACCOUNT")}{" "}
 					<Link
 						to="/login"
-						className="text-accent hover:underline transition-colors"
+						className="text-brand hover:underline transition-colors"
 					>
 						{t("AUTH.LOGIN")}
 					</Link>

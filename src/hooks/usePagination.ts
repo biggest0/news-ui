@@ -1,6 +1,8 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useEffect, useMemo, useState } from "react";
+
 import type { ArticleInfo } from "@/types/articleTypes";
-import { getArticlesInfo } from "@/service/articleService";
+import { useApiLang } from "@/hooks/useApiLang";
+import { useGetArticlesPageQuery } from "@/store/api/articleEndpoints";
 
 export type PageSize = 5 | 10 | 20 | 50;
 
@@ -9,6 +11,8 @@ interface UsePaginationProps {
 	initialPageSize?: PageSize;
 	dateRange?: string;
 	sortBy?: string;
+	/** Only fetch while page-pagination mode is active. */
+	enabled?: boolean;
 }
 
 interface UsePaginationReturn {
@@ -18,81 +22,67 @@ interface UsePaginationReturn {
 	pageSize: PageSize;
 	totalCount: number;
 	isLoading: boolean;
+	isError: boolean;
+	refetchPage: () => void;
 	setPageSize: (size: PageSize) => void;
 	goToPage: (page: number) => void;
 	hasNextPage: boolean;
 	hasPrevPage: boolean;
 }
 
+/**
+ * Page-mode pagination on RTK Query (M5): each {page, size, filters, lang}
+ * combination is its own cache entry, so revisiting a page is instant and a
+ * language/filter change refetches automatically. Only page/size state lives
+ * here — data, loading, and errors come from the query hook.
+ */
 export function usePagination({
 	selectedCategory,
 	initialPageSize = 5,
 	dateRange,
 	sortBy,
+	enabled = true,
 }: UsePaginationProps): UsePaginationReturn {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [pageSize, setPageSize] = useState<PageSize>(initialPageSize);
-	const [paginatedArticles, setPaginatedArticles] = useState<ArticleInfo[]>([]);
-	const [totalCount, setTotalCount] = useState(0);
-	const [isLoading, setIsLoading] = useState(false);
+	const lang = useApiLang();
 
-	// Calculate total pages based on server's total count
+	// Back to page 1 whenever the result set changes shape
+	useEffect(() => {
+		setCurrentPage(1);
+	}, [selectedCategory, dateRange, sortBy, pageSize]);
+
+	const { data, isFetching, isError, refetch } = useGetArticlesPageQuery(
+		{
+			page: currentPage,
+			limit: pageSize,
+			category: selectedCategory || undefined,
+			dateRange,
+			sortBy,
+			lang,
+		},
+		{ skip: !enabled }
+	);
+
+	const totalCount = data?.count ?? 0;
 	const totalPages = useMemo(
 		() => Math.max(1, Math.ceil(totalCount / pageSize)),
 		[totalCount, pageSize]
 	);
 
-	const hasNextPage = currentPage < totalPages;
-	const hasPrevPage = currentPage > 1;
-
-	// Fetch articles for a specific page directly from the API
-	const fetchPage = useCallback(async (page: number, limit: PageSize) => {
-		setIsLoading(true);
-		try {
-			const response = await getArticlesInfo({
-				page,
-				limit,
-				category: selectedCategory || undefined,
-				dateRange,
-				sortBy,
-			});
-			setPaginatedArticles(response.articles);
-			setTotalCount(response.count);
-		} catch (error) {
-			console.error("Error fetching page:", error);
-		} finally {
-			setIsLoading(false);
-		}
-	}, [selectedCategory, dateRange, sortBy]);
-
-	// Fetch initial page and when filters change
-	useEffect(() => {
-		setCurrentPage(1);
-		fetchPage(1, pageSize);
-	}, [selectedCategory, dateRange, sortBy, pageSize, fetchPage]);
-
-	// Navigate to a specific page
-	const goToPage = useCallback((page: number) => {
-		const validPage = Math.max(1, Math.min(page, totalPages || 1));
-		setCurrentPage(validPage);
-		fetchPage(validPage, pageSize);
-	}, [totalPages, pageSize, fetchPage]);
-
-	const handlePageSizeChange = useCallback((size: PageSize) => {
-		setPageSize(size);
-		// Will trigger useEffect to fetch page 1 with new size
-	}, []);
-
 	return {
-		paginatedArticles,
+		paginatedArticles: data?.articles ?? [],
 		currentPage,
 		totalPages,
 		pageSize,
 		totalCount,
-		isLoading,
-		setPageSize: handlePageSizeChange,
-		goToPage,
-		hasNextPage,
-		hasPrevPage,
+		isLoading: isFetching,
+		isError,
+		refetchPage: refetch,
+		setPageSize,
+		goToPage: (page: number) =>
+			setCurrentPage(Math.max(1, Math.min(page, totalPages || 1))),
+		hasNextPage: currentPage < totalPages,
+		hasPrevPage: currentPage > 1,
 	};
 }

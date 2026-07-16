@@ -1,32 +1,23 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
-import type { RootState, AppDispatch } from "@/store/store";
-import { loadTopTenArticles } from "@/store/articlesSlice";
 import { ArticleTitleCard } from "@/components/news/cards/ArticleTitleCard";
 import { SectionHeaderExpandable } from "@/components/common/layout/SectionHeaderExpandable";
-import CollapsibleSection from "./CollapsibleSection";
+import { SectionShell } from "@/components/common/layout/SectionShell";
+import CollapsibleSection from "@/components/news/section/CollapsibleSection";
 import { SECTIONS } from "@/constants/keys";
 import { useSectionVisible } from "@/hooks/useSectionCollapse";
+import { useApiLang } from "@/hooks/useApiLang";
+import { useGetTopTenQuery } from "@/store/api/articleEndpoints";
 
+/** Top-ten most-viewed articles — RTK Query consumer. */
 export default function PopularSection() {
-	const dispatch = useDispatch<AppDispatch>();
 	const { t } = useTranslation();
-	const { topTenArticles } = useSelector((state: RootState) => state.article);
 	const isVisible = useSectionVisible(SECTIONS.POPULAR);
-
-	useEffect(() => {
-		dispatch(loadTopTenArticles());
-	}, []);
+	const lang = useApiLang();
+	const { data: topTenArticles = [] } = useGetTopTenQuery({ lang });
 
 	return (
-		<section
-			className={`border-b border-gray-400 py-6 ${
-				isVisible ? "" : "hidden"
-			}`}
-		>
-			{/* instead pass in an enum maybe, this enum will give the title, and enum will map to correct options being created */}
+		<SectionShell visible={isVisible} bordered>
 			<SectionHeaderExpandable
 				title={t("SECTION.POPULAR")}
 				section={SECTIONS.POPULAR}
@@ -43,6 +34,6 @@ export default function PopularSection() {
 					))}
 				</div>
 			</CollapsibleSection>
-		</section>
+		</SectionShell>
 	);
 }

@@ -18,7 +18,7 @@ export const LoadingOverlay = ({ loading }: { loading: boolean }) => {
 	return (
 		show && (
 			<div
-				className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-white text-gray-700 transition-opacity duration-300 ${
+				className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-background text-foreground-secondary transition-opacity duration-300 ${
 					loading ? "opacity-100" : "opacity-0"
 				}`}
 			>

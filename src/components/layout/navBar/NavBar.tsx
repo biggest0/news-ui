@@ -1,20 +1,17 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import type { AppDispatch } from "@/store/store";
-import { useDispatch } from "react-redux";
-
-import { loadArticlesInfoBySearch } from "@/store/articlesSlice";
-import { DesktopNavigation } from "./DesktopNavigation";
-import { MobileNavigation } from "./MobileNavigation";
-import { MobileMenu } from "./MobileMenu";
+import { DesktopNavigation } from "@/components/layout/navBar/DesktopNavigation";
+import { MobileNavigation } from "@/components/layout/navBar/MobileNavigation";
+import { MobileMenu } from "@/components/layout/navBar/MobileMenu";
 
 export default function NavBar() {
-	const dispatch = useDispatch<AppDispatch>();
 	const navigate = useNavigate();
 
 	const [searchClicked, setSearchClicked] = useState(false);
 	const [query, setQuery] = useState("");
 	const [menuOpen, setMenuOpen] = useState(false);
+	// drawer returns focus here on close (finalFocus)
+	const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   // Handle search submit
 	const handleSubmit = (e: React.FormEvent) => {
@@ -24,7 +21,7 @@ export default function NavBar() {
 		}
 
 		if (query.trim()) {
-			dispatch(loadArticlesInfoBySearch({ page: 1, search: query }));
+			// navigation is enough — SearchPage's RTK Query hook fetches from the URL
 			navigate(`/search?q=${encodeURIComponent(query)}`);
 			setSearchClicked(false);
 		}
@@ -40,6 +37,7 @@ export default function NavBar() {
 
 	const mobileMenuProps = {
 		menuOpen,
+		returnFocusRef: menuButtonRef,
 		onMenuToggle: () => setMenuOpen(!menuOpen),
 		onMenuClose: () => setMenuOpen(false),
 		query,
@@ -53,6 +51,7 @@ export default function NavBar() {
 			<MobileNavigation
 				menuOpen={menuOpen}
 				onMenuToggle={() => setMenuOpen(!menuOpen)}
+				menuButtonRef={menuButtonRef}
 			/>
 			<MobileMenu {...mobileMenuProps} />
 		</nav>
