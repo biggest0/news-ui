@@ -1,13 +1,12 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import type { ArticleInfo, ArticleDetail } from "@/types/articleTypes";
-import type { RootState, AppDispatch } from "@/store/store";
-import { loadArticleDetail } from "@/store/articlesSlice";
+import type { ArticleInfo } from "@/types/articleTypes";
+import { useApiLang } from "@/hooks/useApiLang";
+import { useGetArticleDetailQuery } from "@/store/api/articleEndpoints";
+import { useRecordArticleReadMutation } from "@/store/api/userContentEndpoints";
 import { incrementArticleViewed } from "@/api/articleApi";
-import { recordArticleRead } from "@/service/userArticleService";
 import { useAuth } from "@/contexts/AuthContext";
 import { ShareButton } from "@/components/common/social/ShareButton";
 import { LikeButton } from "@/components/common/social/LikeButton";
@@ -19,32 +18,28 @@ interface NewsCardProp {
 
 export default function NewsCard({ articleInfo }: NewsCardProp) {
 	const { t } = useTranslation();
-	const dispatch = useDispatch<AppDispatch>();
 	const { isAuthenticated } = useAuth();
-	const articleDetail: ArticleDetail = useSelector(
-		(state: RootState) => state.article.articlesDetail[articleInfo.id]
-	);
+	const lang = useApiLang();
+	// fire-and-forget: triggered without await (invalidates History)
+	const [recordArticleRead] = useRecordArticleReadMutation();
 
 	const [expanded, setExpanded] = useState(false);
-	const [articleDetailfetched, setArticleDetailfetched] = useState(false);
-	const [isLoadingDetail, setIsLoadingDetail] = useState(false);
+	const [hasExpandedOnce, setHasExpandedOnce] = useState(false);
 
-	async function handleExpand() {
+	// Detail loads lazily on first expand and is cached per {id, lang} —
+	// collapsing and re-expanding (or another card/page for the same article)
+	// reuses the cache entry.
+	const { data: articleDetail, isFetching: isLoadingDetail } =
+		useGetArticleDetailQuery(
+			{ id: articleInfo.id, lang },
+			{ skip: !hasExpandedOnce }
+		);
+
+	function handleExpand() {
 		setExpanded((prev) => !prev);
-		if (!articleDetailfetched && !isLoadingDetail) {
-			setIsLoadingDetail(true);
-			await dispatch(loadArticleDetail(articleInfo.id))
-				.then(() => {
-					setArticleDetailfetched(true);
-				})
-				.catch((error) => {
-					console.error("Failed to fetch article detail:", error);
-					// Reset states on error so user can retry
-					setArticleDetailfetched(false);
-				})
-				.finally(() => {
-					setIsLoadingDetail(false);
-				});
+		if (!hasExpandedOnce) {
+			setHasExpandedOnce(true);
+			// count the view + record history once per card expansion session
 			incrementArticleViewed(articleInfo.id);
 			if (isAuthenticated) {
 				recordArticleRead(articleInfo.id);
@@ -52,44 +47,49 @@ export default function NewsCard({ articleInfo }: NewsCardProp) {
 		}
 	}
 
+	/**
+	 * Per-category colors — documented exception to the token system.
+	 * Light-mode values were semi-transparent rgba() and failed WCAG AA;
+	 * M6 replaced them with solid 700-shade equivalents (same hues, AA-safe).
+	 */
 	function categoryColor(category: string): string {
 		switch (category) {
 			case "world":
-				return "text-[rgba(209,45,22,0.7)] dark:text-red-400";
+				return "text-red-700 dark:text-red-400";
 
 			case "business":
-				return "text-[rgba(37,99,235,0.8)] dark:text-blue-400";
+				return "text-blue-700 dark:text-blue-400";
 
 			case "lifestyle":
-				return "text-[rgba(168,55,207,0.7)] dark:text-purple-400";
+				return "text-purple-700 dark:text-purple-400";
 
 			case "science":
-				return "text-[rgba(20,124,166,0.8)] dark:text-teal-400";
+				return "text-teal-700 dark:text-teal-400";
 
 			case "technology":
-				return "text-[rgba(6,152,212,0.7)] dark:text-cyan-400";
+				return "text-cyan-700 dark:text-cyan-400";
 
 			case "sport":
-				return "text-[rgba(21,128,61,0.7)] dark:text-green-400";
+				return "text-green-700 dark:text-green-400";
 
 			case "politics":
-				return "text-[rgba(37,51,80,0.8)] dark:text-slate-300";
+				return "text-slate-800 dark:text-slate-300";
 
 			case "other":
-				return "text-[rgba(107,114,128,0.7)] dark:text-slate-400";
+				return "text-gray-600 dark:text-slate-400";
 
 			default:
-				return "text-secondary";
+				return "text-foreground-secondary";
 		}
 	}
 
 	return (
 		<div className="flex flex-col justify-between min-h-48 max-h-full border-b border-border py-4 w-full space-y-8 transition-colors duration-200">
 			<div>
-				<h3 className="text-xl font-semibold text-primary">
+				<h3 className="text-xl font-semibold text-foreground">
 					{articleInfo.title}
 				</h3>
-				<div className="text-sm text-muted">{articleInfo.datePublished}</div>
+				<div className="text-sm text-muted-foreground">{articleInfo.datePublished}</div>
 				<div
 					className={`text-sm ${categoryColor(articleInfo.mainCategory ?? "")}`}
 				>
@@ -98,7 +98,7 @@ export default function NewsCard({ articleInfo }: NewsCardProp) {
 			</div>
 
 			{/* Article Summary/ Paragraphs */}
-			<div className="text-secondary">
+			<div className="text-foreground-secondary">
 				{/* Grid transition for article's paragraphs on expand */}
 				<div
 					className={`grid transition-all duration-500 ease-in-out ${
@@ -113,7 +113,7 @@ export default function NewsCard({ articleInfo }: NewsCardProp) {
 					>
 						{/* Display loading if waiting for data*/}
 						{isLoadingDetail && !articleDetail && (
-							<div className="py-4 text-muted">{t("ARTICLE_CARD.LOADING_DETAILS")}</div>
+							<div className="py-4 text-muted-foreground">{t("ARTICLE_CARD.LOADING_DETAILS")}</div>
 						)}
 						{articleDetail && (
 							<div className="flex flex-col space-y-4">
@@ -129,7 +129,7 @@ export default function NewsCard({ articleInfo }: NewsCardProp) {
 										<Link
 											key={`${articleDetail.id}-category-${index}}`}
 											to={`/subcategory/${encodeURIComponent(subCat)}`}
-											className="hover:text-accent transition-colors"
+											className="hover:text-brand transition-colors"
 										>
 											{subCat}
 										</Link>
@@ -159,7 +159,7 @@ export default function NewsCard({ articleInfo }: NewsCardProp) {
 
 			<div className="flex flex-row justify-between items-center">
 				<div
-					className="cursor-pointer hover:text-accent self-start transition-colors"
+					className="cursor-pointer hover:text-brand self-start transition-colors"
 					onClick={handleExpand}
 				>
 					{!expanded ? t("ARTICLE_CARD.READ_MORE") : t("ARTICLE_CARD.HIDE")}

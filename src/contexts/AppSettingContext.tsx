@@ -246,6 +246,10 @@ export const AppSettingProvider = ({ children }: { children: ReactNode }) => {
  * `AppSettingProvider` — throws if used outside the tree.
  */
 // Custom hook to use the context
+/**
+ * Access UI preferences (theme mode, section layout, pagination mode) and
+ * their update functions. Must be used inside AppSettingProvider.
+ */
 export const useAppSettings = () => {
 	const context = useContext(AppSettingContext);
 	if (!context) {

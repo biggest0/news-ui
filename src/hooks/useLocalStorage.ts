@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 
 // Custom hook for localStorage management
+/**
+ * useState persisted to localStorage under `key` (JSON-serialized).
+ * @returns [value, setValue] tuple, same contract as useState
+ */
 export function useLocalStorage<T>(key: string, initialValue: T) {
 	const [storedValue, setStoredValue] = useState<T>(() => {
 		try {
@@ -18,7 +22,7 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
 		} catch (error) {
 			console.error("Error setting localStorage key “" + key + "”: ", error);
 		}
-	}, [storedValue]);
+	}, [key, storedValue]);
 
 	return [storedValue, setStoredValue] as const;
 }

@@ -1,4 +1,4 @@
-import common from "./en/common.json";
+import common from "@/i18n/en/common.json";
 
 // Provide type safety for t() function and i18n resources
 export interface Resources {

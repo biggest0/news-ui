@@ -17,12 +17,15 @@ export function FilterBar({
 	const { t } = useTranslation();
 
 	return (
-		<div className="flex gap-8 pb-4 text-sm text-muted">
+		<div className="flex gap-8 pb-4 text-sm text-muted-foreground">
 			{/* Date Range */}
 			<div className="relative">
 				<select
+					id="filter-date-range"
+					name="dateRange"
+					aria-label={t("FILTER.DATE_RANGE")}
 					value={dateRange}
-					className="py-1 font-medium text-secondary bg-transparent appearance-none pr-4"
+					className="py-1 font-medium text-foreground-secondary bg-transparent appearance-none pr-4"
 					onChange={(e) => onDateRangeChange(e.target.value)}
 				>
 					<option value="" disabled>
@@ -34,15 +37,18 @@ export function FilterBar({
 					<option value="30d">{t("FILTER.LAST_30_DAYS")}</option>
 				</select>
 				<div className="absolute inset-y-0 right-0 flex items-center pointer-events-none">
-					<BsChevronDown className="w-3 h-3 fill-current text-muted" />
+					<BsChevronDown className="w-3 h-3 fill-current text-muted-foreground" />
 				</div>
 			</div>
 
 			{/* Sort By */}
 			<div className="relative">
 				<select
+					id="filter-sort-by"
+					name="sortBy"
+					aria-label={t("FILTER.SORT_BY")}
 					value={sortBy}
-					className="py-1 font-medium text-secondary bg-transparent appearance-none pr-4"
+					className="py-1 font-medium text-foreground-secondary bg-transparent appearance-none pr-4"
 					onChange={(e) => onSortByChange(e.target.value)}
 				>
 					<option value="" disabled>
@@ -52,7 +58,7 @@ export function FilterBar({
 					<option value="mostViewed">{t("FILTER.MOST_VIEWED")}</option>
 				</select>
 				<div className="absolute inset-y-0 right-0 flex items-center pointer-events-none">
-					<BsChevronDown className="w-3 h-3 fill-current text-muted" />
+					<BsChevronDown className="w-3 h-3 fill-current text-muted-foreground" />
 				</div>
 			</div>
 		</div>

@@ -6,6 +6,7 @@ import {
 	setAppSetting,
 } from "@/utils/storage/localStorageUtils";
 
+/** Persists a section's visibility flag into the stored app settings. */
 export function updateSectionVisibility(
 	key: keyof SectionToggleState,
 	value: boolean
@@ -19,6 +20,7 @@ export function updateSectionVisibility(
 	}
 }
 
+/** Persists a section's expanded/collapsed flag into the stored app settings. */
 export function updateSectionExpansion(
 	key: keyof SectionToggleState,
 	value: boolean
@@ -35,6 +37,7 @@ export function updateSectionExpansion(
 	}
 }
 
+/** Flips the persisted theme mode between light and dark. */
 export function toggleDarkMode() {
 	try {
 		const appSetting = getAppSetting();
@@ -45,6 +48,7 @@ export function toggleDarkMode() {
 	}
 }
 
+/** Flips the persisted news-list mode between pagination and infinite scroll. */
 export function togglePagePagination() {
 	try {
 		const appSetting = getAppSetting();

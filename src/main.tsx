@@ -6,21 +6,28 @@ import "@/index.css";
 import App from "@/App.tsx";
 import { store } from "@/store/store.ts";
 import i18n from "@/i18n/config.ts";
-import { resetArticleData } from "@/store/articlesSlice";
-import { resetRecommendations } from "@/store/recommendationsSlice";
-import { clearUserContent } from "@/store/userContentSlice";
-import { resetCatFacts } from "@/store/catFactsSlice";
+import { apiSlice } from "@/store/api/apiSlice";
+import { authStore } from "@/auth/authStore";
 
-// Keep document + article data in sync with the UI language.
-// All cached article content is language-specific, so on toggle we clear the
-// store and let the remounted pages (see key on <main> in App.tsx) refetch
-// with the new `lang` query param.
+// Keep the document language in sync with the UI language. Article data
+// needs no manual handling: RTK Query endpoints carry `lang` in their cache
+// keys, so every migrated domain refetches automatically on toggle (M5 —
+// this replaced the manual slice resets + <main key> page remount).
 i18n.on("languageChanged", (lng) => {
 	document.documentElement.lang = lng;
-	store.dispatch(resetArticleData());
-	store.dispatch(resetRecommendations());
-	store.dispatch(clearUserContent());
-	store.dispatch(resetCatFacts());
+});
+
+// Drop per-user cached data (likes, reading history) the moment the session
+// ends, so a subsequent login as a different user can't see stale entries.
+// (Subscribed here rather than in authStore to avoid a runtime import cycle:
+// authStore ← apiSlice ← store.)
+let wasAuthenticated = authStore.getState().isAuthenticated;
+authStore.subscribe(() => {
+	const { isAuthenticated } = authStore.getState();
+	if (wasAuthenticated && !isAuthenticated) {
+		store.dispatch(apiSlice.util.invalidateTags(["Like", "History"]));
+	}
+	wasAuthenticated = isAuthenticated;
 });
 // i18n init (and its initial languageChanged event) ran on import above,
 // so set the initial <html lang> explicitly

@@ -14,32 +14,32 @@ export default function About() {
 				<div className="space-y-6 pt-4">
 					{/* Catire Time */}
 					<div className="text-center">
-						<h3 className="text-lg text-primary">{t("APP.TITLE")}</h3>
-						<div className="text-secondary">
+						<h3 className="text-lg text-foreground">{t("APP.TITLE")}</h3>
+						<div className="text-foreground-secondary">
 							{t("PAGES.ABOUT.INTRODUCTION")}
 						</div>
 					</div>
 					{/* Our mission */}
 					<div className="text-center">
-						<h3 className="text-lg text-primary">{t("PAGES.ABOUT.MISSION_TITLE")}</h3>
-						<div className="text-secondary">
+						<h3 className="text-lg text-foreground">{t("PAGES.ABOUT.MISSION_TITLE")}</h3>
+						<div className="text-foreground-secondary">
 							{t("PAGES.ABOUT.MISSION_CONTENT")}
 						</div>
 					</div>
 					<div className="text-center">
-						<h3 className="text-lg text-primary">{t("PAGES.ABOUT.FUN_READS_TITLE")}</h3>
-						<div className="text-secondary">
+						<h3 className="text-lg text-foreground">{t("PAGES.ABOUT.FUN_READS_TITLE")}</h3>
+						<div className="text-foreground-secondary">
 							{t("PAGES.ABOUT.FUN_READS_CONTENT")}
 						</div>
 					</div>
 					{/* Disclaimer */}
 					<div className="text-center">
-						<h3 className="text-lg text-primary">{t("PAGES.ABOUT.DISCLAIMER_TITLE")}</h3>
-						<div className="text-secondary">
+						<h3 className="text-lg text-foreground">{t("PAGES.ABOUT.DISCLAIMER_TITLE")}</h3>
+						<div className="text-foreground-secondary">
 							{t("PAGES.ABOUT.DISCLAIMER_CONTENT")}
 						</div>
 						<Link
-							className="cursor-pointer text-muted hover:text-primary underline"
+							className="cursor-pointer text-muted-foreground hover:text-foreground underline"
 							to="/disclaimer"
 						>
 							{t("PAGES.ABOUT.FULL_DISCLAIMER")}

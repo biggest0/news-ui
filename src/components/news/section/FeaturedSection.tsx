@@ -1,26 +1,16 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 import Image from "@/assets/news_hero_image.jpg";
 import NewsHeroCard from "@/components/news/cards/NewsHeroCard";
-import type { AppDispatch, RootState } from "@/store/store";
-import { loadFeaturedArticles } from "@/store/articlesSlice";
+import { useFeaturedArticles } from "@/hooks/useArticleHooks";
 
+/** Desktop hero + featured grid — shares the featured cache with StaffPicks. */
 export default function FeaturedSection() {
 	const { t } = useTranslation();
-	const dispatch = useDispatch<AppDispatch>();
-	const featuredArticles = useSelector(
-		(state: RootState) => state.article.featuredArticles
-	);
-
-	// server-curated selection; thunk dedupes if another section already loaded it
-	useEffect(() => {
-		dispatch(loadFeaturedArticles());
-	}, [dispatch]);
+	const featuredArticles = useFeaturedArticles();
 
 	return (
-		<section className="border-b border-gray-400 py-6 hidden md:grid grid-cols-4 grid-rows-2 gap-4 min-h-112">
+		<section className="border-b border-border py-6 hidden md:grid grid-cols-4 grid-rows-2 gap-4 min-h-112">
 			{/* Desktop Layout */}
 			{/* Left column - 2 articles */}
 			<div className="col-span-1 row-span-2 flex flex-col gap-8">

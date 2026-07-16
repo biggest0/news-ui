@@ -19,6 +19,12 @@ export interface DropDownOption {
 	isDivider?: boolean;
 }
 
+/**
+ * Builds the option list for a section's dropdown menu (expand/collapse,
+ * remove, and — for the news section — page/scroll view toggle).
+ * @param sectionKey - Which home section the menu controls
+ * @returns Memoized DropDownOption[] for SectionDropDown
+ */
 export function useSectionDropdown(sectionKey: SectionKey): DropDownOption[] {
 	const { t } = useTranslation();
 	const {
@@ -61,7 +67,7 @@ export function useSectionDropdown(sectionKey: SectionKey): DropDownOption[] {
 		}
 
 		return options;
-	}, [appSetting, t]);
+	}, [appSetting, t, sectionKey, togglePagination, updateSectionExpansion, updateSectionVisibility]);
 
 	return dropdownOptions;
 }

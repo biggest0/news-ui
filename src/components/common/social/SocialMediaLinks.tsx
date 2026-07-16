@@ -9,24 +9,27 @@ export default function SocialMediaLinks() {
                 href="https://www.instagram.com/catiretime"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Instagram"
             >
-                <CgInstagram className="w-5 h-5 text-muted hover:text-primary cursor-pointer" />
+                <CgInstagram className="w-5 h-5 text-muted-foreground hover:text-foreground cursor-pointer" />
             </a>
 
             <a
                 href="https://x.com/catiretime"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="X"
             >
-                <RiTwitterXFill className="w-5 h-5 text-muted hover:text-primary cursor-pointer" />
+                <RiTwitterXFill className="w-5 h-5 text-muted-foreground hover:text-foreground cursor-pointer" />
             </a>
 
             <a
                 href="https://www.youtube.com/@catiretime"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="YouTube"
             >
-                <TfiYoutube className="w-5 h-5 text-muted hover:text-primary cursor-pointer" />
+                <TfiYoutube className="w-5 h-5 text-muted-foreground hover:text-foreground cursor-pointer" />
             </a>
         </div>
     );

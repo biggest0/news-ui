@@ -4,9 +4,9 @@ import { useTranslation } from "react-i18next";
 import { LuSearch } from "react-icons/lu";
 
 import { buildSearchUrl, type SearchType } from "@/utils/search/searchUrlUtils";
-import DateRangeFilter from "./DateRangeFilter";
-import SortByFilter from "./SortByFilter";
-import SearchTypeFilter from "./SearchTypeFilter";
+import DateRangeFilter from "@/components/search/DateRangeFilter";
+import SortByFilter from "@/components/search/SortByFilter";
+import SearchTypeFilter from "@/components/search/SearchTypeFilter";
 
 interface SearchSectionProps {
 	query: string;
@@ -49,29 +49,33 @@ export default function SearchSection({
 	};
 
 	return (
-		<section className="w-full flex flex-col justify-center items-center py-4 h-48 bg-surface">
+		<section className="w-full flex flex-col justify-center items-center py-4 h-48 bg-background">
 			{/* Search bar */}
 			<form
 				onSubmit={handleSubmit}
 				className="flex items-center w-full max-w-md border-b border-border overflow-hidden mb-4"
 			>
 				<input
+					id="search-page-query"
+					name="q"
+					aria-label={t("FILTER.SEARCH_ARTICLES_PLACEHOLDER")}
 					type="text"
 					value={input}
 					onChange={(e) => setInput(e.target.value)}
 					placeholder={t("FILTER.SEARCH_ARTICLES_PLACEHOLDER")}
-					className="flex-grow py-2 outline-none text-secondary bg-transparent text-2xl"
+					className="flex-grow py-2 outline-none text-foreground-secondary bg-transparent text-2xl"
 				/>
 				<button
 					type="submit"
-					className="text-muted px-4 py-2 hover:text-primary transition cursor-pointer"
+					aria-label={t("FILTER.SEARCH_ARTICLES_PLACEHOLDER")}
+					className="text-muted-foreground px-4 py-2 hover:text-foreground transition cursor-pointer"
 				>
 					<LuSearch />
 				</button>
 			</form>
 
 			{/* Filter bar */}
-			<div className="flex justify-start gap-8 w-full max-w-md text-sm text-secondary">
+			<div className="flex justify-start gap-8 w-full max-w-md text-sm text-foreground-secondary">
 				<SearchTypeFilter
 					value={searchType}
 					onChange={(value) => updateUrl(query, dateRange, sortBy, value)}

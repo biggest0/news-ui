@@ -13,34 +13,34 @@ export default function Contact() {
 				<div className="space-y-6 pt-4">
 					{/* Catire Time */}
 					<div className="text-center">
-						<h3 className="text-lg text-primary">{t('PAGES.CONTACT.EMAIL')}</h3>
-						<div className="text-secondary">catirecontact@gmail.com</div>
+						<h3 className="text-lg text-foreground">{t('PAGES.CONTACT.EMAIL')}</h3>
+						<div className="text-foreground-secondary">catirecontact@gmail.com</div>
 					</div>
 					<div className="text-center flex flex-col">
-						<h3 className="text-lg text-primary">{t('PAGES.CONTACT.SOCIALS')}</h3>
+						<h3 className="text-lg text-foreground">{t('PAGES.CONTACT.SOCIALS')}</h3>
 						<a
 							href="https://www.instagram.com/catiretime"
 							target="_blank"
 							rel="noopener noreferrer"
-							className="text-secondary hover:text-accent"
+							className="text-foreground-secondary hover:text-brand"
 						>
-							Instagram: catiretime
+							{"Instagram: catiretime" /* platform + handle — proper noun, untranslated */}
 						</a>
 						<a
 							href="https://www.youtube.com/@catiretime"
 							target="_blank"
 							rel="noopener noreferrer"
-							className="text-secondary hover:text-accent"
+							className="text-foreground-secondary hover:text-brand"
 						>
-							YouTube: catiretime
+							{"YouTube: catiretime" /* platform + handle — proper noun, untranslated */}
 						</a>
 						<a
 							href="https://x.com/catiretime"
 							target="_blank"
 							rel="noopener noreferrer"
-							className="text-secondary hover:text-accent"
+							className="text-foreground-secondary hover:text-brand"
 						>
-							X: catiretime
+							{"X: catiretime" /* platform + handle — proper noun, untranslated */}
 						</a>
 					</div>
 				</div>
