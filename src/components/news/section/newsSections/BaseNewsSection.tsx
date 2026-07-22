@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import NewsSideColumn from "@/components/news/shared/NewsSideColumn";
@@ -104,6 +104,21 @@ export function BaseNewsSection({
 		: scrollArticles;
 	const showError = isPaginationEnabled ? isPageError : isError;
 
+	// The full-page overlay is a first-open affair only: latch true once the
+	// first batch of articles is present so later page changes or filter swaps
+	// (which momentarily empty a page-mode cache entry) never re-trigger it.
+	const [hasLoadedOnce, setHasLoadedOnce] = useState(false);
+	useEffect(() => {
+		if (displayedArticles.length > 0) setHasLoadedOnce(true);
+	}, [displayedArticles.length]);
+
+	// Initial-load signal for the active mode. Scroll mode reads the infinite
+	// query's first-load flag; page mode is skipped there, so it falls back to
+	// its own fetch state. Gated on hasLoadedOnce so the overlay shows only
+	// while we're still waiting for the very first response.
+	const isInitialLoading =
+		!hasLoadedOnce && (isPaginationEnabled ? isPaginationLoading : isLoading);
+
 	return (
 		<div className="flex flex-col md:grid md:grid-cols-3 md:items-start gap-x-4 gap-y-6 pt-6">
 			{/* Articles, main col */}
@@ -174,7 +189,7 @@ export function BaseNewsSection({
 			{/* Side col for md screen and larger */}
 			<NewsSideColumn />
 
-			{overlayOnInitialLoad && <LoadingOverlay loading={isLoading} />}
+			{overlayOnInitialLoad && <LoadingOverlay loading={isInitialLoading} />}
 		</div>
 	);
 }
