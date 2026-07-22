@@ -67,6 +67,8 @@ testI18n.init({
 					PREVIOUS_PAGE: "Previous page",
 					NEXT_PAGE: "Next page",
 					LAST_PAGE: "Last page",
+					ARTICLES_COMING: "Just a few seconds, articles are coming!",
+					CAUGHT_UP: "You've scrolled to the end. There's nothing left!",
 				},
 				EMPTY_STATE: {
 					NEWS_SECTION_MESSAGE: "Looks like you removed the Mews section",
