@@ -197,7 +197,7 @@ describe("BaseNewsSection", () => {
 
 		renderWithProviders(<BaseNewsSection />);
 
-		expect(screen.getByText("Just a few seoncds, articles are coming!")).toBeInTheDocument();
+		expect(screen.getByText("Just a few seconds, articles are coming!")).toBeInTheDocument();
 	});
 
 	/** In infinite scroll mode, PaginationControls are NOT shown. */
