@@ -65,7 +65,13 @@ test("Skip records a skipped dismissal", async ({ page }) => {
 	const stored = await page.evaluate(() =>
 		JSON.parse(window.localStorage.getItem("onboarding")!)
 	);
+	expect(stored.seenVersion).toBe(1);
 	expect(stored.dismissedVia).toBe("skipped");
+
+	// skipping must stick just as firmly as finishing
+	await page.reload();
+	await page.waitForTimeout(1500);
+	await expect(dialog(page)).toHaveCount(0);
 });
 
 test("the theme control really flips dark mode", async ({ page }) => {
