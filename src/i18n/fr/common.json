@@ -310,8 +310,7 @@
     "DOT_LABEL": "Aller à l'étape {{step}}",
     "WELCOME": {
       "TITLE": "Bienvenue sur Catire Time",
-      "BODY": "Tous les articles ici sont satiriques, écrits par des chats, et rien n'est une vraie information. C'est bien le principe. Voici comment adapter le site à vos envies.",
-      "DISCLAIMER_LINK": "Lire l'avertissement complet"
+      "BODY": "Chaque article ici est satirique — une version courte et facile à lire de l'actualité réelle. À prendre avec des pincettes. Voici comment adapter le site à vos envies."
     },
     "PREFERENCES": {
       "TITLE": "Personnalisez",

@@ -105,8 +105,7 @@ testI18n.init({
 					DOT_LABEL: "Go to step {{step}}",
 					WELCOME: {
 						TITLE: "Welcome to Catire Time",
-						BODY: "Every story here is satire.",
-						DISCLAIMER_LINK: "Read the full disclaimer",
+						BODY: "Every article here is satire.",
 					},
 					PREFERENCES: {
 						TITLE: "Make it yours",

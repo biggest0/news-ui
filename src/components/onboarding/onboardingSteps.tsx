@@ -40,20 +40,6 @@ export interface OnboardingStep {
 // Each belongs to exactly one slide, so they live beside the manifest
 // rather than in controls/, which holds the two reusable segmented pickers.
 
-/** Welcome slide: a quiet route out to the full disclaimer. */
-function DisclaimerLink({ onDismiss }: OnboardingControlProps) {
-	const { t } = useTranslation();
-	return (
-		<Link
-			to="/disclaimer"
-			onClick={onDismiss}
-			className="text-sm text-muted-foreground underline hover:text-brand"
-		>
-			{t("ONBOARDING.WELCOME.DISCLAIMER_LINK")}
-		</Link>
-	);
-}
-
 /** Preferences slide: the real language and theme controls, stacked. */
 function PreferenceControls() {
 	const { t } = useTranslation();
@@ -115,7 +101,6 @@ export const ONBOARDING_STEPS: readonly OnboardingStep[] = [
 		icon: HiSparkles,
 		titleKey: "ONBOARDING.WELCOME.TITLE",
 		bodyKey: "ONBOARDING.WELCOME.BODY",
-		Control: DisclaimerLink,
 	},
 	{
 		id: "preferences",

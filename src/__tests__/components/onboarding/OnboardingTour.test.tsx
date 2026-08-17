@@ -251,12 +251,15 @@ describe("OnboardingTour — live controls", () => {
 	});
 
 	it("closes the tour when a slide link navigates away", async () => {
+		// A Link inside a modal would otherwise leave the dialog stranded over
+		// the page it just routed to, so link controls dismiss first.
 		const user = userEvent.setup();
 		renderTour();
 
+		await user.click(dots()[5]);
 		await user.click(
 			within(screen.getByRole("dialog")).getByRole("link", {
-				name: "Read the full disclaimer",
+				name: "Create an account",
 			})
 		);
 

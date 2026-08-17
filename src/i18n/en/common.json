@@ -310,8 +310,7 @@
     "DOT_LABEL": "Go to step {{step}}",
     "WELCOME": {
       "TITLE": "Welcome to Catire Time",
-      "BODY": "Every story here is satire, written by cats, and none of it is real news. That's rather the point. Here's how to make the site work the way you like.",
-      "DISCLAIMER_LINK": "Read the full disclaimer"
+      "BODY": "Every article here is satire — a short, easy-to-read spin on real news. Take it all with a grain of salt. Here's how to make the site work the way you like."
     },
     "PREFERENCES": {
       "TITLE": "Make it yours",
