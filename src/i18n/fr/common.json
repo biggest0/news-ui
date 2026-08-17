@@ -129,7 +129,9 @@
     "FIRST_PAGE": "Première page",
     "PREVIOUS_PAGE": "Page précédente",
     "NEXT_PAGE": "Page suivante",
-    "LAST_PAGE": "Dernière page"
+    "LAST_PAGE": "Dernière page",
+    "ARTICLES_COMING": "Encore quelques secondes, les articles arrivent !",
+    "CAUGHT_UP": "Vous avez atteint la fin. Il n'y a plus rien !"
   },
   "EDITORS": {
     "MEOWSTEIN": {
