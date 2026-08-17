@@ -15,50 +15,62 @@ test.beforeEach(async ({ page }) => {
 	await page.goto("/");
 });
 
+type Page = import("@playwright/test").Page;
+
+/** base-ui renders an inert backdrop while a menu is open/closing; clicking
+ *  through it silently fails, so always settle before driving another menu. */
+async function expectNoOpenMenu(page: Page) {
+	await expect(page.getByRole("menu")).toHaveCount(0);
+}
+
 /** Opens a section's options menu by its visible heading. */
-async function openSectionMenu(page: import("@playwright/test").Page, heading: string) {
+async function openSectionMenu(page: Page, heading: string) {
+	await expectNoOpenMenu(page);
+
 	const section = page
 		.locator("section")
-		.filter({ has: page.getByRole("heading", { name: heading, exact: true }) });
-	await section.first().scrollIntoViewIfNeeded();
-	await section.first().getByLabel("Section options").first().click();
+		.filter({ has: page.getByRole("heading", { name: heading, exact: true }) })
+		.first();
+
+	await section.scrollIntoViewIfNeeded();
+	await section.getByLabel("Section options").first().click();
+	await expect(page.getByRole("menu")).toBeVisible();
 }
+
+async function closeMenu(page: Page) {
+	await page.keyboard.press("Escape");
+	await expectNoOpenMenu(page);
+}
+
+const restoreItem = (page: Page) =>
+	page.getByRole("menuitem", { name: "Restore hidden sections" });
+
+const popularHeading = (page: Page) =>
+	page.getByRole("heading", { name: "POPULAR", exact: true });
 
 test("restore option is absent until something is hidden, then brings it back", async ({
 	page,
 }) => {
 	await expect(page.getByText("per page")).toBeVisible();
 
-	// 1. nothing hidden → no restore entry
+	// nothing hidden → no restore entry, and remove from the same open menu
 	await openSectionMenu(page, "POPULAR");
-	await expect(
-		page.getByRole("menuitem", { name: "Restore hidden sections" })
-	).toHaveCount(0);
-	await page.keyboard.press("Escape");
-
-	// 2. hide Popular
-	await openSectionMenu(page, "POPULAR");
+	await expect(restoreItem(page)).toHaveCount(0);
 	await page.getByRole("menuitem", { name: "Remove" }).click();
-	await expect(
-		page.getByRole("heading", { name: "POPULAR", exact: true })
-	).not.toBeVisible();
+	await expect(popularHeading(page)).not.toBeVisible();
+	await expectNoOpenMenu(page);
 
-	// 3. a *different* section's menu now offers the way back
+	// a *different* section's menu now offers the way back
 	await openSectionMenu(page, "MEWS");
-	const restore = page.getByRole("menuitem", { name: "Restore hidden sections" });
-	await expect(restore).toBeVisible();
-	await restore.click();
+	await expect(restoreItem(page)).toBeVisible();
+	await restoreItem(page).click();
+	await expect(popularHeading(page)).toBeVisible();
+	await expectNoOpenMenu(page);
 
-	// 4. Popular is back
-	await expect(
-		page.getByRole("heading", { name: "POPULAR", exact: true })
-	).toBeVisible();
-
-	// 5. and the entry is gone again
+	// and the entry is gone again
 	await openSectionMenu(page, "POPULAR");
-	await expect(
-		page.getByRole("menuitem", { name: "Restore hidden sections" })
-	).toHaveCount(0);
+	await expect(restoreItem(page)).toHaveCount(0);
+	await closeMenu(page);
 });
 
 test("restore survives a reload (persisted, not just in-memory)", async ({ page }) => {
@@ -67,16 +79,10 @@ test("restore survives a reload (persisted, not just in-memory)", async ({ page 
 	await openSectionMenu(page, "POPULAR");
 	await page.getByRole("menuitem", { name: "Remove" }).click();
 	await page.reload();
-
-	await expect(
-		page.getByRole("heading", { name: "POPULAR", exact: true })
-	).not.toBeVisible();
+	await expect(popularHeading(page)).not.toBeVisible();
 
 	await openSectionMenu(page, "MEWS");
-	await page.getByRole("menuitem", { name: "Restore hidden sections" }).click();
+	await restoreItem(page).click();
 	await page.reload();
-
-	await expect(
-		page.getByRole("heading", { name: "POPULAR", exact: true })
-	).toBeVisible();
+	await expect(popularHeading(page)).toBeVisible();
 });

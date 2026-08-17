@@ -22,10 +22,6 @@ export async function stubApi(page: Page) {
 
 	// Articles — lists (home/category/subcategory) share one endpoint
 	await page.route("**/api/articles?*", (route) => route.fulfill(json(articles)));
-	await page.route("**/api/articles/top*", (route) => route.fulfill(json(topTen)));
-	await page.route("**/api/articles/featured*", (route) =>
-		route.fulfill(json({ articles: topTen }))
-	);
 	await page.route("**/api/articles/search/keyword*", (route) =>
 		route.fulfill(json(articles))
 	);
@@ -45,6 +41,17 @@ export async function stubApi(page: Page) {
 		if (route.request().url().includes("/api/articles?")) return route.fallback();
 		return route.fulfill(json(articleDetail));
 	});
+
+	// /top and /featured MUST come after the detail regex above: they are
+	// single-segment paths, so `/api/articles/[^/?]+` matches them too, and
+	// Playwright gives the win to the LAST registered route. Registered any
+	// earlier and both endpoints silently receive the article-detail fixture —
+	// getTopTen then throws on `response.map`, getFeatured on
+	// `response.articles.map`, and both sections render empty for the whole run.
+	await page.route("**/api/articles/top*", (route) => route.fulfill(json(topTen)));
+	await page.route("**/api/articles/featured*", (route) =>
+		route.fulfill(json({ articles: topTen }))
+	);
 
 	// Cat facts + recommendations
 	await page.route("**/api/cat-facts*", (route) =>
