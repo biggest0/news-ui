@@ -21,7 +21,8 @@ export interface DropDownOption {
 
 /**
  * Builds the option list for a section's dropdown menu (expand/collapse,
- * remove, and — for the news section — page/scroll view toggle).
+ * remove, — for the news section — page/scroll view toggle, and a restore
+ * action whenever any section is currently hidden).
  * @param sectionKey - Which home section the menu controls
  * @returns Memoized DropDownOption[] for SectionDropDown
  */
@@ -31,6 +32,7 @@ export function useSectionDropdown(sectionKey: SectionKey): DropDownOption[] {
 		appSetting,
 		updateSectionExpansion,
 		updateSectionVisibility,
+		resetSectionVisibility,
 		togglePagination,
 	} = useAppSettings();
 
@@ -38,6 +40,12 @@ export function useSectionDropdown(sectionKey: SectionKey): DropDownOption[] {
 		// const isVisible = appSetting.homeLayout.visible[sectionKey];
 		const isExpanded = appSetting.homeLayout.expanded[sectionKey];
 		const isPaginated = appSetting.homeLayout.pagePagination;
+		// Removing a section other than Mews leaves no trace on the page, so the
+		// only way back is from a menu like this one. Read straight off the
+		// appSetting we already hold rather than adding a second subscription.
+		const hasHiddenSection = Object.values(appSetting.homeLayout.visible).some(
+			(isSectionVisible) => !isSectionVisible
+		);
 
 		const options: DropDownOption[] = [];
 
@@ -66,8 +74,21 @@ export function useSectionDropdown(sectionKey: SectionKey): DropDownOption[] {
 			});
 		}
 
+		// Last, behind its own divider: this one acts on the whole home layout,
+		// not on this section, so it shouldn't read as another section toggle.
+		if (hasHiddenSection) {
+			options.push({ isDivider: true, label: "", onClick: () => {} });
+
+			options.push({
+				label: t("DROPDOWN.RESTORE_SECTIONS"),
+				onClick: () => {
+					resetSectionVisibility();
+				},
+			});
+		}
+
 		return options;
-	}, [appSetting, t, sectionKey, togglePagination, updateSectionExpansion, updateSectionVisibility]);
+	}, [appSetting, t, sectionKey, togglePagination, updateSectionExpansion, updateSectionVisibility, resetSectionVisibility]);
 
 	return dropdownOptions;
 }
