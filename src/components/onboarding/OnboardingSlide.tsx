@@ -27,7 +27,10 @@ export default function OnboardingSlide({
 	children,
 }: OnboardingSlideProps) {
 	return (
-		<div className="flex flex-col items-center gap-3 px-6 text-center">
+		<div
+			data-slot="onboarding-slide"
+			className="flex flex-col items-center gap-3 px-6 text-center"
+		>
 			<span
 				className="flex h-12 w-12 items-center justify-center rounded-full bg-accent text-brand"
 				aria-hidden="true"

@@ -103,14 +103,21 @@ export default function OnboardingTour() {
 					</DialogDescription>
 				</DialogHeader>
 
-				<OnboardingSlide
-					icon={step.icon}
-					title={t(step.titleKey)}
-					body={t(step.bodyKey)}
-					headingRef={headingRef}
-				>
-					{step.Control && <step.Control onDismiss={() => close("closed")} />}
-				</OnboardingSlide>
+				{/* Reserve the tallest slide's height so the dialog never resizes as
+				    you click through: measured at ~302px (the preferences slide, with
+				    two stacked pickers) across both breakpoints and languages. Shorter
+				    slides are centred in the reserved space. min-height rather than a
+				    hard height, so unusually long copy grows instead of clipping. */}
+				<div className="flex min-h-[19.5rem] flex-col justify-center">
+					<OnboardingSlide
+						icon={step.icon}
+						title={t(step.titleKey)}
+						body={t(step.bodyKey)}
+						headingRef={headingRef}
+					>
+						{step.Control && <step.Control onDismiss={() => close("closed")} />}
+					</OnboardingSlide>
+				</div>
 
 				{/* Real buttons, not decoration: each dot jumps to its slide */}
 				<div className="flex justify-center gap-2 pt-6">

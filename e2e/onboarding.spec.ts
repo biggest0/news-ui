@@ -92,6 +92,34 @@ test("the language control refetches with lang=fr", async ({ page }) => {
 	await expect(page.locator("html")).toHaveAttribute("lang", "fr");
 });
 
+test("keeps a constant height across every step", async ({ page }) => {
+	await page.goto("/");
+	await expect(dialog(page)).toBeVisible({ timeout: 10_000 });
+
+	const heights: number[] = [];
+	for (let index = 1; index <= 6; index++) {
+		await page.getByRole("button", { name: `Go to step ${index}` }).click();
+		heights.push(Math.round((await dialog(page).boundingBox())!.height));
+	}
+
+	// A height that changes per slide makes the dialog jump under the cursor,
+	// and can slide the Next button out from under a mid-click pointer.
+	expect(new Set(heights).size, `heights were ${heights.join(", ")}`).toBe(1);
+});
+
+test("stays fully reachable on a short viewport", async ({ page }) => {
+	// The fixed height is taller than the tallest slide used to be, so make
+	// sure a landscape phone can still reach the top of the dialog.
+	await page.setViewportSize({ width: 640, height: 420 });
+	await page.goto("/");
+	await expect(dialog(page)).toBeVisible({ timeout: 10_000 });
+
+	const box = (await dialog(page).boundingBox())!;
+	expect(box.y).toBeGreaterThanOrEqual(0);
+	await expect(page.getByText("Welcome to Catire Time")).toBeVisible();
+	await expect(page.getByRole("button", { name: "Next" })).toBeVisible();
+});
+
 test("renders as a bottom sheet on mobile", async ({ page }) => {
 	await page.setViewportSize({ width: 390, height: 780 });
 	await page.goto("/");
