@@ -12,9 +12,8 @@ import {
 import type { IconType } from "react-icons";
 import type { ParseKeys } from "i18next";
 
-import { Button, buttonVariants } from "@/components/ui/Button";
+import { buttonVariants } from "@/components/ui/Button";
 import ThemeSelector from "@/components/common/theme/ThemeSelector";
-import { useAppSettings } from "@/contexts/AppSettingContext";
 import LanguageChoice from "@/components/onboarding/controls/LanguageChoice";
 import ReadingModeChoice from "@/components/onboarding/controls/ReadingModeChoice";
 
@@ -58,20 +57,6 @@ function PreferenceControls() {
 				<ThemeSelector />
 			</div>
 		</div>
-	);
-}
-
-/**
- * Sections slide: the same full reset the section menus expose. Shown here so
- * a first-time visitor sees the way back *before* they start removing things.
- */
-function ResetLayoutButton() {
-	const { t } = useTranslation();
-	const { resetSectionVisibility } = useAppSettings();
-	return (
-		<Button variant="outline" size="sm" onClick={() => resetSectionVisibility()}>
-			{t("ONBOARDING.SECTIONS.RESET")}
-		</Button>
 	);
 }
 
@@ -121,7 +106,6 @@ export const ONBOARDING_STEPS: readonly OnboardingStep[] = [
 		icon: HiSquares2X2,
 		titleKey: "ONBOARDING.SECTIONS.TITLE",
 		bodyKey: "ONBOARDING.SECTIONS.BODY",
-		Control: ResetLayoutButton,
 	},
 	{
 		id: "browse",

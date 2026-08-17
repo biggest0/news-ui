@@ -326,8 +326,7 @@
     },
     "SECTIONS": {
       "TITLE": "Arrange the home page",
-      "BODY": "Most sections (Mews, Popular, Editors, Cat Facts and the rest) can be collapsed or removed from their section menu. Changed your mind? Bring them back from that same menu, or reset everything here.",
-      "RESET": "Reset home layout"
+      "BODY": "Most sections (Mews, Popular, Editors, Cat Facts and the rest) can be collapsed or removed from their section menu. Changed your mind? Bring them back from that same menu."
     },
     "BROWSE": {
       "TITLE": "Find what you like",

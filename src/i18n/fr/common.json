@@ -326,8 +326,7 @@
     },
     "SECTIONS": {
       "TITLE": "Organisez la page d'accueil",
-      "BODY": "La plupart des sections (Miaous, Populaire, La Rédaction, Faits sur les chats et les autres) peuvent être réduites ou supprimées depuis leur menu. Vous avez changé d'avis ? Ramenez-les depuis ce même menu, ou réinitialisez tout ici.",
-      "RESET": "Réinitialiser la mise en page"
+      "BODY": "La plupart des sections (Miaous, Populaire, La Rédaction, Faits sur les chats et les autres) peuvent être réduites ou supprimées depuis leur menu. Vous avez changé d'avis ? Ramenez-les depuis ce même menu."
     },
     "BROWSE": {
       "TITLE": "Trouvez ce qui vous plaît",

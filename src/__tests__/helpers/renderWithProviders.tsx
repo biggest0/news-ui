@@ -122,7 +122,6 @@ testI18n.init({
 					SECTIONS: {
 						TITLE: "Arrange the home page",
 						BODY: "Sections can be collapsed or removed.",
-						RESET: "Reset home layout",
 					},
 					BROWSE: {
 						TITLE: "Find what you like",
