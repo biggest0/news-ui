@@ -11,6 +11,7 @@ import { useAllSectionNotVisible } from "@/hooks/useSectionCollapse";
 import { useAppSettings } from "@/contexts/AppSettingContext";
 import EmptyStateSection from "@/components/news/section/EmptyStateSection";
 import MobileStaffPicksSection from "@/components/news/section/mobileSections/MobileStaffPicksSection";
+import OnboardingAutoOpen from "@/components/onboarding/OnboardingAutoOpen";
 
 export default function HomePage() {
 	const { t } = useTranslation();
@@ -18,6 +19,9 @@ export default function HomePage() {
 	const { resetSectionVisibility } = useAppSettings();
 	return (
 		<>
+			{/* Renders nothing — mounting it here is what scopes the first-visit
+			    tour to the home page (see OnboardingAutoOpen for the timing gate) */}
+			<OnboardingAutoOpen />
 			<FeaturedSection />
 			<MobileStaffPicksSection />
 			<RecommendedSection />
