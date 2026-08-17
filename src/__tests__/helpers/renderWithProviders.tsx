@@ -84,6 +84,16 @@ testI18n.init({
 					PAGE_VIEW: "Page View",
 					RESTORE_SECTIONS: "Restore hidden sections",
 				},
+				LANGUAGE: {
+					EN: "English",
+					FR: "French",
+				},
+				THEME: {
+					LIGHT: "Light",
+					DARK: "Dark",
+					SYSTEM: "System",
+					SWITCH_TO: "Switch to {{mode}} mode",
+				},
 				ONBOARDING: {
 					TITLE: "How to use this site",
 					STEP_OF: "Step {{current}} of {{total}}",

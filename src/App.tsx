@@ -13,6 +13,7 @@ import { ARTICLE_ROUTES } from "@/constants/routes";
 import { AppSettingProvider } from "@/contexts/AppSettingContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { OnboardingProvider } from "@/contexts/OnboardingContext";
+import OnboardingTourMount from "@/components/onboarding/OnboardingTourMount";
 
 // Route-level code-splitting (M8): the home page stays in the main bundle
 // (it's the LCP-critical landing route); every other page loads on demand.
@@ -82,6 +83,8 @@ function App() {
 							</Suspense>
 						</main>
 						<Footer />
+						{/* Lazy: the chunk is only fetched once the tour is first opened */}
+						<OnboardingTourMount />
 					</OnboardingProvider>
 				</AuthProvider>
 			</AppSettingProvider>
