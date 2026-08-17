@@ -288,12 +288,54 @@
     "REMOVE": "Remove",
     "SCROLL_VIEW": "Scroll View",
     "PAGE_VIEW": "Page View",
-    "SECTION_OPTIONS": "Section options"
+    "SECTION_OPTIONS": "Section options",
+    "RESTORE_SECTIONS": "Restore hidden sections"
   },
   "THEME": {
     "LIGHT": "Light",
     "DARK": "Dark",
     "SYSTEM": "System",
     "SWITCH_TO": "Switch to {{mode}} mode"
+  },
+  "ONBOARDING": {
+    "TITLE": "How to use this site",
+    "STEP_OF": "Step {{current}} of {{total}}",
+    "SKIP": "Skip tour",
+    "BACK": "Back",
+    "NEXT": "Next",
+    "FINISH": "Got it",
+    "REOPEN": "How to use this site",
+    "DOT_LABEL": "Go to step {{step}}",
+    "WELCOME": {
+      "TITLE": "Welcome to Catire Time",
+      "BODY": "Every story here is satire, written by cats, and none of it is real news. That's rather the point. Here's how to make the site work the way you like.",
+      "DISCLAIMER_LINK": "Read the full disclaimer"
+    },
+    "PREFERENCES": {
+      "TITLE": "Make it yours",
+      "BODY": "Read in English or French — the articles themselves are translated, not just the buttons. Pick a light or dark look, or let it follow your system.",
+      "LANGUAGE_LABEL": "Language",
+      "THEME_LABEL": "Appearance"
+    },
+    "READING": {
+      "TITLE": "Choose how you read",
+      "BODY": "Keep scrolling for an endless feed, or switch to numbered pages. Your choice applies to the Mews feed and every category page, and you can change it any time from the section menu.",
+      "SCROLL": "Endless scroll",
+      "PAGES": "Numbered pages"
+    },
+    "SECTIONS": {
+      "TITLE": "Arrange the home page",
+      "BODY": "Most sections — Mews, Popular, Editors, Cat Facts and the rest — can be collapsed or removed from their section menu. Changed your mind? Bring them back from that same menu, or reset everything here.",
+      "RESET": "Reset home layout"
+    },
+    "BROWSE": {
+      "TITLE": "Find what you like",
+      "BODY": "Browse by category along the top, follow a subcategory tag, or search. Search understands meaning as well as keywords, so you'll find related stories even when the words don't match."
+    },
+    "ACCOUNT": {
+      "TITLE": "Make it personal",
+      "BODY": "Create an account to like articles, keep a reading history, and get recommendations based on what you actually read.",
+      "CTA": "Create an account"
+    }
   }
 }

@@ -288,12 +288,54 @@
     "REMOVE": "Supprimer",
     "SCROLL_VIEW": "Vue défilement",
     "PAGE_VIEW": "Vue pagination",
-    "SECTION_OPTIONS": "Options de la section"
+    "SECTION_OPTIONS": "Options de la section",
+    "RESTORE_SECTIONS": "Restaurer les sections masquées"
   },
   "THEME": {
     "LIGHT": "Clair",
     "DARK": "Sombre",
     "SYSTEM": "Système",
     "SWITCH_TO": "Passer en mode {{mode}}"
+  },
+  "ONBOARDING": {
+    "TITLE": "Comment utiliser ce site",
+    "STEP_OF": "Étape {{current}} sur {{total}}",
+    "SKIP": "Passer le guide",
+    "BACK": "Retour",
+    "NEXT": "Suivant",
+    "FINISH": "J'ai compris",
+    "REOPEN": "Comment utiliser ce site",
+    "DOT_LABEL": "Aller à l'étape {{step}}",
+    "WELCOME": {
+      "TITLE": "Bienvenue sur Catire Time",
+      "BODY": "Tous les articles ici sont satiriques, écrits par des chats, et rien n'est une vraie information. C'est bien le principe. Voici comment adapter le site à vos envies.",
+      "DISCLAIMER_LINK": "Lire l'avertissement complet"
+    },
+    "PREFERENCES": {
+      "TITLE": "Personnalisez",
+      "BODY": "Lisez en français ou en anglais — les articles eux-mêmes sont traduits, pas seulement les boutons. Choisissez un thème clair ou sombre, ou laissez-le suivre votre système.",
+      "LANGUAGE_LABEL": "Langue",
+      "THEME_LABEL": "Apparence"
+    },
+    "READING": {
+      "TITLE": "Choisissez votre lecture",
+      "BODY": "Continuez à faire défiler pour un fil sans fin, ou passez aux pages numérotées. Votre choix s'applique au fil Miaous et à toutes les pages de catégorie, et vous pouvez le modifier à tout moment depuis le menu de la section.",
+      "SCROLL": "Défilement continu",
+      "PAGES": "Pages numérotées"
+    },
+    "SECTIONS": {
+      "TITLE": "Organisez la page d'accueil",
+      "BODY": "La plupart des sections — Miaous, Populaire, La Rédaction, Faits sur les chats et les autres — peuvent être réduites ou supprimées depuis leur menu. Vous avez changé d'avis ? Ramenez-les depuis ce même menu, ou réinitialisez tout ici.",
+      "RESET": "Réinitialiser la mise en page"
+    },
+    "BROWSE": {
+      "TITLE": "Trouvez ce qui vous plaît",
+      "BODY": "Parcourez par catégorie en haut, suivez une sous-catégorie, ou lancez une recherche. La recherche comprend le sens autant que les mots-clés, donc vous trouverez des articles liés même sans correspondance exacte."
+    },
+    "ACCOUNT": {
+      "TITLE": "Rendez-le personnel",
+      "BODY": "Créez un compte pour aimer des articles, conserver un historique de lecture et recevoir des recommandations basées sur vos lectures.",
+      "CTA": "Créer un compte"
+    }
   }
 }
