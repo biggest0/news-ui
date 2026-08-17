@@ -22,10 +22,6 @@ export async function stubApi(page: Page) {
 
 	// Articles — lists (home/category/subcategory) share one endpoint
 	await page.route("**/api/articles?*", (route) => route.fulfill(json(articles)));
-	await page.route("**/api/articles/top*", (route) => route.fulfill(json(topTen)));
-	await page.route("**/api/articles/featured*", (route) =>
-		route.fulfill(json({ articles: topTen }))
-	);
 	await page.route("**/api/articles/search/keyword*", (route) =>
 		route.fulfill(json(articles))
 	);
@@ -45,6 +41,17 @@ export async function stubApi(page: Page) {
 		if (route.request().url().includes("/api/articles?")) return route.fallback();
 		return route.fulfill(json(articleDetail));
 	});
+
+	// /top and /featured MUST come after the detail regex above: they are
+	// single-segment paths, so `/api/articles/[^/?]+` matches them too, and
+	// Playwright gives the win to the LAST registered route. Registered any
+	// earlier and both endpoints silently receive the article-detail fixture —
+	// getTopTen then throws on `response.map`, getFeatured on
+	// `response.articles.map`, and both sections render empty for the whole run.
+	await page.route("**/api/articles/top*", (route) => route.fulfill(json(topTen)));
+	await page.route("**/api/articles/featured*", (route) =>
+		route.fulfill(json({ articles: topTen }))
+	);
 
 	// Cat facts + recommendations
 	await page.route("**/api/cat-facts*", (route) =>
@@ -104,6 +111,32 @@ export async function loginSession(page: Page) {
 			body: JSON.stringify({ user: { email: "testcat@catire.com" } }),
 		})
 	);
+}
+
+/**
+ * Marks the first-visit "how to use" tour as already dismissed so its modal
+ * never covers the page under test. Every spec that lands on the home page
+ * needs this — the tour auto-opens on `/` for anyone who hasn't seen it.
+ *
+ * Call it in a spec's TOP-LEVEL beforeEach: `addInitScript` only applies to
+ * navigations registered after it, so a call inside a `describe` block that
+ * already ran `goto` would silently do nothing.
+ *
+ * `seenVersion` is deliberately absurd so that bumping ONBOARDING_VERSION in
+ * `src/constants/keys.ts` can never invalidate the seed. The key name is
+ * hardcoded because this callback is serialized into the browser context.
+ */
+export async function dismissOnboarding(page: Page) {
+	await page.addInitScript(() => {
+		window.localStorage.setItem(
+			"onboarding",
+			JSON.stringify({
+				seenVersion: 9999,
+				completedAt: "2026-01-01T00:00:00.000Z",
+				dismissedVia: "completed",
+			})
+		);
+	});
 }
 
 /**

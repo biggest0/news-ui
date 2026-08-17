@@ -3,10 +3,11 @@
  * About, Contact, and Disclaimer content.
  */
 import { test, expect } from "@playwright/test";
-import { stubApi, useEnglish } from "./support/stubApi";
+import { stubApi, useEnglish, dismissOnboarding } from "./support/stubApi";
 
 test.beforeEach(async ({ page }) => {
 	await useEnglish(page);
+	await dismissOnboarding(page);
 	await stubApi(page);
 });
 

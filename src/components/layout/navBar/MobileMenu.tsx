@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { LuX } from "react-icons/lu";
@@ -13,6 +13,7 @@ import SocialMediaLinks from "@/components/common/social/SocialMediaLinks";
 import { APP_VERSION } from "@/config/config";
 import LanguageSwitcher from "@/components/layout/navBar/LanguageSwitcherMobile";
 import ThemeToggle from "@/components/common/theme/ThemeToggle";
+import OnboardingLauncher from "@/components/onboarding/OnboardingLauncher";
 
 /**
  * Full-screen mobile navigation drawer. Built on the Sheet primitive
@@ -132,9 +133,23 @@ export const MobileMenu = ({
 								<LanguageSwitcher />
 							</div>
 						</div>
-						{/* Social media links */}
-						<div className="border-t border-border-subtle pt-4 mt-6 flex justify-center">
+						{/* Footer: socials over a row of quiet links, mirroring the site
+						    footer's bottom bar. Only links that aren't already in the
+						    navigation above belong here. */}
+						<div className="border-t border-border-subtle pt-4 mt-6 flex flex-col items-center gap-4">
 							<SocialMediaLinks />
+							<div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
+								{/* Opening the tour closes the drawer first — two stacked
+								    dialogs would leave this one sitting on top of it */}
+								<OnboardingLauncher variant="footer" onOpen={onMenuClose} />
+								<Link
+									to="/disclaimer"
+									onClick={onMenuClose}
+									className="cursor-pointer transition-colors hover:text-foreground"
+								>
+									{t("FOOTER.DISCLAIMER")}
+								</Link>
+							</div>
 						</div>
 					</div>
 

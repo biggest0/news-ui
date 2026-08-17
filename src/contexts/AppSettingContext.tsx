@@ -20,7 +20,8 @@ interface AppSettingContextType {
 	appSetting: AppSetting;
 	updateSectionVisibility: (key: keyof SectionToggleState, value: boolean) => void;
 	updateSectionExpansion: (key: keyof SectionToggleState, value: boolean) => void;
-	resetSectionVisibility: () => void;
+	/** Omit `key` to restore every section; pass one to restore just that section. */
+	resetSectionVisibility: (key?: keyof SectionToggleState) => void;
 	toggleDarkMode: () => void;
 	setThemeMode: (mode: ThemeMode) => void;
 	togglePagination: () => void;

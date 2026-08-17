@@ -12,6 +12,8 @@ import ScrollToTop from "@/components/layout/navigation/ScrollToTop";
 import { ARTICLE_ROUTES } from "@/constants/routes";
 import { AppSettingProvider } from "@/contexts/AppSettingContext";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { OnboardingProvider } from "@/contexts/OnboardingContext";
+import OnboardingTourMount from "@/components/onboarding/OnboardingTourMount";
 
 // Route-level code-splitting (M8): the home page stays in the main bundle
 // (it's the LCP-critical landing route); every other page loads on demand.
@@ -38,45 +40,52 @@ function App() {
 		<BrowserRouter basename="/">
 			<AppSettingProvider>
 				<AuthProvider>
-					<Header />
-					{/* Language toggles update content in place (M5): RTK Query args
-					    carry `lang`, so hooks refetch automatically — no page remount,
-					    scroll position preserved */}
-					<main className="w-full max-w-[1280px] min-h-screen mx-auto px-4 bg-background transition-colors duration-200">
-						<ScrollToTop />
-						<Suspense fallback={<LoadingOverlay loading />}>
-							<Routes>
-								<Route path="/" element={<HomePage />} />
-								{/* Article category pages */}
-								{ARTICLE_ROUTES.map((category) => (
-									<Route
-										key={category}
-										path={`/${category}`}
-										element={<ArticlePages />}
-									/>
-								))}
-								{/* Article pages */}
-								<Route path="/article/:id" element={<ArticlePage />} />
-								<Route path="/subcategory/:subCategory" element={<SubCategoryPage />} />
-								<Route path="/search" element={<SearchPage />} />
-								<Route path="/about" element={<About />} />
-								<Route path="/contact" element={<Contact />} />
-								<Route path="/account" element={<AccountPage />} />
-								<Route path="/login" element={<LoginPage />} />
-								<Route path="/register" element={<RegisterPage />} />
-								<Route path="/account/verification" element={<EmailVerificationPage />} />
-								<Route path="/reset-password" element={<ResetPasswordPage />} />
-								<Route path="/reset-password/:token" element={<NewPasswordPage />} />
-								<Route path="/auth/google/callback" element={<GoogleCallbackPage />} />
-								<Route path="/blog" element={<BlogPage />} />
-								<Route path="/blog/:slug" element={<BlogPostPage />} />
-								<Route path="/disclaimer" element={<DisclaimerPage />} />
-								{/* Other routes */}
-								<Route path="*" element={<div>{t("APP.NOT_FOUND")}</div>} />
-							</Routes>
-						</Suspense>
-					</main>
-					<Footer />
+					{/* Onboarding open-state is shared above <main>: the mobile menu
+					    (inside Header) and the About page both open the tour, and the
+					    dialog itself is mounted once at this level. */}
+					<OnboardingProvider>
+						<Header />
+						{/* Language toggles update content in place (M5): RTK Query args
+						    carry `lang`, so hooks refetch automatically — no page remount,
+						    scroll position preserved */}
+						<main className="w-full max-w-[1280px] min-h-screen mx-auto px-4 bg-background transition-colors duration-200">
+							<ScrollToTop />
+							<Suspense fallback={<LoadingOverlay loading />}>
+								<Routes>
+									<Route path="/" element={<HomePage />} />
+									{/* Article category pages */}
+									{ARTICLE_ROUTES.map((category) => (
+										<Route
+											key={category}
+											path={`/${category}`}
+											element={<ArticlePages />}
+										/>
+									))}
+									{/* Article pages */}
+									<Route path="/article/:id" element={<ArticlePage />} />
+									<Route path="/subcategory/:subCategory" element={<SubCategoryPage />} />
+									<Route path="/search" element={<SearchPage />} />
+									<Route path="/about" element={<About />} />
+									<Route path="/contact" element={<Contact />} />
+									<Route path="/account" element={<AccountPage />} />
+									<Route path="/login" element={<LoginPage />} />
+									<Route path="/register" element={<RegisterPage />} />
+									<Route path="/account/verification" element={<EmailVerificationPage />} />
+									<Route path="/reset-password" element={<ResetPasswordPage />} />
+									<Route path="/reset-password/:token" element={<NewPasswordPage />} />
+									<Route path="/auth/google/callback" element={<GoogleCallbackPage />} />
+									<Route path="/blog" element={<BlogPage />} />
+									<Route path="/blog/:slug" element={<BlogPostPage />} />
+									<Route path="/disclaimer" element={<DisclaimerPage />} />
+									{/* Other routes */}
+									<Route path="*" element={<div>{t("APP.NOT_FOUND")}</div>} />
+								</Routes>
+							</Suspense>
+						</main>
+						<Footer />
+						{/* Lazy: the chunk is only fetched once the tour is first opened */}
+						<OnboardingTourMount />
+					</OnboardingProvider>
 				</AuthProvider>
 			</AppSettingProvider>
 		</BrowserRouter>

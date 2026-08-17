@@ -201,7 +201,9 @@
       "FUN_READS_CONTENT": "La motivation pour cette application est de rendre la lecture des nouvelles plus engageante et de donner aux lecteurs le contrôle sur la façon dont ils l'expérimentent. Soyons honnêtes, beaucoup de nouvelles sont trop longues, sombres ou simplement ennuyeuses. Notre objectif est de les rendre agréables, comme prendre du brocoli ordinaire et le tremper dans une sauce savoureuse. Nous laissons les lecteurs choisir exactement à quel point ils veulent s'engager. Ils peuvent commencer par un titre accrocheur, parcourir un résumé rapide, ou plonger dans le contenu complet. C'est une approche \"à trois vitesses\" qui correspond à la façon dont les gens consomment naturellement l'information aujourd'hui : rapidement, de manière sélective, et avec facilité.",
       "DISCLAIMER_TITLE": "Avis de non-responsabilité",
       "DISCLAIMER_CONTENT": "Ceci est un site de satire. Tous nos articles sont des blagues basées sur des événements réels. Veuillez ne pas nous utiliser comme source pour... eh bien, quoi que ce soit, vraiment. Nous sommes des chats. Nous ne sommes pas des journalistes.",
-      "FULL_DISCLAIMER": "Avis de non-responsabilité complet"
+      "FULL_DISCLAIMER": "Avis de non-responsabilité complet",
+      "GETTING_STARTED_TITLE": "Prise en main",
+      "GETTING_STARTED_CONTENT": "Nouveau ici, ou besoin d'un rappel ? Le guide rapide couvre les langues, les thèmes, les modes de lecture et l'organisation de la page d'accueil."
     },
     "ACCOUNT": {
       "TITLE": "COMPTE"
@@ -290,12 +292,52 @@
     "REMOVE": "Supprimer",
     "SCROLL_VIEW": "Vue défilement",
     "PAGE_VIEW": "Vue pagination",
-    "SECTION_OPTIONS": "Options de la section"
+    "SECTION_OPTIONS": "Options de la section",
+    "RESTORE_SECTIONS": "Restaurer les sections masquées"
   },
   "THEME": {
     "LIGHT": "Clair",
     "DARK": "Sombre",
     "SYSTEM": "Système",
     "SWITCH_TO": "Passer en mode {{mode}}"
+  },
+  "ONBOARDING": {
+    "TITLE": "Comment utiliser ce site",
+    "STEP_OF": "Étape {{current}} sur {{total}}",
+    "SKIP": "Passer le guide",
+    "BACK": "Retour",
+    "NEXT": "Suivant",
+    "FINISH": "J'ai compris",
+    "REOPEN": "Comment utiliser ce site",
+    "DOT_LABEL": "Aller à l'étape {{step}}",
+    "WELCOME": {
+      "TITLE": "Bienvenue sur Catire Time",
+      "BODY": "Chaque article ici est satirique, une version courte et facile à lire de l'actualité réelle, donc à prendre avec des pincettes. Cliquez sur Suivant pour découvrir les fonctionnalités du site."
+    },
+    "PREFERENCES": {
+      "TITLE": "Définissez vos préférences",
+      "BODY": "Choisissez votre thème et votre langue. Vous pouvez les modifier à tout moment dans le menu.",
+      "LANGUAGE_LABEL": "Langue",
+      "THEME_LABEL": "Apparence"
+    },
+    "READING": {
+      "TITLE": "Choisissez votre lecture",
+      "BODY": "Continuez à faire défiler pour un fil sans fin, ou passez aux pages numérotées. Votre choix s'applique au fil Miaous et à toutes les pages de catégorie, et vous pouvez le modifier à tout moment depuis le menu de la section.",
+      "SCROLL": "Défilement continu",
+      "PAGES": "Pages numérotées"
+    },
+    "SECTIONS": {
+      "TITLE": "Organisez la page d'accueil",
+      "BODY": "La plupart des sections (Miaous, Populaire, La Rédaction, Faits sur les chats et les autres) peuvent être réduites ou supprimées depuis leur menu. Vous avez changé d'avis ? Ramenez-les depuis ce même menu."
+    },
+    "BROWSE": {
+      "TITLE": "Trouvez ce qui vous plaît",
+      "BODY": "Parcourez par catégorie en haut, suivez une sous-catégorie, ou lancez une recherche. La recherche comprend le sens autant que les mots-clés, donc vous trouverez des articles liés même sans correspondance exacte."
+    },
+    "ACCOUNT": {
+      "TITLE": "Rendez-le personnel",
+      "BODY": "Créez un compte pour aimer des articles, conserver un historique de lecture et recevoir des recommandations basées sur vos lectures.",
+      "CTA": "Créer un compte"
+    }
   }
 }

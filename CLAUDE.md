@@ -47,11 +47,12 @@ src/
 │   ├── common/           # Reusable UI: feedback (SectionErrorMessage, LoadingOverlay), layout (SectionShell, SectionDropDown), social, theme, user
 │   ├── layout/           # App shell: header, footer, navBar (MobileMenu drawer), sideColumn
 │   ├── news/             # Domain: cards/, section/, shared/ (FilterBar, PaginationControls)
+│   ├── onboarding/       # First-visit "how to use" tour: slides, step manifest, controls/
 │   ├── search/           # Search-specific filters
-│   └── ui/               # Adapted shadcn primitives on @base-ui (Button, DropdownMenu, Sheet)
+│   └── ui/               # Adapted shadcn primitives on @base-ui (Button, Dialog, DropdownMenu, Sheet)
 ├── config/               # config.ts — API_URL, BASE_URL, APP_VERSION (injected from package.json)
 ├── constants/            # routes.ts, keys.ts
-├── contexts/             # AppSettingContext (UI prefs), AuthContext (AuthProvider + useAuth)
+├── contexts/             # AppSettingContext (UI prefs), AuthContext (AuthProvider + useAuth), OnboardingContext (tour open state)
 ├── hooks/                # Custom hooks (see below)
 ├── i18n/                 # Translation files + i18next config + lang.ts helpers
 ├── lib/                  # utils.ts — cn() class-merge helper for ui/ primitives
@@ -135,6 +136,11 @@ One unified token system (M2 — shadcn's vocabulary themed to the brand): plain
 **React Context** (`AppSettingContext`) handles all **local UI preferences**:
 - Theme mode (`light` | `dark` | `system`), section visibility, section expansion, pagination mode
 - Persisted to `localStorage`, synced across tabs
+
+**Onboarding state** (`OnboardingContext`) holds only the tour's open state plus its "already seen" record:
+- Persisted under its own `localStorage` key (`onboarding`), **not** in `appSetting` — it's a one-shot dismissal flag, not a preference, and has no business in that cross-tab merge
+- `{ seenVersion, completedAt, dismissedVia }`; bumping `ONBOARDING_VERSION` in `constants/keys.ts` re-shows the tour once to everyone who dismissed an older version
+- The provider carries no routing or timing logic — *when* a first-time visitor sees the tour is decided by `<OnboardingAutoOpen />`, which only `HomePage` mounts (that's what makes "home page only" structural)
 
 **Auth state** lives in a module-level store at `src/auth/authStore.ts` (not Redux, not Context):
 - `AuthProvider` (`src/contexts/AuthContext.tsx`) wraps the app and triggers a silent token refresh on mount
@@ -225,6 +231,7 @@ Article *content* (title, summary, paragraphs, sub_category) is translated by th
 |---|---|---|
 | `useAppSettings()` | `contexts/AppSettingContext.tsx` | Access theme, section visibility, toggles, pagination mode |
 | `useAuth()` | `contexts/AuthContext.tsx` | Subscribe to auth store; exposes user, isAuthenticated, login/register/logout |
+| `useOnboarding()` | `contexts/OnboardingContext.tsx` | Onboarding tour state: `isOpen`, `open()`, `close(via)`, `hasSeen` |
 | `useApiLang()` | `hooks/useApiLang.ts` | Reactive content language ("en"/"fr") for RTK Query args — subscribes to i18next changes |
 | `useListInfiniteScroll(...)` | `hooks/useArticleHooks.ts` | Window-scroll driver for infinite queries (700px threshold) — calls `fetchNextPage` |
 | `useFeaturedArticles()` | `hooks/useArticleHooks.ts` | Featured/staff-picks articles via RTKQ (co-mounted sections share the cache) |

@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { SectionHeader } from "@/components/common/layout/SectionHeader";
 import { useTranslation } from "react-i18next";
 
+import OnboardingLauncher from "@/components/onboarding/OnboardingLauncher";
+
 export default function About() {
 	const { t } = useTranslation();
 
@@ -44,6 +46,16 @@ export default function About() {
 						>
 							{t("PAGES.ABOUT.FULL_DISCLAIMER")}
 						</Link>
+					</div>
+					{/* Re-run the onboarding tour — the only entry point on desktop */}
+					<div className="text-center">
+						<h3 className="text-lg text-foreground">
+							{t("PAGES.ABOUT.GETTING_STARTED_TITLE")}
+						</h3>
+						<div className="text-foreground-secondary">
+							{t("PAGES.ABOUT.GETTING_STARTED_CONTENT")}
+						</div>
+						<OnboardingLauncher />
 					</div>
 				</div>
 			</section>
