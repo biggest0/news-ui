@@ -4,10 +4,11 @@
  * Labels are the localized THEME.SWITCH_TO strings ("Switch to Dark mode").
  */
 import { test, expect } from "@playwright/test";
-import { stubApi, useEnglish } from "./support/stubApi";
+import { stubApi, useEnglish, dismissOnboarding } from "./support/stubApi";
 
 test.beforeEach(async ({ page }) => {
 	await useEnglish(page);
+	await dismissOnboarding(page);
 	await stubApi(page);
 	await page.goto("/");
 });

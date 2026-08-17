@@ -3,10 +3,11 @@
  * disabled/enabled submit states and the success message.
  */
 import { test, expect } from "@playwright/test";
-import { stubApi, useEnglish } from "./support/stubApi";
+import { stubApi, useEnglish, dismissOnboarding } from "./support/stubApi";
 
 test.beforeEach(async ({ page }) => {
 	await useEnglish(page);
+	await dismissOnboarding(page);
 	await stubApi(page);
 	await page.goto("/");
 	await page.locator("footer").scrollIntoViewIfNeeded();

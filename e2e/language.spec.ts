@@ -4,10 +4,11 @@
  * flips <html lang>, and refetches article data with the new lang param.
  */
 import { test, expect } from "@playwright/test";
-import { stubApi, useEnglish } from "./support/stubApi";
+import { stubApi, useEnglish, dismissOnboarding } from "./support/stubApi";
 
 test.beforeEach(async ({ page }) => {
 	await useEnglish(page);
+	await dismissOnboarding(page);
 	await stubApi(page);
 	await page.goto("/");
 });

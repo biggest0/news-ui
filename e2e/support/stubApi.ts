@@ -107,6 +107,32 @@ export async function loginSession(page: Page) {
 }
 
 /**
+ * Marks the first-visit "how to use" tour as already dismissed so its modal
+ * never covers the page under test. Every spec that lands on the home page
+ * needs this — the tour auto-opens on `/` for anyone who hasn't seen it.
+ *
+ * Call it in a spec's TOP-LEVEL beforeEach: `addInitScript` only applies to
+ * navigations registered after it, so a call inside a `describe` block that
+ * already ran `goto` would silently do nothing.
+ *
+ * `seenVersion` is deliberately absurd so that bumping ONBOARDING_VERSION in
+ * `src/constants/keys.ts` can never invalidate the seed. The key name is
+ * hardcoded because this callback is serialized into the browser context.
+ */
+export async function dismissOnboarding(page: Page) {
+	await page.addInitScript(() => {
+		window.localStorage.setItem(
+			"onboarding",
+			JSON.stringify({
+				seenVersion: 9999,
+				completedAt: "2026-01-01T00:00:00.000Z",
+				dismissedVia: "completed",
+			})
+		);
+	});
+}
+
+/**
  * Defaults the UI to English for fresh contexts. Only sets the language when
  * none is stored, so in-test language switches survive reloads.
  */

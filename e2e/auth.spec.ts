@@ -4,10 +4,11 @@
  * account page, logout clearing the persisted user (the session hint).
  */
 import { test, expect } from "@playwright/test";
-import { stubApi, loginSession, useEnglish } from "./support/stubApi";
+import { stubApi, loginSession, useEnglish, dismissOnboarding } from "./support/stubApi";
 
 test.beforeEach(async ({ page }) => {
 	await useEnglish(page);
+	await dismissOnboarding(page);
 	await stubApi(page);
 });
 
