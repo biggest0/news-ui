@@ -1,6 +1,11 @@
-import { describe, it, expect, beforeEach } from "vitest";
-import { getAppSetting, setAppSetting } from "@/utils/storage/localStorageUtils";
-import type { AppSetting } from "@/types/localStorageTypes";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+import {
+	getAppSetting,
+	setAppSetting,
+	getOnboardingState,
+	setOnboardingState,
+} from "@/utils/storage/localStorageUtils";
+import type { AppSetting, OnboardingState } from "@/types/localStorageTypes";
 
 // ── Setup ────────────────────────────────────────────────────────────
 
@@ -28,8 +33,18 @@ const DEFAULT_APP_SETTING: AppSetting = {
 	},
 };
 
+const DEFAULT_ONBOARDING_STATE: OnboardingState = {
+	seenVersion: 0,
+	completedAt: "",
+	dismissedVia: "closed",
+};
+
 beforeEach(() => {
 	localStorage.clear();
+});
+
+afterEach(() => {
+	vi.restoreAllMocks();
 });
 
 // ── getAppSetting ────────────────────────────────────────────────────
@@ -114,6 +129,108 @@ describe("setAppSetting", () => {
 	});
 });
 
+// ── getOnboardingState ───────────────────────────────────────────────
+
+describe("getOnboardingState", () => {
+	it("returns defaults when localStorage is empty", () => {
+		expect(getOnboardingState()).toEqual(DEFAULT_ONBOARDING_STATE);
+	});
+
+	it("returns the stored record when present", () => {
+		const stored: OnboardingState = {
+			seenVersion: 3,
+			completedAt: "2026-08-16T12:00:00.000Z",
+			dismissedVia: "completed",
+		};
+		localStorage.setItem("onboarding", JSON.stringify(stored));
+		expect(getOnboardingState()).toEqual(stored);
+	});
+
+	it("merges over defaults when the stored record is partial", () => {
+		// Only seenVersion was written (e.g. by an older build)
+		localStorage.setItem("onboarding", JSON.stringify({ seenVersion: 2 }));
+		const result = getOnboardingState();
+
+		expect(result.seenVersion).toBe(2);
+		expect(result.completedAt).toBe("");
+		expect(result.dismissedVia).toBe("closed");
+	});
+
+	it("falls back to defaults on corrupt JSON", () => {
+		vi.spyOn(console, "error").mockImplementation(() => {});
+		localStorage.setItem("onboarding", "{not valid json");
+
+		expect(getOnboardingState()).toEqual(DEFAULT_ONBOARDING_STATE);
+	});
+
+	it("falls back to defaults when the stored value is not an object", () => {
+		localStorage.setItem("onboarding", JSON.stringify("nope"));
+		expect(getOnboardingState()).toEqual(DEFAULT_ONBOARDING_STATE);
+	});
+
+	it("falls back to defaults when localStorage itself throws", () => {
+		// Safari private mode: reads can reject outright
+		vi.spyOn(console, "error").mockImplementation(() => {});
+		vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
+			throw new Error("access denied");
+		});
+
+		expect(getOnboardingState()).toEqual(DEFAULT_ONBOARDING_STATE);
+	});
+
+	it("returns a fresh object each call so callers can't poison the default", () => {
+		const first = getOnboardingState();
+		first.seenVersion = 99;
+
+		expect(getOnboardingState().seenVersion).toBe(0);
+	});
+
+	it("normalizes a non-numeric seenVersion so the tour can't be suppressed forever", () => {
+		localStorage.setItem(
+			"onboarding",
+			JSON.stringify({ seenVersion: "999", completedAt: "", dismissedVia: "closed" })
+		);
+
+		// "999" < 1 is false, which would silently hide the tour for good
+		expect(getOnboardingState().seenVersion).toBe(0);
+	});
+});
+
+// ── setOnboardingState ───────────────────────────────────────────────
+
+describe("setOnboardingState", () => {
+	it("writes to localStorage under the 'onboarding' key", () => {
+		const state: OnboardingState = {
+			seenVersion: 1,
+			completedAt: "2026-08-16T12:00:00.000Z",
+			dismissedVia: "skipped",
+		};
+		setOnboardingState(state);
+
+		const stored = localStorage.getItem("onboarding");
+		expect(stored).not.toBeNull();
+		expect(JSON.parse(stored!)).toEqual(state);
+	});
+
+	it("overwrites an existing record", () => {
+		setOnboardingState({ ...DEFAULT_ONBOARDING_STATE, seenVersion: 1 });
+		setOnboardingState({ ...DEFAULT_ONBOARDING_STATE, seenVersion: 2 });
+
+		expect(JSON.parse(localStorage.getItem("onboarding")!).seenVersion).toBe(2);
+	});
+
+	it("swallows write failures so a failed persist can't block the dialog closing", () => {
+		vi.spyOn(console, "error").mockImplementation(() => {});
+		vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
+			throw new Error("quota exceeded");
+		});
+
+		expect(() =>
+			setOnboardingState({ ...DEFAULT_ONBOARDING_STATE, seenVersion: 1 })
+		).not.toThrow();
+	});
+});
+
 // ── Round-trip ───────────────────────────────────────────────────────
 
 describe("round-trip: set → get", () => {
@@ -144,5 +261,15 @@ describe("round-trip: set → get", () => {
 		setAppSetting(custom);
 		const result = getAppSetting();
 		expect(result).toEqual(custom);
+	});
+
+	it("returns the same onboarding record after set then get", () => {
+		const custom: OnboardingState = {
+			seenVersion: 4,
+			completedAt: "2026-08-16T09:30:00.000Z",
+			dismissedVia: "completed",
+		};
+		setOnboardingState(custom);
+		expect(getOnboardingState()).toEqual(custom);
 	});
 });
