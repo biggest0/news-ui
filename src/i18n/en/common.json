@@ -310,11 +310,11 @@
     "DOT_LABEL": "Go to step {{step}}",
     "WELCOME": {
       "TITLE": "Welcome to Catire Time",
-      "BODY": "Every article here is satire — a short, easy-to-read spin on real news. Take it all with a grain of salt. Here's how to make the site work the way you like."
+      "BODY": "Every article here is satire, a short and easy-to-read spin on real news, so take it all with a grain of salt. Click Next to see what the site can do."
     },
     "PREFERENCES": {
-      "TITLE": "Make it yours",
-      "BODY": "Read in English or French — the articles themselves are translated, not just the buttons. Pick a light or dark look, or let it follow your system.",
+      "TITLE": "Set your preferences",
+      "BODY": "Choose your preferred theme and language. You can change these anytime in the menu.",
       "LANGUAGE_LABEL": "Language",
       "THEME_LABEL": "Appearance"
     },
@@ -326,7 +326,7 @@
     },
     "SECTIONS": {
       "TITLE": "Arrange the home page",
-      "BODY": "Most sections — Mews, Popular, Editors, Cat Facts and the rest — can be collapsed or removed from their section menu. Changed your mind? Bring them back from that same menu, or reset everything here.",
+      "BODY": "Most sections (Mews, Popular, Editors, Cat Facts and the rest) can be collapsed or removed from their section menu. Changed your mind? Bring them back from that same menu, or reset everything here.",
       "RESET": "Reset home layout"
     },
     "BROWSE": {

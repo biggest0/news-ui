@@ -25,7 +25,7 @@ vi.mock("@/contexts/AuthContext", () => ({
 /** All slide headings in manifest order, for count assertions. */
 const SLIDE_TITLES = [
 	"Welcome to Catire Time",
-	"Make it yours",
+	"Set your preferences",
 	"Choose how you read",
 	"Arrange the home page",
 	"Find what you like",

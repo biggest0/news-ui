@@ -108,8 +108,8 @@ testI18n.init({
 						BODY: "Every article here is satire.",
 					},
 					PREFERENCES: {
-						TITLE: "Make it yours",
-						BODY: "Read in English or French.",
+						TITLE: "Set your preferences",
+						BODY: "Choose your preferred theme and language.",
 						LANGUAGE_LABEL: "Language",
 						THEME_LABEL: "Appearance",
 					},

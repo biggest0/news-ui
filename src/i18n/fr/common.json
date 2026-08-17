@@ -310,11 +310,11 @@
     "DOT_LABEL": "Aller à l'étape {{step}}",
     "WELCOME": {
       "TITLE": "Bienvenue sur Catire Time",
-      "BODY": "Chaque article ici est satirique — une version courte et facile à lire de l'actualité réelle. À prendre avec des pincettes. Voici comment adapter le site à vos envies."
+      "BODY": "Chaque article ici est satirique, une version courte et facile à lire de l'actualité réelle, donc à prendre avec des pincettes. Cliquez sur Suivant pour découvrir les fonctionnalités du site."
     },
     "PREFERENCES": {
-      "TITLE": "Personnalisez",
-      "BODY": "Lisez en français ou en anglais — les articles eux-mêmes sont traduits, pas seulement les boutons. Choisissez un thème clair ou sombre, ou laissez-le suivre votre système.",
+      "TITLE": "Définissez vos préférences",
+      "BODY": "Choisissez votre thème et votre langue. Vous pouvez les modifier à tout moment dans le menu.",
       "LANGUAGE_LABEL": "Langue",
       "THEME_LABEL": "Apparence"
     },
@@ -326,7 +326,7 @@
     },
     "SECTIONS": {
       "TITLE": "Organisez la page d'accueil",
-      "BODY": "La plupart des sections — Miaous, Populaire, La Rédaction, Faits sur les chats et les autres — peuvent être réduites ou supprimées depuis leur menu. Vous avez changé d'avis ? Ramenez-les depuis ce même menu, ou réinitialisez tout ici.",
+      "BODY": "La plupart des sections (Miaous, Populaire, La Rédaction, Faits sur les chats et les autres) peuvent être réduites ou supprimées depuis leur menu. Vous avez changé d'avis ? Ramenez-les depuis ce même menu, ou réinitialisez tout ici.",
       "RESET": "Réinitialiser la mise en page"
     },
     "BROWSE": {
