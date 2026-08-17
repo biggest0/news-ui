@@ -201,7 +201,9 @@
       "FUN_READS_CONTENT": "The motivation for this app is to make reading news more engaging and give readers control over how they experience it. Let's be honest, a lot of news is too long, gloomy, or just plain boring. Our goal is to make it enjoyable, like taking plain broccoli and drenching it in flavorful gravy. We let readers choose exactly how deeply they want to engage. They can start with a catchy title, skim a quick summary, or dive into the full content. It's a 'three-speed' approach that matches how people naturally consume information today: quickly, selectively, and with ease.",
       "DISCLAIMER_TITLE": "Disclaimer",
       "DISCLAIMER_CONTENT": "This is a satire site. All our articles are jokes based on real events. Please do not use us as a source for... well, anything, really. We are cats. We are not journalists.",
-      "FULL_DISCLAIMER": "Full Disclaimer"
+      "FULL_DISCLAIMER": "Full Disclaimer",
+      "GETTING_STARTED_TITLE": "Getting Started",
+      "GETTING_STARTED_CONTENT": "New here, or want a reminder? The quick tour covers languages, themes, reading modes and arranging the home page."
     },
     "ACCOUNT": {
       "TITLE": "ACCOUNT"

@@ -201,7 +201,9 @@
       "FUN_READS_CONTENT": "La motivation pour cette application est de rendre la lecture des nouvelles plus engageante et de donner aux lecteurs le contrôle sur la façon dont ils l'expérimentent. Soyons honnêtes, beaucoup de nouvelles sont trop longues, sombres ou simplement ennuyeuses. Notre objectif est de les rendre agréables, comme prendre du brocoli ordinaire et le tremper dans une sauce savoureuse. Nous laissons les lecteurs choisir exactement à quel point ils veulent s'engager. Ils peuvent commencer par un titre accrocheur, parcourir un résumé rapide, ou plonger dans le contenu complet. C'est une approche \"à trois vitesses\" qui correspond à la façon dont les gens consomment naturellement l'information aujourd'hui : rapidement, de manière sélective, et avec facilité.",
       "DISCLAIMER_TITLE": "Avis de non-responsabilité",
       "DISCLAIMER_CONTENT": "Ceci est un site de satire. Tous nos articles sont des blagues basées sur des événements réels. Veuillez ne pas nous utiliser comme source pour... eh bien, quoi que ce soit, vraiment. Nous sommes des chats. Nous ne sommes pas des journalistes.",
-      "FULL_DISCLAIMER": "Avis de non-responsabilité complet"
+      "FULL_DISCLAIMER": "Avis de non-responsabilité complet",
+      "GETTING_STARTED_TITLE": "Prise en main",
+      "GETTING_STARTED_CONTENT": "Nouveau ici, ou besoin d'un rappel ? Le guide rapide couvre les langues, les thèmes, les modes de lecture et l'organisation de la page d'accueil."
     },
     "ACCOUNT": {
       "TITLE": "COMPTE"

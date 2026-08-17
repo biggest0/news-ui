@@ -132,6 +132,75 @@ test("renders as a bottom sheet on mobile", async ({ page }) => {
 	expect(Math.round(box.width)).toBe(viewport.width);
 });
 
+// ── Re-opening after dismissal ───────────────────────────────────────
+
+test.describe("re-opening", () => {
+	// these start from an already-dismissed state, like a returning visitor
+	test.beforeEach(async ({ page }) => {
+		await page.addInitScript(() => {
+			window.localStorage.setItem(
+				"onboarding",
+				JSON.stringify({
+					seenVersion: 1,
+					completedAt: "2026-01-01T00:00:00.000Z",
+					dismissedVia: "completed",
+				})
+			);
+		});
+	});
+
+	test("re-opens from the About page and returns focus to the button", async ({
+		page,
+	}) => {
+		await page.goto("/about");
+		await expect(dialog(page)).toHaveCount(0);
+
+		const launcher = page.getByRole("button", { name: "How to use this site" });
+		await launcher.click();
+		await expect(dialog(page)).toBeVisible();
+		await expect(page.getByText("Welcome to Catire Time")).toBeVisible();
+
+		await page.keyboard.press("Escape");
+		await expect(dialog(page)).toHaveCount(0);
+		// base-ui restores focus to the previously focused element, no ref needed
+		await expect(launcher).toBeFocused();
+	});
+
+	test("re-opens from the mobile drawer footer, closing the drawer as it goes", async ({
+		page,
+	}) => {
+		await page.setViewportSize({ width: 390, height: 780 });
+		await page.goto("/");
+
+		await page.getByLabel("Toggle menu").click();
+		const drawer = page.getByLabel("Navigation menu");
+		await expect(drawer).toBeVisible();
+
+		// it lives in the drawer's footer row, not among the navigation links
+		await expect(drawer.getByRole("link", { name: "Disclaimer" })).toBeVisible();
+
+		await drawer.getByRole("button", { name: "How to use this site" }).click();
+
+		// the drawer must be gone, or it would stack on top of the tour
+		await expect(drawer).toHaveCount(0);
+		await expect(dialog(page)).toBeVisible();
+		await expect(page.getByText("Welcome to Catire Time")).toBeVisible();
+	});
+
+	test("dismissing a re-opened tour does not re-arm the auto-open", async ({
+		page,
+	}) => {
+		await page.goto("/about");
+		await page.getByRole("button", { name: "How to use this site" }).click();
+		await expect(dialog(page)).toBeVisible();
+		await page.getByRole("button", { name: "Skip tour" }).click();
+
+		await page.goto("/");
+		await page.waitForTimeout(1500);
+		await expect(dialog(page)).toHaveCount(0);
+	});
+});
+
 test("renders centred on desktop", async ({ page }) => {
 	await page.setViewportSize({ width: 1280, height: 900 });
 	await page.goto("/");
