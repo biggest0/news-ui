@@ -241,7 +241,7 @@ Article *content* (title, summary, paragraphs, sub_category) is translated by th
 | `useSectionVisible(section)` | `hooks/useSectionCollapse.ts` | Section visibility state |
 | `useSectionCollapse(section)` | `hooks/useSectionCollapse.ts` | Section expand/collapse state |
 | `useAllSectionNotVisible()` | `hooks/useSectionCollapse.ts` | True when every home section is hidden (drives empty state) |
-| `useSectionDropdown(sectionKey)` | `hooks/useSectionDropdown.ts` | Builds the per-section dropdown options (collapse / remove / view mode) |
+| `useSectionDropdown(sectionKey)` | `hooks/useSectionDropdown.ts` | Builds the per-section dropdown options (collapse / remove / view mode, plus "restore hidden sections" whenever any section is hidden) |
 | `useSearchPage` exports | `hooks/useSearchPage.ts` | `useSearchParams`, `useSearchResults` (keyword/semantic infinite queries), `useFilteredArticles`, `useSearchInfiniteScroll` |
 
 RTK Query hooks (`useGetArticlesInfiniteQuery`, `useGetArticleDetailQuery`, `useGetCatFactsQuery`, `useToggleLikeMutation`, …) are exported from their endpoint files in `src/store/api/`.
@@ -312,6 +312,10 @@ npm run deploy      # build + copy index.html → 404.html + gh-pages deploy
 **Unit/component tests** (Vitest) live in `src/__tests__/` with subfolders mirroring `src/` (`mappers/`, `service/`, `utils/`, `components/`, `hooks/`, `store/`). Shared helpers in `__tests__/helpers/` (`renderWithProviders.tsx`); global setup in `__tests__/setup.ts`.
 
 **E2E tests** (Playwright, chromium-only) live in `e2e/*.spec.ts`. The backend is fully stubbed per-test via `page.route` (fixtures + helpers in `e2e/support/stubApi.ts`), so no live API is needed — locally or in CI. Tests run against the production build served by `vite preview` (port 4173). Auth is exercised with a fake session hint (`e2e/support/stubApi.ts` → `loginSession`) since tokens are HttpOnly cookies. **Cypress was removed in M7 — Playwright is the sole e2e framework.**
+
+> **Any new spec that lands on `/` must call `dismissOnboarding(page)`** in its **top-level** `beforeEach`, alongside `useEnglish(page)`. Without it the first-visit onboarding tour opens over the page and intercepts every click. It has to be the top-level block: `addInitScript` only applies to navigations registered after it, so a call inside a `describe` that already ran `goto` silently does nothing. `e2e/onboarding.spec.ts` is the one spec that deliberately omits it.
+>
+> Route registration order in `stubApi` matters for the same reason the detail regex once shadowed them: `/api/articles/top` and `/api/articles/featured` are single-segment paths that `\/api\/articles\/[^/?]+` also matches, and **Playwright gives the win to the last-registered route**. They are registered *after* the detail regex on purpose — moving them earlier silently feeds both endpoints the article-detail fixture.
 
 ## CI
 
