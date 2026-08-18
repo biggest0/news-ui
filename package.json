@@ -11,8 +11,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "preview": "vite preview",
-    "predeploy": "npm run build && cp dist/index.html dist/404.html",
-    "deploy": "gh-pages -d dist -r https://github.com/biggest0/news-ui.git",
+    "predeploy": "npm run build && node scripts/prerenderRoutes.mjs",
+    "deploy": "gh-pages -d dist --nojekyll -r https://github.com/biggest0/news-ui.git",
     "test:e2e": "npm run build && playwright test",
     "test:e2e:ui": "playwright test --ui"
   },
