@@ -16,7 +16,7 @@ export default function Contact() {
 					{/* Catire Time */}
 					<div className="text-center">
 						<h3 className="text-lg text-foreground">{t('PAGES.CONTACT.EMAIL')}</h3>
-						<div className="text-foreground-secondary">catirecontact@gmail.com</div>
+						<p className="text-foreground-secondary">catirecontact@gmail.com</p>
 					</div>
 					<div className="text-center flex flex-col">
 						<h3 className="text-lg text-foreground">{t('PAGES.CONTACT.SOCIALS')}</h3>

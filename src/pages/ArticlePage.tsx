@@ -72,7 +72,7 @@ export default function ArticlePage() {
 				/>
 
 				{articleDetail && <ArticleDetailSection article={articleDetail} />}
-				{isDetailLoading && !articleDetail && <div>{t("PAGES.ARTICLE.LOADING_DETAILS")}</div>}
+				{isDetailLoading && !articleDetail && <p>{t("PAGES.ARTICLE.LOADING_DETAILS")}</p>}
 				{id && <SimilarArticlesSection articleId={id} />}
 			</div>
 		</div>
