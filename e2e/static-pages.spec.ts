@@ -50,3 +50,35 @@ test.describe("Disclaimer", () => {
 		await expect(page.getByText("entertainment purposes only")).toBeVisible();
 	});
 });
+
+test.describe("Privacy policy", () => {
+	test.beforeEach(async ({ page }) => {
+		await page.goto("/privacy");
+	});
+
+	test("displays the policy with its section headings", async ({ page }) => {
+		await expect(
+			page.getByRole("heading", { name: "PRIVACY POLICY", exact: true })
+		).toBeVisible();
+		await expect(page.getByRole("heading", { name: "What we collect" })).toBeVisible();
+		await expect(page.getByRole("heading", { name: "Cookies" })).toBeVisible();
+	});
+
+	test("discloses the things AdSense and privacy law require", async ({ page }) => {
+		// third-party ad cookies and personalisation
+		await expect(page.getByText(/Google AdSense/)).toBeVisible();
+		// a contact route for access and deletion requests
+		await expect(page.getByText(/catirecontact@gmail\.com/).first()).toBeVisible();
+		// cross-border transfer
+		await expect(page.getByText(/outside Canada/)).toBeVisible();
+	});
+
+	test("is reachable from the footer", async ({ page }) => {
+		await page.goto("/");
+		await page.locator("footer").getByRole("link", { name: "Privacy" }).click();
+		await expect(page).toHaveURL(/\/privacy/);
+		await expect(
+			page.getByRole("heading", { name: "PRIVACY POLICY", exact: true })
+		).toBeVisible();
+	});
+});

@@ -33,6 +33,9 @@ export default function Footer() {
 					<Link className="cursor-pointer hover:text-foreground transition-colors" to="/disclaimer">
 						{t("FOOTER.DISCLAIMER")}
 					</Link>
+					<Link className="cursor-pointer hover:text-foreground transition-colors" to="/privacy">
+						{t("FOOTER.PRIVACY")}
+					</Link>
 					<Link className="cursor-pointer hover:text-foreground transition-colors" to="/about">
 						{t("FOOTER.ABOUT_US")}
 					</Link>

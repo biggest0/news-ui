@@ -28,11 +28,11 @@ const SHELL = join(DIST, "index.html");
  * /login. Dynamic routes (/article/:id, /subcategory/:sub) need the API and
  * arrive with Tier 2.
  *
- * NOTE: /privacy is not here yet. Adding a route before the page exists would
- * serve a 200 that renders "Page not Found" — a soft 404, which is worse for
- * SEO than the honest 404 we have now. Add it when the page ships.
+ * Only add a route here once its page actually exists: pre-rendering ahead of
+ * the component serves a 200 that renders "Page not Found", and a soft 404 is
+ * worse for SEO than an honest miss.
  */
-const STATIC_ROUTES = ["about", "contact", "disclaimer", "search", "blog"];
+const STATIC_ROUTES = ["about", "contact", "disclaimer", "privacy", "search", "blog"];
 
 /**
  * Reads the category list from constants/routes.ts rather than duplicating it.
