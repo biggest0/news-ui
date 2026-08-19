@@ -178,3 +178,40 @@ test.describe("headings", () => {
 		await expect(page.locator("h1")).toHaveText("MONDE");
 	});
 });
+
+// ── 404 page (audit M7) ──────────────────────────────────────────────
+
+test.describe("not found page", () => {
+	test("shows a real page, not a bare message", async ({ page }) => {
+		await page.goto("/this-page-does-not-exist");
+
+		await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+			"This page wandered off"
+		);
+		await expect(page.getByText(/knocked this page off the table/)).toBeVisible();
+	});
+
+	test("offers a way back", async ({ page }) => {
+		await page.goto("/nope");
+
+		await page.getByRole("link", { name: "Back to home" }).click();
+		await expect(page).toHaveURL("http://localhost:4173/");
+		await expect(page.getByText("per page")).toBeVisible();
+	});
+
+	test("has its own title and exactly one h1", async ({ page }) => {
+		await page.goto("/nope");
+
+		await expect(page).toHaveTitle(/Page not found \| Catire Time/);
+		await expect(page.locator("h1")).toHaveCount(1);
+	});
+
+	test("real routes are unaffected", async ({ page }) => {
+		// /article/:id matches a real route, so it must render the article even
+		// though GitHub Pages answers the direct hit with a 404 status
+		await page.goto("/article/art-001");
+		await expect(page.getByRole("heading", { level: 1 })).not.toHaveText(
+			"This page wandered off"
+		);
+	});
+});

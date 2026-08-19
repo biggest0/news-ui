@@ -1,7 +1,6 @@
 {
   "APP": {
-    "TITLE": "Çatire Time",
-    "NOT_FOUND": "Page introuvable"
+    "TITLE": "Çatire Time"
   },
   "CATEGORY": {
     "ALL": "Tout",
@@ -249,6 +248,12 @@
       "TITLE": "Cette page est encore en purr-oduction 🐱🔧",
       "BODY": "Notre équipe travaille d'arrache-patte !",
       "IMAGE_ALT": "Des chats au travail"
+    },
+    "NOT_FOUND": {
+      "TITLE": "Cette page s'est égarée",
+      "MESSAGE": "Quelque chose a fait tomber cette page de la table. Elle a peut-être été déplacée, ou n'a peut-être jamais existé.",
+      "HOME": "Retour à l'accueil",
+      "SEARCH": "Rechercher des articles"
     }
   },
   "AUTH": {

@@ -1,5 +1,4 @@
 import { lazy, Suspense } from "react";
-import { useTranslation } from "react-i18next";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import "./App.css";
@@ -34,9 +33,9 @@ const ResetPasswordPage = lazy(() => import("@/pages/ResetPasswordPage"));
 const NewPasswordPage = lazy(() => import("@/pages/NewPasswordPage"));
 const EmailVerificationPage = lazy(() => import("@/pages/EmailVerificationPage"));
 const ArticlePage = lazy(() => import("@/pages/ArticlePage"));
+const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"));
 
 function App() {
-	const { t } = useTranslation();
 	return (
 		<BrowserRouter basename="/">
 			<AppSettingProvider>
@@ -80,7 +79,7 @@ function App() {
 									<Route path="/disclaimer" element={<DisclaimerPage />} />
 									<Route path="/privacy" element={<PrivacyPolicyPage />} />
 									{/* Other routes */}
-									<Route path="*" element={<div>{t("APP.NOT_FOUND")}</div>} />
+									<Route path="*" element={<NotFoundPage />} />
 								</Routes>
 							</Suspense>
 						</main>

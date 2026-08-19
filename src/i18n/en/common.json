@@ -1,7 +1,6 @@
 {
   "APP": {
-    "TITLE": "Çatire Time",
-    "NOT_FOUND": "Page not Found"
+    "TITLE": "Çatire Time"
   },
   "CATEGORY": {
     "ALL": "All",
@@ -249,6 +248,12 @@
       "TITLE": "This page is still in purr-duction 🐱🔧",
       "BODY": "Our team is hard at work!",
       "IMAGE_ALT": "Cats at work"
+    },
+    "NOT_FOUND": {
+      "TITLE": "This page wandered off",
+      "MESSAGE": "Something knocked this page off the table. It may have been moved, or it may never have existed at all.",
+      "HOME": "Back to home",
+      "SEARCH": "Search articles"
     }
   },
   "AUTH": {
