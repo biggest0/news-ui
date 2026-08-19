@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 import NewsCard from "@/components/news/cards/NewsCard";
 import SearchSection from "@/components/search/SearchSection";
 import { SectionErrorMessage } from "@/components/common/feedback/SectionErrorMessage";
@@ -8,6 +10,7 @@ import {
 	useSearchInfiniteScroll,
 } from "@/hooks/useSearchPage";
 import type { SearchFilters } from "@/utils/search/searchUtils";
+import PageMeta from "@/components/common/seo/PageMeta";
 
 /**
  * Search results page — RTK Query consumer. Keyword and semantic modes are
@@ -15,6 +18,7 @@ import type { SearchFilters } from "@/utils/search/searchUtils";
  * an extra client-side filter/sort pass, matching previous behavior.
  */
 export default function SearchPage() {
+	const { t } = useTranslation();
 	const searchParams = useSearchParams();
 	const isSemanticMode = searchParams.searchType === "semantic";
 
@@ -39,6 +43,10 @@ export default function SearchPage() {
 
 	return (
 		<div>
+			<PageMeta
+				title={t("SEO.SEARCH.TITLE")}
+				description={t("SEO.SEARCH.DESCRIPTION")}
+			/>
 			<SearchSection
 				query={searchParams.query}
 				dateRange={searchParams.dateRange}

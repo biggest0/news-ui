@@ -82,3 +82,53 @@ test.describe("Privacy policy", () => {
 		).toBeVisible();
 	});
 });
+
+// ── Per-page metadata (audit M2) ─────────────────────────────────────
+
+test.describe("page metadata", () => {
+	const routes = [
+		{ path: "/", title: /Satirical news, short enough to finish \| Catire Time/ },
+		{ path: "/science", title: /Science \| Catire Time/ },
+		{ path: "/politics", title: /Politics \| Catire Time/ },
+		{ path: "/about", title: /About \| Catire Time/ },
+		{ path: "/privacy", title: /Privacy Policy \| Catire Time/ },
+		{ path: "/blog", title: /Blog \| Catire Time/ },
+	];
+
+	for (const route of routes) {
+		test(`${route.path} has its own title`, async ({ page }) => {
+			await page.goto(route.path);
+			await expect(page).toHaveTitle(route.title);
+		});
+	}
+
+	test("each page has exactly one title and one description", async ({ page }) => {
+		await page.goto("/about");
+		await expect(page.locator("head title")).toHaveCount(1);
+		await expect(page.locator('head meta[name="description"]')).toHaveCount(1);
+	});
+
+	test("the description is page-specific, not the site default", async ({ page }) => {
+		await page.goto("/privacy");
+		// toHaveAttribute retries; getAttribute reads once and can beat the effect
+		await expect(page.locator('head meta[name="description"]')).toHaveAttribute(
+			"content",
+			/stays on your device/
+		);
+	});
+
+	test("open graph tags follow the page too", async ({ page }) => {
+		await page.goto("/blog");
+		await expect(page.locator('head meta[property="og:title"]')).toHaveAttribute(
+			"content",
+			/Blog \| Catire Time/
+		);
+	});
+
+	test("titles are localised", async ({ page }) => {
+		await page.goto("/about");
+		await page.getByLabel("Language").click();
+		await page.getByRole("menuitem", { name: /French/ }).click();
+		await expect(page).toHaveTitle(/À propos \| Çatire Time/);
+	});
+});

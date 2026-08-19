@@ -1,11 +1,13 @@
 import { SectionHeader } from "@/components/common/layout/SectionHeader";
 import { useTranslation } from "react-i18next";
+import PageMeta from "@/components/common/seo/PageMeta";
 
 export default function DisclaimerPage() {
 	const { t } = useTranslation();
 
 	return (
 		<>
+			<PageMeta title={t("SEO.DISCLAIMER.TITLE")} description={t("SEO.DISCLAIMER.DESCRIPTION")} />
 			<section className="border-b border-border py-6">
 				<SectionHeader title={t("PAGES.DISCLAIMER.TITLE")} />
 				{/* Text body */}

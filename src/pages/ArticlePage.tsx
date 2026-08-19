@@ -9,6 +9,7 @@ import { useApiLang } from "@/hooks/useApiLang";
 import { useGetArticleDetailQuery } from "@/store/api/articleEndpoints";
 import { useRecordArticleReadMutation } from "@/store/api/userContentEndpoints";
 import ArticleDetailSection from "@/components/news/section/ArticleDetailSection";
+import PageMeta from "@/components/common/seo/PageMeta";
 import SimilarArticlesSection from "@/components/news/section/SimilarArticlesSection";
 
 export default function ArticlePage() {
@@ -46,6 +47,14 @@ export default function ArticlePage() {
 
 	return (
 		<div className="py-6">
+			{/* The article's own title/summary — this is the page most likely to
+			    be shared or land in search results */}
+			{articleDetail && (
+				<PageMeta
+					title={articleDetail.title}
+					description={articleDetail.summary}
+				/>
+			)}
 			{/* Back button */}
 			<button
 				onClick={() => navigate(-1)}

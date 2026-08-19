@@ -3,12 +3,17 @@ import { useTranslation } from "react-i18next";
 
 import { SectionHeader } from "@/components/common/layout/SectionHeader";
 import { BLOG_POSTS } from "@/blog/registry";
+import PageMeta from "@/components/common/seo/PageMeta";
 
 export default function BlogPage() {
 	const { t } = useTranslation();
 
 	return (
 		<section className="py-6">
+			<PageMeta
+				title={t("SEO.BLOG.TITLE")}
+				description={t("SEO.BLOG.DESCRIPTION")}
+			/>
 			<SectionHeader title={t("BLOG.TITLE")} />
 
 			{BLOG_POSTS.length === 0 ? (

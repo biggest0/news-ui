@@ -1,12 +1,14 @@
 import { useTranslation } from "react-i18next";
 
 import { SectionHeader } from "@/components/common/layout/SectionHeader";
+import PageMeta from "@/components/common/seo/PageMeta";
 
 export default function Contact() {
 	const { t } = useTranslation();
 
 	return (
 		<>
+			<PageMeta title={t("SEO.CONTACT.TITLE")} description={t("SEO.CONTACT.DESCRIPTION")} />
 			<section className="border-b border-border py-6">
 				<SectionHeader title={t('PAGES.CONTACT.TITLE')}/>
 				{/* Text body */}
