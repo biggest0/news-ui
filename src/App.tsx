@@ -24,6 +24,7 @@ const About = lazy(() => import("@/pages/AboutPage"));
 const Contact = lazy(() => import("@/pages/ContactPage"));
 const AccountPage = lazy(() => import("@/pages/AccountPage"));
 const DisclaimerPage = lazy(() => import("@/pages/DisclaimerPage"));
+const PrivacyPolicyPage = lazy(() => import("@/pages/PrivacyPolicyPage"));
 const LoginPage = lazy(() => import("@/pages/LoginPage"));
 const RegisterPage = lazy(() => import("@/pages/RegisterPage"));
 const GoogleCallbackPage = lazy(() => import("@/pages/GoogleCallbackPage"));
@@ -77,6 +78,7 @@ function App() {
 									<Route path="/blog" element={<BlogPage />} />
 									<Route path="/blog/:slug" element={<BlogPostPage />} />
 									<Route path="/disclaimer" element={<DisclaimerPage />} />
+									<Route path="/privacy" element={<PrivacyPolicyPage />} />
 									{/* Other routes */}
 									<Route path="*" element={<div>{t("APP.NOT_FOUND")}</div>} />
 								</Routes>

@@ -149,6 +149,13 @@ export const MobileMenu = ({
 								>
 									{t("FOOTER.DISCLAIMER")}
 								</Link>
+								<Link
+									to="/privacy"
+									onClick={onMenuClose}
+									className="cursor-pointer transition-colors hover:text-foreground"
+								>
+									{t("FOOTER.PRIVACY")}
+								</Link>
 							</div>
 						</div>
 					</div>
