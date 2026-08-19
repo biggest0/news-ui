@@ -30,7 +30,8 @@
     "SHARE": "Share",
     "LOADING_DETAILS": "Loading details...",
     "LOGIN_TO_LIKE": "Log in to like this article",
-    "LIKE": "Like"
+    "LIKE": "Like",
+    "BY_AUTHOR": "By: {{author}}"
   },
   "FILTER": {
     "DATE_RANGE": "Date Range",

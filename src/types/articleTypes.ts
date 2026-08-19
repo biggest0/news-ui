@@ -55,6 +55,12 @@ export interface ArticleDetail {
 	subCategory: string[];
 	source: string;
 	url: string;
+	/**
+	 * Credited editor. Left optional rather than defaulted here: the fallback
+	 * name is a translated string, and mappers have no business reading i18n.
+	 * ArticleDetailSection falls back to Meowstein at render time.
+	 */
+	author?: string;
 }
 
 export interface RecommendedArticle {

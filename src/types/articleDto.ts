@@ -41,6 +41,8 @@ export interface ArticleDetailDTO {
 	sub_category: string[];
 	source: string;
 	url: string;
+	/** Editor credited with the piece. Optional — older articles predate it. */
+	author?: string;
 }
 
 export interface ArticleInfoResponseDTO {

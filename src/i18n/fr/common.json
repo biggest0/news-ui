@@ -30,7 +30,8 @@
     "SHARE": "Partager",
     "LOADING_DETAILS": "Chargement des détails...",
     "LOGIN_TO_LIKE": "Connectez-vous pour aimer cet article",
-    "LIKE": "Aimer"
+    "LIKE": "Aimer",
+    "BY_AUTHOR": "Par : {{author}}"
   },
   "FILTER": {
     "DATE_RANGE": "Période",

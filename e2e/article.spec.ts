@@ -46,3 +46,39 @@ test("back button returns to the previous page", async ({ page }) => {
 	await page.getByRole("button", { name: /Back/ }).click();
 	await expect(page).not.toHaveURL(/\/article\//);
 });
+
+// ── Attribution (audit N3 + N1) ──────────────────────────────────────
+
+test("credits an editor, falling back to the chief editor", async ({ page }) => {
+	// the fixture carries no author, so this exercises the fallback
+	await page.goto("/article/art-001");
+	await expect(page.getByText("By: Meowstein")).toBeVisible();
+});
+
+test("renders as a real article with paragraph elements", async ({ page }) => {
+	await page.goto("/article/art-001");
+
+	// N1: paragraphs were <div>s, and there was no <article> wrapper at all
+	await expect(page.locator("article")).toHaveCount(1);
+	expect(await page.locator("article p").count()).toBeGreaterThan(0);
+});
+
+test("uses the backend's author when the article has one", async ({ page }) => {
+	// Registered after stubApi, so this wins for the detail endpoint
+	await page.route(/\/api\/articles\/[^/?]+(\?.*)?$/, async (route) => {
+		if (route.request().url().includes("/api/articles?")) return route.fallback();
+		const detail = await import("./fixtures/articleDetail.json", {
+			with: { type: "json" },
+		});
+		return route.fulfill({
+			status: 200,
+			contentType: "application/json",
+			body: JSON.stringify({ ...detail.default, author: "Purrscilla" }),
+		});
+	});
+
+	await page.goto("/article/art-001");
+
+	await expect(page.getByText("By: Purrscilla")).toBeVisible();
+	await expect(page.getByText("By: Meowstein")).toHaveCount(0);
+});
