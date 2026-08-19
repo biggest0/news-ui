@@ -389,11 +389,11 @@
     },
     "BLOG": {
       "TITLE": "Blog",
-      "DESCRIPTION": "Nos notes sur le choix des sujets, pourquoi nous écrivons court, et ce que nous préparons."
+      "DESCRIPTION": "Notes sur le développement continu de Çatire Time : décisions de conception, solutions intéressantes, nouvelles fonctionnalités et idées en cours."
     },
     "ABOUT": {
       "TITLE": "À propos",
-      "DESCRIPTION": "Qui nous sommes, pourquoi nous condensons l'actualité en satire, et ce que nous cherchons à faire."
+      "DESCRIPTION": "Qui nous sommes, notre mission, et pourquoi l'application."
     },
     "CONTACT": {
       "TITLE": "Contact",
