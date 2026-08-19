@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { findBlogPost } from "@/blog/registry";
 import placeholderBanner from "@/assets/blogs_banner_placeholder.jpg";
+import PageMeta from "@/components/common/seo/PageMeta";
 
 export default function BlogPostPage() {
 	const { t } = useTranslation();
@@ -20,10 +21,11 @@ export default function BlogPostPage() {
 		);
 	}
 
-	const { Component, title, date, tags } = post;
+	const { Component, title, date, tags, summary } = post;
 
 	return (
 		<section className="py-6">
+			<PageMeta title={title} description={summary} />
 			<Link to="/blog" className="text-md text-brand hover:underline">
 				← {t("BLOG.BACK_TO_BLOG")}
 			</Link>

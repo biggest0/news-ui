@@ -368,5 +368,48 @@
       "BODY": "Créez un compte pour aimer des articles, conserver un historique de lecture et recevoir des recommandations basées sur vos lectures.",
       "CTA": "Créer un compte"
     }
+  },
+  "SEO": {
+    "SITE_NAME": "Çatire Time",
+    "HOME": {
+      "TITLE": "Nouvelles satiriques, assez courtes pour être finies",
+      "DESCRIPTION": "L'actualité du jour condensée en courtes satires que vous pouvez vraiment finir. Écrites par des chats, en français et en anglais."
+    },
+    "CATEGORY": {
+      "TITLE": "{{category}}",
+      "DESCRIPTION": "Nouvelles satiriques sur {{category}}, condensées en textes courts à lire en une minute."
+    },
+    "SEARCH": {
+      "TITLE": "Recherche",
+      "DESCRIPTION": "Cherchez sur Çatire Time des satires de l'actualité du jour."
+    },
+    "SUBCATEGORY": {
+      "TITLE": "{{subCategory}}",
+      "DESCRIPTION": "Articles satiriques classés sous {{subCategory}}."
+    },
+    "BLOG": {
+      "TITLE": "Blog",
+      "DESCRIPTION": "Notes sur le développement continu de Çatire Time : décisions de conception, solutions intéressantes, nouvelles fonctionnalités et idées en cours."
+    },
+    "ABOUT": {
+      "TITLE": "À propos",
+      "DESCRIPTION": "Qui nous sommes, notre mission, et pourquoi nous l'avons créé."
+    },
+    "CONTACT": {
+      "TITLE": "Contact",
+      "DESCRIPTION": "Comment joindre Çatire Time par courriel ou sur les réseaux sociaux."
+    },
+    "DISCLAIMER": {
+      "TITLE": "Avis de non-responsabilité",
+      "DESCRIPTION": "Tout sur Çatire Time est satirique. Voici l'avis complet."
+    },
+    "PRIVACY": {
+      "TITLE": "Politique de confidentialité",
+      "DESCRIPTION": "Ce que Çatire Time recueille, ce qui reste sur votre appareil, et comment faire supprimer vos renseignements."
+    },
+    "NOT_FOUND": {
+      "TITLE": "Page introuvable",
+      "DESCRIPTION": "Cette page n'existe pas. Retournez à la une pour la satire du jour."
+    }
   }
 }

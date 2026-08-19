@@ -56,7 +56,7 @@ export default function EmailVerificationPage() {
 	if (status === "verifying") {
 		return (
 			<section className="py-6">
-				<SectionHeader title={t("AUTH.VERIFY_EMAIL_TITLE")} />
+				<SectionHeader title={t("AUTH.VERIFY_EMAIL_TITLE")} as="h1" />
 				<div className="max-w-sm pt-6">
 					<p className="text-foreground-secondary">{t("AUTH.VERIFY_VERIFYING")}</p>
 				</div>

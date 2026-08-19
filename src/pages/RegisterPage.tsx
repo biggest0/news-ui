@@ -72,7 +72,7 @@ export default function RegisterPage() {
 	if (registered) {
 		return (
 			<section className="py-6">
-				<SectionHeader title={t("AUTH.VERIFY_EMAIL_TITLE")} />
+				<SectionHeader title={t("AUTH.VERIFY_EMAIL_TITLE")} as="h1" />
 
 				<div className="max-w-sm pt-6 flex flex-col gap-4">
 					<h2 className="text-lg font-semibold text-foreground">

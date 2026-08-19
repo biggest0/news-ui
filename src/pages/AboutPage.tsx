@@ -4,14 +4,16 @@ import { SectionHeader } from "@/components/common/layout/SectionHeader";
 import { useTranslation } from "react-i18next";
 
 import OnboardingLauncher from "@/components/onboarding/OnboardingLauncher";
+import PageMeta from "@/components/common/seo/PageMeta";
 
 export default function About() {
 	const { t } = useTranslation();
 
 	return (
 		<>
+			<PageMeta title={t("SEO.ABOUT.TITLE")} description={t("SEO.ABOUT.DESCRIPTION")} />
 			<section className="border-b border-border py-6">
-				<SectionHeader title={t("PAGES.ABOUT.TITLE")} />
+				<SectionHeader title={t("PAGES.ABOUT.TITLE")} as="h1" />
 				{/* Text body */}
 				<div className="space-y-6 pt-4">
 					{/* Catire Time */}

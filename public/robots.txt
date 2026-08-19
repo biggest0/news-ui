@@ -1,3 +1,5 @@
 # Catire Time — satirical news by cats. Crawl away.
 User-agent: *
 Allow: /
+
+Sitemap: https://www.catiretime.com/sitemap.xml

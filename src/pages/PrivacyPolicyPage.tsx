@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 import { SectionHeader } from "@/components/common/layout/SectionHeader";
+import PageMeta from "@/components/common/seo/PageMeta";
 
 /**
  * Privacy policy (audit B3 — an AdSense requirement, and owed to readers
@@ -67,7 +68,11 @@ export default function PrivacyPolicyPage() {
 
 	return (
 		<section className="border-b border-border py-6">
-			<SectionHeader title={t("PAGES.PRIVACY.TITLE")} />
+			<PageMeta
+				title={t("SEO.PRIVACY.TITLE")}
+				description={t("SEO.PRIVACY.DESCRIPTION")}
+			/>
+			<SectionHeader title={t("PAGES.PRIVACY.TITLE")} as="h1" />
 
 			<div className="max-w-3xl space-y-8 pt-4">
 				<p className="text-sm text-muted-foreground">

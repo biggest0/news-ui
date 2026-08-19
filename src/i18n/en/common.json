@@ -368,5 +368,48 @@
       "BODY": "Create an account to like articles, keep a reading history, and get recommendations based on what you actually read.",
       "CTA": "Create an account"
     }
+  },
+  "SEO": {
+    "SITE_NAME": "Catire Time",
+    "HOME": {
+      "TITLE": "Satirical news, short enough to finish",
+      "DESCRIPTION": "The day's events condensed into short satirical takes you can actually finish. Written by cats, in English and French."
+    },
+    "CATEGORY": {
+      "TITLE": "{{category}}",
+      "DESCRIPTION": "Satirical {{category}} stories, condensed into short takes you can finish in a minute."
+    },
+    "SEARCH": {
+      "TITLE": "Search",
+      "DESCRIPTION": "Search Catire Time for satirical takes on the day's events."
+    },
+    "SUBCATEGORY": {
+      "TITLE": "{{subCategory}}",
+      "DESCRIPTION": "Satirical stories tagged {{subCategory}}."
+    },
+    "BLOG": {
+      "TITLE": "Blog",
+      "DESCRIPTION": "Notes on the ongoing development of Catire Time: design decisions, solutions we found interesting, new features, and ideas we are working on."
+    },
+    "ABOUT": {
+      "TITLE": "About",
+      "DESCRIPTION": "Who we are, our mission, and why we built it."
+    },
+    "CONTACT": {
+      "TITLE": "Contact",
+      "DESCRIPTION": "How to reach Catire Time by email or on social media."
+    },
+    "DISCLAIMER": {
+      "TITLE": "Disclaimer",
+      "DESCRIPTION": "Everything on Catire Time is satire. Here is the full disclaimer."
+    },
+    "PRIVACY": {
+      "TITLE": "Privacy Policy",
+      "DESCRIPTION": "What Catire Time collects, what stays on your device, and how to have your data deleted."
+    },
+    "NOT_FOUND": {
+      "TITLE": "Page not found",
+      "DESCRIPTION": "That page does not exist. Head back to the front page for the day's satire."
+    }
   }
 }

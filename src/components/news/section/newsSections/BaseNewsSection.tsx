@@ -29,6 +29,17 @@ interface BaseNewsSectionProps {
 	category?: string;
 	/** Show the full-page overlay during the initial load (home page). */
 	overlayOnInitialLoad?: boolean;
+	/**
+	 * Heading above the feed. Defaults to the Mews section name; category
+	 * pages pass their own name so all eight routes aren't headed "MEWS".
+	 */
+	headingTitle?: string;
+	/**
+	 * Render the heading as the page's `h1`. True on category pages, where
+	 * this feed is the entire page; false on the home page, where it is one
+	 * section among several.
+	 */
+	isPageHeading?: boolean;
 }
 
 /**
@@ -43,6 +54,8 @@ interface BaseNewsSectionProps {
 export function BaseNewsSection({
 	category,
 	overlayOnInitialLoad = false,
+	headingTitle,
+	isPageHeading = false,
 }: BaseNewsSectionProps) {
 	const { t } = useTranslation();
 	const lang = useApiLang();
@@ -126,8 +139,9 @@ export function BaseNewsSection({
 				{/* Header and filters */}
 				<div className="flex flex-row justify-between w-full items-center">
 					<SectionHeaderExpandable
-						title={t("SECTION.MEWS")}
+						title={headingTitle ?? t("SECTION.MEWS")}
 						section={SECTIONS.NEWS}
+						as={isPageHeading ? "h1" : "h2"}
 					/>
 					<FilterBar
 						dateRange={dateRange}

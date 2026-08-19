@@ -39,7 +39,7 @@ function SubCategoryPage() {
 
 	return (
 		<div className="py-6">
-			<SectionHeader title={decodeURIComponent(subCategory || "")} />
+			<SectionHeader title={decodeURIComponent(subCategory || "")} as="h1" />
 
 			{isError && <SectionErrorMessage onRetry={refetch} />}
 

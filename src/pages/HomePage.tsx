@@ -12,6 +12,7 @@ import { useAppSettings } from "@/contexts/AppSettingContext";
 import EmptyStateSection from "@/components/news/section/EmptyStateSection";
 import MobileStaffPicksSection from "@/components/news/section/mobileSections/MobileStaffPicksSection";
 import OnboardingAutoOpen from "@/components/onboarding/OnboardingAutoOpen";
+import PageMeta from "@/components/common/seo/PageMeta";
 
 export default function HomePage() {
 	const { t } = useTranslation();
@@ -19,6 +20,14 @@ export default function HomePage() {
 	const { resetSectionVisibility } = useAppSettings();
 	return (
 		<>
+			<PageMeta
+				title={t("SEO.HOME.TITLE")}
+				description={t("SEO.HOME.DESCRIPTION")}
+			/>
+			{/* The wordmark sits in the shared header, so the home page has no
+			    visible title to promote. A screen-reader-only h1 gives the page one
+			    top-level heading for assistive tech and crawlers. */}
+			<h1 className="sr-only">{t("SEO.HOME.TITLE")}</h1>
 			{/* Renders nothing — mounting it here is what scopes the first-visit
 			    tour to the home page (see OnboardingAutoOpen for the timing gate) */}
 			<OnboardingAutoOpen />
