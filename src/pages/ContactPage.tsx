@@ -16,7 +16,14 @@ export default function Contact() {
 					{/* Catire Time */}
 					<div className="text-center">
 						<h3 className="text-lg text-foreground">{t('PAGES.CONTACT.EMAIL')}</h3>
-						<p className="text-foreground-secondary">catirecontact@gmail.com</p>
+						{/* href derives from the same key as the text, so the two
+						    can't drift apart if the address ever changes */}
+						<a
+							href={`mailto:${t("PAGES.CONTACT.EMAIL_ADDRESS")}`}
+							className="text-foreground-secondary hover:text-brand"
+						>
+							{t("PAGES.CONTACT.EMAIL_ADDRESS")}
+						</a>
 					</div>
 					<div className="text-center flex flex-col">
 						<h3 className="text-lg text-foreground">{t('PAGES.CONTACT.SOCIALS')}</h3>

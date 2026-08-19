@@ -34,7 +34,10 @@ test.describe("Contact", () => {
 
 	test("displays the Contact page with email and socials", async ({ page }) => {
 		await expect(page.getByRole("heading", { name: "CONTACT", exact: true })).toBeVisible();
-		await expect(page.getByText("catirecontact@gmail.com")).toBeVisible();
+		// the address is a real mailto link, not plain text
+		await expect(
+			page.getByRole("link", { name: "catirecontact@gmail.com" })
+		).toHaveAttribute("href", "mailto:catirecontact@gmail.com");
 		await expect(page.getByText("Instagram: catiretime")).toBeVisible();
 		await expect(page.getByText("YouTube: catiretime")).toBeVisible();
 	});
