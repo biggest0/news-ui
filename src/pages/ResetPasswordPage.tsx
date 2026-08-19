@@ -49,7 +49,7 @@ export default function ResetPasswordPage() {
 
 	return (
 		<section className="py-6">
-			<SectionHeader title={t("AUTH.RESET_PASSWORD_TITLE")} />
+			<SectionHeader title={t("AUTH.RESET_PASSWORD_TITLE")} as="h1" />
 
 			<div className="max-w-sm pt-6">
 				{sent ? (

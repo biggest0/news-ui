@@ -62,7 +62,7 @@ export default function LoginPage() {
 
 	return (
 		<section className="py-6">
-			<SectionHeader title={t("AUTH.LOGIN_TITLE")} />
+			<SectionHeader title={t("AUTH.LOGIN_TITLE")} as="h1" />
 
 			<div className="max-w-sm pt-6">
 				<form className="flex flex-col gap-4" onSubmit={handleSubmit}>

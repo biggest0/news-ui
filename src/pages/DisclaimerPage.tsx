@@ -9,7 +9,7 @@ export default function DisclaimerPage() {
 		<>
 			<PageMeta title={t("SEO.DISCLAIMER.TITLE")} description={t("SEO.DISCLAIMER.DESCRIPTION")} />
 			<section className="border-b border-border py-6">
-				<SectionHeader title={t("PAGES.DISCLAIMER.TITLE")} />
+				<SectionHeader title={t("PAGES.DISCLAIMER.TITLE")} as="h1" />
 				{/* Text body */}
 				<div className="space-y-6 pt-4 text-center flex flex-col text-foreground-secondary">
 					<div>

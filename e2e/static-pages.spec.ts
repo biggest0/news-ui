@@ -132,3 +132,49 @@ test.describe("page metadata", () => {
 		await expect(page).toHaveTitle(/À propos \| Çatire Time/);
 	});
 });
+
+// ── Headings (audit M1 + M3) ─────────────────────────────────────────
+
+test.describe("headings", () => {
+	const routes = [
+		"/", "/science", "/politics", "/about", "/contact",
+		"/disclaimer", "/privacy", "/blog", "/search",
+	];
+
+	for (const path of routes) {
+		test(`${path} has exactly one h1`, async ({ page }) => {
+			await page.goto(path);
+			await expect(page.locator("h1")).toHaveCount(1);
+		});
+	}
+
+	test("category pages are headed by their own name, not MEWS", async ({ page }) => {
+		await page.goto("/science");
+		await expect(page.locator("h1")).toHaveText("SCIENCE");
+
+		await page.goto("/politics");
+		await expect(page.locator("h1")).toHaveText("POLITICS");
+	});
+
+	test("the home feed is still headed MEWS, as one section among several", async ({
+		page,
+	}) => {
+		await page.goto("/");
+		await expect(
+			page.getByRole("heading", { level: 2, name: "MEWS" })
+		).toBeVisible();
+		// the home h1 is screen-reader only, so it must not be a visible section title
+		await expect(page.locator("h1")).toHaveCount(1);
+	});
+
+	test("category headings are localised", async ({ page }) => {
+		// /world, not /science: "Science" is spelled the same in French, so it
+		// would pass even if the heading were never translated
+		await page.goto("/world");
+		await expect(page.locator("h1")).toHaveText("WORLD");
+
+		await page.getByLabel("Language").click();
+		await page.getByRole("menuitem", { name: /French/ }).click();
+		await expect(page.locator("h1")).toHaveText("MONDE");
+	});
+});

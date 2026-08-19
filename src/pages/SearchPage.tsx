@@ -47,6 +47,9 @@ export default function SearchPage() {
 				title={t("SEO.SEARCH.TITLE")}
 				description={t("SEO.SEARCH.DESCRIPTION")}
 			/>
+			{/* SearchSection is a form with no heading of its own; screen readers
+			    still need one top-level heading per page (audit M3) */}
+			<h1 className="sr-only">{t("SEO.SEARCH.TITLE")}</h1>
 			<SearchSection
 				query={searchParams.query}
 				dateRange={searchParams.dateRange}

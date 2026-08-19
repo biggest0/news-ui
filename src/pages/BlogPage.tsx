@@ -14,7 +14,7 @@ export default function BlogPage() {
 				title={t("SEO.BLOG.TITLE")}
 				description={t("SEO.BLOG.DESCRIPTION")}
 			/>
-			<SectionHeader title={t("BLOG.TITLE")} />
+			<SectionHeader title={t("BLOG.TITLE")} as="h1" />
 
 			{BLOG_POSTS.length === 0 ? (
 				<p className="pt-4 text-muted-foreground">{t("BLOG.NO_POSTS")}</p>

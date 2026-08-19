@@ -51,7 +51,7 @@ export default function NewPasswordPage() {
 
 	return (
 		<section className="py-6">
-			<SectionHeader title={t("AUTH.NEW_PASSWORD_TITLE")} />
+			<SectionHeader title={t("AUTH.NEW_PASSWORD_TITLE")} as="h1" />
 
 			<div className="max-w-sm pt-6">
 				{success ? (

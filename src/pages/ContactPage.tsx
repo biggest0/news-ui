@@ -10,7 +10,7 @@ export default function Contact() {
 		<>
 			<PageMeta title={t("SEO.CONTACT.TITLE")} description={t("SEO.CONTACT.DESCRIPTION")} />
 			<section className="border-b border-border py-6">
-				<SectionHeader title={t('PAGES.CONTACT.TITLE')}/>
+				<SectionHeader title={t('PAGES.CONTACT.TITLE')} as="h1" />
 				{/* Text body */}
 				<div className="space-y-6 pt-4">
 					{/* Catire Time */}

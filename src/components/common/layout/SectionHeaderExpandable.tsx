@@ -5,6 +5,8 @@ import type { SectionToggleState } from "@/types/localStorageTypes";
 interface SectionHeaderExpandableProps {
 	title: string;
 	section: keyof SectionToggleState;
+	/** Forwarded to SectionHeader — `h1` when this section is the whole page. */
+	as?: "h1" | "h2";
 }
 
 /**
@@ -15,10 +17,11 @@ interface SectionHeaderExpandableProps {
 export const SectionHeaderExpandable = ({
 	title,
 	section,
+	as,
 }: SectionHeaderExpandableProps) => {
 	return (
 		<div className="flex flex-row items-center space-x-4">
-			<SectionHeader title={title} />
+			<SectionHeader title={title} as={as} />
 			<SectionDropDown section={section} />
 		</div>
 	);
