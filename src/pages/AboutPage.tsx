@@ -19,29 +19,29 @@ export default function About() {
 					{/* Catire Time */}
 					<div className="text-center">
 						<h3 className="text-lg text-foreground">{t("APP.TITLE")}</h3>
-						<div className="text-foreground-secondary">
+						<p className="text-foreground-secondary">
 							{t("PAGES.ABOUT.INTRODUCTION")}
-						</div>
+						</p>
 					</div>
 					{/* Our mission */}
 					<div className="text-center">
 						<h3 className="text-lg text-foreground">{t("PAGES.ABOUT.MISSION_TITLE")}</h3>
-						<div className="text-foreground-secondary">
+						<p className="text-foreground-secondary">
 							{t("PAGES.ABOUT.MISSION_CONTENT")}
-						</div>
+						</p>
 					</div>
 					<div className="text-center">
 						<h3 className="text-lg text-foreground">{t("PAGES.ABOUT.FUN_READS_TITLE")}</h3>
-						<div className="text-foreground-secondary">
+						<p className="text-foreground-secondary">
 							{t("PAGES.ABOUT.FUN_READS_CONTENT")}
-						</div>
+						</p>
 					</div>
 					{/* Disclaimer */}
 					<div className="text-center">
 						<h3 className="text-lg text-foreground">{t("PAGES.ABOUT.DISCLAIMER_TITLE")}</h3>
-						<div className="text-foreground-secondary">
+						<p className="text-foreground-secondary">
 							{t("PAGES.ABOUT.DISCLAIMER_CONTENT")}
-						</div>
+						</p>
 						<Link
 							className="cursor-pointer text-muted-foreground hover:text-foreground underline"
 							to="/disclaimer"
@@ -54,9 +54,9 @@ export default function About() {
 						<h3 className="text-lg text-foreground">
 							{t("PAGES.ABOUT.GETTING_STARTED_TITLE")}
 						</h3>
-						<div className="text-foreground-secondary">
+						<p className="text-foreground-secondary">
 							{t("PAGES.ABOUT.GETTING_STARTED_CONTENT")}
-						</div>
+						</p>
 						<OnboardingLauncher />
 					</div>
 				</div>

@@ -54,9 +54,9 @@ function SubCategoryPage() {
 						))
 					) : (
 						!isFetching && (
-							<div className="py-4 text-muted-foreground">
+							<p className="py-4 text-muted-foreground">
 								{t("PAGES.SUBCATEGORY.NO_ARTICLES")}
-							</div>
+							</p>
 						)
 					)}
 				</section>
@@ -64,15 +64,15 @@ function SubCategoryPage() {
 
 			{/* Loading indicator for infinite scroll */}
 			{isFetching && (
-				<div className="py-4 text-muted-foreground text-center">
+				<p className="py-4 text-muted-foreground text-center">
 					{t("PAGES.SUBCATEGORY.LOADING_MORE")}
-				</div>
+				</p>
 			)}
 
 			{!isFetching && !isError && !hasNextPage && articles.length > 0 && (
-				<div className="py-4 text-muted-foreground text-center">
+				<p className="py-4 text-muted-foreground text-center">
 					{t("PAGES.SUBCATEGORY.NO_MORE_ARTICLES")}
-				</div>
+				</p>
 			)}
 		</div>
 	);

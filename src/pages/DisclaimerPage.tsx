@@ -12,24 +12,24 @@ export default function DisclaimerPage() {
 				<SectionHeader title={t("PAGES.DISCLAIMER.TITLE")} as="h1" />
 				{/* Text body */}
 				<div className="space-y-6 pt-4 text-center flex flex-col text-foreground-secondary">
-					<div>
+					<p>
 						{t("PAGES.DISCLAIMER.CONTENT_1")}
-					</div>
-					<div>
+					</p>
+					<p>
 						{t("PAGES.DISCLAIMER.CONTENT_2")}
-					</div>
-					<div>
+					</p>
+					<p>
 						{t("PAGES.DISCLAIMER.CONTENT_3")}
-					</div>
-					<div>
+					</p>
+					<p>
 						{t("PAGES.DISCLAIMER.CONTENT_4")}
-					</div>
-					<div>
+					</p>
+					<p>
 						{t("PAGES.DISCLAIMER.CONTENT_5")}
-					</div>
-					<div>
+					</p>
+					<p>
 						{t("PAGES.DISCLAIMER.CONTENT_6")}
-					</div>
+					</p>
 				</div>
 			</section>
 		</>

@@ -64,5 +64,6 @@ export function mapDTOtoArticleDetail(
 		subCategory: articleDetailResponse.sub_category,
 		source: articleDetailResponse.source,
 		url: articleDetailResponse.url,
+		author: articleDetailResponse.author,
 	};
 }

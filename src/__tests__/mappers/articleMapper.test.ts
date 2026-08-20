@@ -182,6 +182,18 @@ describe("mapDTOtoArticleDetail", () => {
 		expect(result.paragraphs).toEqual([]);
 	});
 
+	it("carries the author through when present", () => {
+		const dto = makeArticleDetailDTO({ author: "Purrscilla" });
+		expect(mapDTOtoArticleDetail(dto).author).toBe("Purrscilla");
+	});
+
+	it("leaves author undefined when the backend omits it", () => {
+		// The byline fallback belongs to the component, not the mapper: the
+		// default name is a translated string, and mappers don't read i18n.
+		const dto = makeArticleDetailDTO();
+		expect(mapDTOtoArticleDetail(dto).author).toBeUndefined();
+	});
+
 	it("handles undefined summary", () => {
 		const dto = makeArticleDetailDTO({ summary: undefined });
 		const result = mapDTOtoArticleDetail(dto);

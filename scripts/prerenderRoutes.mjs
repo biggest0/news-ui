@@ -8,8 +8,10 @@
  * each route a real file, and the 404s become 200s with no hosting change.
  *
  * `dist/404.html` is still written: it is the correct answer for genuinely
- * unknown URLs, and it keeps client-side deep links working for any route not
- * listed here (dynamic article pages, until Tier 2 lands).
+ * unknown URLs.
+ *
+ * Article pages (Tier 2) are currently DISABLED — see the call site below.
+ * `readArticleRoutes()` is kept ready; flip one line to turn them back on.
  *
  * Also writes dist/sitemap.xml from the same route list, so the two can never
  * disagree about which URLs exist.
@@ -101,10 +103,75 @@ function toW3CDate(date) {
 	return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
 }
 
+/**
+ * Reads VITE_API_URL the same way the app build does, so the two can't point
+ * at different backends. CI can override with a real environment variable.
+ * @returns {Promise<string>} API base URL without a trailing slash
+ */
+async function readApiUrl() {
+	if (process.env.VITE_API_URL) return process.env.VITE_API_URL.replace(/\/$/, "");
+
+	const env = await readFile(".env.production", "utf8");
+	const match = env.match(/^VITE_API_URL=(.+)$/m);
+
+	if (!match) {
+		throw new Error("VITE_API_URL not found in .env.production");
+	}
+	return match[1].trim().replace(/\/$/, "");
+}
+
+/**
+ * Fetches every article ID so each gets a real file on disk.
+ *
+ * **Throws rather than degrading.** If this returned an empty list when the
+ * API was unreachable, the deploy would quietly ship a site with ~1,200
+ * previously-indexed URLs suddenly 404ing — telling Google the entire
+ * catalogue vanished. Failing the build is very much the safer outcome.
+ *
+ * @returns {Promise<{route: string, lastmod?: string}[]>}
+ */
+async function readArticleRoutes() {
+	const api = await readApiUrl();
+	// One request: the endpoint honours a limit above the current article count
+	const url = `${api}/api/articles?lang=en&limit=100000`;
+
+	const response = await fetch(url).catch((cause) => {
+		throw new Error(`Could not reach ${url} — refusing to build`, { cause });
+	});
+
+	if (!response.ok) {
+		throw new Error(`${url} returned ${response.status} — refusing to build`);
+	}
+
+	const { articles } = await response.json();
+
+	if (!Array.isArray(articles) || articles.length === 0) {
+		throw new Error(`${url} returned no articles — refusing to build`);
+	}
+
+	return articles.map((article) => ({
+		route: `article/${article._id}`,
+		lastmod: article.date_published?.slice(0, 10),
+	}));
+}
+
 // ── build the route list ──────────────────────────────────────────────
 
 const categories = await readCategoryRoutes();
 const blogPosts = await readBlogRoutes();
+
+/*
+ * Article routes (Tier 2) are switched off for now.
+ *
+ * Consequence to be aware of: with this empty, `/article/<id>` has no file on
+ * disk, so GitHub Pages answers **404** for direct hits and crawlers. Articles
+ * still work for people browsing the site, because in-app navigation is
+ * client-side and never touches the server.
+ *
+ * To re-enable, restore the call:
+ *   const articles = await readArticleRoutes();
+ */
+const articles = [];
 
 /** Every indexable URL, as {route, lastmod?}. "" is the home page. */
 const pages = [
@@ -112,9 +179,15 @@ const pages = [
 	...STATIC_ROUTES.map((route) => ({ route })),
 	...categories.map((route) => ({ route })),
 	...blogPosts,
+	...articles,
 ];
 
-const routes = [...STATIC_ROUTES, ...categories, ...blogPosts.map((p) => p.route)];
+const routes = [
+	...STATIC_ROUTES,
+	...categories,
+	...blogPosts.map((p) => p.route),
+	...articles.map((a) => a.route),
+];
 
 // ── write a directory per route ───────────────────────────────────────
 
@@ -162,6 +235,7 @@ await rm(join(DIST, ".DS_Store"), { force: true });
 
 console.log(
 	`prerendered ${routes.length} routes ` +
-		`(${STATIC_ROUTES.length} static, ${categories.length} categories, ${blogPosts.length} blog)\n` +
+		`(${STATIC_ROUTES.length} static, ${categories.length} categories, ` +
+		`${blogPosts.length} blog, ${articles.length} articles)\n` +
 		`sitemap.xml lists ${pages.length} URLs`
 );
