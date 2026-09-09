@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { findBlogPost } from "@/blog/registry";
 import placeholderBanner from "@/assets/blogs_banner_placeholder.jpg";
 import PageMeta from "@/components/common/seo/PageMeta";
+import { PAGE_ROUTES } from "@/constants/routes";
 
 export default function BlogPostPage() {
 	const { t } = useTranslation();
@@ -13,7 +14,7 @@ export default function BlogPostPage() {
 	if (!post) {
 		return (
 			<section className="py-6">
-				<Link to="/blog" className="text-md text-brand hover:underline">
+				<Link to={PAGE_ROUTES.BLOG} className="text-md text-brand hover:underline">
 					← {t("BLOG.BACK_TO_BLOG")}
 				</Link>
 				<p className="pt-6 text-muted-foreground text-center">{t("BLOG.NOT_FOUND")}</p>
@@ -26,7 +27,7 @@ export default function BlogPostPage() {
 	return (
 		<section className="py-6">
 			<PageMeta title={title} description={summary} />
-			<Link to="/blog" className="text-md text-brand hover:underline">
+			<Link to={PAGE_ROUTES.BLOG} className="text-md text-brand hover:underline">
 				← {t("BLOG.BACK_TO_BLOG")}
 			</Link>
 

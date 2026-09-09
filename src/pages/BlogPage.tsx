@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { SectionHeader } from "@/components/common/layout/SectionHeader";
 import { BLOG_POSTS } from "@/blog/registry";
 import PageMeta from "@/components/common/seo/PageMeta";
+import { blogPostPath } from "@/constants/routes";
 
 export default function BlogPage() {
 	const { t } = useTranslation();
@@ -24,7 +25,7 @@ export default function BlogPage() {
 						<article key={post.slug} className="border-b border-border py-4 w-full">
 							<h2 className="text-xl font-semibold text-foreground">
 								<Link
-									to={`/blog/${post.slug}`}
+									to={blogPostPath(post.slug)}
 									className="hover:text-brand transition-colors"
 								>
 									{post.title}
@@ -35,7 +36,7 @@ export default function BlogPage() {
 								{post.summary}
 							</p>
 							<Link
-								to={`/blog/${post.slug}`}
+								to={blogPostPath(post.slug)}
 								className="text-md text-brand hover:underline"
 							>
 								{t("BLOG.READ_POST")}

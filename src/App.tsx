@@ -8,7 +8,12 @@ import Header from "@/components/layout/header/Header";
 import Footer from "@/components/layout/footer/Footer";
 import { LoadingOverlay } from "@/components/common/feedback/LoadingOverlay";
 import ScrollToTop from "@/components/layout/navigation/ScrollToTop";
-import { ARTICLE_ROUTES } from "@/constants/routes";
+import {
+	ARTICLE_ROUTES,
+	PAGE_ROUTES,
+	ROUTE_PATTERNS,
+	categoryPath,
+} from "@/constants/routes";
 import { AppSettingProvider } from "@/contexts/AppSettingContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { OnboardingProvider } from "@/contexts/OnboardingContext";
@@ -52,32 +57,32 @@ function App() {
 							<ScrollToTop />
 							<Suspense fallback={<LoadingOverlay loading />}>
 								<Routes>
-									<Route path="/" element={<HomePage />} />
+									<Route path={PAGE_ROUTES.HOME} element={<HomePage />} />
 									{/* Article category pages */}
 									{ARTICLE_ROUTES.map((category) => (
 										<Route
 											key={category}
-											path={`/${category}`}
+											path={categoryPath(category)}
 											element={<ArticlePages />}
 										/>
 									))}
 									{/* Article pages */}
-									<Route path="/article/:id" element={<ArticlePage />} />
-									<Route path="/subcategory/:subCategory" element={<SubCategoryPage />} />
-									<Route path="/search" element={<SearchPage />} />
-									<Route path="/about" element={<About />} />
-									<Route path="/contact" element={<Contact />} />
-									<Route path="/account" element={<AccountPage />} />
-									<Route path="/login" element={<LoginPage />} />
-									<Route path="/register" element={<RegisterPage />} />
-									<Route path="/account/verification" element={<EmailVerificationPage />} />
-									<Route path="/reset-password" element={<ResetPasswordPage />} />
-									<Route path="/reset-password/:token" element={<NewPasswordPage />} />
-									<Route path="/auth/google/callback" element={<GoogleCallbackPage />} />
-									<Route path="/blog" element={<BlogPage />} />
-									<Route path="/blog/:slug" element={<BlogPostPage />} />
-									<Route path="/disclaimer" element={<DisclaimerPage />} />
-									<Route path="/privacy" element={<PrivacyPolicyPage />} />
+									<Route path={ROUTE_PATTERNS.ARTICLE} element={<ArticlePage />} />
+									<Route path={ROUTE_PATTERNS.SUBCATEGORY} element={<SubCategoryPage />} />
+									<Route path={PAGE_ROUTES.SEARCH} element={<SearchPage />} />
+									<Route path={PAGE_ROUTES.ABOUT} element={<About />} />
+									<Route path={PAGE_ROUTES.CONTACT} element={<Contact />} />
+									<Route path={PAGE_ROUTES.ACCOUNT} element={<AccountPage />} />
+									<Route path={PAGE_ROUTES.LOGIN} element={<LoginPage />} />
+									<Route path={PAGE_ROUTES.REGISTER} element={<RegisterPage />} />
+									<Route path={PAGE_ROUTES.VERIFY_EMAIL} element={<EmailVerificationPage />} />
+									<Route path={PAGE_ROUTES.RESET_PASSWORD} element={<ResetPasswordPage />} />
+									<Route path={ROUTE_PATTERNS.NEW_PASSWORD} element={<NewPasswordPage />} />
+									<Route path={PAGE_ROUTES.GOOGLE_CALLBACK} element={<GoogleCallbackPage />} />
+									<Route path={PAGE_ROUTES.BLOG} element={<BlogPage />} />
+									<Route path={ROUTE_PATTERNS.BLOG_POST} element={<BlogPostPage />} />
+									<Route path={PAGE_ROUTES.DISCLAIMER} element={<DisclaimerPage />} />
+									<Route path={PAGE_ROUTES.PRIVACY} element={<PrivacyPolicyPage />} />
 									{/* Other routes */}
 									<Route path="*" element={<NotFoundPage />} />
 								</Routes>

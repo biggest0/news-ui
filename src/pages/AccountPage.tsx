@@ -5,6 +5,7 @@ import { SectionHeader } from "@/components/common/layout/SectionHeader";
 import { AccountNewsSection } from "@/components/news/section/AccountNewsSection";
 import { AccountInfoSection } from "@/components/account/AccountInfoSection";
 import { useAuth } from "@/contexts/AuthContext";
+import { PAGE_ROUTES } from "@/constants/routes";
 
 export default function AccountPage() {
 	const { t } = useTranslation();
@@ -13,7 +14,7 @@ export default function AccountPage() {
 
 	const handleLogout = async () => {
 		await logout();
-		navigate("/login");
+		navigate(PAGE_ROUTES.LOGIN);
 	};
 
 	return (

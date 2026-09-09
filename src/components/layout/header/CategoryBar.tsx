@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { GoChevronLeft, GoChevronRight } from "react-icons/go";
 
-import { ARTICLE_ROUTES } from "@/constants/routes";
+import { ARTICLE_ROUTES, categoryPath } from "@/constants/routes";
 import type { CategoryKey } from "@/i18n/types";
 
 /**
@@ -70,7 +70,7 @@ export default function CategoryBar() {
 						{ARTICLE_ROUTES.map((category, index) => (
 							<Link
 								key={category}
-								to={`/${category}`}
+								to={categoryPath(category)}
 								className={`cursor-pointer lg:pt-1 text-base md:text-lg font-medium whitespace-nowrap transition-colors ${
 									currentCategory === category
 										? "text-brand underline"

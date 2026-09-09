@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import SubscribeForm from "@/components/common/user/SubscribeForm";
 import SocialMediaLinks from "@/components/common/social/SocialMediaLinks";
+import { PAGE_ROUTES } from "@/constants/routes";
 
 export default function Footer() {
 	const { t } = useTranslation();
@@ -30,19 +31,19 @@ export default function Footer() {
 			<div className="py-6 border-t border-border-subtle text-sm text-muted-foreground flex flex-col items-center gap-2 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-6">
 				<span className="shrink-0">{t("FOOTER.COPYRIGHT")}</span>
 				<div className="flex flex-wrap justify-center gap-6">
-					<Link className="cursor-pointer hover:text-foreground transition-colors" to="/disclaimer">
+					<Link className="cursor-pointer hover:text-foreground transition-colors" to={PAGE_ROUTES.DISCLAIMER}>
 						{t("FOOTER.DISCLAIMER")}
 					</Link>
-					<Link className="cursor-pointer hover:text-foreground transition-colors" to="/privacy">
+					<Link className="cursor-pointer hover:text-foreground transition-colors" to={PAGE_ROUTES.PRIVACY}>
 						{t("FOOTER.PRIVACY")}
 					</Link>
-					<Link className="cursor-pointer hover:text-foreground transition-colors" to="/about">
+					<Link className="cursor-pointer hover:text-foreground transition-colors" to={PAGE_ROUTES.ABOUT}>
 						{t("FOOTER.ABOUT_US")}
 					</Link>
-					<Link className="cursor-pointer hover:text-foreground transition-colors" to="/contact">
+					<Link className="cursor-pointer hover:text-foreground transition-colors" to={PAGE_ROUTES.CONTACT}>
 						{t("FOOTER.CONTACT")}
 					</Link>
-					<Link className="cursor-pointer hover:text-foreground transition-colors" to="/blog">
+					<Link className="cursor-pointer hover:text-foreground transition-colors" to={PAGE_ROUTES.BLOG}>
 						{t("FOOTER.BLOG")}
 					</Link>
 				</div>

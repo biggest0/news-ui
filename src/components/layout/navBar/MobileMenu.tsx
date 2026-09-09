@@ -14,6 +14,7 @@ import { APP_VERSION } from "@/config/config";
 import LanguageSwitcher from "@/components/layout/navBar/LanguageSwitcherMobile";
 import ThemeToggle from "@/components/common/theme/ThemeToggle";
 import OnboardingLauncher from "@/components/onboarding/OnboardingLauncher";
+import { PAGE_ROUTES } from "@/constants/routes";
 
 /**
  * Full-screen mobile navigation drawer. Built on the Sheet primitive
@@ -143,14 +144,14 @@ export const MobileMenu = ({
 								    dialogs would leave this one sitting on top of it */}
 								<OnboardingLauncher variant="footer" onOpen={onMenuClose} />
 								<Link
-									to="/disclaimer"
+									to={PAGE_ROUTES.DISCLAIMER}
 									onClick={onMenuClose}
 									className="cursor-pointer transition-colors hover:text-foreground"
 								>
 									{t("FOOTER.DISCLAIMER")}
 								</Link>
 								<Link
-									to="/privacy"
+									to={PAGE_ROUTES.PRIVACY}
 									onClick={onMenuClose}
 									className="cursor-pointer transition-colors hover:text-foreground"
 								>
