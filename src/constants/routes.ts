@@ -3,7 +3,9 @@ export const PAGE_ROUTES = {
 	LOGIN: "/login",
 	ABOUT: "/about",
 	SEARCH: "/search",
-	CATS: "/cats",
+	// CATS: "/cats", not built yet. Uncomment when the route exists in
+	// App.tsx, and add "cats" to STATIC_ROUTES in scripts/prerenderRoutes.mjs so
+	// it gets a real file on disk. Until then /cats correctly 404s.
 	BLOG: "/blog",
 };
 
