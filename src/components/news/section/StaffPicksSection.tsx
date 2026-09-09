@@ -10,6 +10,7 @@ import { useFeaturedArticles } from "@/hooks/useArticleHooks";
 import { incrementArticleViewed } from "@/api/articleApi";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRecordArticleReadMutation } from "@/store/api/userContentEndpoints";
+import { articlePath } from "@/constants/routes";
 
 /**
  * Desktop side-column "Staff Picks": title links to the top featured
@@ -43,7 +44,7 @@ export default function StaffPicksSection() {
 					{featuredArticles.slice(0, 5).map((article) => (
 						<div key={`side-${article.id}`}>
 							<Link
-								to={`/article/${article.id}`}
+								to={articlePath(article.id)}
 								className="py-2 hover:text-brand transition-colors duration-200 cursor-pointer"
 								onClick={() => handleClick(article.id)}
 							>

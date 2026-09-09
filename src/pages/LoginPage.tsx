@@ -4,6 +4,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import { SectionHeader } from "@/components/common/layout/SectionHeader";
 import { useAuth } from "@/contexts/AuthContext";
+import { PAGE_ROUTES } from "@/constants/routes";
 
 function buildGoogleLoginUrl(): string {
 	const state = crypto.randomUUID();
@@ -48,7 +49,7 @@ export default function LoginPage() {
 
 		try {
 			await login(email, password);
-			navigate("/account");
+			navigate(PAGE_ROUTES.ACCOUNT);
 		} catch (err) {
 			if (err instanceof Error) {
 				setError(err.message);
@@ -133,7 +134,7 @@ export default function LoginPage() {
 
 				<p className="mt-4 text-sm text-muted-foreground">
 					<Link
-						to="/reset-password"
+						to={PAGE_ROUTES.RESET_PASSWORD}
 						className="text-brand hover:underline transition-colors"
 					>
 						{t("AUTH.FORGOT_PASSWORD")}
@@ -143,7 +144,7 @@ export default function LoginPage() {
 				<p className="mt-2 text-sm text-muted-foreground">
 					{t("AUTH.NO_ACCOUNT")}{" "}
 					<Link
-						to="/register"
+						to={PAGE_ROUTES.REGISTER}
 						className="text-brand hover:underline transition-colors"
 					>
 						{t("AUTH.REGISTER")}

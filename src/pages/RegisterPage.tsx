@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { SectionHeader } from "@/components/common/layout/SectionHeader";
 import { useAuth } from "@/contexts/AuthContext";
 import { resendVerification } from "@/service/authService";
+import { PAGE_ROUTES } from "@/constants/routes";
 
 export default function RegisterPage() {
 	const { t } = useTranslation();
@@ -183,7 +184,7 @@ export default function RegisterPage() {
 				<p className="mt-6 text-sm text-muted-foreground">
 					{t("AUTH.HAS_ACCOUNT")}{" "}
 					<Link
-						to="/login"
+						to={PAGE_ROUTES.LOGIN}
 						className="text-brand hover:underline transition-colors"
 					>
 						{t("AUTH.LOGIN")}

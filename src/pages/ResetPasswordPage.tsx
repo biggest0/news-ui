@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import { SectionHeader } from "@/components/common/layout/SectionHeader";
 import { requestPasswordReset } from "@/service/authService";
+import { PAGE_ROUTES } from "@/constants/routes";
 
 export default function ResetPasswordPage() {
 	const { t } = useTranslation();
@@ -67,7 +68,7 @@ export default function ResetPasswordPage() {
 								: t("AUTH.RESEND_RESET_LINK")}
 						</button>
 						<Link
-							to="/login"
+							to={PAGE_ROUTES.LOGIN}
 							className="text-brand hover:underline transition-colors text-sm"
 						>
 							{t("AUTH.BACK_TO_LOGIN")}
@@ -115,7 +116,7 @@ export default function ResetPasswordPage() {
 
 						<p className="mt-6 text-sm text-muted-foreground">
 							<Link
-								to="/login"
+								to={PAGE_ROUTES.LOGIN}
 								className="text-brand hover:underline transition-colors"
 							>
 								{t("AUTH.BACK_TO_LOGIN")}

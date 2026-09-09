@@ -16,6 +16,7 @@ import { buttonVariants } from "@/components/ui/Button";
 import ThemeSelector from "@/components/common/theme/ThemeSelector";
 import LanguageChoice from "@/components/onboarding/controls/LanguageChoice";
 import ReadingModeChoice from "@/components/onboarding/controls/ReadingModeChoice";
+import { PAGE_ROUTES } from "@/constants/routes";
 
 export interface OnboardingControlProps {
 	/** Closes the tour. Call this before navigating away from the page. */
@@ -65,7 +66,7 @@ function AccountCta({ onDismiss }: OnboardingControlProps) {
 	const { t } = useTranslation();
 	return (
 		<Link
-			to="/register"
+			to={PAGE_ROUTES.REGISTER}
 			onClick={onDismiss}
 			className={buttonVariants({ variant: "default", size: "sm" })}
 		>

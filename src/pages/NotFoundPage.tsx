@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import PageMeta from "@/components/common/seo/PageMeta";
 import { buttonVariants } from "@/components/ui/Button";
+import { PAGE_ROUTES } from "@/constants/routes";
 
 /**
  * 404 page for genuinely unmatched routes.
@@ -38,11 +39,11 @@ export default function NotFoundPage() {
 			</p>
 
 			<div className="flex flex-wrap justify-center gap-3 pt-2">
-				<Link to="/" className={buttonVariants({ variant: "default", size: "sm" })}>
+				<Link to={PAGE_ROUTES.HOME} className={buttonVariants({ variant: "default", size: "sm" })}>
 					{t("PAGES.NOT_FOUND.HOME")}
 				</Link>
 				<Link
-					to="/search"
+					to={PAGE_ROUTES.SEARCH}
 					className={buttonVariants({ variant: "outline", size: "sm" })}
 				>
 					{t("PAGES.NOT_FOUND.SEARCH")}

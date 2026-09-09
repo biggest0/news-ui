@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 
 import { SectionHeader } from "@/components/common/layout/SectionHeader";
 import { resetPassword } from "@/service/authService";
+import { PAGE_ROUTES } from "@/constants/routes";
 
 export default function NewPasswordPage() {
 	const { t } = useTranslation();
@@ -58,7 +59,7 @@ export default function NewPasswordPage() {
 					<div className="flex flex-col gap-4">
 						<p className="text-foreground-secondary">{t("AUTH.RESET_SUCCESS")}</p>
 						<Link
-							to="/login"
+							to={PAGE_ROUTES.LOGIN}
 							className="bg-primary text-white py-2 rounded-lg hover:bg-primary-hover transition-colors text-center"
 						>
 							{t("AUTH.RESET_GO_TO_LOGIN")}
@@ -108,7 +109,7 @@ export default function NewPasswordPage() {
 
 						<p className="mt-2 text-sm text-muted-foreground">
 							<Link
-								to="/login"
+								to={PAGE_ROUTES.LOGIN}
 								className="text-brand hover:underline transition-colors"
 							>
 								{t("AUTH.BACK_TO_LOGIN")}

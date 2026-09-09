@@ -12,6 +12,7 @@ import { useApiLang } from "@/hooks/useApiLang";
 import { incrementArticleViewed } from "@/api/articleApi";
 import { useGetRecommendedArticlesQuery } from "@/store/api/recommendationEndpoints";
 import { useRecordArticleReadMutation } from "@/store/api/userContentEndpoints";
+import { articlePath } from "@/constants/routes";
 
 /**
  * Personalized recommendations (authenticated) — RTK Query consumer. The
@@ -62,7 +63,7 @@ export default function RecommendedSection() {
 						{recommendedArticles.map((article) => (
 							<div key={`recommended-${article.id}`} className="space-y-1">
 								<Link
-									to={`/article/${article.id}`}
+									to={articlePath(article.id)}
 									className="font-medium text-foreground hover:text-brand transition-colors duration-200 cursor-pointer"
 									onClick={() => handleClick(article.id)}
 								>

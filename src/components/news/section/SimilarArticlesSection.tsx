@@ -8,6 +8,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useApiLang } from "@/hooks/useApiLang";
 import { useGetSimilarArticlesQuery } from "@/store/api/recommendationEndpoints";
 import { useRecordArticleReadMutation } from "@/store/api/userContentEndpoints";
+import { articlePath } from "@/constants/routes";
 
 interface SimilarArticlesSectionProps {
 	articleId: string;
@@ -60,7 +61,7 @@ export default function SimilarArticlesSection({
 								className="flex-shrink-0 w-56 space-y-1"
 							>
 								<Link
-									to={`/article/${article.id}`}
+									to={articlePath(article.id)}
 									className="font-medium text-foreground hover:text-brand transition-colors duration-200 cursor-pointer text-sm"
 									onClick={() => handleClick(article.id)}
 								>

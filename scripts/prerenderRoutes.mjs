@@ -10,8 +10,9 @@
  * `dist/404.html` is still written: it is the correct answer for genuinely
  * unknown URLs.
  *
- * Article pages (Tier 2) are currently DISABLED — see the call site below.
- * `readArticleRoutes()` is kept ready; flip one line to turn them back on.
+ * Article pages (Tier 2) are ENABLED: `readArticleRoutes()` pulls every article
+ * id from the API so each gets its own file. Without them `/article/<id>` is a
+ * 404 to crawlers, which leaves the site's actual content unindexable.
  *
  * Also writes dist/sitemap.xml from the same route list, so the two can never
  * disagree about which URLs exist.
@@ -30,8 +31,9 @@ const SHELL = join(DIST, "index.html");
  *
  * Auth and account routes are deliberately absent: they hold nothing a search
  * engine should index, and 404 is the honest answer for a crawler asking for
- * /login. Dynamic routes (/article/:id, /subcategory/:sub) need the API and
- * arrive with Tier 2.
+ * /login. Article routes are dynamic and come from the API instead, further
+ * down. /subcategory/:sub is still absent: those pages are reachable in-app
+ * but have no file on disk, so a crawler asking for one gets a 404.
  *
  * Only add a route here once its page actually exists: pre-rendering ahead of
  * the component serves a 200 that renders "Page not Found", and a soft 404 is
@@ -161,17 +163,17 @@ const categories = await readCategoryRoutes();
 const blogPosts = await readBlogRoutes();
 
 /*
- * Article routes (Tier 2) are switched off for now.
+ * Article routes (Tier 2).
  *
- * Consequence to be aware of: with this empty, `/article/<id>` has no file on
- * disk, so GitHub Pages answers **404** for direct hits and crawlers. Articles
- * still work for people browsing the site, because in-app navigation is
- * client-side and never touches the server.
+ * One file per article, so `/article/<id>` answers 200 to a direct hit or a
+ * crawler instead of 404. In-app navigation never needed this (it is
+ * client-side), but indexing and shared links do.
  *
- * To re-enable, restore the call:
- *   const articles = await readArticleRoutes();
+ * readArticleRoutes() throws rather than returning an empty list when the API
+ * is unreachable: a silent empty result would ship a build that 404s every
+ * article URL, which is exactly the state this call exists to prevent.
  */
-const articles = [];
+const articles = await readArticleRoutes();
 
 /** Every indexable URL, as {route, lastmod?}. "" is the home page. */
 const pages = [
@@ -198,7 +200,8 @@ for (const route of routes) {
 }
 
 // Genuinely unknown URLs should still 404, with the SPA as the body so that
-// client-side deep links (article pages) keep working until Tier 2.
+// any client-side deep link without a file on disk (a subcategory page, or an
+// article published since the last deploy) still renders for a real visitor.
 await cp(SHELL, join(DIST, "404.html"));
 
 // ── sitemap ───────────────────────────────────────────────────────────

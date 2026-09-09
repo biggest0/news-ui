@@ -4,6 +4,7 @@ import type { ArticleInfo } from "@/types/articleTypes";
 import { incrementArticleViewed } from "@/api/articleApi";
 import { useRecordArticleReadMutation } from "@/store/api/userContentEndpoints";
 import { useAuth } from "@/contexts/AuthContext";
+import { articlePath } from "@/constants/routes";
 
 interface NewsCardProp {
 	articleInfo: ArticleInfo;
@@ -30,7 +31,7 @@ export default function NewsHeroCard({ articleInfo, small }: NewsCardProp) {
 				} font-semibold text-foreground hover:text-brand transition-colors duration-200 cursor-pointer`}
 			>
 				<Link
-					to={`/article/${articleInfo.id}`}
+					to={articlePath(articleInfo.id)}
 					onClick={handleClick}
 				>
 					{articleInfo.title}

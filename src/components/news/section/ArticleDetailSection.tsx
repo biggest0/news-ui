@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import type { ArticleDetail } from "@/types/articleTypes";
+import { subCategoryPath } from "@/constants/routes";
 
 interface ArticleDetailProps {
 	article: ArticleDetail;
@@ -57,7 +58,7 @@ export default function ArticleDetailSection({ article }: ArticleDetailProps) {
 				{article.subCategory?.map((subCategory, index) => (
 					<Link
 						key={`${article.id}-category-${index}`}
-						to={`/subcategory/${encodeURIComponent(subCategory)}`}
+						to={subCategoryPath(subCategory)}
 						className="hover:text-brand transition-colors"
 					>
 						{subCategory}
