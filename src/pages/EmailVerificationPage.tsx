@@ -4,6 +4,7 @@ import { Link, useSearchParams } from "react-router-dom";
 
 import { SectionHeader } from "@/components/common/layout/SectionHeader";
 import { verifyEmail, resendVerification } from "@/service/authService";
+import { PAGE_ROUTES } from "@/constants/routes";
 
 export default function EmailVerificationPage() {
 	const { t } = useTranslation();
@@ -71,7 +72,7 @@ export default function EmailVerificationPage() {
 				<div className="max-w-sm pt-6 flex flex-col gap-4">
 					<p className="text-foreground-secondary">{t("AUTH.VERIFY_SUCCESS")}</p>
 					<Link
-						to="/account"
+						to={PAGE_ROUTES.ACCOUNT}
 						className="bg-primary text-white py-2 rounded-lg hover:bg-primary-hover transition-colors text-center"
 					>
 						{t("AUTH.VERIFY_GO_TO_ACCOUNT")}
@@ -112,7 +113,7 @@ export default function EmailVerificationPage() {
 				</button>
 
 				<Link
-					to="/login"
+					to={PAGE_ROUTES.LOGIN}
 					className="text-brand hover:underline transition-colors text-sm"
 				>
 					{t("AUTH.BACK_TO_LOGIN")}

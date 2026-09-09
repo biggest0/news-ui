@@ -11,6 +11,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { ShareButton } from "@/components/common/social/ShareButton";
 import { LikeButton } from "@/components/common/social/LikeButton";
 import { capitalizeWord } from "@/utils/text/wordUtils";
+import { subCategoryPath } from "@/constants/routes";
 
 interface NewsCardProp {
 	articleInfo: ArticleInfo;
@@ -128,7 +129,7 @@ export default function NewsCard({ articleInfo }: NewsCardProp) {
 									{articleDetail.subCategory?.map((subCat, index) => (
 										<Link
 											key={`${articleDetail.id}-category-${index}}`}
-											to={`/subcategory/${encodeURIComponent(subCat)}`}
+											to={subCategoryPath(subCat)}
 											className="hover:text-brand transition-colors"
 										>
 											{subCat}

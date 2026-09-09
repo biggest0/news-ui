@@ -306,8 +306,27 @@ npm run test        # vitest run (unit/component, CI mode)
 npm run test:watch  # vitest watch
 npm run test:e2e    # build + playwright test (chromium, stubbed API)
 npm run test:e2e:ui # playwright test --ui (interactive)
-npm run deploy      # build + copy index.html → 404.html + gh-pages deploy
+npm run predeploy   # build + prerender routes to real files on disk + sitemap
+npm run deploy      # gh-pages deploy of dist/ (runs predeploy first)
 ```
+
+### Prerendering (SEO)
+
+GitHub Pages has no rewrite rules, so an SPA served from one `index.html` answers
+404 on every path but `/`. `scripts/prerenderRoutes.mjs` (run by `predeploy`)
+copies the built shell into `dist/<route>/index.html` for every indexable route,
+turning those 404s into 200s, and writes `dist/sitemap.xml` from the same list so
+the two can never disagree.
+
+Covered: home, the six static pages, all `ARTICLE_ROUTES` categories, every blog
+slug (read from each post's `meta.slug`), and every article id (fetched from
+`VITE_API_URL` at build time). Auth and account routes are deliberately excluded.
+`/subcategory/:sub` is not covered yet and still 404s to crawlers.
+
+The article fetch throws rather than returning an empty list: a silent empty
+result would ship a build where every previously indexed article URL 404s.
+**Adding a new page means adding it to `STATIC_ROUTES`**, but only once the route
+exists in `App.tsx` (prerendering ahead of the component serves a soft 404).
 
 **Unit/component tests** (Vitest) live in `src/__tests__/` with subfolders mirroring `src/` (`mappers/`, `service/`, `utils/`, `components/`, `hooks/`, `store/`). Shared helpers in `__tests__/helpers/` (`renderWithProviders.tsx`); global setup in `__tests__/setup.ts`.
 

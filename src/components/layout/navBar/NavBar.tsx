@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { DesktopNavigation } from "@/components/layout/navBar/DesktopNavigation";
 import { MobileNavigation } from "@/components/layout/navBar/MobileNavigation";
 import { MobileMenu } from "@/components/layout/navBar/MobileMenu";
+import { searchPath } from "@/constants/routes";
 
 export default function NavBar() {
 	const navigate = useNavigate();
@@ -22,7 +23,7 @@ export default function NavBar() {
 
 		if (query.trim()) {
 			// navigation is enough — SearchPage's RTK Query hook fetches from the URL
-			navigate(`/search?q=${encodeURIComponent(query)}`);
+			navigate(searchPath(query));
 			setSearchClicked(false);
 		}
 	};

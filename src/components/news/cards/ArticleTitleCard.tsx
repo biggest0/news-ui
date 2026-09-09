@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { incrementArticleViewed } from "@/api/articleApi";
 import { useRecordArticleReadMutation } from "@/store/api/userContentEndpoints";
 import { useAuth } from "@/contexts/AuthContext";
+import { articlePath } from "@/constants/routes";
 
 interface ArticleTitleCardProps {
 	articleId: string;
@@ -31,7 +32,7 @@ export const ArticleTitleCard = ({
 
 	return (
 		<Link
-			to={`/article/${articleId}`}
+			to={articlePath(articleId)}
 			className="font-medium text-foreground hover:text-brand transition-colors duration-200 cursor-pointer"
 			onClick={handleClick}
 		>

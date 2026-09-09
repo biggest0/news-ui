@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/contexts/AuthContext";
+import { PAGE_ROUTES } from "@/constants/routes";
 
 export default function GoogleCallbackPage() {
 	const { t } = useTranslation();
@@ -26,11 +27,11 @@ export default function GoogleCallbackPage() {
 			// Step A — Google-side error
 			if (googleError) {
 				if (isCancelled || googleError === "access_denied") {
-					navigate("/login", { replace: true });
+					navigate(PAGE_ROUTES.LOGIN, { replace: true });
 					return;
 				}
 				setError(t("AUTH.GOOGLE_FAILED"));
-				navigate("/login", { replace: true });
+				navigate(PAGE_ROUTES.LOGIN, { replace: true });
 				return;
 			}
 
@@ -40,22 +41,22 @@ export default function GoogleCallbackPage() {
 
 			if (!savedState || savedState !== returnedState) {
 				setError(t("AUTH.GOOGLE_STATE_INVALID"));
-				navigate("/login", { replace: true, state: { googleError: t("AUTH.GOOGLE_STATE_INVALID") } });
+				navigate(PAGE_ROUTES.LOGIN, { replace: true, state: { googleError: t("AUTH.GOOGLE_STATE_INVALID") } });
 				return;
 			}
 
 			// Step C — exchange loginCode for tokens
 			if (!loginCode) {
-				navigate("/login", { replace: true, state: { googleError: t("AUTH.GOOGLE_FAILED") } });
+				navigate(PAGE_ROUTES.LOGIN, { replace: true, state: { googleError: t("AUTH.GOOGLE_FAILED") } });
 				return;
 			}
 
 			try {
 				await loginWithGoogle(loginCode);
-				navigate("/account", { replace: true });
+				navigate(PAGE_ROUTES.ACCOUNT, { replace: true });
 			} catch (err) {
 				const message = err instanceof Error ? err.message : t("AUTH.GOOGLE_FAILED");
-				navigate("/login", { replace: true, state: { googleError: message } });
+				navigate(PAGE_ROUTES.LOGIN, { replace: true, state: { googleError: message } });
 			}
 		};
 

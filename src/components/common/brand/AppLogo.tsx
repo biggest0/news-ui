@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { LuHouse } from "react-icons/lu";
+import { PAGE_ROUTES } from "@/constants/routes";
 
 interface LogoProps {
 	size?: "sm" | "md";
@@ -15,7 +16,7 @@ export const AppLogo = ({ size = "md" }: LogoProps) => {
 	};
 
 	return (
-		<Link to="/" aria-label={t("NAVIGATION.HOME")}>
+		<Link to={PAGE_ROUTES.HOME} aria-label={t("NAVIGATION.HOME")}>
 			<LuHouse
 				className={`${sizeClasses[size]} hover:text-foreground cursor-pointer transition-colors`}
 			/>

@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import OnboardingLauncher from "@/components/onboarding/OnboardingLauncher";
 import PageMeta from "@/components/common/seo/PageMeta";
+import { PAGE_ROUTES } from "@/constants/routes";
 
 export default function About() {
 	const { t } = useTranslation();
@@ -44,7 +45,7 @@ export default function About() {
 						</p>
 						<Link
 							className="cursor-pointer text-muted-foreground hover:text-foreground underline"
-							to="/disclaimer"
+							to={PAGE_ROUTES.DISCLAIMER}
 						>
 							{t("PAGES.ABOUT.FULL_DISCLAIMER")}
 						</Link>
