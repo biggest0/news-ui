@@ -12,19 +12,21 @@ interface PageMetaProps {
 /**
  * Sets the document title and meta description for the current route.
  *
- * Half declarative, half imperative, and deliberately so — verified in a real
- * browser rather than assumed:
+ * Everything is set imperatively, editing the tags index.html already ships
+ * rather than rendering new ones. Verified in a real browser rather than
+ * assumed, because React 19's hoisting does the wrong thing for both:
  *
- * - **`<title>` is rendered.** React 19 hoists it into <head> *before* the
- *   static title in index.html, and the first title element wins, so the
- *   page-specific one takes effect.
- * - **The description is set imperatively.** React appends hoisted `<meta>`
- *   *after* the static one, and since the first wins, a rendered description
- *   would silently lose to the generic site description on every page. Editing
- *   the existing tag in place keeps exactly one, with the right value.
+ * - **Title.** Rendering `<title>` hoists a *second* title into <head> ahead of
+ *   index.html's. The page-specific one wins, so it looked correct, but two
+ *   title elements is invalid HTML and leaves a crawler two values to choose
+ *   from. `document.title` updates the one that already exists.
+ * - **Description.** React appends a hoisted `<meta>` *after* the static one,
+ *   and the first wins, so a rendered description would silently lose to the
+ *   generic site description on every page.
  *
  * index.html keeps its own title and description as the pre-JavaScript
- * fallback, which is what a crawler sees before the app boots.
+ * fallback, which is what a crawler sees before the app boots. Both are then
+ * overwritten in place, so there is exactly one of each at all times.
  *
  * Open Graph tags are updated alongside, so shared links carry the article's
  * own title rather than the site's.
@@ -37,6 +39,9 @@ export default function PageMeta({ title, description }: PageMetaProps) {
 	const metaDescription = description ?? t("SEO.HOME.DESCRIPTION");
 
 	useEffect(() => {
+		// Overwrites index.html's title rather than adding a second one.
+		document.title = fullTitle;
+
 		/** Updates an existing head tag in place; adds it only if absent. */
 		const setMeta = (selector: string, attr: string, value: string) => {
 			let tag = document.head.querySelector(selector);
@@ -54,5 +59,5 @@ export default function PageMeta({ title, description }: PageMetaProps) {
 		setMeta('meta[property="og:description"]', "content", metaDescription);
 	}, [fullTitle, metaDescription]);
 
-	return <title>{fullTitle}</title>;
+	return null;
 }
