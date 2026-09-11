@@ -44,14 +44,14 @@ src/
 ├── blog/                 # registry.ts auto-discovers posts/*.tsx via import.meta.glob
 ├── components/
 │   ├── account/          # AccountPage building blocks (AccountInfoSection, AccountInfoForm)
-│   ├── common/           # Reusable UI: feedback (SectionErrorMessage, LoadingOverlay), layout (SectionShell, SectionDropDown), social, theme, user
+│   ├── common/           # Reusable UI: feedback (SectionErrorMessage, LoadingOverlay), layout (SectionShell, SectionDropDown), navigation (Breadcrumbs, BackToTopButton), seo (PageMeta), social, theme, user
 │   ├── layout/           # App shell: header, footer, navBar (MobileMenu drawer), sideColumn
 │   ├── news/             # Domain: cards/, section/, shared/ (FilterBar, PaginationControls)
 │   ├── onboarding/       # First-visit "how to use" tour: slides, step manifest, controls/
 │   ├── search/           # Search-specific filters
 │   └── ui/               # Adapted shadcn primitives on @base-ui (Button, Dialog, DropdownMenu, Sheet)
 ├── config/               # config.ts — API_URL, BASE_URL, APP_VERSION (injected from package.json)
-├── constants/            # routes.ts, keys.ts
+├── constants/            # routes.ts, keys.ts, site.ts (brand name, social profiles, share image + logo paths)
 ├── contexts/             # AppSettingContext (UI prefs), AuthContext (AuthProvider + useAuth), OnboardingContext (tour open state)
 ├── hooks/                # Custom hooks (see below)
 ├── i18n/                 # Translation files + i18next config + lang.ts helpers
@@ -61,7 +61,7 @@ src/
 ├── service/              # Non-RTKQ business logic: authService, formService, localStorageService
 ├── store/                # store.ts + api/ (RTK Query: apiSlice + per-domain endpoint files)
 ├── types/                # Domain types, DTO types, localStorage types, prop types
-└── utils/                # date, search, storage, text, validation utilities
+└── utils/                # date, search, seo (canonical URLs, JSON-LD builders), storage, text, validation utilities
 ```
 
 ### Path Alias
@@ -207,6 +207,36 @@ Article *content* (title, summary, paragraphs, sub_category) is translated by th
 
 ---
 
+## SEO
+
+Every route renders `<PageMeta>` (`components/common/seo/PageMeta.tsx`). It **edits the head tags `index.html` already ships** rather than rendering new ones (React 19 hoisting produces duplicate title/description tags, see its docblock), and owns:
+
+- `<title>` as `<page> | <site name>`, meta description (site default as fallback), `<link rel="canonical">` + `og:url`
+- `<meta name="robots">`: `index, follow, max-image-preview:large`, or `noindex, follow` with the `noindex` prop
+- Open Graph + Twitter card tags, `og:locale` following the UI language, `article:*` tags when `type="article"`
+- One page-level JSON-LD script (`data-seo="page"`), replaced on change and removed on unmount. The site-wide Organization + WebSite graph is static in `index.html` under `data-seo="site"` and is never touched.
+
+**Canonical form:** `https://www.catiretime.com/<path>/` (trailing slash, no query string). `absoluteUrl()` in `utils/seo/urlUtils.ts` is the only builder; PageMeta, ShareButton, the sitemap and the prerender all use that form. `SITE_URL` comes from `package.json` `homepage` via a Vite define, like `APP_VERSION`.
+
+**Structured data** is built with `utils/seo/structuredData.ts`: `newsArticleJsonLd` (typed `["NewsArticle", "SatiricalArticle"]` on purpose, eligible for Article rich results and honest about the genre), `blogPostingJsonLd`, `breadcrumbJsonLd`. Breadcrumb JSON-LD must be built from the same `items` array as the visible `<Breadcrumbs>`: Google only honours markup that reflects a visible trail.
+
+**Machine-readable dates:** every article type carries `datePublishedIso` (the backend's ISO timestamp) next to the localized `datePublished` display string. Use it for `<time dateTime>` and JSON-LD, never the display string.
+
+**Crawl paths:** headlines in every feed are real `<Link>`s to `/article/:id` (NewsCard, NewsHeroCard, ArticleTitleCard), card categories link to their listing page, the masthead links home. Never turn a headline back into a click handler: crawlers need the `href`.
+
+**Prerender parity:** `scripts/prerenderRoutes.mjs` writes the same tags and JSON-LD into each route's HTML at build time from the raw API data (see Prerendering). The client and the script each build the shapes; when changing one, change the other.
+
+**Rules for new work:**
+
+- New page: render `<PageMeta>`. New indexable route: also add `{ route, seoKey }` to `STATIC_ROUTES` in the prerender script, with matching `SEO.<KEY>.TITLE/DESCRIPTION` in both translation files.
+- Private or duplicate pages pass `noindex`: auth/account flows, search results with a query, sub-category tag pages, not-found states (including an article the API answers 404 for).
+- Article-like pages pass `type="article"`, `article={...}` and `jsonLd`.
+- Brand values live in `constants/site.ts`; `index.html`'s site graph and the prerender script mirror a few of them and say so. Change a value in all three.
+- Assets: share image `public/og-image.jpg` (1200x630), publisher logo `public/images/logo-512.png`, icons `public/app_icon.png` (32) + `public/favicon-48x48.png` (Google needs a multiple of 48px). Hero/banner images are WebP with intrinsic `width`/`height` and `fetchPriority="high"` (LCP); below-the-fold images are `loading="lazy"`.
+- Language: article content varies with the UI language at one URL (no `/fr/` routes), so the prerendered HTML is English and `<html lang>`/`og:locale` follow the UI. Per-language URLs with `hreflang` are a future milestone, not something to bolt on per page.
+
+---
+
 ## Component Conventions
 
 - **File names:** PascalCase for component files (`NewsCard.tsx`, `ThemeToggle.tsx`, `DropdownMenu.tsx`); camelCase for non-component `.ts` files (`articleMapper.ts`, `useSectionDropdown.ts`). **No kebab-case** — shadcn-generated files (which arrive as e.g. `dropdown-menu.tsx`) must be renamed to PascalCase during adaptation, with imports updated
@@ -314,23 +344,39 @@ npm run deploy      # gh-pages deploy of dist/ (runs predeploy first)
 
 GitHub Pages has no rewrite rules, so an SPA served from one `index.html` answers
 404 on every path but `/`. `scripts/prerenderRoutes.mjs` (run by `predeploy`)
-copies the built shell into `dist/<route>/index.html` for every indexable route,
-turning those 404s into 200s, and writes `dist/sitemap.xml` from the same list so
-the two can never disagree.
+writes the built shell into `dist/<route>/index.html` for every indexable route,
+turning those 404s into 200s, and rewrites each copy's SEO head for that route:
+title, description, canonical, `og:*`/`twitter:*`, `article:*` tags and a
+page-level JSON-LD block (NewsArticle + BreadcrumbList for articles, BlogPosting
+for posts, BreadcrumbList for categories). That is what crawlers and link
+scrapers see before JavaScript runs; `<PageMeta>` takes over after hydration.
+The script matches the shell's tags one-per-line by attribute and **throws** if
+one is missing, so keep the SEO block in `index.html` one tag per line.
+
+From the same route list it also writes `dist/sitemap.xml` (with `<lastmod>`:
+newest article for home and each category, publish date for articles and
+posts), `dist/feed.xml` (RSS 2.0, newest 50 articles, advertised from
+`index.html`), and `dist/404.html` with `noindex`.
 
 Covered: home, the six static pages, all `ARTICLE_ROUTES` categories, every blog
-slug (read from each post's `meta.slug`), and every article id (fetched from
-`VITE_API_URL` at build time). Auth and account routes are deliberately excluded.
-`/subcategory/:sub` is not covered yet and still 404s to crawlers.
+slug (title/summary/tags/date read from each post's `meta`), and every article
+(fetched from `VITE_API_URL` at build time). Auth and account routes are
+deliberately excluded. `/subcategory/:sub` is not covered and still 404s to
+crawlers (its page is `noindex` for the same reason).
 
 The article fetch throws rather than returning an empty list: a silent empty
 result would ship a build where every previously indexed article URL 404s.
-**Adding a new page means adding it to `STATIC_ROUTES`**, but only once the route
-exists in `App.tsx` (prerendering ahead of the component serves a soft 404).
+**Adding a new page means adding `{ route, seoKey }` to `STATIC_ROUTES`** (with
+`SEO.<KEY>` strings in both translation files), but only once the route exists
+in `App.tsx` (prerendering ahead of the component serves a soft 404).
+
+Articles published after the last deploy 404 for crawlers until the next
+`npm run deploy`. `.github/workflows/deploy.yml` is an opt-in (manual, or
+scheduled once uncommented) redeploy that needs the three `VITE_*` secrets.
 
 **Unit/component tests** (Vitest) live in `src/__tests__/` with subfolders mirroring `src/` (`mappers/`, `service/`, `utils/`, `components/`, `hooks/`, `store/`). Shared helpers in `__tests__/helpers/` (`renderWithProviders.tsx`); global setup in `__tests__/setup.ts`.
 
-**E2E tests** (Playwright, chromium-only) live in `e2e/*.spec.ts`. The backend is fully stubbed per-test via `page.route` (fixtures + helpers in `e2e/support/stubApi.ts`), so no live API is needed — locally or in CI. Tests run against the production build served by `vite preview` (port 4173). Auth is exercised with a fake session hint (`e2e/support/stubApi.ts` → `loginSession`) since tokens are HttpOnly cookies. **Cypress was removed in M7 — Playwright is the sole e2e framework.**
+**E2E tests** (Playwright, chromium-only) live in `e2e/*.spec.ts`. The backend is fully stubbed per-test via `page.route` (fixtures + helpers in `e2e/support/stubApi.ts`), so no live API is needed — locally or in CI. Tests run against the production build served by `vite preview` (port 4173). Auth is exercised with a fake session hint (`e2e/support/stubApi.ts` → `loginSession`) since tokens are HttpOnly cookies. **Cypress was removed in M7 — Playwright is the sole e2e framework.** `e2e/seo.spec.ts` covers canonical/robots/OG tags, page JSON-LD and the crawlable links; the prerendered copies are verified by inspecting `dist/` after `npm run predeploy`.
 
 > **Any new spec that lands on `/` must call `dismissOnboarding(page)`** in its **top-level** `beforeEach`, alongside `useEnglish(page)`. Without it the first-visit onboarding tour opens over the page and intercepts every click. It has to be the top-level block: `addInitScript` only applies to navigations registered after it, so a call inside a `describe` that already ran `goto` silently does nothing. `e2e/onboarding.spec.ts` is the one spec that deliberately omits it.
 >
@@ -351,6 +397,8 @@ GitHub Actions (`.github/workflows/ci.yml`) runs on every PR and on pushes to `m
 - Map API responses through `mappers/` inside each endpoint's `transformResponse` — components never see DTOs
 - Keep UI preferences in `AppSettingContext`, server data in RTK Query; put `lang` in every article-ish query arg (`useApiLang()`)
 - Follow the existing folder structure when adding new components
+- Render `<PageMeta>` on every page; pass `noindex` for private/duplicate pages and `type="article"` + `jsonLd` for article-like pages (see SEO)
+- Build URLs with `absoluteUrl()` / the `*Path()` helpers; keep feed headlines as real links to `/article/:id`
 - **Docstrings on all generated code:** every new function, hook, context, service, or utility you write must have a JSDoc comment (`/** ... */`) describing what it does, its parameters, and its return value if non-obvious
 - **Inline comments in long blocks:** for any function or code block longer than ~20 lines, add short inline comments to section off distinct logical steps (e.g. `// validate inputs`, `// build query params`, `// update store`) so the flow is easy to scan
 - Preserve existing inline comments — only remove a comment if the code it describes has been changed or deleted and the comment no longer applies
@@ -362,5 +410,8 @@ GitHub Actions (`.github/workflows/ci.yml`) runs on every PR and on pushes to `m
 - Import `@base-ui/react` in domain components — compose the primitives in `src/components/ui/` instead
 - Use relative imports (`../../` or `./`) — always `@/`
 - Await `incrementArticleViewed()` — it's intentionally fire-and-forget
+- Render `<title>` or `<meta>` tags from components (React 19 hoists duplicates); go through `<PageMeta>`
+- Use `datePublished` (a localized display string) for `<time dateTime>` or JSON-LD; use `datePublishedIso`
+- Reflow the SEO tags in `index.html` onto multiple lines: the prerender matches them one per line
 - Strip inline comments when editing adjacent code — leave them intact unless they are actively misleading after your change
 - Skip the JSDoc or section comments on trivial one-liners or self-evident code — comment where it actually helps
