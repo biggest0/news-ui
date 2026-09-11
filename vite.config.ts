@@ -11,6 +11,9 @@ export default defineConfig({
 	// version is injected at build time and surfaces as APP_VERSION in config.ts.
 	define: {
 		__APP_VERSION__: JSON.stringify(pkg.version),
+		// Same idea for the public origin: package.json `homepage` feeds SITE_URL
+		// (canonical URLs, share links, structured data) and the prerender script.
+		__SITE_URL__: JSON.stringify(pkg.homepage.replace(/\/$/, "")),
 	},
 	plugins: [react(), tailwindcss()],
 	server: {
