@@ -218,7 +218,7 @@ Every route renders `<PageMeta>` (`components/common/seo/PageMeta.tsx`). It **ed
 
 **Canonical form:** `https://www.catiretime.com/<path>/` (trailing slash, no query string). `absoluteUrl()` in `utils/seo/urlUtils.ts` is the only builder; PageMeta, ShareButton, the sitemap and the prerender all use that form. `SITE_URL` comes from `package.json` `homepage` via a Vite define, like `APP_VERSION`.
 
-**Structured data** is built with `utils/seo/structuredData.ts`: `newsArticleJsonLd` (typed `["NewsArticle", "SatiricalArticle"]` on purpose, eligible for Article rich results and honest about the genre), `blogPostingJsonLd`, `breadcrumbJsonLd`. Breadcrumb JSON-LD must be built from the same `items` array as the visible `<Breadcrumbs>`: Google only honours markup that reflects a visible trail.
+**Structured data** is built with `utils/seo/structuredData.ts`: `newsArticleJsonLd` (typed `["NewsArticle", "SatiricalArticle"]` on purpose, eligible for Article rich results and honest about the genre), `blogPostingJsonLd`, `breadcrumbJsonLd`. Breadcrumb JSON-LD must be built from the same `items` array as the visible `<Breadcrumbs>`: Google only honours markup that reflects a visible trail. Trails live on article and blog post pages, whose URLs carry no category; category pages deliberately have none (the URL already says `/science/`, and the trail fought the layout).
 
 **Machine-readable dates:** every article type carries `datePublishedIso` (the backend's ISO timestamp) next to the localized `datePublished` display string. Use it for `<time dateTime>` and JSON-LD, never the display string.
 
@@ -348,8 +348,8 @@ writes the built shell into `dist/<route>/index.html` for every indexable route,
 turning those 404s into 200s, and rewrites each copy's SEO head for that route:
 title, description, canonical, `og:*`/`twitter:*`, `article:*` tags and a
 page-level JSON-LD block (NewsArticle + BreadcrumbList for articles, BlogPosting
-for posts, BreadcrumbList for categories). That is what crawlers and link
-scrapers see before JavaScript runs; `<PageMeta>` takes over after hydration.
++ BreadcrumbList for posts; category pages carry none because they render no
+trail). That is what crawlers and link scrapers see before JavaScript runs; `<PageMeta>` takes over after hydration.
 The script matches the shell's tags one-per-line by attribute and **throws** if
 one is missing, so keep the SEO block in `index.html` one tag per line.
 

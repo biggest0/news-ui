@@ -453,7 +453,7 @@ const pages = [
 			title: interpolate(en.SEO.CATEGORY.TITLE, { category: name }),
 			description: interpolate(en.SEO.CATEGORY.DESCRIPTION, { category: name }),
 			lastmod: newestDate(articles.filter((a) => a.main_category === slug)),
-			jsonLd: breadcrumbList([homeCrumb, { name, url: canonical(slug) }]),
+			// no BreadcrumbList: the category page renders no trail (see ArticlesPage.tsx)
 		};
 	}),
 	...blogPosts.map((post) => ({
