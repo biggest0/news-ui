@@ -24,6 +24,7 @@ export default function NotFoundPage() {
 			<PageMeta
 				title={t("SEO.NOT_FOUND.TITLE")}
 				description={t("SEO.NOT_FOUND.DESCRIPTION")}
+				noindex
 			/>
 
 			<p className="font-heading text-6xl text-brand">

@@ -5,6 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import { SectionHeader } from "@/components/common/layout/SectionHeader";
 import { resetPassword } from "@/service/authService";
 import { PAGE_ROUTES } from "@/constants/routes";
+import PageMeta from "@/components/common/seo/PageMeta";
 
 export default function NewPasswordPage() {
 	const { t } = useTranslation();
@@ -52,6 +53,7 @@ export default function NewPasswordPage() {
 
 	return (
 		<section className="py-6">
+			<PageMeta title={t("SEO.RESET_PASSWORD.TITLE")} noindex />
 			<SectionHeader title={t("AUTH.NEW_PASSWORD_TITLE")} as="h1" />
 
 			<div className="max-w-sm pt-6">

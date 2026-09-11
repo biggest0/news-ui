@@ -6,6 +6,7 @@ import { AccountNewsSection } from "@/components/news/section/AccountNewsSection
 import { AccountInfoSection } from "@/components/account/AccountInfoSection";
 import { useAuth } from "@/contexts/AuthContext";
 import { PAGE_ROUTES } from "@/constants/routes";
+import PageMeta from "@/components/common/seo/PageMeta";
 
 export default function AccountPage() {
 	const { t } = useTranslation();
@@ -19,6 +20,7 @@ export default function AccountPage() {
 
 	return (
 		<>
+			<PageMeta title={t("SEO.ACCOUNT.TITLE")} noindex />
 			<section className="py-6">
 				<div className="flex items-center justify-between">
 					<SectionHeader title={t("PAGES.ACCOUNT.TITLE")} as="h1" />
