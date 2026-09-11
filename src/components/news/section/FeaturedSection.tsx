@@ -1,12 +1,21 @@
-import { useTranslation } from "react-i18next";
-
-import Image from "@/assets/news_hero_image.webp";
 import NewsHeroCard from "@/components/news/cards/NewsHeroCard";
+import FeaturedHeroImage, {
+	type HeroImageVariant,
+} from "@/components/news/section/featured/FeaturedHeroImage";
 import { useFeaturedArticles } from "@/hooks/useArticleHooks";
 
+interface FeaturedSectionProps {
+	/**
+	 * Press-photo treatment. The home page takes the default; the prop exists
+	 * so the look can be switched without rewriting the section.
+	 */
+	heroVariant?: HeroImageVariant;
+}
+
 /** Desktop hero + featured grid — shares the featured cache with StaffPicks. */
-export default function FeaturedSection() {
-	const { t } = useTranslation();
+export default function FeaturedSection({
+	heroVariant = "ruled",
+}: FeaturedSectionProps = {}) {
 	const featuredArticles = useFeaturedArticles();
 
 	return (
@@ -23,21 +32,7 @@ export default function FeaturedSection() {
 				))}
 			</div>
 
-			{/* Image - spans 2x2 */}
-			<div className="col-span-2 row-span-2 relative overflow-y-hidden">
-				<img
-					src={Image}
-					alt={t("HERO.IMAGE_ALT")}
-					width={1024}
-					height={685}
-					fetchPriority="high"
-					decoding="async"
-					className="w-full h-full object-cover"
-				/>
-				<div className="absolute bottom-0 left-0 right-0 bg-black/70 p-4 text-white text-xl">
-					{t("HERO.QUOTE")}
-				</div>
-			</div>
+			<FeaturedHeroImage variant={heroVariant} />
 
 			{/* Right column - multiple articles with scroll */}
 			<div className="col-span-1 row-span-2 flex flex-col gap-4">
