@@ -1,4 +1,4 @@
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { findBlogPost } from "@/blog/registry";
@@ -18,6 +18,7 @@ import { absoluteUrl, assetUrl } from "@/utils/seo/urlUtils";
 export default function BlogPostPage() {
 	const { t } = useTranslation();
 	const location = useLocation();
+	const navigate = useNavigate();
 	const { slug } = useParams<{ slug: string }>();
 	const post = slug ? findBlogPost(slug) : undefined;
 
@@ -68,9 +69,16 @@ export default function BlogPostPage() {
 					breadcrumbJsonLd(crumbs),
 				]}
 			/>
-			<Breadcrumbs items={crumbs} />
+			{/* Back button */}
+			<button
+				onClick={() => navigate(-1)}
+				className="text-md text-brand hover:underline mb-4"
+			>
+				← {t("COMMON.BACK")}
+			</button>
 
 			<div className="max-w-3xl mx-auto">
+				<Breadcrumbs items={crumbs} />
 				{/* Banner image — uses post.image if provided, otherwise falls back to
 				    placeholder. Intrinsic size is only known for the placeholder. */}
 				<img
@@ -80,7 +88,7 @@ export default function BlogPostPage() {
 					height={hasCustomImage ? undefined : 768}
 					fetchPriority="high"
 					decoding="async"
-					className="w-full h-64 object-cover rounded-lg mt-4 mb-2"
+					className="w-full h-64 object-cover rounded-lg mb-2"
 				/>
 
 				<header className="pt-4 pb-6 border-b border-border-subtle">
