@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 import Image from "@/assets/news_hero_image.webp";
+import { cn } from "@/lib/utils";
 
 /**
  * Press-photo treatments for the home page hero.
@@ -14,10 +15,23 @@ export type HeroImageVariant = "ruled" | "cutline" | "matted";
 
 interface FeaturedHeroImageProps {
 	variant: HeroImageVariant;
+	/**
+	 * Placement for the `<figure>`. Defaults to the desktop hero's grid cell;
+	 * the mobile section passes nothing so the figure is a plain block.
+	 */
+	className?: string;
+	/**
+	 * Sizing for the photo box. Defaults to filling the desktop cell's leftover
+	 * height; mobile passes a fixed height instead, since it has no cell to fill.
+	 */
+	photoClassName?: string;
 }
 
-/** Grid placement every variant shares: the middle 2x2 block of the hero. */
+/** Grid placement the desktop hero uses: the middle 2x2 block. */
 const CELL = "col-span-2 row-span-2";
+
+/** Desktop photo sizing: take whatever height the caption leaves. */
+const FILL_CELL = "w-full flex-1 min-h-0";
 
 /**
  * The home page's featured press photo, in one of several print-inspired
@@ -27,9 +41,17 @@ const CELL = "col-span-2 row-span-2";
  * home page's LCP element; every variant keeps those attributes so switching
  * between them cannot change loading behaviour.
  *
+ * Shared by the desktop hero and the mobile section so the caption treatment
+ * only exists once: they differ in placement and photo sizing, which is what
+ * `className` and `photoClassName` are for, not in how the cutline is set.
+ *
  * @param variant - Which treatment to render
  */
-export default function FeaturedHeroImage({ variant }: FeaturedHeroImageProps) {
+export default function FeaturedHeroImage({
+	variant,
+	className = CELL,
+	photoClassName = FILL_CELL,
+}: FeaturedHeroImageProps) {
 	const { t } = useTranslation();
 
 	/**
@@ -73,8 +95,8 @@ export default function FeaturedHeroImage({ variant }: FeaturedHeroImageProps) {
 		// caption the way a newspaper closes a cutline.
 		case "ruled":
 			return (
-				<figure className={`${CELL} flex flex-col`}>
-					{photo("w-full flex-1 min-h-0 mb-2")}
+				<figure className={cn(className, "flex flex-col")}>
+					{photo(cn(photoClassName, "mb-2"))}
 					<div className="border-t border-border" />
 					<figcaption className="mt-2 text-center">
 						<blockquote className="text-sm italic leading-snug text-foreground-secondary">
@@ -91,8 +113,8 @@ export default function FeaturedHeroImage({ variant }: FeaturedHeroImageProps) {
 		// Closest to how a paper sets caption copy under a photo.
 		case "cutline":
 			return (
-				<figure className={`${CELL} flex flex-col`}>
-					{photo("w-full flex-1 min-h-0 border border-border-subtle")}
+				<figure className={cn(className, "flex flex-col")}>
+					{photo(cn(photoClassName, "border border-border-subtle"))}
 					<figcaption className="mt-2 flex items-baseline justify-between gap-4 border-b border-border-subtle pb-2">
 						<blockquote className="text-sm italic leading-snug text-foreground-secondary">
 							{quote}
@@ -112,9 +134,9 @@ export default function FeaturedHeroImage({ variant }: FeaturedHeroImageProps) {
 		case "matted":
 			return (
 				<figure
-					className={`${CELL} flex flex-col border border-border bg-card p-3`}
+					className={cn(className, "flex flex-col border border-border bg-card p-3")}
 				>
-					{photo("w-full flex-1 min-h-0")}
+					{photo(photoClassName)}
 					<figcaption className="mt-3 text-center">
 						<blockquote className="font-heading text-base leading-snug text-foreground">
 							{quote}
