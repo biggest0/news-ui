@@ -7,7 +7,7 @@ import { SECTIONS } from "@/constants/keys";
 import { useSectionVisible } from "@/hooks/useSectionCollapse";
 import { useFeaturedArticles } from "@/hooks/useArticleHooks";
 import NewsHeroCard from "@/components/news/cards/NewsHeroCard";
-import Image from "@/assets/news_hero_image.jpg";
+import Image from "@/assets/news_hero_image.webp";
 
 /**
  * Mobile-only hero image + "Staff Picks" carousel. Intentionally separate
@@ -28,6 +28,10 @@ export default function MobileStaffPicksSection() {
 					<img
 						src={Image}
 						alt={t("HERO.IMAGE_ALT")}
+						width={1024}
+						height={685}
+						fetchPriority="high"
+						decoding="async"
 						className="w-full h-full object-cover"
 					/>
 				</div>
