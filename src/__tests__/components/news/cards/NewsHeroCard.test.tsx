@@ -62,6 +62,7 @@ const sampleArticle: ArticleInfo = {
 	title: "Cat Economy Booms",
 	summary: "Feline GDP hits record highs",
 	datePublished: "3/20/2026",
+	datePublishedIso: "2026-03-20T00:00:00.000Z",
 	mainCategory: "business",
 	subCategory: ["economy"],
 	viewed: 999,

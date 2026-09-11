@@ -12,6 +12,8 @@ export function mapDTOtoArticleInfo(
 		datePublished: new Date(
 			articleInfoResponse.date_published
 		).toLocaleDateString(getDateLocale()),
+		// raw ISO kept for <time dateTime> and JSON-LD (the display string is localized)
+		datePublishedIso: articleInfoResponse.date_published,
 		mainCategory: articleInfoResponse.main_category,
 		subCategory: articleInfoResponse.sub_category || [],
 		viewed: articleInfoResponse.viewed,
@@ -27,6 +29,7 @@ export function mapDTOtoArticleHistoryItem(
 		title: dto.title,
 		summary: dto.summary,
 		datePublished: new Date(dto.date_published).toLocaleDateString(getDateLocale()),
+		datePublishedIso: dto.date_published,
 		mainCategory: dto.main_category,
 		subCategory: dto.sub_category || [],
 		viewed: dto.viewed,
@@ -45,6 +48,7 @@ export function mapDTOtoRecommendedArticle(
 		mainCategory: dto.main_category,
 		subCategory: dto.sub_category || [],
 		datePublished: new Date(dto.date_published).toLocaleDateString(getDateLocale()),
+		datePublishedIso: dto.date_published,
 		score: dto.score,
 	};
 }
@@ -57,6 +61,7 @@ export function mapDTOtoArticleDetail(
 		datePublished: new Date(
 			articleDetailResponse.date_published
 		).toLocaleDateString(getDateLocale()),
+		datePublishedIso: articleDetailResponse.date_published,
 		title: articleDetailResponse.title,
 		summary: articleDetailResponse.summary,
 		paragraphs: articleDetailResponse.paragraphs,

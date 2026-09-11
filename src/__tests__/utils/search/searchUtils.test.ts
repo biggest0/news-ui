@@ -11,6 +11,7 @@ function makeArticle(overrides: Partial<ArticleInfo> = {}): ArticleInfo {
 		title: "Cat Parliament",
 		summary: "A tabby named Lord Whiskers took over parliament",
 		datePublished: "3/20/2026",
+		datePublishedIso: "2026-03-20T00:00:00.000Z",
 		mainCategory: "politics",
 		subCategory: ["government"],
 		viewed: 100,
@@ -25,6 +26,7 @@ const sampleArticles: ArticleInfo[] = [
 		title: "Cat Parliament",
 		summary: "A tabby named Lord Whiskers took over parliament",
 		datePublished: "3/20/2026",
+		datePublishedIso: "2026-03-20T00:00:00.000Z",
 		viewed: 100,
 	}),
 	makeArticle({
@@ -32,6 +34,7 @@ const sampleArticles: ArticleInfo[] = [
 		title: "Dog Park Revolution",
 		summary: "Dogs unite against leash laws",
 		datePublished: "3/25/2026",
+		datePublishedIso: "2026-03-25T00:00:00.000Z",
 		viewed: 500,
 	}),
 	makeArticle({
@@ -39,6 +42,7 @@ const sampleArticles: ArticleInfo[] = [
 		title: "Cat Cafe Opens Downtown",
 		summary: "A new cat cafe with 50 rescue cats",
 		datePublished: "3/26/2026",
+		datePublishedIso: "2026-03-26T00:00:00.000Z",
 		viewed: 250,
 	}),
 ];

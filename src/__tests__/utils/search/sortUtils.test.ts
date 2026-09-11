@@ -8,6 +8,7 @@ function makeArticle(overrides: Partial<ArticleInfo> = {}): ArticleInfo {
 		title: "Default Title",
 		summary: "Default summary",
 		datePublished: "3/20/2026",
+		datePublishedIso: "2026-03-20T00:00:00.000Z",
 		mainCategory: "general",
 		subCategory: [],
 		viewed: 0,

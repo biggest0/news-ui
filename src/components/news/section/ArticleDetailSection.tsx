@@ -30,11 +30,15 @@ export default function ArticleDetailSection({ article }: ArticleDetailProps) {
 
 	return (
 		<article className="flex flex-col space-y-4">
-			{/* Title, byline and date */}
+			{/* Title, byline and date. The <time> carries the machine-readable
+			    ISO date next to the localized display string. */}
 			<header className="pb-6 border-b border-border-subtle">
-				<div className="text-sm text-muted-foreground mb-2">
+				<time
+					dateTime={article.datePublishedIso}
+					className="block text-sm text-muted-foreground mb-2"
+				>
 					{article.datePublished}
-				</div>
+				</time>
 				<h1 className="text-3xl text-foreground">{article.title}</h1>
 				<div className="mt-2 text-sm text-muted-foreground">
 					{t("ARTICLE_CARD.BY_AUTHOR", { author })}

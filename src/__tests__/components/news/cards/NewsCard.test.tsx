@@ -89,6 +89,7 @@ const sampleArticle: ArticleInfo = {
 	title: "Cat Takes Over Parliament",
 	summary: "A tabby named Lord Whiskers seized control",
 	datePublished: "3/20/2026",
+	datePublishedIso: "2026-03-20T00:00:00.000Z",
 	mainCategory: "politics",
 	subCategory: ["government", "cats"],
 	viewed: 1234,
@@ -100,6 +101,7 @@ const sampleDetail: ArticleDetail = {
 	title: "Cat Takes Over Parliament",
 	summary: "A tabby named Lord Whiskers seized control",
 	datePublished: "3/20/2026",
+	datePublishedIso: "2026-03-20T00:00:00.000Z",
 	mainCategory: "politics",
 	subCategory: ["government", "cats"],
 	paragraphs: ["Lord Whiskers entered the chamber.", "Parliament was stunned."],
@@ -288,5 +290,59 @@ describe("NewsCard", () => {
 		renderWithProviders(<NewsCard articleInfo={noCategory} />);
 
 		expect(screen.getByText("Cat Takes Over Parliament")).toBeInTheDocument();
+	});
+});
+
+// ── Links and semantics (SEO pass) ───────────────────────────────────
+
+describe("NewsCard links", () => {
+	/** The headline links to the article's own page: the crawl path from every feed. */
+	it("links the headline to the article page", () => {
+		setAuth(false);
+		renderWithProviders(<NewsCard articleInfo={sampleArticle} />);
+
+		expect(screen.getByRole("link", { name: "Cat Takes Over Parliament" })).toHaveAttribute(
+			"href",
+			"/article/card-1"
+		);
+	});
+
+	/** A known category links to its listing page. */
+	it("links the category to its listing page", () => {
+		setAuth(false);
+		renderWithProviders(<NewsCard articleInfo={sampleArticle} />);
+
+		expect(screen.getByRole("link", { name: "Politics" })).toHaveAttribute("href", "/politics");
+	});
+
+	/** An unknown category is plain text, not a link to a route that doesn't exist. */
+	it("renders an unknown category as text", () => {
+		setAuth(false);
+		renderWithProviders(<NewsCard articleInfo={{ ...sampleArticle, mainCategory: "gossip" }} />);
+
+		expect(screen.getByText("Gossip")).toBeInTheDocument();
+		expect(screen.queryByRole("link", { name: "Gossip" })).toBeNull();
+	});
+
+	/** The date is a <time> element carrying the ISO timestamp. */
+	it("marks the date up as <time> with a machine-readable dateTime", () => {
+		setAuth(false);
+		renderWithProviders(<NewsCard articleInfo={sampleArticle} />);
+
+		const time = screen.getByText("3/20/2026");
+		expect(time.tagName).toBe("TIME");
+		expect(time).toHaveAttribute("dateTime", "2026-03-20T00:00:00.000Z");
+	});
+
+	/** "Read More" is a real button that announces its expanded state. */
+	it("exposes the expand toggle as a button with aria-expanded", async () => {
+		setAuth(false);
+		renderWithProviders(<NewsCard articleInfo={sampleArticle} />);
+
+		const toggle = screen.getByRole("button", { name: "Read More" });
+		expect(toggle).toHaveAttribute("aria-expanded", "false");
+
+		await userEvent.click(toggle);
+		expect(screen.getByRole("button", { name: "Hide" })).toHaveAttribute("aria-expanded", "true");
 	});
 });

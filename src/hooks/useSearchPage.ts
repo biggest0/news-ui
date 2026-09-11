@@ -56,6 +56,7 @@ export function useSearchResults(params: SearchParams) {
 						title: a.title,
 						summary: a.summary,
 						datePublished: a.datePublished,
+						datePublishedIso: a.datePublishedIso,
 						mainCategory: a.mainCategory,
 						subCategory: a.subCategory,
 						viewed: 0,
