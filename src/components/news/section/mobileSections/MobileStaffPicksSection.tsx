@@ -7,7 +7,7 @@ import { SECTIONS } from "@/constants/keys";
 import { useSectionVisible } from "@/hooks/useSectionCollapse";
 import { useFeaturedArticles } from "@/hooks/useArticleHooks";
 import NewsHeroCard from "@/components/news/cards/NewsHeroCard";
-import Image from "@/assets/news_hero_image.webp";
+import FeaturedHeroImage from "@/components/news/section/featured/FeaturedHeroImage";
 
 /**
  * Mobile-only hero image + "Staff Picks" carousel. Intentionally separate
@@ -22,20 +22,16 @@ export default function MobileStaffPicksSection() {
 
 	return (
 		<div className="flex flex-col md:hidden">
-			{/* Home Main Picture */}
+			{/* Home Main Picture — same press-photo treatment as the desktop hero
+			    (FeaturedHeroImage), so the cutline is set once and both stay in
+			    step. Only the sizing differs: no grid cell to fill here, so the
+			    photo takes a fixed height. */}
 			<section className="border-b border-border py-6">
-				<div className="relative w-full h-64 overflow-hidden">
-					<img
-						src={Image}
-						alt={t("HERO.IMAGE_ALT")}
-						width={1024}
-						height={685}
-						fetchPriority="high"
-						decoding="async"
-						className="w-full h-full object-cover"
-					/>
-				</div>
-				<div className="text-center">{t("HERO.QUOTE")}</div>
+				<FeaturedHeroImage
+					variant="ruled"
+					className=""
+					photoClassName="w-full h-64"
+				/>
 			</section>
 
 			{/* Staff Picks Section */}

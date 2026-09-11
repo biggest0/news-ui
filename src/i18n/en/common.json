@@ -95,7 +95,9 @@
   },
   "HERO": {
     "IMAGE_ALT": "Featured News",
-    "QUOTE": "Reading satire news is like getting your veggies in cake form—tasty, fun, and surprisingly informative.\" — Albert Mewstein"
+    "QUOTE": "“Reading satire news is like getting your veggies in cake form: tasty, fun, and surprisingly informative.”",
+    "QUOTE_ATTRIBUTION": "Albert Mewstein",
+    "IMAGE_CREDIT": "Catire Time illustration"
   },
   "EMPTY_STATE": {
     "NEWS_SECTION_MESSAGE": "Looks like you removed the Mews section",

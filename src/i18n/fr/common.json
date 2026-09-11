@@ -95,7 +95,9 @@
   },
   "HERO": {
     "IMAGE_ALT": "Nouvelles en vedette",
-    "QUOTE": "Lire des nouvelles satiriques, c'est comme manger des légumes sous forme de gâteau — savoureux, amusant et surprenamment instructif.\" — Albert Mewstein"
+    "QUOTE": "« Lire des nouvelles satiriques, c'est comme manger des légumes sous forme de gâteau : savoureux, amusant et surprenamment instructif. »",
+    "QUOTE_ATTRIBUTION": "Albert Mewstein",
+    "IMAGE_CREDIT": "Illustration Catire Time"
   },
   "EMPTY_STATE": {
     "NEWS_SECTION_MESSAGE": "Il semble que vous ayez supprimé la section Meowelles",
