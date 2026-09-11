@@ -12,9 +12,9 @@
  *   `navigate()` calls should use.
  *
  * Adding a route means adding it here first, then wiring it in `App.tsx`. If it
- * should be indexable, also add it to `STATIC_ROUTES` in
- * `scripts/prerenderRoutes.mjs` so it gets a real file on disk, otherwise it
- * 404s for crawlers and anyone opening the link directly.
+ * should be indexable, also add it (with its `SEO.*` key) to `STATIC_ROUTES` in
+ * `scripts/prerenderRoutes.mjs` so it gets a real file on disk with its own
+ * metadata, otherwise it 404s for crawlers and anyone opening the link directly.
  */
 
 /** Paths with no parameters. Usable as-is in `<Route path>` and `<Link to>`. */
@@ -33,8 +33,8 @@ export const PAGE_ROUTES = {
 	RESET_PASSWORD: "/reset-password",
 	GOOGLE_CALLBACK: "/auth/google/callback",
 	// CATS: "/cats", not built yet. Uncomment when the route exists in
-	// App.tsx, and add "cats" to STATIC_ROUTES in scripts/prerenderRoutes.mjs so
-	// it gets a real file on disk. Until then /cats correctly 404s.
+	// App.tsx, and add { route: "cats", seoKey: "CATS" } to STATIC_ROUTES in
+	// scripts/prerenderRoutes.mjs so it gets a real file on disk. Until then /cats correctly 404s.
 } as const;
 
 /**
@@ -65,6 +65,14 @@ export const ARTICLE_ROUTES = [
 ] as const;
 
 export type ArticleCategory = (typeof ARTICLE_ROUTES)[number];
+
+/**
+ * Type guard for a category slug coming from article data or the URL.
+ * @param value - e.g. an article's `mainCategory`
+ * @returns true when it is one of `ARTICLE_ROUTES`
+ */
+export const isArticleCategory = (value: string | undefined): value is ArticleCategory =>
+	value !== undefined && (ARTICLE_ROUTES as readonly string[]).includes(value);
 
 /**
  * Link target for a single article.

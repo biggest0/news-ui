@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { isWithinNDays } from "@/utils/date/dateUtils";
+import { isWithinNDays, toIsoDate } from "@/utils/date/dateUtils";
 
 describe("isWithinNDays", () => {
 	afterEach(() => {
@@ -77,5 +77,18 @@ describe("isWithinNDays", () => {
 		freezeDate("2026-03-27T12:00:00");
 		const localeDateStr = new Date().toLocaleDateString();
 		expect(isWithinNDays(localeDateStr, 1)).toBe(true);
+	});
+});
+
+describe("toIsoDate", () => {
+	it("converts M/D/YYYY to YYYY-MM-DD with zero padding", () => {
+		expect(toIsoDate("8/18/2026")).toBe("2026-08-18");
+		expect(toIsoDate("12/1/2025")).toBe("2025-12-01");
+	});
+
+	it("returns undefined for anything else, so callers omit the attribute", () => {
+		expect(toIsoDate(undefined)).toBeUndefined();
+		expect(toIsoDate("2026-08-18")).toBeUndefined();
+		expect(toIsoDate("yesterday")).toBeUndefined();
 	});
 });

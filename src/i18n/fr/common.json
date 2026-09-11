@@ -113,7 +113,8 @@
     "CONTACT": "Contact",
     "SEARCH": "Rechercher",
     "BLOG": "Blog",
-    "MENU_LABEL": "Menu de navigation"
+    "MENU_LABEL": "Menu de navigation",
+    "BREADCRUMB": "Fil d'Ariane"
   },
   "BLOG": {
     "TITLE": "Blog",
@@ -238,7 +239,8 @@
       "TITLE": "COMPTE"
     },
     "ARTICLE": {
-      "LOADING_DETAILS": "Chargement des détails de l'article !"
+      "LOADING_DETAILS": "Chargement des détails de l'article !",
+      "NOT_FOUND": "Cet article n'existe pas ou a été retiré. Quelque chose l'a sans doute fait tomber de la table."
     },
     "SUBCATEGORY": {
       "NO_ARTICLES": "Aucun article trouvé pour cette sous-catégorie.",
@@ -416,6 +418,27 @@
     "NOT_FOUND": {
       "TITLE": "Page introuvable",
       "DESCRIPTION": "Cette page n'existe pas. Retournez à la une pour la satire du jour."
+    },
+    "ARTICLE": {
+      "NOT_FOUND_TITLE": "Article introuvable"
+    },
+    "LOGIN": {
+      "TITLE": "Connexion"
+    },
+    "REGISTER": {
+      "TITLE": "Inscription"
+    },
+    "ACCOUNT": {
+      "TITLE": "Compte"
+    },
+    "RESET_PASSWORD": {
+      "TITLE": "Réinitialiser le mot de passe"
+    },
+    "VERIFY_EMAIL": {
+      "TITLE": "Vérifiez votre courriel"
+    },
+    "GOOGLE_CALLBACK": {
+      "TITLE": "Connexion en cours"
     }
   }
 }

@@ -40,7 +40,11 @@ export default function NewsHeroCard({ articleInfo, small }: NewsCardProp) {
 			{!small && articleInfo.summary && (
 				<div className="text-sm lg:text-base text-foreground-secondary">{articleInfo.summary}</div>
 			)}
-			{small && <div className="text-sm text-muted-foreground">{articleInfo.datePublished}</div>}
+			{small && (
+				<time dateTime={articleInfo.datePublishedIso} className="block text-sm text-muted-foreground">
+					{articleInfo.datePublished}
+				</time>
+			)}
 		</div>
 	);
 }

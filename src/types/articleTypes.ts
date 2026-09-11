@@ -16,7 +16,14 @@ export interface ArticleInfo {
 	id: string;
 	title: string;
 	summary?: string;
+	/** Display date, already formatted for the active locale at map time. */
 	datePublished: string;
+	/**
+	 * The backend's ISO timestamp, kept alongside the display string for
+	 * `<time dateTime>` and structured data, which need a machine-readable
+	 * date rather than a localized one.
+	 */
+	datePublishedIso: string;
 	mainCategory: string | undefined;
 	subCategory: string[];
 	viewed: number;
@@ -33,6 +40,8 @@ export interface ArticleHistoryItem {
 	title: string;
 	summary?: string;
 	datePublished: string;
+	/** See ArticleInfo.datePublishedIso. */
+	datePublishedIso: string;
 	mainCategory: string | undefined;
 	subCategory: string[];
 	viewed: number;
@@ -48,6 +57,8 @@ export interface ArticleHistoryResponse {
 export interface ArticleDetail {
 	id: string;
 	datePublished: string;
+	/** See ArticleInfo.datePublishedIso. */
+	datePublishedIso: string;
 	title: string;
 	summary?: string;
 	paragraphs: string[];
@@ -70,5 +81,7 @@ export interface RecommendedArticle {
 	mainCategory: string;
 	subCategory: string[];
 	datePublished: string;
+	/** See ArticleInfo.datePublishedIso. */
+	datePublishedIso: string;
 	score: number;
 }

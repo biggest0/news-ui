@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 
 import { SectionHeader } from "@/components/common/layout/SectionHeader";
 import PageMeta from "@/components/common/seo/PageMeta";
+import { SOCIAL_PROFILES } from "@/constants/site";
 
 export default function Contact() {
 	const { t } = useTranslation();
@@ -27,30 +28,19 @@ export default function Contact() {
 					</div>
 					<div className="text-center flex flex-col">
 						<h3 className="text-lg text-foreground">{t('PAGES.CONTACT.SOCIALS')}</h3>
-						<a
-							href="https://www.instagram.com/catiretime"
-							target="_blank"
-							rel="noopener noreferrer"
-							className="text-foreground-secondary hover:text-brand"
-						>
-							{"Instagram: catiretime" /* platform + handle — proper noun, untranslated */}
-						</a>
-						<a
-							href="https://www.youtube.com/@catiretime"
-							target="_blank"
-							rel="noopener noreferrer"
-							className="text-foreground-secondary hover:text-brand"
-						>
-							{"YouTube: catiretime" /* platform + handle — proper noun, untranslated */}
-						</a>
-						<a
-							href="https://x.com/catiretime"
-							target="_blank"
-							rel="noopener noreferrer"
-							className="text-foreground-secondary hover:text-brand"
-						>
-							{"X: catiretime" /* platform + handle — proper noun, untranslated */}
-						</a>
+						{/* One source for the profile URLs (constants/site.ts), shared with
+						    the footer icons and the Organization markup */}
+						{SOCIAL_PROFILES.map(({ id, label, handle, url }) => (
+							<a
+								key={id}
+								href={url}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="text-foreground-secondary hover:text-brand"
+							>
+								{`${label}: ${handle}` /* platform + handle — proper noun, untranslated */}
+							</a>
+						))}
 					</div>
 				</div>
 			</section>

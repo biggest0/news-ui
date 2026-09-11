@@ -206,3 +206,19 @@ describe("mapDTOtoArticleDetail", () => {
 		expect(result.datePublished).toBe("Invalid Date");
 	});
 });
+
+// ── datePublishedIso ─────────────────────────────────────────────────
+
+describe("datePublishedIso", () => {
+	it("keeps the backend's raw ISO timestamp next to the localized display date", () => {
+		const info = mapDTOtoArticleInfo(makeArticleInfoDTO({ date_published: "2026-03-20T00:00:00.000Z" }));
+		expect(info.datePublishedIso).toBe("2026-03-20T00:00:00.000Z");
+		expect(info.datePublished).not.toBe(info.datePublishedIso);
+
+		const detail = mapDTOtoArticleDetail(makeArticleDetailDTO({ date_published: "2026-01-15T12:00:00.000Z" }));
+		expect(detail.datePublishedIso).toBe("2026-01-15T12:00:00.000Z");
+
+		const history = mapDTOtoArticleHistoryItem(makeHistoryItemDTO());
+		expect(history.datePublishedIso).toBe("2026-03-20T00:00:00.000Z");
+	});
+});

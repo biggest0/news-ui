@@ -11,7 +11,12 @@ import { useAuth } from "@/contexts/AuthContext";
 import { ShareButton } from "@/components/common/social/ShareButton";
 import { LikeButton } from "@/components/common/social/LikeButton";
 import { capitalizeWord } from "@/utils/text/wordUtils";
-import { subCategoryPath } from "@/constants/routes";
+import {
+	articlePath,
+	categoryPath,
+	isArticleCategory,
+	subCategoryPath,
+} from "@/constants/routes";
 
 interface NewsCardProp {
 	articleInfo: ArticleInfo;
@@ -84,18 +89,40 @@ export default function NewsCard({ articleInfo }: NewsCardProp) {
 		}
 	}
 
+	const categoryClass = `text-sm ${categoryColor(articleInfo.mainCategory ?? "")}`;
+
 	return (
 		<div className="flex flex-col justify-between min-h-48 max-h-full border-b border-border py-4 w-full space-y-8 transition-colors duration-200">
 			<div>
+				{/* The headline is a real link to the article's own page. The inline
+				    expansion below stays for readers; the link is what gives
+				    crawlers (and anyone wanting a permalink) a path to /article/:id
+				    from every feed the card appears in. */}
 				<h3 className="text-xl font-semibold text-foreground">
-					{articleInfo.title}
+					<Link
+						to={articlePath(articleInfo.id)}
+						className="hover:text-brand transition-colors duration-200"
+					>
+						{articleInfo.title}
+					</Link>
 				</h3>
-				<div className="text-sm text-muted-foreground">{articleInfo.datePublished}</div>
-				<div
-					className={`text-sm ${categoryColor(articleInfo.mainCategory ?? "")}`}
+				<time
+					dateTime={articleInfo.datePublishedIso}
+					className="block text-sm text-muted-foreground"
 				>
-					{capitalizeWord(articleInfo.mainCategory)}
-				</div>
+					{articleInfo.datePublished}
+				</time>
+				{/* Category links to its listing page when it is one of ours */}
+				{isArticleCategory(articleInfo.mainCategory) ? (
+					<Link
+						to={categoryPath(articleInfo.mainCategory)}
+						className={`${categoryClass} hover:underline`}
+					>
+						{capitalizeWord(articleInfo.mainCategory)}
+					</Link>
+				) : (
+					<div className={categoryClass}>{capitalizeWord(articleInfo.mainCategory)}</div>
+				)}
 			</div>
 
 			{/* Article Summary/ Paragraphs */}
@@ -159,12 +186,16 @@ export default function NewsCard({ articleInfo }: NewsCardProp) {
 			</div>
 
 			<div className="flex flex-row justify-between items-center">
-				<div
+				{/* A real button (was a clickable div): keyboard-operable and
+				    announced with its expanded state */}
+				<button
+					type="button"
+					aria-expanded={expanded}
 					className="cursor-pointer hover:text-brand self-start transition-colors"
 					onClick={handleExpand}
 				>
 					{!expanded ? t("ARTICLE_CARD.READ_MORE") : t("ARTICLE_CARD.HIDE")}
-				</div>
+				</button>
 				<div className="flex items-center gap-2">
 					<div className="min-w-12">
 						<LikeButton articleId={articleInfo.id} initialLikeCount={articleInfo.likeCount} />

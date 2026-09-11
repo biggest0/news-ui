@@ -5,6 +5,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { SectionHeader } from "@/components/common/layout/SectionHeader";
 import { verifyEmail, resendVerification } from "@/service/authService";
 import { PAGE_ROUTES } from "@/constants/routes";
+import PageMeta from "@/components/common/seo/PageMeta";
 
 export default function EmailVerificationPage() {
 	const { t } = useTranslation();
@@ -57,6 +58,7 @@ export default function EmailVerificationPage() {
 	if (status === "verifying") {
 		return (
 			<section className="py-6">
+				<PageMeta title={t("SEO.VERIFY_EMAIL.TITLE")} noindex />
 				<SectionHeader title={t("AUTH.VERIFY_EMAIL_TITLE")} as="h1" />
 				<div className="max-w-sm pt-6">
 					<p className="text-foreground-secondary">{t("AUTH.VERIFY_VERIFYING")}</p>
@@ -68,6 +70,7 @@ export default function EmailVerificationPage() {
 	if (status === "success") {
 		return (
 			<section className="py-6">
+				<PageMeta title={t("SEO.VERIFY_EMAIL.TITLE")} noindex />
 				<SectionHeader title={t("AUTH.VERIFY_SUCCESS_TITLE")} />
 				<div className="max-w-sm pt-6 flex flex-col gap-4">
 					<p className="text-foreground-secondary">{t("AUTH.VERIFY_SUCCESS")}</p>
@@ -84,6 +87,7 @@ export default function EmailVerificationPage() {
 
 	return (
 		<section className="py-6">
+			<PageMeta title={t("SEO.VERIFY_EMAIL.TITLE")} noindex />
 			<SectionHeader title={t("AUTH.VERIFY_EMAIL_TITLE")} />
 			<div className="max-w-sm pt-6 flex flex-col gap-4">
 				<p className="text-destructive">

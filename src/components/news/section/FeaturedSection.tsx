@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 
-import Image from "@/assets/news_hero_image.jpg";
+import Image from "@/assets/news_hero_image.webp";
 import NewsHeroCard from "@/components/news/cards/NewsHeroCard";
 import { useFeaturedArticles } from "@/hooks/useArticleHooks";
 
@@ -28,6 +28,10 @@ export default function FeaturedSection() {
 				<img
 					src={Image}
 					alt={t("HERO.IMAGE_ALT")}
+					width={1024}
+					height={685}
+					fetchPriority="high"
+					decoding="async"
 					className="w-full h-full object-cover"
 				/>
 				<div className="absolute bottom-0 left-0 right-0 bg-black/70 p-4 text-white text-xl">

@@ -31,6 +31,10 @@ export const EditorCardHorizontal = ({
 				<img
 					src={`${BASE_URL}images/${imageUrl}`}
 					alt={name}
+					width={400}
+					height={400}
+					loading="lazy"
+					decoding="async"
 					className="w-28 h-28 object-cover rounded-xl flex-shrink-0"
 				/>
 			</div>

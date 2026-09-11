@@ -6,6 +6,7 @@ import { SectionHeader } from "@/components/common/layout/SectionHeader";
 import { useAuth } from "@/contexts/AuthContext";
 import { resendVerification } from "@/service/authService";
 import { PAGE_ROUTES } from "@/constants/routes";
+import PageMeta from "@/components/common/seo/PageMeta";
 
 export default function RegisterPage() {
 	const { t } = useTranslation();
@@ -73,6 +74,7 @@ export default function RegisterPage() {
 	if (registered) {
 		return (
 			<section className="py-6">
+				<PageMeta title={t("SEO.REGISTER.TITLE")} noindex />
 				<SectionHeader title={t("AUTH.VERIFY_EMAIL_TITLE")} as="h1" />
 
 				<div className="max-w-sm pt-6 flex flex-col gap-4">
@@ -115,6 +117,7 @@ export default function RegisterPage() {
 
 	return (
 		<section className="py-6">
+			<PageMeta title={t("SEO.REGISTER.TITLE")} noindex />
 			<SectionHeader title={t("AUTH.REGISTER_TITLE")} />
 
 			<div className="max-w-sm pt-6">

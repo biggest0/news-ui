@@ -43,9 +43,13 @@ export default function SearchPage() {
 
 	return (
 		<div>
+			{/* Result pages carry noindex (search engines are told not to index a
+			    site's own search results); the canonical drops the query string,
+			    so the empty /search/ landing page is the only indexed form. */}
 			<PageMeta
 				title={t("SEO.SEARCH.TITLE")}
 				description={t("SEO.SEARCH.DESCRIPTION")}
+				noindex={!!searchParams.query}
 			/>
 			{/* SearchSection is a form with no heading of its own; screen readers
 			    still need one top-level heading per page (audit M3) */}

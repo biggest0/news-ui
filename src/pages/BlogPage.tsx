@@ -5,6 +5,7 @@ import { SectionHeader } from "@/components/common/layout/SectionHeader";
 import { BLOG_POSTS } from "@/blog/registry";
 import PageMeta from "@/components/common/seo/PageMeta";
 import { blogPostPath } from "@/constants/routes";
+import { toIsoDate } from "@/utils/date/dateUtils";
 
 export default function BlogPage() {
 	const { t } = useTranslation();
@@ -31,7 +32,9 @@ export default function BlogPage() {
 									{post.title}
 								</Link>
 							</h2>
-							<div className="text-sm text-muted-foreground">{post.date}</div>
+							<time dateTime={toIsoDate(post.date)} className="block text-sm text-muted-foreground">
+								{post.date}
+							</time>
 							<p className="text-md text-foreground-secondary mt-8 mb-8">
 								{post.summary}
 							</p>

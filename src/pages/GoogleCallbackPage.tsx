@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/contexts/AuthContext";
 import { PAGE_ROUTES } from "@/constants/routes";
+import PageMeta from "@/components/common/seo/PageMeta";
 
 export default function GoogleCallbackPage() {
 	const { t } = useTranslation();
@@ -65,6 +66,7 @@ export default function GoogleCallbackPage() {
 
 	return (
 		<section className="py-6 flex items-center justify-center min-h-40">
+			<PageMeta title={t("SEO.GOOGLE_CALLBACK.TITLE")} noindex />
 			{error ? (
 				<p className="text-sm text-destructive">{error}</p>
 			) : (

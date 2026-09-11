@@ -1,5 +1,12 @@
 # Catire Time — satirical news by cats. Crawl away.
 User-agent: *
 Allow: /
+# Account and auth flows hold nothing to index (they also 404 on the server,
+# since only indexable routes are prerendered). Listing them saves crawl budget.
+Disallow: /account
+Disallow: /login
+Disallow: /register
+Disallow: /reset-password
+Disallow: /auth/
 
 Sitemap: https://www.catiretime.com/sitemap.xml

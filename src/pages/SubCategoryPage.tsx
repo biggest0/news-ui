@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import NewsCard from "@/components/news/cards/NewsCard";
+import PageMeta from "@/components/common/seo/PageMeta";
 import { SectionHeader } from "@/components/common/layout/SectionHeader";
 import { SectionErrorMessage } from "@/components/common/feedback/SectionErrorMessage";
 import { useApiLang } from "@/hooks/useApiLang";
@@ -16,6 +17,7 @@ function SubCategoryPage() {
 	const { subCategory } = useParams<{ subCategory: string }>();
 	const { t } = useTranslation();
 	const lang = useApiLang();
+	const subCategoryName = decodeURIComponent(subCategory || "");
 
 	const {
 		data,
@@ -39,7 +41,16 @@ function SubCategoryPage() {
 
 	return (
 		<div className="py-6">
-			<SectionHeader title={decodeURIComponent(subCategory || "")} as="h1" />
+			{/* noindex: these are free-form tag listings that repeat articles the
+			    category pages already carry, and the server 404s them anyway (no
+			    file on disk, see prerenderRoutes.mjs). Drop the flag if they are
+			    ever prerendered and worth ranking on their own. Links still count. */}
+			<PageMeta
+				title={t("SEO.SUBCATEGORY.TITLE", { subCategory: subCategoryName })}
+				description={t("SEO.SUBCATEGORY.DESCRIPTION", { subCategory: subCategoryName })}
+				noindex
+			/>
+			<SectionHeader title={subCategoryName} as="h1" />
 
 			{isError && <SectionErrorMessage onRetry={refetch} />}
 
