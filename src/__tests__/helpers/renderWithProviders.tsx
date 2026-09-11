@@ -88,6 +88,10 @@ testI18n.init({
 					EN: "English",
 					FR: "French",
 				},
+				NAVIGATION: {
+					HOME: "Home",
+					BREADCRUMB: "Breadcrumb",
+				},
 				THEME: {
 					LIGHT: "Light",
 					DARK: "Dark",

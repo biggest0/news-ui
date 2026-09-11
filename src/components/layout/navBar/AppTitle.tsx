@@ -1,7 +1,15 @@
+import { Link } from "react-router-dom";
+
+import { PAGE_ROUTES } from "@/constants/routes";
+
 interface AppTitleProps {
 	variant?: "desktop" | "mobile";
 }
 
+/**
+ * Brand wordmark. Links home, as readers (and crawlers) expect a masthead to:
+ * the house icon in AppLogo is the other, icon-only route to the front page.
+ */
 export const AppTitle = ({ variant = "desktop" }: AppTitleProps) => {
 	const tailwindClasses =
 		variant === "desktop"
@@ -9,7 +17,7 @@ export const AppTitle = ({ variant = "desktop" }: AppTitleProps) => {
 			: "text-xl font-semibold text-foreground tracking-wide";
 
 	return (
-		<div className={tailwindClasses}>
+		<Link to={PAGE_ROUTES.HOME} className={tailwindClasses}>
 			<span className="relative inline-block">
 				<span className="relative z-10">Ç</span>
 				<img
@@ -19,6 +27,6 @@ export const AppTitle = ({ variant = "desktop" }: AppTitleProps) => {
 				/>
 			</span>
 			{"ATIRE TIME" /* brand wordmark — intentionally untranslated */}
-		</div>
+		</Link>
 	);
 };

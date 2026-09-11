@@ -113,7 +113,8 @@
     "CONTACT": "Contact",
     "SEARCH": "Search",
     "BLOG": "Blog",
-    "MENU_LABEL": "Navigation menu"
+    "MENU_LABEL": "Navigation menu",
+    "BREADCRUMB": "Breadcrumb"
   },
   "BLOG": {
     "TITLE": "Blog",
@@ -238,7 +239,8 @@
       "TITLE": "ACCOUNT"
     },
     "ARTICLE": {
-      "LOADING_DETAILS": "Loading article details!"
+      "LOADING_DETAILS": "Loading article details!",
+      "NOT_FOUND": "This article doesn't exist or has been taken down. Something probably knocked it off the table."
     },
     "SUBCATEGORY": {
       "NO_ARTICLES": "No articles found for this subcategory.",
@@ -416,6 +418,27 @@
     "NOT_FOUND": {
       "TITLE": "Page not found",
       "DESCRIPTION": "That page does not exist. Head back to the front page for the day's satire."
+    },
+    "ARTICLE": {
+      "NOT_FOUND_TITLE": "Article not found"
+    },
+    "LOGIN": {
+      "TITLE": "Log in"
+    },
+    "REGISTER": {
+      "TITLE": "Register"
+    },
+    "ACCOUNT": {
+      "TITLE": "Account"
+    },
+    "RESET_PASSWORD": {
+      "TITLE": "Reset password"
+    },
+    "VERIFY_EMAIL": {
+      "TITLE": "Verify your email"
+    },
+    "GOOGLE_CALLBACK": {
+      "TITLE": "Signing in"
     }
   }
 }
