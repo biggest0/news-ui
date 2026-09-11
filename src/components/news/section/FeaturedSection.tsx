@@ -19,30 +19,24 @@ export default function FeaturedSection({
 	const featuredArticles = useFeaturedArticles();
 
 	return (
-		// Fixed height, not min-height: left to grow, the band tracks the press
-		// photo's natural 1024x685 and runs ~70px taller.
+		// min-height, not a fixed height: as the viewport narrows, headlines wrap
+		// to more lines and the band has to grow with them. Capping it made the
+		// cards shrink into each other instead (see shrink-0 below).
 		//
 		// The column gaps are tight on purpose. NewsHeroCard's own floors
 		// (min-h-48 / min-h-24) already account for 384px of the 400px each
-		// column has inside this band, so the gap is almost the entire remaining
-		// budget: the right column only fits its four cards at gap-1. Each card
-		// still reserves more height than its content needs, so the visible
-		// separation is wider than the gap value suggests.
-		//
-		// At those gaps the columns fit exactly with typical headlines. A long
-		// one wraps past its floor and the column scrolls, which is the accepted
-		// trade for a band that stays put: capping the text instead was tried and
-		// the truncation looked worse than the scroll.
-		<section className="border-b border-border py-6 hidden md:grid grid-cols-4 grid-rows-2 gap-4 h-112">
+		// column has at the minimum band height, so the gap is almost the entire
+		// remaining budget: the right column only fits its four cards at gap-1.
+		// Each card still reserves more height than its content needs, so the
+		// visible separation is wider than the gap value suggests.
+		<section className="border-b border-border py-6 hidden md:grid grid-cols-4 grid-rows-2 gap-4 min-h-112">
 			{/* Desktop Layout */}
 			{/* Left column - 2 lead articles (title + summary) */}
 			<div className="col-span-1 row-span-2 flex flex-col gap-3 min-h-0 overflow-y-auto hide-scrollbar">
 				{featuredArticles.slice(0, 2).map((article) => (
-					<NewsHeroCard
-						key={`top-${article.id}`}
-						articleInfo={article}
-						small={false}
-					/>
+					<div key={`top-${article.id}`} className="shrink-0">
+						<NewsHeroCard articleInfo={article} small={false} />
+					</div>
 				))}
 			</div>
 
@@ -51,11 +45,9 @@ export default function FeaturedSection({
 			{/* Right column - 4 secondary articles (title + date) */}
 			<div className="col-span-1 row-span-2 flex flex-col gap-1 min-h-0 overflow-y-auto hide-scrollbar">
 				{featuredArticles.slice(2, 6).map((article) => (
-					<NewsHeroCard
-						key={`top-${article.id}`}
-						articleInfo={article}
-						small={true}
-					/>
+					<div key={`top-${article.id}`} className="shrink-0">
+						<NewsHeroCard articleInfo={article} small={true} />
+					</div>
 				))}
 			</div>
 		</section>
