@@ -2,7 +2,7 @@
   "name": "catire",
   "homepage": "https://www.catiretime.com/",
   "private": true,
-  "version": "1.13.7",
+  "version": "1.14.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
