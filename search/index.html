@@ -2,9 +2,93 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/app_icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Catire Time your daily satire news</title>
+    <!-- Icons. The 48px PNG exists because Google Search only shows favicons
+         whose size is a multiple of 48px; browsers keep using the 32px one. -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/app_icon.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0f172a" />
+    <!-- Warm up the API origin: the first article fetch is on the critical path
+         to LCP. Vite fills the placeholder from VITE_API_URL at build time. -->
+    <link rel="preconnect" href="https://api.catiretime.com" crossorigin />
+    <link rel="alternate" type="application/rss+xml" title="Catire Time" href="https://www.catiretime.com/feed.xml" />
+
+    <!-- Per-route SEO tags. What follows are the site-wide defaults (= the home
+         page). scripts/prerenderRoutes.mjs rewrites them for every prerendered
+         route at build time, and PageMeta updates them in place after hydration.
+         Keep each tag on ONE line: the prerender matches them by attribute. -->
+    <title>Search | Catire Time</title>
+    <meta name="description" content="Search Catire Time for satirical takes on the day's events." />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://www.catiretime.com/search/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Catire Time" />
+    <meta property="og:locale" content="en_CA" />
+    <meta property="og:locale:alternate" content="fr_CA" />
+    <meta property="og:title" content="Search | Catire Time" />
+    <meta property="og:description" content="Search Catire Time for satirical takes on the day's events." />
+    <meta property="og:url" content="https://www.catiretime.com/search/" />
+    <meta property="og:image" content="https://www.catiretime.com/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Cats in work clothes sitting along a steel beam above a city: the Catire Time newsroom" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@catiretime" />
+    <meta name="twitter:title" content="Search | Catire Time" />
+    <meta name="twitter:description" content="Search Catire Time for satirical takes on the day's events." />
+    <meta name="twitter:image" content="https://www.catiretime.com/og-image.jpg" />
+
+    <!-- Site-wide structured data: who publishes this and what the site is.
+         Static on purpose: it is the same on every page, so every prerendered
+         shell carries it and PageMeta never touches it (page-level JSON-LD
+         lives in a separate data-seo="page" script). The sameAs list mirrors
+         SOCIAL_PROFILES in src/constants/site.ts. -->
+    <script type="application/ld+json" data-seo="site">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://www.catiretime.com/#organization",
+            "name": "Catire Time",
+            "alternateName": "Çatire Time",
+            "url": "https://www.catiretime.com/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://www.catiretime.com/images/logo-512.png",
+              "width": 512,
+              "height": 512
+            },
+            "sameAs": [
+              "https://www.instagram.com/catiretime",
+              "https://x.com/catiretime",
+              "https://www.youtube.com/@catiretime"
+            ],
+            "email": "catirecontact@gmail.com"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://www.catiretime.com/#website",
+            "url": "https://www.catiretime.com/",
+            "name": "Catire Time",
+            "alternateName": "Çatire Time",
+            "description": "Satirical news written by cats, in English and French.",
+            "inLanguage": ["en", "fr"],
+            "publisher": { "@id": "https://www.catiretime.com/#organization" },
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://www.catiretime.com/search/?q={search_term_string}"
+              },
+              "query-input": "required name=search_term_string"
+            }
+          }
+        ]
+      }
+    </script>
+
     <!-- Google AdSense: site verification + ad serving. Loads async so it never
          blocks first paint. -->
     <script
@@ -12,25 +96,12 @@
       src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8331105946676949"
       crossorigin="anonymous"
     ></script>
-    <meta
-      name="description"
-      content="Catire Time — satirical news written by cats. Fresh absurdity daily in English and French: world, business, science, and other things knocked off tables."
-    />
-    <!-- Open Graph basics for link previews -->
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Catire Time" />
-    <meta property="og:title" content="Catire Time — your daily satire news" />
-    <meta
-      property="og:description"
-      content="Satirical news written by cats. Fresh absurdity daily in English and French."
-    />
-    <meta property="og:url" content="https://www.catiretime.com/" />
-    <script type="module" crossorigin src="/assets/index-v7DcJPSw.js"></script>
+    <script type="module" crossorigin src="/assets/index-BZKhnoSD.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/redux-abe5LzR-.js">
     <link rel="modulepreload" crossorigin href="/assets/react-CO20UjKk.js">
     <link rel="modulepreload" crossorigin href="/assets/i18n-DaO48NU9.js">
     <link rel="modulepreload" crossorigin href="/assets/baseui-CYk3EIuC.js">
-    <link rel="stylesheet" crossorigin href="/assets/index-DLJY5nsr.css">
+    <link rel="stylesheet" crossorigin href="/assets/index-DjsjTeCl.css">
   </head>
   <body>
     <div id="root"></div>

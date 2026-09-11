@@ -1,0 +1,1 @@
+function r(e,a){const t=new Date,n=new Date(e),o=Date.UTC(t.getFullYear(),t.getMonth(),t.getDate()),s=Date.UTC(n.getFullYear(),n.getMonth(),n.getDate());return(o-s)/(1e3*60*60*24)<=a}function D(e){const a=e?.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);if(!a)return;const[,t,n,o]=a;return`${o}-${t.padStart(2,"0")}-${n.padStart(2,"0")}`}export{r as i,D as t};
