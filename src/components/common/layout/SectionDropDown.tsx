@@ -21,6 +21,14 @@ export interface SectionDropDownProps {
  * DropdownMenu primitive: the trigger is a real button with aria-haspopup /
  * aria-expanded, the menu handles arrow-key navigation, Escape, and focus
  * return for free. Options come from `useSectionDropdown(section)`.
+ *
+ * The menu closes without its usual fade-out. "Remove" unmounts this whole
+ * section, trigger included, so with an exit animation the popup outlived its
+ * anchor and rendered in the viewport's top-left corner for the frame or two
+ * it spent fading. Deferring the action until the animation finished fixed the
+ * flash but introduced a worse bug: a reload within that window dropped the
+ * change entirely. Dropping the exit animation keeps actions synchronous and
+ * unmounts the popup in the same commit as the section.
  */
 export const SectionDropDown = ({ section }: SectionDropDownProps) => {
 	const { t } = useTranslation();
@@ -34,7 +42,7 @@ export const SectionDropDown = ({ section }: SectionDropDownProps) => {
 			>
 				<FaChevronDown className="h-4 w-4 fill-current transition-transform duration-200 group-data-popup-open:rotate-180" />
 			</DropdownMenuTrigger>
-			<DropdownMenuContent align="start">
+			<DropdownMenuContent align="start" animateClose={false}>
 				{dropDownOptions.map((option, index) =>
 					option.isDivider ? (
 						<DropdownMenuSeparator key={`divider-${index}`} />

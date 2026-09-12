@@ -30,13 +30,32 @@ function DropdownMenuContent({
   alignOffset = 0,
   side = "bottom",
   sideOffset = 4,
+  animateClose = true,
   className,
   ...props
 }: MenuPrimitive.Popup.Props &
   Pick<
     MenuPrimitive.Positioner.Props,
     "align" | "alignOffset" | "side" | "sideOffset"
-  >) {
+  > & {
+    /**
+     * Fade/zoom the panel out on close. Set false when the trigger can unmount
+     * as a result of choosing an item: the popup is portalled and positioned
+     * against the trigger, so outliving it by even one animation frame parks
+     * the panel in the viewport's top-left corner. Closing instantly unmounts
+     * it in the same commit as the trigger.
+     */
+    animateClose?: boolean
+  }) {
+  // Closing without an animation still leaves the panel mounted for a frame or
+  // so. `invisible` keeps that frame from painting, which is the whole point
+  // when the trigger it was anchored to has already gone. `transition-none`
+  // has to come with it: the panel inherits `transition: all 100ms`, and a
+  // transition holds a discrete property like visibility at its old value
+  // until it finishes, so on its own the hide simply would not take effect.
+  const closeAnimation = animateClose
+    ? "data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95"
+    : "data-closed:invisible data-closed:transition-none"
   return (
     <MenuPrimitive.Portal>
       <MenuPrimitive.Positioner
@@ -48,7 +67,7 @@ function DropdownMenuContent({
       >
         <MenuPrimitive.Popup
           data-slot="dropdown-menu-content"
-          className={cn("z-50 max-h-(--available-height) min-w-48 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-lg border border-border-subtle bg-popover py-1 text-popover-foreground shadow-lg duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:overflow-hidden data-closed:fade-out-0 data-closed:zoom-out-95", className )}
+          className={cn("z-50 max-h-(--available-height) min-w-48 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-lg border border-border-subtle bg-popover py-1 text-popover-foreground shadow-lg duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:overflow-hidden", closeAnimation, className )}
           {...props}
         />
       </MenuPrimitive.Positioner>
