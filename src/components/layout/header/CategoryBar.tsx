@@ -48,7 +48,7 @@ export default function CategoryBar() {
 	};
 
 	return (
-		<nav className="border-b-2 border-border-subtle pb-2 transition-colors duration-200">
+		<nav className="border-t-2 border-b-2 border-border-subtle pb-2 transition-colors duration-200">
 			<div className="relative w-full">
 				{/* Left arrow */}
 				{canScrollLeft && (
