@@ -14,6 +14,7 @@ const DEFAULT_APP_SETTING: AppSetting = {
 	themeMode: "light",
 	homeLayout: {
 		visible: {
+			featuredSection: true,
 			newsSection: true,
 			editorsSection: true,
 			catFactsSection: true,
@@ -22,6 +23,7 @@ const DEFAULT_APP_SETTING: AppSetting = {
 			recommendedSection: true,
 		},
 		expanded: {
+			featuredSection: true,
 			newsSection: true,
 			editorsSection: true,
 			catFactsSection: true,
@@ -73,6 +75,7 @@ describe("getAppSetting", () => {
 			darkMode: true,
 			homeLayout: {
 				visible: {
+					featuredSection: false,
 					newsSection: false,
 					editorsSection: true,
 					catFactsSection: true,
@@ -240,6 +243,7 @@ describe("round-trip: set → get", () => {
 			themeMode: "system",
 			homeLayout: {
 				visible: {
+					featuredSection: false,
 					newsSection: false,
 					editorsSection: false,
 					catFactsSection: true,
@@ -248,6 +252,7 @@ describe("round-trip: set → get", () => {
 					recommendedSection: true,
 				},
 				expanded: {
+					featuredSection: true,
 					newsSection: true,
 					editorsSection: false,
 					catFactsSection: false,

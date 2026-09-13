@@ -11,6 +11,7 @@ export const ONBOARDING_VERSION = 1
 
 // Sections
 export const SECTIONS = {
+  FEATURED: 'featuredSection',
   NEWS: 'newsSection',
   EDITORS: 'editorsSection',
   CAT_FACTS: 'catFactsSection',

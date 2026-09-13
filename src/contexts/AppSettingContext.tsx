@@ -161,6 +161,7 @@ export const AppSettingProvider = ({ children }: { children: ReactNode }) => {
 			homeLayout: {
 				...appSetting.homeLayout,
 				visible: {
+					featuredSection: true,
 					newsSection: true,
 					editorsSection: true,
 					catFactsSection: true,
