@@ -86,3 +86,39 @@ test("restore survives a reload (persisted, not just in-memory)", async ({ page 
 	await page.reload();
 	await expect(popularHeading(page)).toBeVisible();
 });
+
+test("removing a section does not flash the menu in the corner", async ({ page }) => {
+	await expect(page.getByText("per page")).toBeVisible();
+	await openSectionMenu(page, "POPULAR");
+
+	const popup = page.locator('[data-slot="dropdown-menu-content"]');
+	const anchored = await popup.boundingBox();
+	expect(anchored!.x).toBeGreaterThan(40);
+
+	// Remove unmounts the section, and the menu's trigger with it. If the action
+	// ran before the close animation finished, the popup outlived its anchor and
+	// jumped to the viewport's top-left for a frame or two. Sample every frame
+	// of the fade-out and require that it never renders there while visible.
+	await page.getByRole("menuitem", { name: "Remove" }).click({ noWaitAfter: true });
+
+	let framesInCorner = 0;
+	for (let i = 0; i < 14; i++) {
+		const box = await page.evaluate(() => {
+			const el = document.querySelector('[data-slot="dropdown-menu-content"]');
+			if (!el) return null;
+			const rect = el.getBoundingClientRect();
+			const style = getComputedStyle(el);
+			return {
+				x: rect.x,
+				y: rect.y,
+				painted: style.visibility !== "hidden" && Number(style.opacity) > 0.05,
+			};
+		});
+		if (box && box.painted && box.x < 40 && box.y < 40) framesInCorner++;
+		await page.waitForTimeout(25);
+	}
+
+	expect(framesInCorner).toBe(0);
+	await expect(popularHeading(page)).not.toBeVisible();
+	await expectNoOpenMenu(page);
+});
