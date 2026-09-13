@@ -37,13 +37,23 @@ export function useFitText<T extends HTMLElement>(text: string) {
 
 		// Measure at a known size on one unwrapped line, then restore whatever
 		// was there so this never paints an intermediate state.
+		//
+		// `width: max-content` is what makes this work in both directions.
+		// These are block elements, so scrollWidth never reports less than the
+		// container's width: the moment the text is narrower than its column
+		// the measurement reads as an exact fit and the size stops growing.
+		// That is invisible on a phone, where the text always overflows at the
+		// reference size, and wrong on every desktop width.
 		const previousSize = element.style.fontSize;
 		const previousWrap = element.style.whiteSpace;
+		const previousWidth = element.style.width;
 		element.style.fontSize = `${REFERENCE_SIZE}px`;
 		element.style.whiteSpace = "nowrap";
-		const naturalWidth = element.scrollWidth;
+		element.style.width = "max-content";
+		const naturalWidth = element.getBoundingClientRect().width;
 		element.style.fontSize = previousSize;
 		element.style.whiteSpace = previousWrap;
+		element.style.width = previousWidth;
 		if (!naturalWidth) return;
 
 		setFontSize((available / naturalWidth) * REFERENCE_SIZE);

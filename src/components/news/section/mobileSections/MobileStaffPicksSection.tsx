@@ -6,9 +6,9 @@ import CollapsibleSection from "@/components/news/section/CollapsibleSection";
 import { SECTIONS } from "@/constants/keys";
 import { useSectionVisible } from "@/hooks/useSectionCollapse";
 import { useFeaturedArticles } from "@/hooks/useArticleHooks";
-import { useFitText } from "@/hooks/useFitText";
 import NewsHeroCard from "@/components/news/cards/NewsHeroCard";
 import FeaturedHeroImage from "@/components/news/section/featured/FeaturedHeroImage";
+import FeaturedMasthead from "@/components/news/section/featured/FeaturedMasthead";
 
 /**
  * Mobile-only hero image + "Staff Picks" carousel. Intentionally separate
@@ -20,8 +20,6 @@ export default function MobileStaffPicksSection() {
 	const isVisible = useSectionVisible(SECTIONS.STAFF_PICKS);
 	const { t } = useTranslation();
 	const featuredArticles = useFeaturedArticles();
-	const title = useFitText<HTMLHeadingElement>(t("HERO.TITLE"));
-	const tagline = useFitText<HTMLParagraphElement>(t("HERO.TAGLINE"));
 
 	return (
 		<div className="flex flex-col md:hidden">
@@ -30,31 +28,7 @@ export default function MobileStaffPicksSection() {
 			    step. Only the sizing differs: no grid cell to fill here, so the
 			    photo takes a fixed height. */}
 			<section className="border-b border-border py-6">
-				{/* Masthead block. A heading for the section, not a caption for the
-				    photo, so it sits outside the <figure> rather than inside its
-				    <figcaption>. Uppercased in CSS rather than in the copy, the
-				    way the other section labels are, so French renders properly. */}
-				<header className="text-center">
-					{/* Both lines are sized to fill the column rather than set to a
-					    fixed size: the strings differ enough between languages
-					    ("Quick Reads" vs "Lectures rapides") that no single value
-					    fits both. The text-* classes are only the pre-measurement
-					    fallback; useFitText overrides them once it has measured. */}
-					<h2
-						ref={title.ref}
-						style={{ fontSize: title.fontSize }}
-						className="font-heading text-3xl leading-none whitespace-nowrap uppercase text-foreground"
-					>
-						{t("HERO.TITLE")}
-					</h2>
-					<p
-						ref={tagline.ref}
-						style={{ fontSize: tagline.fontSize }}
-						className="mt-2 text-sm leading-none whitespace-nowrap text-muted-foreground"
-					>
-						{t("HERO.TAGLINE")}
-					</p>
-				</header>
+				<FeaturedMasthead />
 				<div className="my-3 border-t border-border" />
 
 				{/* Same press-photo treatment as the desktop hero, quote included:
