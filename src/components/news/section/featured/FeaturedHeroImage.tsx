@@ -6,12 +6,13 @@ import { cn } from "@/lib/utils";
 /**
  * Press-photo treatments for the home page hero.
  *
- * `ruled` is what the site uses; the other two are kept as working alternates
- * so the look can be switched from a single default in `FeaturedSection`
- * rather than rebuilt. Two further variants (a scrim overlay and a grayscale
- * newsprint treatment) were compared and dropped.
+ * `ruled` is what the desktop hero uses and `display` is the mobile section's;
+ * the other two are kept as working alternates so the look can be switched
+ * from a single default in `FeaturedSection` rather than rebuilt. Two further
+ * variants (a scrim overlay and a grayscale newsprint treatment) were compared
+ * and dropped.
  */
-export type HeroImageVariant = "ruled" | "cutline" | "matted";
+export type HeroImageVariant = "ruled" | "display" | "cutline" | "matted";
 
 interface FeaturedHeroImageProps {
 	variant: HeroImageVariant;
@@ -106,6 +107,28 @@ export default function FeaturedHeroImage({
 							{attribution}
 						</cite>
 					</figcaption>
+				</figure>
+			);
+
+		// ── In use on mobile: the quote runs above the photo as display type ──
+		// A single narrow column has no room for the desktop's small cutline to
+		// read as anything but a caption afterthought, so the quote is promoted
+		// to the top and set large in the heading face, the way an old paper
+		// leads with a standfirst over the picture. The rule between the two
+		// does the same seating job the desktop rule does, just inverted.
+		case "display":
+			return (
+				<figure className={cn(className, "flex flex-col")}>
+					<figcaption className="mb-3 text-center">
+						<blockquote className="font-heading text-2xl leading-tight text-balance text-foreground">
+							{quote}
+						</blockquote>
+						<cite className="mt-2 block text-[0.625rem] uppercase tracking-widest not-italic text-muted-foreground">
+							{attribution}
+						</cite>
+					</figcaption>
+					<div className="mb-2 border-t border-border" />
+					{photo(photoClassName)}
 				</figure>
 			);
 

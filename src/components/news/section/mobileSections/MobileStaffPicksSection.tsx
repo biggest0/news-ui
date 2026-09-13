@@ -28,7 +28,7 @@ export default function MobileStaffPicksSection() {
 			    photo takes a fixed height. */}
 			<section className="border-b border-border py-6">
 				<FeaturedHeroImage
-					variant="ruled"
+					variant="display"
 					className=""
 					photoClassName="w-full h-96"
 				/>
