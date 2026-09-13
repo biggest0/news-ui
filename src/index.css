@@ -6,6 +6,8 @@
 @import "@fontsource/tinos/700.css";
 @import "@fontsource/cardo/400.css";
 @import "@fontsource/cardo/700.css";
+@import "@fontsource/playfair-display/400.css";
+@import "@fontsource/playfair-display/700.css";
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -124,9 +126,14 @@
  * (tailwindcss.com → docs/colors "Referencing other variables").
  */
 @theme inline {
-	/* typography (O1 resolved 2026-07-09: Tinos body + Cardo headings) */
+	/* typography (O1 resolved 2026-07-09: Tinos body + Cardo headings)
+	   --font-masthead is a third face used only by FeaturedMasthead, whose two
+	   lines are scaled to fill their column: at that size Playfair Display's
+	   high stroke contrast reads as a newspaper nameplate, where Cardo (sized
+	   for running headlines) goes flat. */
 	--font-serif: "Tinos", serif;
 	--font-heading: "Cardo", serif;
+	--font-masthead: "Playfair Display", "Cardo", serif;
 
 	/* shadcn-native tokens */
 	--color-background: var(--background);

@@ -39,14 +39,14 @@ export default function FeaturedMasthead({ className }: FeaturedMastheadProps) {
 			<h2
 				ref={title.ref}
 				style={{ fontSize: title.fontSize }}
-				className="font-heading text-3xl leading-none whitespace-nowrap uppercase text-foreground"
+				className="font-masthead text-3xl leading-none whitespace-nowrap uppercase text-foreground"
 			>
 				{t("HERO.TITLE")}
 			</h2>
 			<p
 				ref={tagline.ref}
 				style={{ fontSize: tagline.fontSize }}
-				className="mt-2 text-sm leading-none whitespace-nowrap text-muted-foreground"
+				className="mt-2 font-masthead text-sm leading-none whitespace-nowrap text-muted-foreground"
 			>
 				{t("HERO.TAGLINE")}
 			</p>
