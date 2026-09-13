@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 import FeaturedSection from "@/components/news/section/FeaturedSection";
+import FeaturedMasthead from "@/components/news/section/featured/FeaturedMasthead";
 import BackToTopButton from "@/components/common/navigation/BackToTopButton";
 import { HomeNewsSection } from "@/components/news/section/newsSections/HomeNewsSection";
 import PopularSection from "@/components/news/section/PopularSection";
@@ -31,6 +32,14 @@ export default function HomePage() {
 			{/* Renders nothing — mounting it here is what scopes the first-visit
 			    tour to the home page (see OnboardingAutoOpen for the timing gate) */}
 			<OnboardingAutoOpen />
+			{/* Desktop only: the mobile layout renders its own copy inside
+			    MobileStaffPicksSection, above that section's photo.
+			
+			    Deliberately uncapped, so both lines span the full content
+			    column the way they span the phone's. That makes the heading
+			    larger than the CATIRE TIME wordmark above it, which is the
+			    intended broadsheet effect rather than an oversight. */}
+			<FeaturedMasthead className="hidden border-b border-border py-6 md:block" />
 			<FeaturedSection />
 			<MobileStaffPicksSection />
 			<RecommendedSection />

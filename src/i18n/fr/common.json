@@ -14,6 +14,7 @@
     "OTHER": "Autre"
   },
   "SECTION": {
+    "FEATURED": "En vedette",
     "MEWS": "Miaous",
     "EDITORS": "La Rédaction",
     "POPULAR": "Populaire",
@@ -94,6 +95,8 @@
     "SATIRE_MESSAGE": "Ce site web est un journal satirique. Le contenu peut être exagéré ou fictif à des fins comiques."
   },
   "HERO": {
+    "TITLE": "Que des lectures rapides",
+    "TAGLINE": "Court, drôle, un peu déjanté et presque vrai.",
     "IMAGE_ALT": "Nouvelles en vedette",
     "QUOTE": "« Lire des nouvelles satiriques, c'est comme manger des légumes sous forme de gâteau : savoureux, amusant et surprenamment instructif. »",
     "QUOTE_ATTRIBUTION": "Albert Mewstein",

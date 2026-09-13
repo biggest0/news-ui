@@ -14,6 +14,7 @@
     "OTHER": "Other"
   },
   "SECTION": {
+    "FEATURED": "Featured",
     "MEWS": "Mews",
     "EDITORS": "Editors",
     "POPULAR": "Popular",
@@ -94,6 +95,8 @@
     "SATIRE_MESSAGE": "This website is a satire news outlet. Content may be exaggerated or fictional for comedic purposes."
   },
   "HERO": {
+    "TITLE": "Quick Reads Only",
+    "TAGLINE": "Short, funny, a little unhinged, and mostly true.",
     "IMAGE_ALT": "Featured News",
     "QUOTE": "“Reading satire news is like getting your veggies in cake form: tasty, fun, and surprisingly informative.”",
     "QUOTE_ATTRIBUTION": "Albert Mewstein",

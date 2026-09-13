@@ -6,6 +6,7 @@ const DEFAULT_APP_SETTING: AppSetting = {
 	themeMode: "light",
 	homeLayout: {
 		visible: {
+			featuredSection: true,
 			newsSection: true,
 			editorsSection: true,
 			catFactsSection: true,
@@ -14,6 +15,7 @@ const DEFAULT_APP_SETTING: AppSetting = {
 			recommendedSection: true,
 		},
 		expanded: {
+			featuredSection: true,
 			newsSection: true,
 			editorsSection: true,
 			catFactsSection: true,

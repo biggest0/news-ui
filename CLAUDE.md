@@ -118,6 +118,7 @@ One unified token system (M2 — shadcn's vocabulary themed to the brand): plain
 ### Fonts
 
 - **Body:** `Tinos` (serif) via `--font-serif`; **Headings (h1–h6):** `Cardo` (serif) via `--font-heading` — both applied in `@layer base`
+- **Masthead:** `Playfair Display` via `--font-masthead` (`font-masthead`), used only by `FeaturedMasthead`. Its two lines are scaled to fill their column, and at that size Playfair's stroke contrast reads as a nameplate where Cardo goes flat. Not for general headings.
 - **Self-hosted** via `@fontsource/tinos` + `@fontsource/cardo` imports in `index.css` (M8) — no Google Fonts request; `unicode-range` keeps downloads to the subsets in use
 
 ---

@@ -8,6 +8,7 @@ import { useSectionVisible } from "@/hooks/useSectionCollapse";
 import { useFeaturedArticles } from "@/hooks/useArticleHooks";
 import NewsHeroCard from "@/components/news/cards/NewsHeroCard";
 import FeaturedHeroImage from "@/components/news/section/featured/FeaturedHeroImage";
+import FeaturedMasthead from "@/components/news/section/featured/FeaturedMasthead";
 
 /**
  * Mobile-only hero image + "Staff Picks" carousel. Intentionally separate
@@ -27,8 +28,14 @@ export default function MobileStaffPicksSection() {
 			    step. Only the sizing differs: no grid cell to fill here, so the
 			    photo takes a fixed height. */}
 			<section className="border-b border-border py-6">
+				<FeaturedMasthead />
+				<div className="my-3 border-t border-border" />
+
+				{/* Same press-photo treatment as the desktop hero, quote included:
+				    below the photo it reads as the cutline it is, instead of
+				    competing for the top of the page. */}
 				<FeaturedHeroImage
-					variant="display"
+					variant="ruled"
 					className=""
 					photoClassName="w-full h-96"
 				/>

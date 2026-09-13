@@ -34,6 +34,8 @@ export interface OnboardingState {
 }
 
 export interface SectionToggleState {
+	/** Desktop-only hero band; has no mobile equivalent. */
+	featuredSection: boolean;
 	newsSection: boolean;
 	editorsSection: boolean;
 	catFactsSection: boolean;

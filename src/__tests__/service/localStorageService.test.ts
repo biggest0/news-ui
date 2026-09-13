@@ -29,6 +29,7 @@ const FRESH_DEFAULTS: AppSetting = {
 	themeMode: "light",
 	homeLayout: {
 		visible: {
+			featuredSection: true,
 			newsSection: true,
 			editorsSection: true,
 			catFactsSection: true,
@@ -37,6 +38,7 @@ const FRESH_DEFAULTS: AppSetting = {
 			recommendedSection: true,
 		},
 		expanded: {
+			featuredSection: true,
 			newsSection: true,
 			editorsSection: true,
 			catFactsSection: true,
