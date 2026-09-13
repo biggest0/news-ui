@@ -36,10 +36,49 @@ export default function FeaturedMasthead({ className }: FeaturedMastheadProps) {
 			    labels are, so French renders with its accents intact. The text-*
 			    sizes are only the pre-measurement fallback; useFitText overrides
 			    them once it has measured. */}
+			{/*
+			 * -mt-[0.09em]: why this exists, because it looks like a stray magic
+			 * number and is not one.
+			 *
+			 * It is NOT the section's spacing. The wrapper already uses the
+			 * standard `border-b border-border py-6` that SectionShell gives
+			 * every other section, and that 24px is untouched.
+			 *
+			 * What it cancels is the blank space a font reserves above its
+			 * capitals inside the line box. That space is proportional to the
+			 * font size, so it is invisible on a normal heading and enormous
+			 * here:
+			 *
+			 *     16px heading  ->  ~4px reserved   (why POPULAR's caps sit
+			 *                                        28px below its top edge,
+			 *                                        not 24px)
+			 *     128px masthead -> ~24px reserved  (padding + leading = ~48px,
+			 *                                        double every other section)
+			 *
+			 * Measured, not assumed: Playfair Display's ink starts 0.185em below
+			 * the element's box top (rasterised and pixel-scanned, since the
+			 * published metrics do not tell you where the ink actually lands).
+			 *
+			 * Why em and not a static px like the rest of the codebase: the font
+			 * size is not static. useFitText scales it to fill its column, so it
+			 * is ~33px on a phone and ~128px on a wide desktop, and the reserved
+			 * space scales with it (~6px vs ~24px). A static -mt-6 would be right
+			 * on desktop and crush the phone to a 6px gap; -mt-2 would fix the
+			 * phone and leave desktop at 40px. One em value holds at both, because
+			 * it is a proportion of exactly the thing it is cancelling.
+			 *
+			 * Calibrated to 0.09em against POPULAR, the nearest peer (the other
+			 * bordered py-6 block in page flow): both now put their capitals 28px
+			 * below their own top edge on desktop, 25px vs 28px on mobile.
+			 *
+			 * If this ever looks wrong, check the font first. The 0.185em is a
+			 * property of Playfair Display; swapping --font-masthead invalidates
+			 * it and the trim needs re-measuring.
+			 */}
 			<h2
 				ref={title.ref}
 				style={{ fontSize: title.fontSize }}
-				className="font-masthead text-3xl leading-none whitespace-nowrap uppercase text-foreground"
+				className="-mt-[0.09em] font-masthead text-3xl leading-none whitespace-nowrap uppercase text-foreground"
 			>
 				{t("HERO.TITLE")}
 			</h2>
