@@ -30,7 +30,7 @@ export default function MobileStaffPicksSection() {
 				<FeaturedHeroImage
 					variant="ruled"
 					className=""
-					photoClassName="w-full h-64"
+					photoClassName="w-full h-96"
 				/>
 			</section>
 
