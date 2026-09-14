@@ -84,7 +84,9 @@
     "LANGUAGE": "Language",
     "LOAD_ERROR": "Couldn't load this section.",
     "RETRY": "Try again",
-    "CLOSE": "Close"
+    "CLOSE": "Close",
+    "PAGE_ERROR": "This page didn't load.",
+    "RELOAD": "Reload"
   },
   "MAINTENANCE": {
     "IMAGE_ALT": "Cats at work",

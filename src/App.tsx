@@ -7,6 +7,7 @@ import HomePage from "@/pages/HomePage";
 import Header from "@/components/layout/header/Header";
 import Footer from "@/components/layout/footer/Footer";
 import { LoadingOverlay } from "@/components/common/feedback/LoadingOverlay";
+import { RouteErrorBoundary } from "@/components/common/feedback/RouteErrorBoundary";
 import ScrollToTop from "@/components/layout/navigation/ScrollToTop";
 import {
 	ARTICLE_ROUTES,
@@ -55,38 +56,43 @@ function App() {
 						    scroll position preserved */}
 						<main className="w-full max-w-[1280px] min-h-screen mx-auto px-4 bg-background transition-colors duration-200">
 							<ScrollToTop />
-							<Suspense fallback={<LoadingOverlay loading />}>
-								<Routes>
-									<Route path={PAGE_ROUTES.HOME} element={<HomePage />} />
-									{/* Article category pages */}
-									{ARTICLE_ROUTES.map((category) => (
-										<Route
-											key={category}
-											path={categoryPath(category)}
-											element={<ArticlePages />}
-										/>
-									))}
-									{/* Article pages */}
-									<Route path={ROUTE_PATTERNS.ARTICLE} element={<ArticlePage />} />
-									<Route path={ROUTE_PATTERNS.SUBCATEGORY} element={<SubCategoryPage />} />
-									<Route path={PAGE_ROUTES.SEARCH} element={<SearchPage />} />
-									<Route path={PAGE_ROUTES.ABOUT} element={<About />} />
-									<Route path={PAGE_ROUTES.CONTACT} element={<Contact />} />
-									<Route path={PAGE_ROUTES.ACCOUNT} element={<AccountPage />} />
-									<Route path={PAGE_ROUTES.LOGIN} element={<LoginPage />} />
-									<Route path={PAGE_ROUTES.REGISTER} element={<RegisterPage />} />
-									<Route path={PAGE_ROUTES.VERIFY_EMAIL} element={<EmailVerificationPage />} />
-									<Route path={PAGE_ROUTES.RESET_PASSWORD} element={<ResetPasswordPage />} />
-									<Route path={ROUTE_PATTERNS.NEW_PASSWORD} element={<NewPasswordPage />} />
-									<Route path={PAGE_ROUTES.GOOGLE_CALLBACK} element={<GoogleCallbackPage />} />
-									<Route path={PAGE_ROUTES.BLOG} element={<BlogPage />} />
-									<Route path={ROUTE_PATTERNS.BLOG_POST} element={<BlogPostPage />} />
-									<Route path={PAGE_ROUTES.DISCLAIMER} element={<DisclaimerPage />} />
-									<Route path={PAGE_ROUTES.PRIVACY} element={<PrivacyPolicyPage />} />
-									{/* Other routes */}
-									<Route path="*" element={<NotFoundPage />} />
-								</Routes>
-							</Suspense>
+							{/* Outside Suspense so it also catches the lazy import itself
+							    failing, which is what a tab left open across a deploy hits:
+							    the chunk filename it remembers is gone from the server. */}
+							<RouteErrorBoundary>
+								<Suspense fallback={<LoadingOverlay loading />}>
+									<Routes>
+										<Route path={PAGE_ROUTES.HOME} element={<HomePage />} />
+										{/* Article category pages */}
+										{ARTICLE_ROUTES.map((category) => (
+											<Route
+												key={category}
+												path={categoryPath(category)}
+												element={<ArticlePages />}
+											/>
+										))}
+										{/* Article pages */}
+										<Route path={ROUTE_PATTERNS.ARTICLE} element={<ArticlePage />} />
+										<Route path={ROUTE_PATTERNS.SUBCATEGORY} element={<SubCategoryPage />} />
+										<Route path={PAGE_ROUTES.SEARCH} element={<SearchPage />} />
+										<Route path={PAGE_ROUTES.ABOUT} element={<About />} />
+										<Route path={PAGE_ROUTES.CONTACT} element={<Contact />} />
+										<Route path={PAGE_ROUTES.ACCOUNT} element={<AccountPage />} />
+										<Route path={PAGE_ROUTES.LOGIN} element={<LoginPage />} />
+										<Route path={PAGE_ROUTES.REGISTER} element={<RegisterPage />} />
+										<Route path={PAGE_ROUTES.VERIFY_EMAIL} element={<EmailVerificationPage />} />
+										<Route path={PAGE_ROUTES.RESET_PASSWORD} element={<ResetPasswordPage />} />
+										<Route path={ROUTE_PATTERNS.NEW_PASSWORD} element={<NewPasswordPage />} />
+										<Route path={PAGE_ROUTES.GOOGLE_CALLBACK} element={<GoogleCallbackPage />} />
+										<Route path={PAGE_ROUTES.BLOG} element={<BlogPage />} />
+										<Route path={ROUTE_PATTERNS.BLOG_POST} element={<BlogPostPage />} />
+										<Route path={PAGE_ROUTES.DISCLAIMER} element={<DisclaimerPage />} />
+										<Route path={PAGE_ROUTES.PRIVACY} element={<PrivacyPolicyPage />} />
+										{/* Other routes */}
+										<Route path="*" element={<NotFoundPage />} />
+									</Routes>
+								</Suspense>
+							</RouteErrorBoundary>
 						</main>
 						<Footer />
 						{/* Lazy: the chunk is only fetched once the tour is first opened */}

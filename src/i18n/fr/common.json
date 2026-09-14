@@ -84,7 +84,9 @@
     "LANGUAGE": "Langue",
     "LOAD_ERROR": "Impossible de charger cette section.",
     "RETRY": "Réessayer",
-    "CLOSE": "Fermer"
+    "CLOSE": "Fermer",
+    "PAGE_ERROR": "Cette page ne s'est pas chargée.",
+    "RELOAD": "Recharger"
   },
   "MAINTENANCE": {
     "IMAGE_ALT": "Chats au travail",

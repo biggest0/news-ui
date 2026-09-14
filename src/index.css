@@ -41,6 +41,7 @@
 	/* text ramp (foreground = headings; secondary = body; muted-foreground = captions) */
 	--foreground-secondary: #4b5563;              /* gray-600 | body text, form inputs, nav links */
 	--muted-foreground: #6b7280;                  /* gray-500 | dates, captions, metadata, icons */
+	--section-label: #92400e;                     /* amber-800 | section labels + page titles (SectionHeader). Deliberately NOT --brand: that reads as "interactive", and these sit next to a real control */
 	--disabled: #d1d5db;                          /* gray-300 | disabled text + disabled input borders */
 	--placeholder: #9ca3af;                       /* gray-400 | input placeholder text */
 
@@ -90,6 +91,7 @@
 	/* text ramp */
 	--foreground-secondary: #cbd5e1;              /* slate-300 */
 	--muted-foreground: #94a3b8;                  /* slate-400 */
+	--section-label: #f59e0b;                     /* amber-500 — a step off --brand's amber-400 so labels and links stay distinguishable */
 	--disabled: #475569;                          /* slate-600 */
 	--placeholder: #64748b;                       /* slate-500 */
 
@@ -161,6 +163,7 @@
 	--color-brand: var(--brand);
 	--color-primary-hover: var(--primary-hover);
 	--color-foreground-secondary: var(--foreground-secondary);
+	--color-section-label: var(--section-label);
 	--color-background-glass: var(--background-glass);
 	--color-elevated-glass: var(--elevated-glass);
 	--color-border-subtle: var(--border-subtle);

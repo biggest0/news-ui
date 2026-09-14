@@ -10,6 +10,9 @@ interface SectionHeaderProps {
 
 export const SectionHeader = ({ title, as: Heading = "h2" }: SectionHeaderProps) => {
 	return (
-		<Heading className="text-muted-foreground pb-4">{title.toUpperCase()}</Heading>
+		// text-section-label, not text-brand: brand means "interactive" in this
+		// palette and these labels sit right beside a real control (the options
+		// chevron), so sharing its colour would imply the label is clickable too.
+		<Heading className="text-section-label pb-4">{title.toUpperCase()}</Heading>
 	);
 };
