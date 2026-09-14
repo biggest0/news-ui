@@ -48,7 +48,7 @@ export default function CategoryBar() {
 	};
 
 	return (
-		<nav className="border-t-2 border-b-2 border-border-subtle pb-2 transition-colors duration-200">
+		<nav className="border-t-2 border-b-2 border-border-subtle transition-colors duration-200">
 			<div className="relative w-full">
 				{/* Left arrow */}
 				{canScrollLeft && (
@@ -71,7 +71,7 @@ export default function CategoryBar() {
 							<Link
 								key={category}
 								to={categoryPath(category)}
-								className={`cursor-pointer lg:pt-1 text-base md:text-lg font-medium whitespace-nowrap transition-colors ${
+								className={`cursor-pointer py-1 text-base md:text-lg font-medium whitespace-nowrap transition-colors ${
 									currentCategory === category
 										? "text-brand underline"
 										: "text-foreground-secondary hover:text-foreground"

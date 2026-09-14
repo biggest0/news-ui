@@ -47,7 +47,10 @@ test("displays article titles from the API", async ({ page }) => {
 test("renders the footer with copyright and links", async ({ page }) => {
 	const footer = page.locator("footer");
 	await footer.scrollIntoViewIfNeeded();
-	await expect(footer.getByText("Catire Time © 2025")).toBeVisible();
+	// Year-agnostic: the copy carries a hard-coded year (FOOTER.COPYRIGHT), and
+	// pinning it here means this spec fails every time that is bumped, which is
+	// exactly what happened when it moved to 2026.
+	await expect(footer.getByText(/Catire Time © \d{4}/)).toBeVisible();
 	await expect(footer.getByText("Disclaimer")).toBeVisible();
 	await expect(footer.getByText("About Us")).toBeVisible();
 	await expect(footer.getByText("Contact")).toBeVisible();
