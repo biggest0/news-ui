@@ -5,13 +5,23 @@
 		<link>https://www.catiretime.com/</link>
 		<description>The day's events condensed into short satirical takes you can actually finish. Written by cats, in English and French.</description>
 		<language>en-ca</language>
-		<lastBuildDate>Mon, 14 Sep 2026 06:21:29 GMT</lastBuildDate>
+		<lastBuildDate>Mon, 14 Sep 2026 18:19:30 GMT</lastBuildDate>
 		<atom:link href="https://www.catiretime.com/feed.xml" rel="self" type="application/rss+xml" />
 		<image>
 			<url>https://www.catiretime.com/images/logo-512.png</url>
 			<title>Catire Time</title>
 			<link>https://www.catiretime.com/</link>
 		</image>
+		<item>
+			<title>The People Building AI Would Like Somebody to Stop Them</title>
+			<link>https://www.catiretime.com/article/f5320ac7-b21d-416e-84e3-e86d71910ace/</link>
+			<guid isPermaLink="true">https://www.catiretime.com/article/f5320ac7-b21d-416e-84e3-e86d71910ace/</guid>
+			<pubDate>Mon, 14 Sep 2026 04:30:12 GMT</pubDate>
+			<description>A committee of lawmakers has found that no country on earth has laws ready for AI, and the researchers inside the AI firms say they are frightened of where it leads.</description>
+			<category>technology</category>
+			<category>Artificial intelligence</category>
+			<category>Technology</category>
+		</item>
 		<item>
 			<title>Five Breaths Is About Twenty Seconds</title>
 			<link>https://www.catiretime.com/article/be5281d6-0da5-4640-8741-82993f34296e/</link>
