@@ -73,7 +73,12 @@ export default function FeaturedSection({
 						section={SECTIONS.FEATURED}
 					/>
 					<CollapsibleSection section={SECTIONS.FEATURED}>
-						<div className="flex flex-col gap-3 min-h-0 overflow-y-auto hide-scrollbar">
+						{/* pt-4 on top of the header's own pb-4 is the house gap between
+						    a section label and its content: POPULAR, MEWS and CAT FACTS
+						    all pair the two the same way. Only the left column takes it,
+						    since the photo and right-hand headlines sit *beside* the
+						    label rather than under it. */}
+						<div className="flex flex-col gap-3 pt-4 min-h-0 overflow-y-auto hide-scrollbar">
 							{featuredArticles.slice(0, 2).map((article) => (
 								<div key={`top-${article.id}`} className="shrink-0">
 									<NewsHeroCard articleInfo={article} small={false} />
