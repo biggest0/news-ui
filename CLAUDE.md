@@ -84,6 +84,7 @@ One unified token system (M2 — shadcn's vocabulary themed to the brand): plain
 | `text-foreground` | gray-800 | slate-100 | Headings, titles, bold labels |
 | `text-foreground-secondary` | gray-600 | slate-300 | Body text, form inputs, nav links |
 | `text-muted-foreground` | gray-500 | slate-400 | Dates, captions, icons |
+| `text-section-label` | amber-800 | amber-500 | Section labels + page titles (`SectionHeader`). Distinct from `text-brand`, which means interactive |
 | `bg-card` / `bg-popover` | white | slate-800 | Cards, inputs, dropdown panels |
 | `bg-background-glass` | white/80% | slate-900/80% | Translucent **page** surface (sticky header). Tracks `--background`, so the bar is invisible with nothing behind it |
 | `bg-elevated-glass` | white/80% | slate-800/80% | Translucent **raised** surface (back-to-top). A step lighter than the page on purpose |
