@@ -85,7 +85,8 @@ One unified token system (M2 — shadcn's vocabulary themed to the brand): plain
 | `text-foreground-secondary` | gray-600 | slate-300 | Body text, form inputs, nav links |
 | `text-muted-foreground` | gray-500 | slate-400 | Dates, captions, icons |
 | `bg-card` / `bg-popover` | white | slate-800 | Cards, inputs, dropdown panels |
-| `bg-elevated-glass` | white/50% | slate-800/70% | Translucent sticky surfaces |
+| `bg-background-glass` | white/80% | slate-900/80% | Translucent **page** surface (sticky header). Tracks `--background`, so the bar is invisible with nothing behind it |
+| `bg-elevated-glass` | white/80% | slate-800/80% | Translucent **raised** surface (back-to-top). A step lighter than the page on purpose |
 | `text-brand` / `hover:text-brand` | amber-700 (AA-safe since M6) | amber-400 | Interactive text, links, active states |
 | `bg-primary` / `hover:bg-primary-hover` | amber-500 / amber-700 | amber-600 / amber-500 | Button fills + hover |
 | `bg-accent` | amber-100 | amber-900/40% | Hover tints, selected-state backgrounds |

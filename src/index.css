@@ -35,7 +35,8 @@
 	--card-foreground: #1f2937;
 	--popover: #ffffff;                           /* floating panels (menus, popovers) */
 	--popover-foreground: #1f2937;
-	--elevated-glass: rgba(255, 255, 255, 0.5);   /* translucent sticky surfaces (navbar on scroll) */
+	--background-glass: rgba(255, 255, 255, 0.8); /* the page background, made translucent: the sticky header. Must track --background exactly, or the bar reads as a different colour of paper with nothing behind it */
+	--elevated-glass: rgba(255, 255, 255, 0.8);  /* a surface floating *above* the page (back-to-top). 80%: at 50% the headlines scrolling underneath stayed legible through it */
 
 	/* text ramp (foreground = headings; secondary = body; muted-foreground = captions) */
 	--foreground-secondary: #4b5563;              /* gray-600 | body text, form inputs, nav links */
@@ -83,7 +84,8 @@
 	--card-foreground: #f1f5f9;
 	--popover: #1e293b;
 	--popover-foreground: #f1f5f9;
-	--elevated-glass: rgba(30, 41, 59, 0.7);      /* slate-800/70% */
+	--background-glass: rgba(15, 23, 42, 0.8);   /* slate-900/80% = --background. Deliberately NOT slate-800: that is a step lighter than the page, and the sticky header showed as a lighter band across the top in dark mode */
+	--elevated-glass: rgba(30, 41, 59, 0.8);     /* slate-800/80% — lighter than the page on purpose, so the floating button reads as raised */
 
 	/* text ramp */
 	--foreground-secondary: #cbd5e1;              /* slate-300 */
@@ -159,6 +161,7 @@
 	--color-brand: var(--brand);
 	--color-primary-hover: var(--primary-hover);
 	--color-foreground-secondary: var(--foreground-secondary);
+	--color-background-glass: var(--background-glass);
 	--color-elevated-glass: var(--elevated-glass);
 	--color-border-subtle: var(--border-subtle);
 	--color-control-active: var(--control-active);
