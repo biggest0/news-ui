@@ -281,3 +281,56 @@
 .dark .hide-scrollbar::-webkit-scrollbar-thumb:hover {
 	background-color: #64748b;
 }
+
+/*
+ * FeaturedMasthead vertical trim (masthead-title, masthead-tagline).
+ *
+ * A line box reserves blank space above the capitals and below the baseline
+ * (the font's ascent and descent). At normal sizes that reserve is a few
+ * pixels; at masthead sizes it is bigger than the section padding itself:
+ * Playfair Display at 128px leaves ~27px above the caps, so a `py-6` wrapper
+ * reads as ~50px on top. `text-box-trim` removes the reserve by font metric,
+ * so the wrapper's padding measures from the ink at any size (useFitText
+ * scales these lines from ~37px to ~128px) and for any font.
+ *
+ * Both lines trim to cap height and baseline. The tagline then gets its
+ * descenders' depth back as padding (Playfair's y, j and comma reach 0.19em
+ * below the baseline), so the padding under the block measures from the
+ * lowest ink the way it measures from the cap tops above it. The title's
+ * only descender is the Q's tail, which hangs into the gap between the lines.
+ *
+ * Unlayered on purpose: this owns both elements' vertical margins, so the
+ * component must not add margin utilities on top of it.
+ * Careful with comments here: a literal star-slash inside one ends it early
+ * and silently kills the next rule (that is how v1 of this block shipped
+ * without the title trim).
+ */
+.masthead-title {
+	text-box: trim-both cap alphabetic;
+}
+.masthead-tagline {
+	/* baseline-to-cap gap between the lines. Scales with the tagline, floored
+	   so the phone keeps 12px; 0.6em leaves the Q's tail (0.19em of the title)
+	   clear of the tagline's ascenders on desktop. */
+	margin-top: max(0.75rem, 0.6em);
+	text-box: trim-both cap alphabetic;
+	padding-bottom: 0.19em;
+}
+/*
+ * Engines without text-box-trim get the same trims as margins, derived from
+ * Playfair Display's metrics at line-height 1 (read from the font itself via
+ * canvas measureText, per em): ascent 1.082, descent 0.251, cap height 0.708.
+ * The baseline sits ascent - (ascent + descent - 1) / 2 = 0.9155em below the
+ * box top, so the caps start 0.2075em down and the box ends 0.0845em below
+ * the baseline. Swapping --font-masthead means re-deriving these numbers.
+ */
+@supports not (text-box: trim-both cap alphabetic) {
+	.masthead-title {
+		margin-top: -0.2075em;
+		margin-bottom: -0.0845em;
+	}
+	.masthead-tagline {
+		margin-top: calc(max(0.75rem, 0.6em) - 0.2075em);
+		margin-bottom: -0.0845em;
+	}
+}
