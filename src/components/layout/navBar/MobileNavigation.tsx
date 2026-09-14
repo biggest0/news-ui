@@ -16,11 +16,11 @@ export const MobileNavigation = ({
 }: MobileNavigationProps) => {
 	return (
 		<div className="md:hidden w-full flex items-center justify-between">
-			{/* Left - Logo. "md" (24px) rather than "sm" (20px) so it matches the
-			    hamburger's 24px box on the right: with justify-between, unequal
-			    end widths push the centred wordmark off the header's midline by
-			    half the difference. */}
-			<AppLogo size="md" />
+			{/* Left - Logo. "sm" keeps the house glyph in scale with the hamburger
+			    opposite it; AppLogo still occupies a 24px box, which is what keeps
+			    the centred wordmark on the header's midline (with justify-between,
+			    unequal end widths shift it by half the difference). */}
+			<AppLogo size="sm" />
 
 			{/* Center - App Title */}
 			<AppTitle variant="mobile" />

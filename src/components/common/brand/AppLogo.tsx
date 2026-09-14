@@ -16,7 +16,15 @@ export const AppLogo = ({ size = "md" }: LogoProps) => {
 	};
 
 	return (
-		<Link to={PAGE_ROUTES.HOME} aria-label={t("NAVIGATION.HOME")}>
+		// Fixed 24px box whatever the glyph size: it matches the hamburger button
+		// opposite in the mobile header, and `justify-between` there shifts the
+		// centred wordmark by half of any difference between the two ends. It
+		// also keeps the tap target at 24px when the icon inside is smaller.
+		<Link
+			to={PAGE_ROUTES.HOME}
+			aria-label={t("NAVIGATION.HOME")}
+			className="flex h-6 w-6 items-center justify-center"
+		>
 			<LuHouse
 				className={`${sizeClasses[size]} hover:text-foreground cursor-pointer transition-colors`}
 			/>

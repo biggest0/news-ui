@@ -61,26 +61,36 @@ export const AppSettingProvider = ({ children }: { children: ReactNode }) => {
 		getAppSetting()
 	);
 
-	// Compute actual dark mode state based on themeMode setting
-	const isDarkMode = shouldUseDarkMode(appSetting.themeMode ?? "light");
+	// The OS preference is React state, not just something read during render.
+	// It used to be read straight from matchMedia, with the change listener only
+	// re-applying the `dark` class: the page recoloured but nothing re-rendered,
+	// so `isDarkMode` stayed at whatever it was when the provider last rendered.
+	// Anything branching on that flag was then wrong until an unrelated update
+	// came along — ThemeToggle showing the wrong icon and label, for one.
+	const [systemPrefersDark, setSystemPrefersDark] = useState(() =>
+		window.matchMedia("(prefers-color-scheme: dark)").matches
+	);
+
+	const themeMode = appSetting.themeMode ?? "light";
+	const isDarkMode =
+		themeMode === "dark" || (themeMode === "system" && systemPrefersDark);
 
 	// Apply dark mode class on mount and when settings change
 	useEffect(() => {
 		applyDarkClass(isDarkMode);
 	}, [isDarkMode]);
 
-	// Listen for system preference changes when in "system" mode
+	// Tracked unconditionally: the value only *matters* in "system" mode, but
+	// subscribing always means switching into that mode already has the current
+	// preference rather than waiting for the next OS change to learn it.
 	useEffect(() => {
-		if (appSetting.themeMode !== "system") return;
-
 		const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-		const handleChange = () => {
-			applyDarkClass(mediaQuery.matches);
-		};
+		const handleChange = (event: MediaQueryListEvent) =>
+			setSystemPrefersDark(event.matches);
 
 		mediaQuery.addEventListener("change", handleChange);
 		return () => mediaQuery.removeEventListener("change", handleChange);
-	}, [appSetting.themeMode]);
+	}, []);
 
 	// Sync with localStorage changes (cross-tab)
 	useEffect(() => {
