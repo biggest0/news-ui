@@ -141,7 +141,7 @@ test.describe("article page", () => {
 
 		await expect(page.getByRole("heading", { level: 1 })).toHaveText("Article not found");
 		await expect(page.locator('head meta[name="robots"]')).toHaveAttribute("content", /noindex/);
-		await expect(page).toHaveTitle(/Article not found \| Catire Time/);
+		await expect(page).toHaveTitle(/Article not found \| Çatire Time/);
 	});
 });
 

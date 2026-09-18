@@ -90,12 +90,12 @@ test.describe("Privacy policy", () => {
 
 test.describe("page metadata", () => {
 	const routes = [
-		{ path: "/", title: /Satirical news, short enough to finish \| Catire Time/ },
-		{ path: "/science", title: /Science \| Catire Time/ },
-		{ path: "/politics", title: /Politics \| Catire Time/ },
-		{ path: "/about", title: /About \| Catire Time/ },
-		{ path: "/privacy", title: /Privacy Policy \| Catire Time/ },
-		{ path: "/blog", title: /Blog \| Catire Time/ },
+		{ path: "/", title: /Satirical news, short enough to finish \| Çatire Time/ },
+		{ path: "/science", title: /Science \| Çatire Time/ },
+		{ path: "/politics", title: /Politics \| Çatire Time/ },
+		{ path: "/about", title: /About \| Çatire Time/ },
+		{ path: "/privacy", title: /Privacy Policy \| Çatire Time/ },
+		{ path: "/blog", title: /Blog \| Çatire Time/ },
 	];
 
 	for (const route of routes) {
@@ -124,7 +124,7 @@ test.describe("page metadata", () => {
 		await page.goto("/blog");
 		await expect(page.locator('head meta[property="og:title"]')).toHaveAttribute(
 			"content",
-			/Blog \| Catire Time/
+			/Blog \| Çatire Time/
 		);
 	});
 
@@ -205,7 +205,7 @@ test.describe("not found page", () => {
 	test("has its own title and exactly one h1", async ({ page }) => {
 		await page.goto("/nope");
 
-		await expect(page).toHaveTitle(/Page not found \| Catire Time/);
+		await expect(page).toHaveTitle(/Page not found \| Çatire Time/);
 		await expect(page.locator("h1")).toHaveCount(1);
 	});
 

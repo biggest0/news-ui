@@ -23,7 +23,7 @@ test("appears on first visit, after the loading overlay has cleared", async ({ p
 	// the opaque full-screen overlay must be gone before the dialog shows
 	await expect(dialog(page)).toBeVisible({ timeout: 10_000 });
 	await expect(page.getByText("Loading...")).not.toBeVisible();
-	await expect(page.getByText("Welcome to Catire Time")).toBeVisible();
+	await expect(page.getByText("Welcome to Çatire Time")).toBeVisible();
 	await expect(page.getByText("Step 1 of 6")).toBeVisible();
 });
 
@@ -122,7 +122,7 @@ test("stays fully reachable on a short viewport", async ({ page }) => {
 
 	const box = (await dialog(page).boundingBox())!;
 	expect(box.y).toBeGreaterThanOrEqual(0);
-	await expect(page.getByText("Welcome to Catire Time")).toBeVisible();
+	await expect(page.getByText("Welcome to Çatire Time")).toBeVisible();
 	await expect(page.getByRole("button", { name: "Next" })).toBeVisible();
 });
 
@@ -164,7 +164,7 @@ test.describe("re-opening", () => {
 		const launcher = page.getByRole("button", { name: "How to use this site" });
 		await launcher.click();
 		await expect(dialog(page)).toBeVisible();
-		await expect(page.getByText("Welcome to Catire Time")).toBeVisible();
+		await expect(page.getByText("Welcome to Çatire Time")).toBeVisible();
 
 		await page.keyboard.press("Escape");
 		await expect(dialog(page)).toHaveCount(0);
@@ -190,7 +190,7 @@ test.describe("re-opening", () => {
 		// the drawer must be gone, or it would stack on top of the tour
 		await expect(drawer).toHaveCount(0);
 		await expect(dialog(page)).toBeVisible();
-		await expect(page.getByText("Welcome to Catire Time")).toBeVisible();
+		await expect(page.getByText("Welcome to Çatire Time")).toBeVisible();
 	});
 
 	test("dismissing a re-opened tour does not re-arm the auto-open", async ({

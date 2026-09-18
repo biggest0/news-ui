@@ -8,10 +8,11 @@
  */
 
 /** Publisher name used in structured data. Stable across UI languages. */
-export const SITE_NAME = "Catire Time";
+export const SITE_NAME = "Çatire Time";
 
-/** Brand spelling with the cat-tail Ç, exposed as schema.org `alternateName`. */
-export const SITE_ALTERNATE_NAME = "Çatire Time";
+/** Plain-C spelling, exposed as schema.org `alternateName` so Google has both
+ *  forms explicitly tied to one entity and `catire` queries match the Ç name. */
+export const SITE_ALTERNATE_NAME = "Catire Time";
 
 /** X / Twitter handle for `twitter:site`. */
 export const TWITTER_HANDLE = "@catiretime";
