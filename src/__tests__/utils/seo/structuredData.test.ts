@@ -36,7 +36,7 @@ describe("newsArticleJsonLd", () => {
 
 		const publisher = node.publisher as Record<string, unknown>;
 		expect(publisher["@type"]).toBe("Organization");
-		expect(publisher.name).toBe("Catire Time");
+		expect(publisher.name).toBe("Çatire Time");
 		expect((publisher.logo as Record<string, unknown>).url).toBe(
 			"https://www.catiretime.com/images/logo-512.png"
 		);

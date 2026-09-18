@@ -66,8 +66,8 @@ const STATIC_ROUTES = [
  * imported because this script runs in plain Node and the TS module can't be
  * loaded without a build step; both files point at each other.
  */
-const SITE_NAME = "Catire Time";
-const SITE_ALTERNATE_NAME = "Çatire Time";
+const SITE_NAME = "Çatire Time";
+const SITE_ALTERNATE_NAME = "Catire Time";
 const SHARE_IMAGE_PATH = "/og-image.jpg";
 const PUBLISHER_LOGO = { path: "/images/logo-512.png", width: 512, height: 512 };
 

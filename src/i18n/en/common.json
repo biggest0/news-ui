@@ -51,9 +51,9 @@
     "TIME_PERIOD": "Time Period"
   },
   "FOOTER": {
-    "BRAND_NAME": "Catire Time",
+    "BRAND_NAME": "Çatire Time",
     "BRAND_TAGLINE": "Your daily dose of humour... I mean mews",
-    "COPYRIGHT": "Catire Time © 2026",
+    "COPYRIGHT": "Çatire Time © 2026",
     "DISCLAIMER": "Disclaimer",
     "PRIVACY": "Privacy",
     "ABOUT_US": "About Us",
@@ -102,7 +102,7 @@
     "IMAGE_ALT": "Featured News",
     "QUOTE": "“Reading satire news is like getting your veggies in cake form: tasty, fun, and surprisingly informative.”",
     "QUOTE_ATTRIBUTION": "Albert Mewstein",
-    "IMAGE_CREDIT": "Catire Time illustration"
+    "IMAGE_CREDIT": "Çatire Time illustration"
   },
   "EMPTY_STATE": {
     "NEWS_SECTION_MESSAGE": "Looks like you removed the Mews section",
@@ -193,18 +193,18 @@
     },
     "DISCLAIMER": {
       "TITLE": "DISCLAIMER",
-      "CONTENT_1": "All content on Catire Time is for entertainment purposes only. This is a satire website.",
+      "CONTENT_1": "All content on Çatire Time is for entertainment purposes only. This is a satire website.",
       "CONTENT_2": "The articles on this site are satirical works based on real current events. While inspired by actual news, the stories presented are heavily fictionalized, exaggerated, and infused with humor, puns, and satire. They are not to be taken as factual news reports.",
       "CONTENT_3": "Our articles are written by a small human team. We use AI tools in the process, but people choose what to cover, set the tone, rewrite and edit the result, and sign off every piece before it is published.",
       "CONTENT_4": "Some stories name real public figures and organisations and treat them satirically. Others use invented names. In every case the quotes, scenes and events are made up. Nothing here is a factual account of what anyone actually said or did, and none of it is intended to be defamatory or malicious.",
-      "CONTENT_5": "Catire Time makes no representations or warranties of any kind, express or implied, about the completeness, accuracy, reliability, or suitability of any information on this site. Any reliance you place on such information is therefore strictly at your own risk.",
-      "CONTENT_6": "For accurate and up-to-date news, please consult reputable news organizations. Catire Time is not for factual information."
+      "CONTENT_5": "Çatire Time makes no representations or warranties of any kind, express or implied, about the completeness, accuracy, reliability, or suitability of any information on this site. Any reliance you place on such information is therefore strictly at your own risk.",
+      "CONTENT_6": "For accurate and up-to-date news, please consult reputable news organizations. Çatire Time is not for factual information."
     },
     "PRIVACY": {
       "TITLE": "PRIVACY POLICY",
       "UPDATED": "Last updated: 18 August 2026",
       "WHO_TITLE": "Who we are",
-      "WHO_BODY": "Catire Time is a satirical news site run by a small team based in Canada. If you have a question about this policy or about your data, email catirecontact@gmail.com.",
+      "WHO_BODY": "Çatire Time is a satirical news site run by a small team based in Canada. If you have a question about this policy or about your data, email catirecontact@gmail.com.",
       "COLLECT_TITLE": "What we collect",
       "COLLECT_ACCOUNT": "If you create an account, we store your email address and an encrypted version of your password. If you sign in with Google, we receive your email address from Google. We never see or store your Google password.",
       "COLLECT_ACTIVITY": "While you are signed in, we record which articles you open and which ones you like, so we can show you your reading history and suggest articles you might enjoy.",
@@ -230,7 +230,7 @@
     },
     "ABOUT": {
       "TITLE": "ABOUT",
-      "BRAND_NAME": "Catire Time",
+      "BRAND_NAME": "Çatire Time",
       "INTRODUCTION": "The only news organization on the internet founded, operated, and exclusively staffed by cats. You see, we got tired of watching our humans stare at their glowing rectangles, looking all stressed out about the news. It looked dreadfully boring. So we did what cats do best: we decided to help. We walked across the keyboards, sat on the routers, and eventually (through a series of tactical naps on warm laptops) accidentally created this news platform.",
       "MISSION_TITLE": "Our Mission",
       "MISSION_CONTENT": "Let's be transparent. We're not here to \"inform the public\" or \"uphold democracy.\" We're here for one reason and one reason only: tuna. Our mission is to generate enough revenue to one day achieve The Dream: a life where we eat nothing but sashimi-grade, sustainably-fished, Pacific Bluefin Tuna. No more kibble. No more mysterious \"fish-flavored\" jelly. Just the good stuff. Every article you read, every ad you (please) click, brings us one step closer to that glorious, fish-filled paradise.",
@@ -355,7 +355,7 @@
     "REOPEN": "How to use this site",
     "DOT_LABEL": "Go to step {{step}}",
     "WELCOME": {
-      "TITLE": "Welcome to Catire Time",
+      "TITLE": "Welcome to Çatire Time",
       "BODY": "Every article here is satire, a short and easy-to-read spin on real news, so take it all with a grain of salt. Click Next to see what the site can do."
     },
     "PREFERENCES": {
@@ -385,7 +385,7 @@
     }
   },
   "SEO": {
-    "SITE_NAME": "Catire Time",
+    "SITE_NAME": "Çatire Time",
     "HOME": {
       "TITLE": "Satirical news, short enough to finish",
       "DESCRIPTION": "The day's events condensed into short satirical takes you can actually finish. Written by cats, in English and French."
@@ -396,7 +396,7 @@
     },
     "SEARCH": {
       "TITLE": "Search",
-      "DESCRIPTION": "Search Catire Time for satirical takes on the day's events."
+      "DESCRIPTION": "Search Çatire Time for satirical takes on the day's events."
     },
     "SUBCATEGORY": {
       "TITLE": "{{subCategory}}",
@@ -404,7 +404,7 @@
     },
     "BLOG": {
       "TITLE": "Blog",
-      "DESCRIPTION": "Notes on the ongoing development of Catire Time: design decisions, solutions we found interesting, new features, and ideas we are working on."
+      "DESCRIPTION": "Notes on the ongoing development of Çatire Time: design decisions, solutions we found interesting, new features, and ideas we are working on."
     },
     "ABOUT": {
       "TITLE": "About",
@@ -412,15 +412,15 @@
     },
     "CONTACT": {
       "TITLE": "Contact",
-      "DESCRIPTION": "How to reach Catire Time by email or on social media."
+      "DESCRIPTION": "How to reach Çatire Time by email or on social media."
     },
     "DISCLAIMER": {
       "TITLE": "Disclaimer",
-      "DESCRIPTION": "Everything on Catire Time is satire. Here is the full disclaimer."
+      "DESCRIPTION": "Everything on Çatire Time is satire. Here is the full disclaimer."
     },
     "PRIVACY": {
       "TITLE": "Privacy Policy",
-      "DESCRIPTION": "What Catire Time collects, what stays on your device, and how to have your data deleted."
+      "DESCRIPTION": "What Çatire Time collects, what stays on your device, and how to have your data deleted."
     },
     "NOT_FOUND": {
       "TITLE": "Page not found",
