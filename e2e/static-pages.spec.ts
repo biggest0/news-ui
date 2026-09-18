@@ -90,7 +90,7 @@ test.describe("Privacy policy", () => {
 
 test.describe("page metadata", () => {
 	const routes = [
-		{ path: "/", title: /Satirical news, short enough to finish \| Çatire Time/ },
+		{ path: "/", title: /Satire news, quick reads \| Çatire Time/ },
 		{ path: "/science", title: /Science \| Çatire Time/ },
 		{ path: "/politics", title: /Politics \| Çatire Time/ },
 		{ path: "/about", title: /About \| Çatire Time/ },
