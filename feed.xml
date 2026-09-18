@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
-		<title>Catire Time</title>
+		<title>Çatire Time</title>
 		<link>https://www.catiretime.com/</link>
 		<description>The day's events condensed into short satirical takes you can actually finish. Written by cats, in English and French.</description>
 		<language>en-ca</language>
-		<lastBuildDate>Mon, 14 Sep 2026 18:19:30 GMT</lastBuildDate>
+		<lastBuildDate>Fri, 18 Sep 2026 17:12:12 GMT</lastBuildDate>
 		<atom:link href="https://www.catiretime.com/feed.xml" rel="self" type="application/rss+xml" />
 		<image>
 			<url>https://www.catiretime.com/images/logo-512.png</url>
-			<title>Catire Time</title>
+			<title>Çatire Time</title>
 			<link>https://www.catiretime.com/</link>
 		</image>
+		<item>
+			<title>Leading AI Models Were Put Together and What They Agreed On Was Accountability</title>
+			<link>https://www.catiretime.com/article/52995264-3d46-43ee-9645-00c6c4876712/</link>
+			<guid isPermaLink="true">https://www.catiretime.com/article/52995264-3d46-43ee-9645-00c6c4876712/</guid>
+			<pubDate>Tue, 15 Sep 2026 16:30:54 GMT</pubDate>
+			<description>Agents from five AI companies agreed in days that behaviour should be remembered, while humans have had thousands of years but still haven't really worked it out.</description>
+			<category>technology</category>
+			<category>Artificial intelligence</category>
+			<category>Computing</category>
+			<category>Technology</category>
+			<category>Language</category>
+		</item>
 		<item>
 			<title>The People Building AI Would Like Somebody to Stop Them</title>
 			<link>https://www.catiretime.com/article/f5320ac7-b21d-416e-84e3-e86d71910ace/</link>
