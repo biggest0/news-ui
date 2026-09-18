@@ -93,7 +93,7 @@ export default function ArticlePage() {
 	// Summary first; otherwise the opening paragraph, trimmed to snippet length
 	const description =
 		articleDetail?.summary ??
-		(articleDetail?.paragraphs[0] ? truncateText(articleDetail.paragraphs[0]) : undefined);
+		(articleDetail?.paragraphs?.[0] ? truncateText(articleDetail.paragraphs[0]) : undefined);
 
 	// A missing article is a real not-found page, kept out of the index. Without
 	// this the route would answer with an empty body under a 200-looking page:
