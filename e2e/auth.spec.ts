@@ -64,6 +64,24 @@ test.describe("Register", () => {
 		// registration now leads to email verification, not straight to /account
 		await expect(page.getByText("Check Your Inbox")).toBeVisible();
 	});
+
+	test("shows the server's reason when the email is already registered", async ({ page }) => {
+		// registered after stubApi, so it wins over the default success stub
+		await page.route("**/auth/user/register", (route) =>
+			route.fulfill({
+				status: 409,
+				contentType: "application/json",
+				body: JSON.stringify({ error: "Email already in use" }),
+			})
+		);
+
+		await page.locator("#email").fill("taken@catire.com");
+		await page.locator("#password").fill("password123");
+		await page.locator("#confirmPassword").fill("password123");
+		await page.getByRole("button", { name: "Register" }).click();
+		await expect(page.getByText("Email already in use")).toBeVisible();
+		await expect(page.getByText("Failed to connect to server")).toHaveCount(0);
+	});
 });
 
 test.describe("Account", () => {

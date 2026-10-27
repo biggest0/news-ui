@@ -7,11 +7,31 @@ import type {
 } from "@/types/authTypes";
 
 /**
+ * Picks the message to throw when register or login fails.
+ *
+ * The backend answers failures with `{ error }`, not `{ message }`. A 4xx
+ * carries the actual reason ("Email already in use", a rate limit), so it is
+ * passed through for authService to re-throw to the form. A 5xx body only says
+ * "Unexpected Error", so it keeps the "HTTP error" form that authService turns
+ * into its server-problem message, as does a body that isn't readable JSON.
+ * @param status - HTTP status of the failed response
+ * @param body - Parsed JSON body, or null when it couldn't be parsed
+ * @returns The error message to throw
+ */
+function credentialErrorMessage(
+	status: number,
+	body: { error?: string } | null
+): string {
+	if (status < 500 && body?.error) return body.error;
+	return `HTTP error! status: ${status}`;
+}
+
+/**
  * POST /auth/user/register
  * Creates a new user account. Tokens are set as HttpOnly cookies by the server.
  * @param data - Email and password for the new account
  * @returns The created user object
- * @throws Error with the server's message, or a generic HTTP error
+ * @throws Error with the server's reason on a 4xx, or a generic HTTP error
  */
 export async function postRegister(
 	data: RegisterRequest
@@ -25,9 +45,7 @@ export async function postRegister(
 
 	if (!response.ok) {
 		const error = await response.json().catch(() => null);
-		throw new Error(
-			error?.message || `HTTP error! status: ${response.status}`
-		);
+		throw new Error(credentialErrorMessage(response.status, error));
 	}
 
 	return await response.json();
@@ -38,7 +56,7 @@ export async function postRegister(
  * Authenticates an existing user. Tokens are set as HttpOnly cookies by the server.
  * @param data - Email and password credentials
  * @returns The authenticated user object
- * @throws Error with the server's message, or a generic HTTP error
+ * @throws Error with the server's reason on a 4xx, or a generic HTTP error
  */
 export async function postLogin(data: LoginRequest): Promise<AuthResponse> {
 	const response = await fetch(`${API_URL}/auth/user/login`, {
@@ -50,9 +68,7 @@ export async function postLogin(data: LoginRequest): Promise<AuthResponse> {
 
 	if (!response.ok) {
 		const error = await response.json().catch(() => null);
-		throw new Error(
-			error?.message || `HTTP error! status: ${response.status}`
-		);
+		throw new Error(credentialErrorMessage(response.status, error));
 	}
 
 	return await response.json();
